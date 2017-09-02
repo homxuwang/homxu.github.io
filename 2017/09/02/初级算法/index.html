@@ -104,18 +104,18 @@
 
 
 
-<meta name="description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法：  123456789101112function factorialize(num) &amp;#123;  var number=1;  while(num&amp;gt;=1)&amp;#123;    number*=num;	num--;	&amp;#125;	return numb">
+<meta name="description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法： 123456789101112function factorialize(num) &amp;#123;  var number=1;  while(num&amp;gt;=1)&amp;#123;    number*=num;	num--;	&amp;#125;	return numbe">
 <meta name="keywords" content="算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初级算法">
 <meta property="og:url" content="http://yoursite.com/2017/09/02/初级算法/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法：  123456789101112function factorialize(num) &amp;#123;  var number=1;  while(num&amp;gt;=1)&amp;#123;    number*=num;	num--;	&amp;#125;	return numb">
+<meta property="og:description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法： 123456789101112function factorialize(num) &amp;#123;  var number=1;  while(num&amp;gt;=1)&amp;#123;    number*=num;	num--;	&amp;#125;	return numbe">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-02T13:24:05.394Z">
+<meta property="og:updated_time" content="2017-09-02T13:26:33.731Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初级算法">
-<meta name="twitter:description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法：  123456789101112function factorialize(num) &amp;#123;  var number=1;  while(num&amp;gt;=1)&amp;#123;    number*=num;	num--;	&amp;#125;	return numb">
+<meta name="twitter:description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法： 123456789101112function factorialize(num) &amp;#123;  var number=1;  while(num&amp;gt;=1)&amp;#123;    number*=num;	num--;	&amp;#125;	return numbe">
 
 
 
@@ -389,7 +389,7 @@
       
         <p> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。</p>
 <h1 id="计算一个整数的阶乘"><a href="#计算一个整数的阶乘" class="headerlink" title="计算一个整数的阶乘"></a>计算一个整数的阶乘</h1><h2 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h2><p>普通方法：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  var number=1;</div><div class="line">  while(num&gt;=1)&#123;</div><div class="line">    number*=num;</div><div class="line">	num--;</div><div class="line">	&#125;</div><div class="line">	return number;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  factorialize(10);  //3628800</div><div class="line">  factorialize(20); // 2432902008176640000</div><div class="line">  factorialize(0); //1</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  var number=1;</div><div class="line">  while(num&gt;=1)&#123;</div><div class="line">    number*=num;</div><div class="line">	num--;</div><div class="line">	&#125;</div><div class="line">	return number;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  factorialize(10);  //3628800</div><div class="line">  factorialize(20); // 2432902008176640000</div><div class="line">  factorialize(0); //1</div></pre></td></tr></table></figure>
 <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>下面是递归的方法：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  if (num === 0)&#123;</div><div class="line">  return 1;</div><div class="line">  &#125;</div><div class="line">  else&#123;</div><div class="line">    return num * factorialize(num - 1);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">factorialize(10);  //3628800</div><div class="line">factorialize(20); // 2432902008176640000</div><div class="line">factorialize(0); //1</div></pre></td></tr></table></figure>
 <hr>
@@ -413,7 +413,7 @@
 <blockquote>
 <p>split() 方法使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。</p>
 </blockquote>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split" target="_blank" rel="external">split()</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split" target="_blank" rel="external">split()</a><code>enter code here</code></p>
 <blockquote>
 <p>str.split([separator[, limit]])<br>separator<br>指定表示每个拆分应发生的点的字符串。separator 可以是一个字符串或正则表达式。 如果纯文本分隔符包含多个字符，则必须找到整个字符串来表示分割点。如果在str中省略或不出现分隔符，则返回的数组包含一个由整个字符串组成的元素。如果分隔符为空字符串，则将str原字符串中每个字符的数组形式返回。<br>limit<br>一个整数，限定返回的分割片段数量。当提供此参数时，split 方法会在指定分隔符的每次出现时分割该字符串，但在限制条目已放入数组时停止。如果在达到指定限制之前达到字符串的末尾，它可能仍然包含少于限制的条目。新数组中不返回剩下的文本。</p>
 </blockquote>
