@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[初级算法]]></title>
+    <url>%2F2017%2F09%2F02%2F%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。 #计算一个整数的阶乘 ##算法1 function factorialize(num) { var number=1; while(num&gt;=1){ number*=num; num--; } return number; } factorialize(10); //3628800 factorialize(20) // 2432902008176640000 factorialize(0) //1 ##递归 function factorialize(num) { if (num === 0) { return 1; } else { return num * RecursiveFac(num - 1); } } factorialize(10); //3628800 factorialize(20) // 2432902008176640000 factorialize(0) //1]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>-算法 -JS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hello World!]]></title>
     <url>%2F2017%2F08%2F22%2FHello-World-0%2F</url>
     <content type="text"><![CDATA[Hello world！]]></content>
