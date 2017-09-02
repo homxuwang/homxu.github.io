@@ -399,8 +399,8 @@
 }
 
 factorialize(10);  //3628800
-factorialize(20) // 2432902008176640000
-factorialize(0) //1
+factorialize(20); // 2432902008176640000
+factorialize(0); //1
 </code></pre><h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><pre><code>function factorialize(num) {
   if (num === 0)
     {
@@ -412,8 +412,8 @@ factorialize(0) //1
   }
 }
 factorialize(10);  //3628800
-factorialize(20) // 2432902008176640000
-factorialize(0) //1
+factorialize(20); // 2432902008176640000
+factorialize(0); //1
 </code></pre><h1 id="分割数组"><a href="#分割数组" class="headerlink" title="分割数组"></a>分割数组</h1><p>把一个数组arr按照指定的数组大小size分割成若干个数组块。</p>
 <p>例如:chunk([1,2,3,4],2)=[[1,2],[3,4]];</p>
 <pre><code> function chunk(arr, size) {
@@ -425,8 +425,8 @@ factorialize(0) //1
 }
 
 chunk([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 2);
-chunk([0, 1, 2, 3, 4, 5, 6], 3)  // [[0, 1, 2], [3, 4, 5], [6]]
-chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4)  // [[0, 1, 2, 3], [4, 5, 6, 7], [8]]
+chunk([0, 1, 2, 3, 4, 5, 6], 3);  // [[0, 1, 2], [3, 4, 5], [6]]
+chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4);  // [[0, 1, 2, 3], [4, 5, 6, 7], [8]]
 </code></pre><h1 id="截断数组"><a href="#截断数组" class="headerlink" title="截断数组"></a>截断数组</h1><pre><code>function slasher(arr, howMany) {
   arr.splice(0,howMany); 
   return arr;
