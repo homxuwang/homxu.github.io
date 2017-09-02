@@ -388,7 +388,7 @@
       
         
           
-            <p> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。</p>
+            <p> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。</p>
 <h1 id="计算一个整数的阶乘"><a href="#计算一个整数的阶乘" class="headerlink" title="计算一个整数的阶乘"></a>计算一个整数的阶乘</h1><h2 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h2><pre><code>function factorialize(num) {
   var number=1;
   while(num&gt;=1){
@@ -414,7 +414,30 @@ factorialize(0) //1
 factorialize(10);  //3628800
 factorialize(20) // 2432902008176640000
 factorialize(0) //1
-</code></pre>
+</code></pre><h1 id="分割数组"><a href="#分割数组" class="headerlink" title="分割数组"></a>分割数组</h1><p>把一个数组arr按照指定的数组大小size分割成若干个数组块。</p>
+<p>例如:chunk([1,2,3,4],2)=[[1,2],[3,4]];</p>
+<pre><code> function chunk(arr, size) {
+  var arr2=[];
+  for(var i=0;i&lt;arr.length;i=i+size){
+    arr2.push(arr.slice(i,i+size));
+  }
+  return arr2;
+}
+
+chunk([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 2);
+chunk([0, 1, 2, 3, 4, 5, 6], 3)  // [[0, 1, 2], [3, 4, 5], [6]]
+chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4)  // [[0, 1, 2, 3], [4, 5, 6, 7], [8]]
+</code></pre><h1 id="截断数组"><a href="#截断数组" class="headerlink" title="截断数组"></a>截断数组</h1><pre><code>function slasher(arr, howMany) {
+  arr.splice(0,howMany); 
+  return arr;
+}
+
+slasher([1, 2, 3], 2);
+</code></pre><blockquote>
+<p>splice() 方法通过删除现有元素和/或添加新元素来更改一个数组的内容。<br>splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。</p>
+</blockquote>
+<p>例如：<br><figure class="highlight plain"><figcaption><span>myFish = ['angel', 'clown', 'mandarin', 'sturgeon'];</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">myFish.splice(2, 0, &apos;drum&apos;); // 在索引为2的位置插入&apos;drum&apos;</div><div class="line">// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;drum&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]</div><div class="line">myFish.splice(2, 1); // 从索引为2的位置删除一项（也就是&apos;drum&apos;这一项）</div><div class="line">// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]</div></pre></td></tr></table></figure></p>
+
           
         
       
