@@ -104,18 +104,18 @@
 
 
 
-<meta name="description" content="&amp;lt;!–more&amp;gt; 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。&amp;lt;!–more&amp;gt; 计算一个整数的阶乘算法1function factorialize(num) {   var number=1;   while(num&amp;gt;=1){     number*=num;      num--;   }   return number; }  fact">
+<meta name="description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。 计算一个整数的阶乘算法1function factorialize(num) {   var number=1;   while(num&amp;gt;=1){     number*=num;      num--;   }   return number; }  factorialize(10);  //3628800 fac">
 <meta name="keywords" content="算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="初级算法">
 <meta property="og:url" content="http://yoursite.com/2017/09/02/初级算法/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="&amp;lt;!–more&amp;gt; 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。&amp;lt;!–more&amp;gt; 计算一个整数的阶乘算法1function factorialize(num) {   var number=1;   while(num&amp;gt;=1){     number*=num;      num--;   }   return number; }  fact">
+<meta property="og:description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。 计算一个整数的阶乘算法1function factorialize(num) {   var number=1;   while(num&amp;gt;=1){     number*=num;      num--;   }   return number; }  factorialize(10);  //3628800 fac">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-02T06:07:42.283Z">
+<meta property="og:updated_time" content="2017-09-02T06:10:37.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初级算法">
-<meta name="twitter:description" content="&amp;lt;!–more&amp;gt; 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。&amp;lt;!–more&amp;gt; 计算一个整数的阶乘算法1function factorialize(num) {   var number=1;   while(num&amp;gt;=1){     number*=num;      num--;   }   return number; }  fact">
+<meta name="twitter:description" content="因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。 计算一个整数的阶乘算法1function factorialize(num) {   var number=1;   while(num&amp;gt;=1){     number*=num;      num--;   }   return number; }  factorialize(10);  //3628800 fac">
 
 
 
@@ -387,7 +387,7 @@
       
 
       
-        <p>&lt;!–more&gt;<br> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。<br>&lt;!–more&gt;</p>
+        <p> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。</p>
 <h1 id="计算一个整数的阶乘"><a href="#计算一个整数的阶乘" class="headerlink" title="计算一个整数的阶乘"></a>计算一个整数的阶乘</h1><h2 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h2><pre><code>function factorialize(num) {
   var number=1;
   while(num&gt;=1){
@@ -407,7 +407,7 @@ factorialize(0) //1
      }
    else
     {
-    return num * RecursiveFac(num - 1);
+    return num * factorialize(num - 1);
   }
 }
 factorialize(10);  //3628800

@@ -388,7 +388,7 @@
       
         
           
-            <p>&lt;!–more&gt;<br> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。<br>&lt;!–more&gt;</p>
+            <p> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。</p>
 <h1 id="计算一个整数的阶乘"><a href="#计算一个整数的阶乘" class="headerlink" title="计算一个整数的阶乘"></a>计算一个整数的阶乘</h1><h2 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h2><pre><code>function factorialize(num) {
   var number=1;
   while(num&gt;=1){
@@ -408,7 +408,7 @@ factorialize(0) //1
      }
    else
     {
-    return num * RecursiveFac(num - 1);
+    return num * factorialize(num - 1);
   }
 }
 factorialize(10);  //3628800

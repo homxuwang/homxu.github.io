@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[初级算法]]></title>
     <url>%2F2017%2F09%2F02%2F%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[&lt;!–more&gt; 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。&lt;!–more&gt; 计算一个整数的阶乘算法1function factorialize(num) { var number=1; while(num&gt;=1){ number*=num; num--; } return number; } factorialize(10); //3628800 factorialize(20) // 2432902008176640000 factorialize(0) //1 递归function factorialize(num) { if (num === 0) { return 1; } else { return num * RecursiveFac(num - 1); } } factorialize(10); //3628800 factorialize(20) // 2432902008176640000 factorialize(0) //1]]></content>
+    <content type="text"><![CDATA[因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。 计算一个整数的阶乘算法1function factorialize(num) { var number=1; while(num&gt;=1){ number*=num; num--; } return number; } factorialize(10); //3628800 factorialize(20) // 2432902008176640000 factorialize(0) //1 递归function factorialize(num) { if (num === 0) { return 1; } else { return num * factorialize(num - 1); } } factorialize(10); //3628800 factorialize(20) // 2432902008176640000 factorialize(0) //1]]></content>
       <categories>
         <category>算法</category>
       </categories>
