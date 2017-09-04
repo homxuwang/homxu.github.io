@@ -1,116 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-    
-    <entry>
-      <title><![CDATA[Arguments的用法初试]]></title>
-      <url>/2017/09/03/Arguments%E7%9A%84%E7%94%A8%E6%B3%95%E5%88%9D%E8%AF%95/</url>
-      <content type="html"><![CDATA[<p>在FCC做题的过程中，遇到了一个初级的算法题，题目用到了arguments对象。在这里对arguments的用法进行一些总结。</p>
-<p>首先，在FCC中的题目如下：</p>
-<blockquote>
-<p>摧毁数组<br>实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function destroyer(arr) &#123;  //arr = (6) [1, 2, 3, 1, 2, 3]</div><div class="line">  var arr_arg=arguments; //arr_arg = (3) [Array(6), 2, 3]</div><div class="line">  for(var i = 1; i &lt; arr_arg.length; i++)&#123;   //先让arr_arg[1](也就是2)与arr的每一个元素比较，保留或者摧毁。第一次循环后arr=[1,2,1,2]然后第二次循环让arr_arg[2](也就是3)与arr的每一个元素比较，保留或者摧毁。第二次循环后arr=[1,1]</div><div class="line">    arr = arr.filter(function(val)&#123;  </div><div class="line">      return arr_arg[i] !== val;     </div><div class="line">    &#125;);  </div><div class="line">    &#125;  </div><div class="line">  return arr;</div><div class="line">&#125;</div><div class="line"></div><div class="line">destroyer([1, 2, 3, 1, 2, 3], 2, 3);//[1,1]</div><div class="line">destroyer([1, 2, 3, 5, 1, 2, 3], 2, 3) ;//[1, 5, 1]</div><div class="line">destroyer([3, 5, 1, 2, 2], 2, 3, 5);//[1]</div><div class="line">destroyer([2, 3, 2, 3], 2, 3);//[]</div><div class="line">destroyer([&quot;tree&quot;, &quot;hamburger&quot;, 53], &quot;tree&quot;, 53);//[&quot;hamburger&quot;]</div></pre></td></tr></table></figure>
-<p>先来看下《JavaScript高级程序设计》中对于arguments的一些解释：</p>
-<blockquote>
-<p>ECMAScript 函数的参数与大多数其他语言中函数的参数有所不同。 ECMAScript 函数不介意传递进来多少个参数，也不在乎传进来参数是什么数据类型。也就是说，即便你定义的函数只接收两个参数，在调用这个函数时也未必一定要传递两个参数。可以传递一个、三个甚至不传递参数，而解析器永远不会有什么怨言。之所以会这样，原因是ECMAScript 中的参数在内部是用一个数组来表示的。函数接收到的始终都是这个数组，而不关心数组中包含哪些参数（如果有参数的话）。如果这个数组中不包含任何元素，无所谓；如果包含多个元素，也没有问题。实际上，在函数体内可以通过 arguments 对象来访问这个参数数组，从而获取传递给函数的每一个参数。<br>  其实， arguments 对象只是与数组类似（它并不是 Array 的实例），因为可以使用方括号语法访问它的每一个元素（即第一个元素是 arguments[0]，第二个元素是 argumetns[1]，以此类推），使用 length 属性来确定传递进来多少个参数。在前面的例子中， sayHi()函数的第一个参数的名字叫name，而该参数的值也可以通过访问 arguments[0]来获取。因此，那个函数也可以像下面这样重写，即不显式地使用命名参数：</p>
-<p>   <code>function sayHi() {
-alert(&quot;Hello &quot; + arguments[0] + &quot;,&quot; + arguments[1]);}</code><br>这个重写后的函数中不包含命名的参数。虽然没有使用 name 和 message 标识符，但函数的功能依旧。这个事实说明了 ECMAScript 函数的一个重要特点：命名的参数只提供便利，但不是必需的。另外，在命名参数方面，其他语言可能需要事先创建一个函数签名，而将来的调用必须与该签名一致。但在 ECMAScript 中，没有这些条条框框，解析器不会验证命名参数。<br>通过访问 arguments 对象的 length 属性可以获知有多少个参数传递给了函数。下面这个函数会在每次被调用时，输出传入其中的参数个数：<br><code>function howManyArgs() {
-alert(arguments.length);
-}</code><br><code>howManyArgs(&quot;string&quot;, 45); //2</code><br><code>howManyArgs(); //0</code><br> <code>howManyArgs(12); //1</code><br> 执行以上代码会依次出现 3 个警告框，分别显示 2、 0 和 1。由此可见，开发人员可以利用这一点让函数能够接收任意个参数并分别实现适当的功能。请看下面的例子：<br> <code>function doAdd() {</code><br><code>if(arguments.length == 1) {</code><br><code>alert(arguments[0] + 10);</code><br><code>} else if (arguments.length == 2) {</code><br><code>alert(arguments[0] + arguments[1]);</code><br><code>}</code><br><code>}</code><br><code>doAdd(10); //20</code><br><code>doAdd(30, 20); //50</code><br>函数 doAdd()会在只有一个参数的情况下给该参数加上 10；如果是两个参数，则将那个参数简单相加并返回结果。因此， doAdd(10)会返回 20，而 doAdd(30,20)则返回 50。虽然这个特性算不上完美的重载，但也足够弥补 ECMAScript 的这一缺憾了。<br>另一个与参数相关的重要方面，就是 arguments 对象可以与命名参数一起使用，如下面的例子所示：<br><code>function doAdd(num1, num2) {</code><br><code>if(arguments.length == 1) {</code><br><code>alert(num1 + 10);</code><br><code>} else if (arguments.length == 2) {</code><br><code>alert(arguments[0] + num2);</code><br><code>}</code><br><code>}</code><br>在重写后的这个 doAdd()函数中，两个命名参数都与 arguments 对象一起使用。由于 num1 的值与 arguments[0]的值相同，因此它们可以互换使用（当然， num2 和 arguments[1]也是如此）。<br>关于 arguments 的行为，还有一点比较有意思。那就是它的值永远与对应命名参数的值保持同步。<br>例如：<br><code>function doAdd(num1, num2) {</code><br><code>arguments[1] = 10;</code><br><code>alert(arguments[0] + num2);</code><br><code>}</code><br>每次执行这个 doAdd()函数都会重写第二个参数，将第二个参数的值修改为 10。因为 arguments对象中的值会自动反映到对应的命名参数，所以修改 arguments[1]，也就修改了 num2，结果它们的值都会变成 10。不过，这并不是说读取这两个值会访问相同的内存空间；它们的内存空间是独立的，但它们的值会同步。另外还要记住，如果只传入了一个参数，那么为 arguments[1]设置的值不会反应到命名参数中。这是因为 arguments 对象的长度是由传入的参数个数决定的，不是由定义函数时的命名参数的个数决定的。<br>关于参数还要记住最后一点：没有传递值的命名参数将自动被赋予 undefined 值。这就跟定义了变量但又没有初始化一样。例如，如果只给 doAdd()函数传递了一个参数，则 num2 中就会保存undefined 值。<br>严格模式对如何使用 arguments 对象做出了一些限制。首先，像前面例子中那样的赋值会变得无效。也就是说，即使把 arguments[1]设置为 10， num2 的值仍然还是 undefined。其次，重写arguments 的值会导致语法错误（代码将不会执行）。</p>
-</blockquote>
-<p>  这里再回过头来看最开始的那个初级的算法题，就很简单了，传递的值是:<strong>([1,2,3,1,2,3],2,3)</strong>,即arguments[0] = [1,2,3,1,2,3], arguments[1] = 2 , arguemnts[2] = 3 .这样让arr_arg=arguments，即定义一个数组等于当前传入的数组，在后面进行使用。后面的部分就很好理解了，用<strong>Array.filter()</strong>方法调用括号内的function函数，让循环从1开始，即让待摧毁的值与数组中的每一个值比较，返回false或者true进而摧毁或者保留。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[初级算法]]></title>
-      <url>/2017/09/02/%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<p> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。</p>
-<h1 id="计算一个整数的阶乘"><a href="#计算一个整数的阶乘" class="headerlink" title="计算一个整数的阶乘"></a>计算一个整数的阶乘</h1><h2 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h2><p>普通方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  var number=1;</div><div class="line">  while(num&gt;=1)&#123;</div><div class="line">    number*=num;</div><div class="line">	num--;</div><div class="line">	&#125;</div><div class="line">	return number;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  factorialize(10);  //3628800</div><div class="line">  factorialize(20); // 2432902008176640000</div><div class="line">  factorialize(0); //1</div></pre></td></tr></table></figure>
-<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>下面是递归的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  if (num === 0)&#123;</div><div class="line">  return 1;</div><div class="line">  &#125;</div><div class="line">  else&#123;</div><div class="line">    return num * factorialize(num - 1);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">factorialize(10);  //3628800</div><div class="line">factorialize(20); // 2432902008176640000</div><div class="line">factorialize(0); //1</div></pre></td></tr></table></figure>
-<hr>
-<h1 id="分割数组"><a href="#分割数组" class="headerlink" title="分割数组"></a>分割数组</h1><p>把一个数组arr按照指定的数组大小size分割成若干个数组块。</p>
-<p>例如:chunk([1,2,3,4],2)=[[1,2],[3,4]];</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function chunk(arr, size) &#123;</div><div class="line">  var arr2=[];</div><div class="line">  for(var i=0;i&lt;arr.length;i=i+size)&#123;</div><div class="line">    arr2.push(arr.slice(i,i+size));</div><div class="line">	&#125;</div><div class="line">	return arr2;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">chunk([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 2);</div><div class="line">chunk([0, 1, 2, 3, 4, 5, 6], 3);  // [[0, 1, 2], [3, 4, 5], [6]]</div><div class="line">chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4);  // [[0, 1, 2, 3], [4, 5, 6, 7], [8]]</div></pre></td></tr></table></figure>
-<hr>
-<h1 id="截断数组"><a href="#截断数组" class="headerlink" title="截断数组"></a>截断数组</h1><p>截断数组的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function slasher(arr, howMany) &#123;</div><div class="line">  arr.splice(0,howMany); </div><div class="line">  return arr;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">slasher([1, 2, 3], 2);</div></pre></td></tr></table></figure>
-<blockquote>
-<p>splice() 方法通过删除现有元素和/或添加新元素来更改一个数组的内容。<br>splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。</p>
-</blockquote>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var myFish = [&apos;angel&apos;, &apos;clown&apos;, &apos;mandarin&apos;, &apos;sturgeon&apos;];</div><div class="line">myFish.splice(2, 0, &apos;drum&apos;); // 在索引为2的位置插入&apos;drum&apos;</div><div class="line">// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;drum&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]</div><div class="line">myFish.splice(2, 1); // 从索引为2的位置删除一项（也就是&apos;drum&apos;这一项）</div><div class="line">// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]</div></pre></td></tr></table></figure>
-<hr>
-<h1 id="比较字符串"><a href="#比较字符串" class="headerlink" title="比较字符串"></a>比较字符串</h1><p>比较字符串</p>
-<p>如果数组第一个字符串元素包含了第二个字符串元素的所有字符，函数返回true。</p>
-<p>举例，[“hello”, “Hello”]应该返回true，因为在忽略大小写的情况下，第二个字符串的所有字符都可以在第一个字符串找到。</p>
-<p>[“hello”, “hey”]应该返回false，因为字符串”hello”并不包含字符”y”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function mutation(arr) &#123;</div><div class="line">  var arr2=arr[1].toLowerCase().split(&quot;&quot;);// 先把后面的字符串拆分成数组</div><div class="line">  for(var i=0;i&lt;arr2.length;i++)&#123;</div><div class="line">    if(arr[0].toLowerCase().indexOf(arr2[i])&lt;0)&#123; //将前面的数组转化为小写后与后面拆分的数组的每一个字母比较， indexOf不包含的情况会返回-1</div><div class="line">      return false;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return true;</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">mutation([&quot;hello&quot;, &quot;hey&quot;]);//false</div><div class="line">mutation([&quot;hello&quot;, &quot;Hello&quot;]);//true</div><div class="line">mutation([&quot;zyxwvutsrqponmlkjihgfedcba&quot;, &quot;qrstu&quot;]);//true</div></pre></td></tr></table></figure>
-<blockquote>
-<p>split() 方法使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。</p>
-</blockquote>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split" target="_blank" rel="external">split()</a></p>
-<blockquote>
-<p>str.split([separator[, limit]])<br>separator<br>指定表示每个拆分应发生的点的字符串。separator 可以是一个字符串或正则表达式。 如果纯文本分隔符包含多个字符，则必须找到整个字符串来表示分割点。如果在str中省略或不出现分隔符，则返回的数组包含一个由整个字符串组成的元素。如果分隔符为空字符串，则将str原字符串中每个字符的数组形式返回。<br>limit<br>一个整数，限定返回的分割片段数量。当提供此参数时，split 方法会在指定分隔符的每次出现时分割该字符串，但在限制条目已放入数组时停止。如果在达到指定限制之前达到字符串的末尾，它可能仍然包含少于限制的条目。新数组中不返回剩下的文本。</p>
-</blockquote>
-<hr>
-<h1 id="过滤数组假值"><a href="#过滤数组假值" class="headerlink" title="过滤数组假值"></a>过滤数组假值</h1><p>删除数组中的所有假值。</p>
-<p>在JavaScript中，假值有false、null、0、””、undefined 和 NaN。</p>
-<p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Boolean" target="_blank" rel="external">Boolean Objects</a><br>          <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank" rel="external">Array.filter()</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function bouncer(arr) &#123;</div><div class="line">  return arr.filter(isBad);</div><div class="line">  function isBad(params)&#123; </div><div class="line">   var result = Boolean(params);</div><div class="line">   return result; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bouncer([7, &quot;ate&quot;, &quot;&quot;, false, 9]);//[7, &quot;ate&quot;, 9]</div><div class="line">bouncer([false, null, 0, NaN, undefined, &quot;&quot;]);// []</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> 算法 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hello World]]></title>
-      <url>/2017/08/21/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-      
-        
-    </entry>
-    
-  
-  
+<search>
+  <entry>
+    <title><![CDATA[Arguments的用法初试]]></title>
+    <url>%2F2017%2F09%2F03%2FArguments%E7%9A%84%E7%94%A8%E6%B3%95%E5%88%9D%E8%AF%95%2F</url>
+    <content type="text"><![CDATA[在FCC做题的过程中，遇到了一个初级的算法题，题目用到了arguments对象。在这里对arguments的用法进行一些总结。 首先，在FCC中的题目如下： 摧毁数组实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。 123456789101112131415function destroyer(arr) &#123; //arr = (6) [1, 2, 3, 1, 2, 3] var arr_arg=arguments; //arr_arg = (3) [Array(6), 2, 3] for(var i = 1; i &lt; arr_arg.length; i++)&#123; //先让arr_arg[1](也就是2)与arr的每一个元素比较，保留或者摧毁。第一次循环后arr=[1,2,1,2]然后第二次循环让arr_arg[2](也就是3)与arr的每一个元素比较，保留或者摧毁。第二次循环后arr=[1,1] arr = arr.filter(function(val)&#123; return arr_arg[i] !== val; &#125;); &#125; return arr;&#125;destroyer([1, 2, 3, 1, 2, 3], 2, 3);//[1,1]destroyer([1, 2, 3, 5, 1, 2, 3], 2, 3) ;//[1, 5, 1]destroyer([3, 5, 1, 2, 2], 2, 3, 5);//[1]destroyer([2, 3, 2, 3], 2, 3);//[]destroyer([&quot;tree&quot;, &quot;hamburger&quot;, 53], &quot;tree&quot;, 53);//[&quot;hamburger&quot;] 先来看下《JavaScript高级程序设计》中对于arguments的一些解释： ECMAScript 函数的参数与大多数其他语言中函数的参数有所不同。 ECMAScript 函数不介意传递进来多少个参数，也不在乎传进来参数是什么数据类型。也就是说，即便你定义的函数只接收两个参数，在调用这个函数时也未必一定要传递两个参数。可以传递一个、三个甚至不传递参数，而解析器永远不会有什么怨言。之所以会这样，原因是ECMAScript 中的参数在内部是用一个数组来表示的。函数接收到的始终都是这个数组，而不关心数组中包含哪些参数（如果有参数的话）。如果这个数组中不包含任何元素，无所谓；如果包含多个元素，也没有问题。实际上，在函数体内可以通过 arguments 对象来访问这个参数数组，从而获取传递给函数的每一个参数。 其实， arguments 对象只是与数组类似（它并不是 Array 的实例），因为可以使用方括号语法访问它的每一个元素（即第一个元素是 arguments[0]，第二个元素是 argumetns[1]，以此类推），使用 length 属性来确定传递进来多少个参数。在前面的例子中， sayHi()函数的第一个参数的名字叫name，而该参数的值也可以通过访问 arguments[0]来获取。因此，那个函数也可以像下面这样重写，即不显式地使用命名参数： function sayHi() { alert(&quot;Hello &quot; + arguments[0] + &quot;,&quot; + arguments[1]);}这个重写后的函数中不包含命名的参数。虽然没有使用 name 和 message 标识符，但函数的功能依旧。这个事实说明了 ECMAScript 函数的一个重要特点：命名的参数只提供便利，但不是必需的。另外，在命名参数方面，其他语言可能需要事先创建一个函数签名，而将来的调用必须与该签名一致。但在 ECMAScript 中，没有这些条条框框，解析器不会验证命名参数。通过访问 arguments 对象的 length 属性可以获知有多少个参数传递给了函数。下面这个函数会在每次被调用时，输出传入其中的参数个数：function howManyArgs() { alert(arguments.length); }howManyArgs(&quot;string&quot;, 45); //2howManyArgs(); //0 howManyArgs(12); //1 执行以上代码会依次出现 3 个警告框，分别显示 2、 0 和 1。由此可见，开发人员可以利用这一点让函数能够接收任意个参数并分别实现适当的功能。请看下面的例子： function doAdd() {if(arguments.length == 1) {alert(arguments[0] + 10);} else if (arguments.length == 2) {alert(arguments[0] + arguments[1]);}}doAdd(10); //20doAdd(30, 20); //50函数 doAdd()会在只有一个参数的情况下给该参数加上 10；如果是两个参数，则将那个参数简单相加并返回结果。因此， doAdd(10)会返回 20，而 doAdd(30,20)则返回 50。虽然这个特性算不上完美的重载，但也足够弥补 ECMAScript 的这一缺憾了。另一个与参数相关的重要方面，就是 arguments 对象可以与命名参数一起使用，如下面的例子所示：function doAdd(num1, num2) {if(arguments.length == 1) {alert(num1 + 10);} else if (arguments.length == 2) {alert(arguments[0] + num2);}}在重写后的这个 doAdd()函数中，两个命名参数都与 arguments 对象一起使用。由于 num1 的值与 arguments[0]的值相同，因此它们可以互换使用（当然， num2 和 arguments[1]也是如此）。关于 arguments 的行为，还有一点比较有意思。那就是它的值永远与对应命名参数的值保持同步。例如：function doAdd(num1, num2) {arguments[1] = 10;alert(arguments[0] + num2);}每次执行这个 doAdd()函数都会重写第二个参数，将第二个参数的值修改为 10。因为 arguments对象中的值会自动反映到对应的命名参数，所以修改 arguments[1]，也就修改了 num2，结果它们的值都会变成 10。不过，这并不是说读取这两个值会访问相同的内存空间；它们的内存空间是独立的，但它们的值会同步。另外还要记住，如果只传入了一个参数，那么为 arguments[1]设置的值不会反应到命名参数中。这是因为 arguments 对象的长度是由传入的参数个数决定的，不是由定义函数时的命名参数的个数决定的。关于参数还要记住最后一点：没有传递值的命名参数将自动被赋予 undefined 值。这就跟定义了变量但又没有初始化一样。例如，如果只给 doAdd()函数传递了一个参数，则 num2 中就会保存undefined 值。严格模式对如何使用 arguments 对象做出了一些限制。首先，像前面例子中那样的赋值会变得无效。也就是说，即使把 arguments[1]设置为 10， num2 的值仍然还是 undefined。其次，重写arguments 的值会导致语法错误（代码将不会执行）。 这里再回过头来看最开始的那个初级的算法题，就很简单了，传递的值是:([1,2,3,1,2,3],2,3),即arguments[0] = [1,2,3,1,2,3], arguments[1] = 2 , arguemnts[2] = 3 .这样让arr_arg=arguments，即定义一个数组等于当前传入的数组，在后面进行使用。后面的部分就很好理解了，用Array.filter()方法调用括号内的function函数，让循环从1开始，即让待摧毁的值与数组中的每一个值比较，返回false或者true进而摧毁或者保留。]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[初级算法]]></title>
+    <url>%2F2017%2F09%2F02%2F%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法： 123456789101112function factorialize(num) &#123; var number=1; while(num&gt;=1)&#123; number*=num; num--; &#125; return number; &#125; factorialize(10); //3628800 factorialize(20); // 2432902008176640000 factorialize(0); //1 递归下面是递归的方法： 123456789101112function factorialize(num) &#123; if (num === 0)&#123; return 1; &#125; else&#123; return num * factorialize(num - 1); &#125;&#125;factorialize(10); //3628800factorialize(20); // 2432902008176640000factorialize(0); //1 分割数组把一个数组arr按照指定的数组大小size分割成若干个数组块。 例如:chunk([1,2,3,4],2)=[[1,2],[3,4]]; 1234567891011function chunk(arr, size) &#123; var arr2=[]; for(var i=0;i&lt;arr.length;i=i+size)&#123; arr2.push(arr.slice(i,i+size)); &#125; return arr2; &#125;chunk([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 2);chunk([0, 1, 2, 3, 4, 5, 6], 3); // [[0, 1, 2], [3, 4, 5], [6]]chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4); // [[0, 1, 2, 3], [4, 5, 6, 7], [8]] 截断数组截断数组的代码： 123456function slasher(arr, howMany) &#123; arr.splice(0,howMany); return arr; &#125; slasher([1, 2, 3], 2); splice() 方法通过删除现有元素和/或添加新元素来更改一个数组的内容。splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。 例如： 12345var myFish = [&apos;angel&apos;, &apos;clown&apos;, &apos;mandarin&apos;, &apos;sturgeon&apos;];myFish.splice(2, 0, &apos;drum&apos;); // 在索引为2的位置插入&apos;drum&apos;// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;drum&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]myFish.splice(2, 1); // 从索引为2的位置删除一项（也就是&apos;drum&apos;这一项）// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;] 比较字符串比较字符串 如果数组第一个字符串元素包含了第二个字符串元素的所有字符，函数返回true。 举例，[“hello”, “Hello”]应该返回true，因为在忽略大小写的情况下，第二个字符串的所有字符都可以在第一个字符串找到。 [“hello”, “hey”]应该返回false，因为字符串”hello”并不包含字符”y”。 1234567891011121314function mutation(arr) &#123; var arr2=arr[1].toLowerCase().split(&quot;&quot;);// 先把后面的字符串拆分成数组 for(var i=0;i&lt;arr2.length;i++)&#123; if(arr[0].toLowerCase().indexOf(arr2[i])&lt;0)&#123; //将前面的数组转化为小写后与后面拆分的数组的每一个字母比较， indexOf不包含的情况会返回-1 return false; &#125; &#125; return true; &#125;mutation([&quot;hello&quot;, &quot;hey&quot;]);//falsemutation([&quot;hello&quot;, &quot;Hello&quot;]);//truemutation([&quot;zyxwvutsrqponmlkjihgfedcba&quot;, &quot;qrstu&quot;]);//true split() 方法使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。 split() str.split([separator[, limit]])separator指定表示每个拆分应发生的点的字符串。separator 可以是一个字符串或正则表达式。 如果纯文本分隔符包含多个字符，则必须找到整个字符串来表示分割点。如果在str中省略或不出现分隔符，则返回的数组包含一个由整个字符串组成的元素。如果分隔符为空字符串，则将str原字符串中每个字符的数组形式返回。limit一个整数，限定返回的分割片段数量。当提供此参数时，split 方法会在指定分隔符的每次出现时分割该字符串，但在限制条目已放入数组时停止。如果在达到指定限制之前达到字符串的末尾，它可能仍然包含少于限制的条目。新数组中不返回剩下的文本。 过滤数组假值删除数组中的所有假值。 在JavaScript中，假值有false、null、0、””、undefined 和 NaN。 参考：Boolean Objects Array.filter() 123456789function bouncer(arr) &#123; return arr.filter(isBad); function isBad(params)&#123; var result = Boolean(params); return result; &#125;&#125;bouncer([7, &quot;ate&quot;, &quot;&quot;, false, 9]);//[7, &quot;ate&quot;, 9]bouncer([false, null, 0, NaN, undefined, &quot;&quot;]);// []]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2017%2F08%2F21%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
 </search>
