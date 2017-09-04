@@ -112,7 +112,7 @@
 <meta property="og:site_name" content="Homxu">
 <meta property="og:description" content="在FCC做题的过程中，遇到了一个初级的算法题，题目用到了arguments对象。在这里对arguments的用法进行一些总结。 首先，在FCC中的题目如下：  摧毁数组实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。  123456789101112131415function destroyer(arr) &amp;#123;  //arr = (6) [1,">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-04T01:55:28.852Z">
+<meta property="og:updated_time" content="2017-09-04T01:58:48.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Arguments的用法初试">
 <meta name="twitter:description" content="在FCC做题的过程中，遇到了一个初级的算法题，题目用到了arguments对象。在这里对arguments的用法进行一些总结。 首先，在FCC中的题目如下：  摧毁数组实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。  123456789101112131415function destroyer(arr) &amp;#123;  //arr = (6) [1,">
@@ -401,7 +401,7 @@ alert(&quot;Hello &quot; + arguments[0] + &quot;,&quot; + arguments[1]);}</code>
 alert(arguments.length);
 }</code><br><code>howManyArgs(&quot;string&quot;, 45); //2</code><br><code>howManyArgs(); //0</code><br> <code>howManyArgs(12); //1</code><br> 执行以上代码会依次出现 3 个警告框，分别显示 2、 0 和 1。由此可见，开发人员可以利用这一点让函数能够接收任意个参数并分别实现适当的功能。请看下面的例子：<br> <code>function doAdd() {</code><br><code>if(arguments.length == 1) {</code><br><code>alert(arguments[0] + 10);</code><br><code>} else if (arguments.length == 2) {</code><br><code>alert(arguments[0] + arguments[1]);</code><br><code>}</code><br><code>}</code><br><code>doAdd(10); //20</code><br><code>doAdd(30, 20); //50</code><br>函数 doAdd()会在只有一个参数的情况下给该参数加上 10；如果是两个参数，则将那个参数简单相加并返回结果。因此， doAdd(10)会返回 20，而 doAdd(30,20)则返回 50。虽然这个特性算不上完美的重载，但也足够弥补 ECMAScript 的这一缺憾了。<br>另一个与参数相关的重要方面，就是 arguments 对象可以与命名参数一起使用，如下面的例子所示：<br><code>function doAdd(num1, num2) {</code><br><code>if(arguments.length == 1) {</code><br><code>alert(num1 + 10);</code><br><code>} else if (arguments.length == 2) {</code><br><code>alert(arguments[0] + num2);</code><br><code>}</code><br><code>}</code><br>在重写后的这个 doAdd()函数中，两个命名参数都与 arguments 对象一起使用。由于 num1 的值与 arguments[0]的值相同，因此它们可以互换使用（当然， num2 和 arguments[1]也是如此）。<br>关于 arguments 的行为，还有一点比较有意思。那就是它的值永远与对应命名参数的值保持同步。<br>例如：<br><code>function doAdd(num1, num2) {</code><br><code>arguments[1] = 10;</code><br><code>alert(arguments[0] + num2);</code><br><code>}</code><br>每次执行这个 doAdd()函数都会重写第二个参数，将第二个参数的值修改为 10。因为 arguments对象中的值会自动反映到对应的命名参数，所以修改 arguments[1]，也就修改了 num2，结果它们的值都会变成 10。不过，这并不是说读取这两个值会访问相同的内存空间；它们的内存空间是独立的，但它们的值会同步。另外还要记住，如果只传入了一个参数，那么为 arguments[1]设置的值不会反应到命名参数中。这是因为 arguments 对象的长度是由传入的参数个数决定的，不是由定义函数时的命名参数的个数决定的。<br>关于参数还要记住最后一点：没有传递值的命名参数将自动被赋予 undefined 值。这就跟定义了变量但又没有初始化一样。例如，如果只给 doAdd()函数传递了一个参数，则 num2 中就会保存undefined 值。<br>严格模式对如何使用 arguments 对象做出了一些限制。首先，像前面例子中那样的赋值会变得无效。也就是说，即使把 arguments[1]设置为 10， num2 的值仍然还是 undefined。其次，重写arguments 的值会导致语法错误（代码将不会执行）。</p>
 </blockquote>
-<p>  这里再回过头来看最开始的那个初级的算法题，就很简单了，传递的值是:<strong>([1,2,3,1,2,3],2,3)</strong>,即==arguments[0]=[1,2,3,1,2,3]==,==arguments[1]=2==,==arguemnts[2]=3==.这样让arr_arg=arguments，即定义一个数组等于当前传入的数组，在后面进行使用。后面的部分就很好理解了，用<strong>Array.filter()</strong>方法调用括号内的function函数，让循环从1开始，即让待摧毁的值与数组中的每一个值比较，返回false或者true进而摧毁或者保留。</p>
+<p>  这里再回过头来看最开始的那个初级的算法题，就很简单了，传递的值是:<strong>([1,2,3,1,2,3],2,3)</strong>,即==arguments[0] = [1,2,3,1,2,3]==  , ==arguments[1] = 2== , ==arguemnts[2] = 3== .这样让arr_arg=arguments，即定义一个数组等于当前传入的数组，在后面进行使用。后面的部分就很好理解了，用<strong>Array.filter()</strong>方法调用括号内的function函数，让循环从1开始，即让待摧毁的值与数组中的每一个值比较，返回false或者true进而摧毁或者保留。</p>
 
       
     </div>
