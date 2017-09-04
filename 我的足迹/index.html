@@ -104,14 +104,17 @@
 
 
 
+<meta name="description" content="var bmapChart=echarts.init(document.getElementById(&quot;map-wrap&quot;)); var myData = [     {name: &apos;海门&apos;, value: [121.15, 31.89, 200]},       {name: &apos;鄂尔多斯&apos;, value: [109.781327, 39.608266, 120]},">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的足迹">
 <meta property="og:url" content="http://yoursite.com/我的足迹/index.html">
 <meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="var bmapChart=echarts.init(document.getElementById(&quot;map-wrap&quot;)); var myData = [     {name: &apos;海门&apos;, value: [121.15, 31.89, 200]},       {name: &apos;鄂尔多斯&apos;, value: [109.781327, 39.608266, 120]},">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-04T07:30:46.596Z">
+<meta property="og:updated_time" content="2017-09-04T12:24:35.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的足迹">
+<meta name="twitter:description" content="var bmapChart=echarts.init(document.getElementById(&quot;map-wrap&quot;)); var myData = [     {name: &apos;海门&apos;, value: [121.15, 31.89, 200]},       {name: &apos;鄂尔多斯&apos;, value: [109.781327, 39.608266, 120]},">
 
 
 
@@ -265,7 +268,7 @@
         <li class="menu-item menu-item-我的足迹">
           <a href="/我的足迹" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-bus"></i> <br />
             
             我的足迹
           </a>
@@ -309,7 +312,109 @@
       <div class="post-body">
         
         
-          
+          <script src="/js/src/echarts.min.js"></script>
+<script src="/js/src/china.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/js/bmap.min.js"></script>
+<script src="/js/api.js"></script>
+
+<div id="map-wrap" style="height: 700px"><!--百度地图api结合的地方--></div>
+
+<script>
+var bmapChart=echarts.init(document.getElementById("map-wrap"));
+var myData = [
+    {name: '海门', value: [121.15, 31.89, 200]},
+      {name: '鄂尔多斯', value: [109.781327, 39.608266, 120]},
+      {name: '招远', value: [120.38, 37.35, 142]},
+    {name: '舟山', value: [122.207216, 29.985295, 123]},
+ ]
+
+ var baiduoption={
+     bmap:{
+         center: [116.307698, 40.056975], // 中心位置坐标
+          zoom: 5, // 地图缩放比例
+          roam: true, // 开启用户缩放
+          mapStyle:{
+         styleJson:[
+             //陆地
+             {
+                 "featureType":"land",
+                 "elementType":"all",
+                 "stylers":{
+                     "color":"#073763"
+                 }
+             },
+           // 水系
+          {
+              "featureType": "water",
+              "elementType": "all",
+              "stylers": {
+                  "color": "#073763",
+                  "lightness": -54
+              }
+          },
+          // 国道与高速
+          {
+              "featureType": "highway",
+              "elementType": "all",
+              "stylers": {
+                  "color": "#45818e"
+              }
+          },
+          // 边界线
+          {
+              "featureType": "boundary",
+              "elementType": "all",
+              "stylers": {
+                  "color": "#ffffff",
+                  "lightness": -62,
+                  "visibility": "on"
+              }
+          },
+          // 行政标注
+          {
+              "featureType": "label",
+              "elementType": "labels.text.fill",
+              "stylers": {
+                  "color": "#ffffff",
+                  "visibility": "on"
+              }
+          },
+          {
+              "featureType": "label",
+              "elementType": "labels.text.stroke",
+              "stylers": {
+                  "color": "#444444",
+                  "visibility": "on"
+              }
+          }
+         ]
+     },
+     },
+
+     visualMap: {
+                type: 'continuous', // 连续型
+                min: 0,               // 值域最小值，必须参数
+                max: 200,            // 值域最大值，必须参数
+                calculable: true,    // 是否启用值域漫游
+                inRange: {
+                         color: ['#50a3ba','#eac736','#d94e5d']
+                                     // 指定数值从低到高时的颜色变化
+                  },
+                textStyle: {
+                    color: '#fff'    // 值域控件的文本颜色
+                }
+                 },
+    series:[{
+                  name:'销量',//series名称
+                  type:'scatter',//series图表类型
+                  coordinateSystem:'bmap',// series坐标系类型
+                  data: myData,// series数据内容
+              }],
+ }    
+
+ bmapChart.setOption(baiduoption);
+</script>
         
       </div>
       
