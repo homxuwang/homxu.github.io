@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Homxu">
 <meta property="og:description" content="var bmapChart=echarts.init(document.getElementById(&quot;map-wrap&quot;)); var myData = [     {name: &apos;济宁&apos;, value: [35.4145900000,116.5872400000]},       {name: &apos;青岛&apos;, value: [36.0662300000,120.382990000">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-04T12:44:46.779Z">
+<meta property="og:updated_time" content="2017-09-04T13:40:00.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的足迹">
 <meta name="twitter:description" content="var bmapChart=echarts.init(document.getElementById(&quot;map-wrap&quot;)); var myData = [     {name: &apos;济宁&apos;, value: [35.4145900000,116.5872400000]},       {name: &apos;青岛&apos;, value: [36.0662300000,120.382990000">
@@ -318,7 +318,7 @@
 <script src="/js/src/bmap.min.js"></script>
 <script src="/js/src/api.js"></script>
 
-<div id="map-wrap" style="height: 700px;width:500px"><!--百度地图api结合的地方--></div>
+<div id="map-wrap" style="height: 700px"><!--百度地图api结合的地方--></div>
 
 <script>
 var bmapChart=echarts.init(document.getElementById("map-wrap"));
@@ -329,8 +329,8 @@ var myData = [
     {name: '济南', value: [36.6582042374,117.1265099573]},
     {name: '威海', value: [37.5192306876,122.1282906890]},
     {name: '北京', value: [39.9110666857,116.4136103013]},
-    {name: '济南', value: [36.6582042374,117.1265099573]},
-    {name: '济南', value: [36.6582042374,117.1265099573]},
+    {name: '武汉', value: [30.5984342798,114.3118287971]},
+    {name: '厦门', value: [24.4857696288,118.0959319647]},
  ]
 
  var baiduoption={
@@ -338,62 +338,105 @@ var myData = [
          center: [116.307698, 40.056975], // 中心位置坐标
           zoom: 5, // 地图缩放比例
           roam: true, // 开启用户缩放
-          mapStyle:{
-         styleJson:[
-             //陆地
-             {
-                 "featureType":"land",
-                 "elementType":"all",
-                 "stylers":{
-                     "color":"#073763"
-                 }
-             },
-           // 水系
-          {
-              "featureType": "water",
-              "elementType": "all",
-              "stylers": {
-                  "color": "#073763",
-                  "lightness": -54
-              }
-          },
-          // 国道与高速
-          {
-              "featureType": "highway",
-              "elementType": "all",
-              "stylers": {
-                  "color": "#45818e"
-              }
-          },
-          // 边界线
-          {
-              "featureType": "boundary",
-              "elementType": "all",
-              "stylers": {
-                  "color": "#ffffff",
-                  "lightness": -62,
-                  "visibility": "on"
-              }
-          },
-          // 行政标注
-          {
-              "featureType": "label",
-              "elementType": "labels.text.fill",
-              "stylers": {
-                  "color": "#ffffff",
-                  "visibility": "on"
-              }
-          },
-          {
-              "featureType": "label",
-              "elementType": "labels.text.stroke",
-              "stylers": {
-                  "color": "#444444",
-                  "visibility": "on"
-              }
-          }
-         ]
-     },
+         mapStyle: {
+            styleJson: [{
+                'featureType': 'water',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'land',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#f3f3f3'
+                }
+            }, {
+                'featureType': 'railway',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'highway',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#fdfdfd'
+                }
+            }, {
+                'featureType': 'highway',
+                'elementType': 'labels',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'geometry',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'geometry.fill',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'poi',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'green',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'subway',
+                'elementType': 'all',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'manmade',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'local',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'arterial',
+                'elementType': 'labels',
+                'stylers': {
+                    'visibility': 'off'
+                }
+            }, {
+                'featureType': 'boundary',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#fefefe'
+                }
+            }, {
+                'featureType': 'building',
+                'elementType': 'all',
+                'stylers': {
+                    'color': '#d1d1d1'
+                }
+            }, {
+                'featureType': 'label',
+                'elementType': 'labels.text.fill',
+                'stylers': {
+                    'color': '#999999'
+                }
+            }]
+        }
      },
 
      visualMap: {
@@ -410,7 +453,7 @@ var myData = [
                 }
                  },
     series:[{
-                  name:'销量',//series名称
+                  name:'足迹',//series名称
                   type:'scatter',//series图表类型
                   coordinateSystem:'bmap',// series坐标系类型
                   data: myData,// series数据内容
