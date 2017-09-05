@@ -104,17 +104,17 @@
 
 
 
-<meta name="description" content="var bmapChart=echarts.init(document.getElementById(&quot;map-wrap&quot;));  var myData=[     {name: &apos;海门&apos;, value: [121.15, 31.89, 90]},       {name: &apos;鄂尔多斯&apos;, value: [109.781327, 39.608266, 120]},       {n">
+<meta name="description" content="var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 200},      {name">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的足迹">
 <meta property="og:url" content="http://yoursite.com/我的足迹/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="var bmapChart=echarts.init(document.getElementById(&quot;map-wrap&quot;));  var myData=[     {name: &apos;海门&apos;, value: [121.15, 31.89, 90]},       {name: &apos;鄂尔多斯&apos;, value: [109.781327, 39.608266, 120]},       {n">
+<meta property="og:description" content="var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 200},      {name">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-05T01:07:15.865Z">
+<meta property="og:updated_time" content="2017-09-05T02:40:00.850Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的足迹">
-<meta name="twitter:description" content="var bmapChart=echarts.init(document.getElementById(&quot;map-wrap&quot;));  var myData=[     {name: &apos;海门&apos;, value: [121.15, 31.89, 90]},       {name: &apos;鄂尔多斯&apos;, value: [109.781327, 39.608266, 120]},       {n">
+<meta name="twitter:description" content="var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 200},      {name">
 
 
 
@@ -316,50 +316,175 @@
 <script src="/js/src/china.js"></script>
 <script src="/js/src/jquery-3.2.1.min.js"></script>
 <script src="/js/src/bmap.min.js"></script>
-<script src="/js/src/api.js"></script>
 
-<p><div id="map-wrap" style="height: 500px"></div></p>
+
+<div id="Map" style="height: 500px"><br>        <!--这以后是地图--><br></div>
+
 <script type="text/javascript">
-var bmapChart=echarts.init(document.getElementById("map-wrap"));
+  var Echartsmap=echarts.init(document.getElementById("Map"));
+    var city = [
+     {name: '青岛', value: 200},
+     {name: '泉州', value: 200},
+     {name: '上海', value: 200},
+     {name: '威海', value: 200},
+     {name: '厦门', value: 200},
+     {name: '宁波', value: 200},
+     {name: '昆明', value: 200},
+     {name: '咸阳', value: 200},
+     {name: '西宁', value: 200},
+     {name: '西安', value: 200},
+     {name: '南京', value: 200},
+     {name: '北京', value: 200},
+     {name: '杭州', value: 200},
+     {name: '济南', value: 200},
+     {name: '临沂', value: 200},
+     {name: '郑州', value: 200},
+     {name: '济宁', value: 200},
+     {name: '武汉', value: 200},
+     {name: '丽江', value: 200},
+     {name: '西双版纳', value: 200},
+     {name: '大理', value: 200},
 
-var myData=[
-    {name: '海门', value: [121.15, 31.89, 90]},
-      {name: '鄂尔多斯', value: [109.781327, 39.608266, 120]},
-      {name: '招远', value: [120.38, 37.35, 142]},
-    {name: '舟山', value: [122.207216, 29.985295, 123]},
-    {name: '北京', value: [116.307698, 40.056975, 123]},
-    ]
-var option={
-    bmap:{
-        center:[116.307698, 40.056975],
-        zoom:5,
-        roam:true
+];
+var geoCoordMap = {
+    '青岛':[120.33,36.07],
+    '泉州':[118.58,24.93],
+    '上海':[121.48,31.22],
+    '威海':[122.1,37.5],
+    '厦门':[118.1,24.46],
+    '宁波':[121.56,29.86],
+    '昆明':[102.73,25.04],
+    '咸阳':[108.72,34.36],
+    '西宁':[101.74,36.56],
+    '西安':[108.95,34.27],
+    '南京':[118.78,32.04],
+    '北京':[116.46,39.92],
+    '杭州':[120.19,30.26],
+    '济南':[117,36.65],
+    '临沂':[118.35,35.05],
+    '郑州':[113.65,34.76],
+    '济宁':[116.59,35.38],
+    '武汉':[114.31,30.52], 
+    '丽江':[100.23331,26.884395], 
+    '西双版纳':[100.79816,22.014105], 
+    '大理':[100.237692,25.597645], 
+
+};
+
+var convertData = function (city) {
+    var res = [];
+    for (var i = 0; i < city.length; i++) {
+        var geoCoord = geoCoordMap[city[i].name];
+        if (geoCoord) {
+            res.push({
+                name: city[i].name,
+                value: geoCoord.concat(city[i].value)
+            });
+        }
+    }
+    return res;
+};
+
+option = {
+    backgroundColor: '#404a59',
+    title: {
+        text: '路途',
+        subtext: '去过的或者待过的地方',       
+        left: 'center',
+        textStyle: {
+            color: '#fff'
+        }
     },
-    visualMap: {    // 视觉映射组件
-            type: 'continuous',
-            min: 0,
-            max: 200,
-            calculable: true,
-            inRange: {
-                     color: ['#50a3ba','#eac736','#d94e5d']
-              },
-            textStyle: {
-                color: '#fff'
+    tooltip : {
+        trigger: 'item' //触发类型。数据项图形触发，主要在散点图，饼图等无类目轴的图表中使用。
+    },
+    legend: {   //图例组件。
+        orient: 'vertical',
+        y: 'bottom',
+        x:'right',
+        data:['景点'],
+        // 设置文本颜色
+        textStyle: {
+            color: '#fff'
+        }
+    },
+    geo: {
+        map: 'china',
+        label: {
+            emphasis: {
+                show: false
             }
-             },
-        series: [
-            {
-                name: '销量',
-                type: 'scatter',
-
-                coordinateSystem: 'bmap', // 坐标系使用bmap
-
-                data: myData
+        },
+        roam: true,
+        itemStyle: {
+            normal: {
+                areaColor: '#323c48',
+                borderColor: '#111'
+            },
+            emphasis: {
+                areaColor: '#2a333d'
             }
-        ]
-}
+        }
+    },
+    series : [
+        {
+            name: '景点',
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            data: convertData(city),
+            symbolSize: function (val) {
+                return val[2] / 10;
+            },
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#ddb926'
+                }
+            }
+        },
+        {
+            name: 'City',
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            data: convertData(city),
+            //标志的大小
+            symbolSize: function (val) {
+                return val[2] / 15;
+            },
+            showEffectOn: 'render',
+            rippleEffect: {
+                brushType: 'stroke'
+            },
+            hoverAnimation: true,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#f4e925',
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            zlevel: 2
+        }
+    ]
+};
 
-bmapChart.setOption(option);
+Echartsmap.setOption(option);
 </script>
         
       </div>
