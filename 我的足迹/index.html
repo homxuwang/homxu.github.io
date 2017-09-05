@@ -111,7 +111,7 @@
 <meta property="og:site_name" content="Homxu">
 <meta property="og:description" content="var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 200},      {name">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-05T02:40:00.850Z">
+<meta property="og:updated_time" content="2017-09-05T07:04:25.436Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的足迹">
 <meta name="twitter:description" content="var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 200},      {name">
@@ -345,7 +345,36 @@
      {name: '西双版纳', value: 200},
      {name: '大理', value: 200},
 
+     {name:'茶卡盐湖',value:100},
+     {name:'青海湖',value:100},
+     {name:'东方明珠',value:100},
+     {name:'五四广场',value:100},
+     {name:'中科院西双版纳热带植物园',value:100},
+     {name:'刘公岛',value:100},
+     {name:'塔尔寺',value:100},
+     {name:'大雁塔',value:100},
+     {name:'骊山',value:100},
+     {name:'鼓浪屿',value:100},
+     {name:'玉龙雪山',value:100},
+     {name:'丽江古城',value:100},
+     {name:'西湖',value:100},
+     {name:'蒙山',value:100},
+     {name:'拉市海',value:100},
+     {name:'束河古镇',value:100},
+     {name:'大理古城',value:100},
+     {name:'崇圣寺三塔公园',value:100},
+     {name:'洱海',value:100},
+     {name:'夫子庙',value:100},
+     {name:'天安门广场',value:100},
+     {name:'故宫',value:100},
+     {name:'黄鹤楼',value:100},
+     {name:'十渡风景区',value:100},
+     {name:'大明湖',value:100},
+     {name:'趵突泉',value:100},
+     {name:'八大关',value:100},
+     {name:'金沙滩',value:100},
 ];
+
 var geoCoordMap = {
     '青岛':[120.33,36.07],
     '泉州':[118.58,24.93],
@@ -369,10 +398,39 @@ var geoCoordMap = {
     '西双版纳':[100.79816,22.014105], 
     '大理':[100.237692,25.597645], 
 
+    '茶卡盐湖':[99.101084,36.749992],
+    '青海湖':[100.187498,36.866642],
+    '东方明珠':[121.506377,31.245105],
+    '五四广场':[120.391729,36.067581],
+    '中科院西双版纳热带植物园':[101.271188,21.923736],
+    '刘公岛':[122.197255,37.511219],
+    '塔尔寺':[101.576298,36.494462],
+    '大雁塔':[108.970492,34.229142],
+    '骊山':[109.221086,34.364599],
+    '鼓浪屿':[118.071909,24.456348],
+    '玉龙雪山':[100.270093,27.034013],
+    '丽江古城':[100.241894,26.876504],
+    '西湖':[120.156352,30.251713],
+    '蒙山':[117.98073,35.565713],
+    '拉市海':[100.145784,26.896587],
+    '束河古镇':[100.212875,26.926349],
+    '大理古城':[100.172117,25.698864],
+    '崇圣寺三塔公园':[100.155887,25.711798],
+    '洱海':[100.272671,25.649292],
+    '夫子庙':[118.795264,32.027003],
+    '天安门广场':[116.404168,39.909677],
+    '故宫':[116.402122,39.929583],
+    '黄鹤楼':[114.309052,30.550239],
+    '十渡风景区':[115.606468,39.644162],
+    '大明湖':[117.029409,36.680642],
+    '趵突泉':[117.022388,36.667454],
+    '八大关':[120.357644,36.059717],
+    '金沙滩':[120.25126,35.964533],
 };
 
+
 var convertData = function (city) {
-    var res = [];
+    var res = [],res2=[];
     for (var i = 0; i < city.length; i++) {
         var geoCoord = geoCoordMap[city[i].name];
         if (geoCoord) {
@@ -382,7 +440,29 @@ var convertData = function (city) {
             });
         }
     }
-    return res;
+
+    res2=res.filter( function (a) {
+        return a.value[2]==200;
+    });
+    return res2;
+};
+
+var convertDataSpot = function (city) {
+    var res = [],res2=[];
+    for (var i = 0; i < city.length; i++) {
+        var geoCoord = geoCoordMap[city[i].name];
+        if (geoCoord) {
+            res.push({
+                name: city[i].name,
+                value: geoCoord.concat(city[i].value)
+            });
+        }
+    }
+
+      res2=res.filter( function (a) {
+        return a.value[2]==100;
+    });
+    return res2;
 };
 
 option = {
@@ -402,7 +482,7 @@ option = {
         orient: 'vertical',
         y: 'bottom',
         x:'right',
-        data:['景点'],
+        data:['景点','City'],
         // 设置文本颜色
         textStyle: {
             color: '#fff'
@@ -415,7 +495,7 @@ option = {
                 show: false
             }
         },
-        roam: true,
+        roam: true,//缩放拖动打开
         itemStyle: {
             normal: {
                 areaColor: '#323c48',
@@ -429,12 +509,11 @@ option = {
     series : [
         {
             name: '景点',
-            type: 'scatter',
+            type: 'scatter',//散点（气泡）图
             coordinateSystem: 'geo',
-            data: convertData(city),
-            symbolSize: function (val) {
-                return val[2] / 10;
-            },
+            data: convertDataSpot(city),
+            symbolSize: 10,
+
             label: {
                 normal: {
                     formatter: '{b}',
@@ -447,20 +526,18 @@ option = {
             },
             itemStyle: {
                 normal: {
-                    color: '#ddb926'
+                    color: '#00FFFF'
                 }
             }
         },
         {
             name: 'City',
-            type: 'effectScatter',
+            type: 'effectScatter',//涟漪特效动画的散点（气泡）图
             coordinateSystem: 'geo',
-            data: convertData(city),
+            data:  convertData(city),
             //标志的大小
-            symbolSize: function (val) {
-                return val[2] / 15;
-            },
-            showEffectOn: 'render',
+            symbolSize: 15,
+             showEffectOn: 'render',
             rippleEffect: {
                 brushType: 'stroke'
             },
@@ -469,6 +546,9 @@ option = {
                 normal: {
                     formatter: '{b}',
                     position: 'right',
+                    show: true
+                },
+                emphasis: {
                     show: true
                 }
             },
@@ -481,6 +561,7 @@ option = {
             },
             zlevel: 2
         }
+
     ]
 };
 
