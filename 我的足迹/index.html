@@ -104,17 +104,17 @@
 
 
 
-<meta name="description" content="您的位置:        var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 2">
+<meta name="description" content="var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 200},      {name">
 <meta property="og:type" content="website">
 <meta property="og:title" content="我的足迹">
 <meta property="og:url" content="http://homxu.com/我的足迹/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="您的位置:        var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 2">
+<meta property="og:description" content="var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 200},      {name">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-06T13:09:44.897Z">
+<meta property="og:updated_time" content="2017-09-06T13:13:02.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="我的足迹">
-<meta name="twitter:description" content="您的位置:        var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 2">
+<meta name="twitter:description" content="var Echartsmap=echarts.init(document.getElementById(&quot;Map&quot;));     var city = [      {name: &apos;青岛&apos;, value: 200},      {name: &apos;泉州&apos;, value: 200},      {name: &apos;上海&apos;, value: 200},      {name">
 
 
 
@@ -318,8 +318,8 @@
 <script src="/js/src/bmap.min.js"></script>
 
 
-<p><div id="Map" style="height: 500px"><br>        <!--这以后是地图--><br></div></p>
-<p><div id="data"><br>      <h4>您的位置:</h4><br></div>    </p>
+<div id="Map" style="height: 500px"><br>        <!--这以后是地图--><br></div>
+
 <script type="text/javascript">
   var Echartsmap=echarts.init(document.getElementById("Map"));
     var city = [
@@ -567,13 +567,7 @@ option = {
 
 Echartsmap.setOption(option);
 </script>
-<script type="text/javascript">
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(function(position){
-      $("#data").html("你的位置:<br> latitude:"+position.coords.latitude+"<br>longitude:"+position.coords.longitude);
-    });
-  }
-</script>
+
         
       </div>
       
@@ -615,17 +609,8 @@ Echartsmap.setOption(option);
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/star.png"
@@ -711,22 +696,6 @@ Echartsmap.setOption(option);
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">您的位置:</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
