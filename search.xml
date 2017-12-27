@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[WEBAPI解决跨域问题]]></title>
     <url>%2F2017%2F12%2F27%2FWEBAPI%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加1234![System.Web.Http.cors.dll][1]![System.Web.cors.dll][2]# Web.Config配置 12345 ```*```代表允许所有 ![Web.config][3]# WebApiConfig配置 //解决API跨域访问的问题var allowOrigins = ConfigurationManager.AppSettings[“cors_allowOrigins”];var allowHeaders = ConfigurationManager.AppSettings[“cors_allowHeaders”];var allowMethods = ConfigurationManager.AppSettings[“cors_allowMethods”];var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) { SupportsCredentials = true };config.EnableCors(globalCors); ``` 完。]]></content>
+    <content type="text"><![CDATA[在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 和 ```System.Web.Http.cors.dll```。123456![System.Web.Http.cors.dll][1]![System.Web.cors.dll][2]# Web.Config配置 1234567 ```*``` 代表允许所有 ![Web.config][3]# WebApiConfig配置 //解决API跨域访问的问题var allowOrigins = ConfigurationManager.AppSettings[“cors_allowOrigins”];var allowHeaders = ConfigurationManager.AppSettings[“cors_allowHeaders”];var allowMethods = ConfigurationManager.AppSettings[“cors_allowMethods”];var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) { SupportsCredentials = true };config.EnableCors(globalCors); ``` 完。]]></content>
       <tags>
         <tag>WEBAPI</tag>
       </tags>
