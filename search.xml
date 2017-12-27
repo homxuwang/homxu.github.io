@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[WEBAPI解决跨域问题]]></title>
+    <url>%2F2017%2F12%2F27%2FWEBAPI%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加1234![System.Web.Http.cors.dll][1]![System.Web.cors.dll][2]# Web.Config配置 12345 ```*```代表允许所有 ![Web.config][3]# WebApiConfig配置 //解决API跨域访问的问题var allowOrigins = ConfigurationManager.AppSettings[“cors_allowOrigins”];var allowHeaders = ConfigurationManager.AppSettings[“cors_allowHeaders”];var allowMethods = ConfigurationManager.AppSettings[“cors_allowMethods”];var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) { SupportsCredentials = true };config.EnableCors(globalCors); ``` 完。]]></content>
+      <tags>
+        <tag>WEBAPI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[mysql学习小记系列（持续更新）]]></title>
     <url>%2F2017%2F12%2F11%2Fmysql%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0%E7%B3%BB%E5%88%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89%2F</url>
     <content type="text"><![CDATA[以下环境为mysql+Navicat Premium 在mysql中使用UUID效果如下： SQL语句有函数生成guid:UUID()，一般使用CHAR(36)或者BINARY(36)来存储uuid 例如sql语句为：INSERT INTO USERS(UUID) VALUES (UUID()) mysql中写入时间 DATETIME 类型可用于需要同时包含日期和时间信息的值。MySQL 以 ‘YYYY-MM-DD HH:MM:SS’ 格式检索与显示 DATETIME 类型。支持的范围是 ‘1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’。 DATE 类型可用于需要一个日期值而不需要时间部分时。MySQL 以 ‘YYYY-MM-DD’ 格式检索与显示DATE 值。支持的范围是 ‘1000-01-01’ 到 ‘9999-12-31’。 TIMESTAMP 列类型提供了一种类型，通过它你可以以当前操作的日期和时间自动地标记 Insert或Update 操作。如果一张表中有多个 TIMESTAMP 列，只有第一个被自动更新。 目前我在项目中使用了DATETIME和DATE类型。 例如DATETIME类型的数据在数据库中如下： 在写入数据库中的时候，用了NOW()函数，让数据库自动写入当前系统时间，对应SQL语句如下：INSERT INTO USER(CREATEDATE) VALUES(now()) DATE类型的数据在数据库中如下： 这条数据在应用中是通过前台传字符串，后台转为DATE格式的。例如前台传来的字符串为”2017-11-21”，用STR_TO_DATE(&#39;2017-11-21&#39;,&#39;%Y-%m-%d&#39;)来转换，当然也可以转换DATETIME格式的日期。 目前项目中还没有使用TIMESTAMP数据类型。暂时不予详细展开。]]></content>
