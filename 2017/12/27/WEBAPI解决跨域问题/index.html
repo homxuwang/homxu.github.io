@@ -104,20 +104,23 @@
 
 
 
-<meta name="description" content="在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 和 ```System.Web.Http.cors.dll```。123456![System.Web.Http.cors.dll][1]![System.Web.cors.dll][2]# Web.Config配置                  1234567    ```*``` 代表允许所有">
+<meta name="description" content="在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 System.Web.cors.dll 和 System.Web.Http.cors.dll。   Web.Conefig配置12345&amp;lt;appSettings&amp;gt;   &amp;lt;add key=&amp;quot;cors_allowOrigins&amp;quot; value=&amp;quot;*&amp;quot;/">
 <meta name="keywords" content="WEBAPI">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WEBAPI解决跨域问题">
 <meta property="og:url" content="http://homxu.com/2017/12/27/WEBAPI解决跨域问题/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 和 ```System.Web.Http.cors.dll```。123456![System.Web.Http.cors.dll][1]![System.Web.cors.dll][2]# Web.Config配置                  1234567    ```*``` 代表允许所有">
+<meta property="og:description" content="在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 System.Web.cors.dll 和 System.Web.Http.cors.dll。   Web.Conefig配置12345&amp;lt;appSettings&amp;gt;   &amp;lt;add key=&amp;quot;cors_allowOrigins&amp;quot; value=&amp;quot;*&amp;quot;/">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2017/12/27/WEBAPI解决跨域问题/System.Web.Http.Cors.jpg">
+<meta property="og:image" content="http://homxu.com/2017/12/27/WEBAPI解决跨域问题/System.Web.cors.jpg">
+<meta property="og:image" content="http://homxu.com/2017/12/27/WEBAPI解决跨域问题/Web.config.jpg">
 <meta property="og:image" content="http://homxu.com/2017/12/27/WEBAPI解决跨域问题/WebApiConfig%E4%B8%AD%E9%85%8D%E7%BD%AE.jpg">
-<meta property="og:updated_time" content="2017-12-27T02:53:09.985Z">
+<meta property="og:updated_time" content="2017-12-27T02:55:22.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WEBAPI解决跨域问题">
-<meta name="twitter:description" content="在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 和 ```System.Web.Http.cors.dll```。123456![System.Web.Http.cors.dll][1]![System.Web.cors.dll][2]# Web.Config配置                  1234567    ```*``` 代表允许所有">
-<meta name="twitter:image" content="http://homxu.com/2017/12/27/WEBAPI解决跨域问题/WebApiConfig%E4%B8%AD%E9%85%8D%E7%BD%AE.jpg">
+<meta name="twitter:description" content="在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 System.Web.cors.dll 和 System.Web.Http.cors.dll。   Web.Conefig配置12345&amp;lt;appSettings&amp;gt;   &amp;lt;add key=&amp;quot;cors_allowOrigins&amp;quot; value=&amp;quot;*&amp;quot;/">
+<meta name="twitter:image" content="http://homxu.com/2017/12/27/WEBAPI解决跨域问题/System.Web.Http.Cors.jpg">
 
 
 
@@ -378,10 +381,13 @@
 
       
         <p>在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。</p>
-<h1 id="添加引用"><a href="#添加引用" class="headerlink" title="添加引用"></a>添加引用</h1><p>首先添加 <figure class="highlight plain"><figcaption><span>和 ```System.Web.Http.cors.dll```。</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">![System.Web.Http.cors.dll][1]</div><div class="line"></div><div class="line">![System.Web.cors.dll][2]</div><div class="line"></div><div class="line"># Web.Config配置</div></pre></td></tr></table></figure></p>
-<p> <appsettings><br>    <add key="cors_allowOrigins" value="*"><br>    <add key="cors_allowHeaders" value="*"><br>    <add key="cors_allowMethods" value="*"><br>  </add></add></add></appsettings><br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  ```*``` 代表允许所有</div><div class="line">  </div><div class="line">  </div><div class="line">![Web.config][3]</div><div class="line"></div><div class="line"># WebApiConfig配置</div></pre></td></tr></table></figure></p>
-<p>  //解决API跨域访问的问题<br>var allowOrigins = ConfigurationManager.AppSettings[“cors_allowOrigins”];<br>var allowHeaders = ConfigurationManager.AppSettings[“cors_allowHeaders”];<br>var allowMethods = ConfigurationManager.AppSettings[“cors_allowMethods”];<br>var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) { SupportsCredentials = true };<br>config.EnableCors(globalCors);</p>
-<p>```</p>
+<h1 id="添加引用"><a href="#添加引用" class="headerlink" title="添加引用"></a>添加引用</h1><p>首先添加 <code>System.Web.cors.dll</code> 和 <code>System.Web.Http.cors.dll</code>。</p>
+<p><img src="/2017/12/27/WEBAPI解决跨域问题/System.Web.Http.Cors.jpg" alt="System.Web.Http.cors.dll" title="System.Web.Http.Cors"></p>
+<p><img src="/2017/12/27/WEBAPI解决跨域问题/System.Web.cors.jpg" alt="System.Web.cors.dll" title="System.Web.Cors"></p>
+<h1 id="Web-Conefig配置"><a href="#Web-Conefig配置" class="headerlink" title="Web.Conefig配置"></a>Web.Conefig配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;appSettings&gt;</div><div class="line">   &lt;add key=&quot;cors_allowOrigins&quot; value=&quot;*&quot;/&gt;</div><div class="line">   &lt;add key=&quot;cors_allowHeaders&quot; value=&quot;*&quot;/&gt;</div><div class="line">   &lt;add key=&quot;cors_allowMethods&quot; value=&quot;*&quot;/&gt;</div><div class="line"> &lt;/appSettings&gt;</div></pre></td></tr></table></figure>
+<p>  <code>*</code> 代表允许所有</p>
+<p><img src="/2017/12/27/WEBAPI解决跨域问题/Web.config.jpg" alt="Web.config" title="Web.config"></p>
+<h1 id="WebApiConfig配置"><a href="#WebApiConfig配置" class="headerlink" title="WebApiConfig配置"></a>WebApiConfig配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  //解决API跨域访问的问题</div><div class="line">var allowOrigins = ConfigurationManager.AppSettings[&quot;cors_allowOrigins&quot;];</div><div class="line">var allowHeaders = ConfigurationManager.AppSettings[&quot;cors_allowHeaders&quot;];</div><div class="line">var allowMethods = ConfigurationManager.AppSettings[&quot;cors_allowMethods&quot;];</div><div class="line">var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) &#123; SupportsCredentials = true &#125;;</div><div class="line">config.EnableCors(globalCors);</div></pre></td></tr></table></figure>
 <p><img src="/2017/12/27/WEBAPI解决跨域问题/WebApiConfig%E4%B8%AD%E9%85%8D%E7%BD%AE.jpg" alt="WebApiConfig" title="WebApiConfig中配置"></p>
 <p>完。</p>
 
@@ -580,7 +586,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#添加引用"><span class="nav-number">1.</span> <span class="nav-text">添加引用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#添加引用"><span class="nav-number">1.</span> <span class="nav-text">添加引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web-Conefig配置"><span class="nav-number">2.</span> <span class="nav-text">Web.Conefig配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebApiConfig配置"><span class="nav-number">3.</span> <span class="nav-text">WebApiConfig配置</span></a></li></ol></div>
             
 
           </div>
