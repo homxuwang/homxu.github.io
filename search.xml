@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[webpack的简单应用(entry 和 output)]]></title>
+    <url>%2F2018%2F01%2F31%2Fwebpack%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8-entry-%E5%92%8C-output%2F</url>
+    <content type="text"><![CDATA[在简单配置了webpack后，指定了它的入口和出口，即entry和output。但是在业务逻辑比较复杂的时候，页面不只有一页。比如 有一个index.html页和signup.html注册页。index.html引用了base.js 和 home.js,signup.html引用了base.js和signup.js。 即项目中如果有很多页，而且会有相同的依赖（比如这里的base.js），也有不同的js控制着各个不同的页面的业务逻辑。 这时候在webpack.config.js中将entry设置为一个入口对象，同时出口也变了，他会根据不同的入口文件生成不同的出口文件：12345678910module.exports=&#123; entry:&#123; home:&apos;./js/home.js&apos;, signup:&apos;./js/signup.js &apos;&#125;,output:&#123; filename:&apos;[name].bundle.js&apos;, //这里的文件名是动态生成的，name即是entry中的键名 path:__dirname+&apos;/dist&apos; //目录生成，如果没有dist文件夹则会自动创建这个文件夹，将上面的文件生成保存在这个目录 &#125;&#125; 在相应目录下创建这三个js文件： 这时候在index.html和signup.html中就不再需要引用base.js了。 这时只需要引用webpack打包后的动态生成的[name].bundle.js文件即可： 假设base.js是整个网站的依赖（因为刚开始两个html也都引用了这个文件），这里面一般会存放一些重要的配置项。 下面举例： 非ES6写法 open 决定网站是否是开放注册的，这时候通过module.exports将open传出去。home.js 和 signup.js 接收open参数值： 执行npm run pack命令 这时候可以看到生成成功。 这时候打开index.html。可以看到 页面生成成功，点击注册连接时，跳转到指定页面并且显示指定内容 如果把open 的值改为false。即open = false重新执行npm run pack命令，刷新可以看到： 并且点击到index.html时，没有显示任何内容，这和我们在home.js中设置的结果是一样的。 一般类似于这种多页的应用，一般都会给每一页一个打包的地址，具体每一页的入口文件用到了哪些依赖我们不用管，只需交给webpack去处理即可。另外这种写法是node的写法，可以用ES6的写法更简单快捷。 ES6写法 这里open可以直接解构出来，在下面可以直接用，即不需要再var open=base.open，它直接知道from导进来的东西是个对象，而且把对象中的一个键（这里是open）变成了一个变量，可以直接在后面使用。这时候重新npm run pack生成，结果是一样的。 webpack中的多入口和多出口。完 根据表严肃http://biaoyansu.com/i/6593023230131的视频总结。]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[webpack的安装配置]]></title>
     <url>%2F2018%2F01%2F31%2Fwebpack%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%2F</url>
     <content type="text"><![CDATA[1.确保安装node和webpacknode: webpack: 如果没有版本号则代表没有安装 首先你需要安装一个全局的webpack 执行 pm install webpack -g 这样你才可以正确的使用webpack这个命令 推荐在当前项目里面也安装一个webpack, 这样就不用担心更换了电脑或者其他人使用时因为版本的不同而会导致错误 这样就可以在你的webpack.config.js里面方便的引用webpack 2.在当前项目安装webpack在当前目录生成package.json文件输入npm init -y 生成package.json文件 生成了package.json,npm就会认为整个目录是一个模块了。 在当前目录安装webpack执行npm install webpack --save-dev 这里的WARN只是警告可以不用管 可以看到安装成功 这时候package.json里面就有了webpack 和它的版本号： 3.使用这时候可以直接用此目录下的webpack指令来执行操作： node_modules/.bin/webpack a.js bundle.js 但是这个路径很长，输入并不方便，可以在package.json里面进行配置，然后直接调用命令即可。 pack和后面的字符串就是键值对的形式，pack即自定义的命令的名称，值就是上面的很长的命令。保存后执行npm run pack 可以看到这种方法仍然是生成成功的。 4.webpack.config.js这个js文件顾名思义可以配置webpack。基本写法是123module.exports=&#123;&#125; 在这里面可以传一些东西出去。比如 :1234567module.exports=&#123;entry: &apos;../a&apos; //入口文件output: &#123; filename:&apos;bundle.js&apos;, //文件名 path:__dirname //__dirname是node里面一个特殊的变量，它会被node解释为当前的文件所在的目录&#125; //输出文件&#125; 那么有了这两个设置参数，可以将package.json文件里面的&quot;pack&quot;:&quot;node_modules/.bin/webpack a.js bundle.js&quot;中的a.js 和 bundel.js 保存后,直接 npm run pack，执行结果也是成功的： 完。 根据表严肃的视频总结，地址：http://biaoyansu.com/i/6593023230131]]></content>
