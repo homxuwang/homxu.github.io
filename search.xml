@@ -5,7 +5,8 @@
     <entry>
       <title><![CDATA[git学习]]></title>
       <url>/2018/02/01/git%E5%AD%A6%E4%B9%A0/</url>
-      <content type="html"><![CDATA[<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><img src="/2018/02/01/git学习/1.jpg" alt="安装成功"></p>
+      <content type="html"><![CDATA[<p><img src="/2018/02/01/git学习/git.jpg" alt="git"><br><a id="more"></a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><img src="/2018/02/01/git学习/1.jpg" alt="安装成功"></p>
 <p>在命令行输入<code>git --version</code>如果显示版本信息则说明安装成功，否则要去官网进行安装。</p>
 <h2 id="Visual-Studio-Code-启用bash"><a href="#Visual-Studio-Code-启用bash" class="headerlink" title="Visual Studio Code 启用bash"></a>Visual Studio Code 启用bash</h2><p>VS Code默认的终端窗口是只带cmd功能的，如果要在终端中唤出bash要进行配置：</p>
 <p>首先找到本机的<code>bash.exe</code>的目录,比如我的目录如图：</p>
