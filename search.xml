@@ -1,608 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-    
-    <entry>
-      <title><![CDATA[git学习]]></title>
-      <url>/2018/02/01/git%E5%AD%A6%E4%B9%A0/</url>
-      <content type="html"><![CDATA[<p><img src="/2018/02/01/git学习/git.jpg" alt="git"><br><a id="more"></a></p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><img src="/2018/02/01/git学习/1.jpg" alt="安装成功"></p>
-<p>在命令行输入<code>git --version</code>如果显示版本信息则说明安装成功，否则要去官网进行安装。</p>
-<h2 id="Visual-Studio-Code-启用bash"><a href="#Visual-Studio-Code-启用bash" class="headerlink" title="Visual Studio Code 启用bash"></a>Visual Studio Code 启用bash</h2><p>VS Code默认的终端窗口是只带cmd功能的，如果要在终端中唤出bash要进行配置：</p>
-<p>首先找到本机的<code>bash.exe</code>的目录,比如我的目录如图：</p>
-<p><img src="/2018/02/01/git学习/3.jpg" alt="bash.exe"></p>
-<p>然后在<code>VS Code</code>-&gt;<code>首选项</code>-&gt;<code>设置</code>-&gt;搜索<code>terminal.integrated.shell.windows</code>-&gt;将<code>&quot;terminal.integrated.shell.windows&quot;: &quot;C:\\Program Files\\Git\\bin\\bash.exe&quot;</code>放入设置中-&gt;保存</p>
-<p><img src="/2018/02/01/git学习/4.jpg" alt="配置"></p>
-<p>重新启动VS Code可以看到自动进入bash命令窗口</p>
-<p><img src="/2018/02/01/git学习/5.jpg" alt="bash终端命令窗口"></p>
-<p>如果想切换到cmd命令窗口直接输入<code>cmd</code>回车即可,同理在cmd下切换到<code>bash</code>只需输入<code>bash</code>回车：</p>
-<p><img src="/2018/02/01/git学习/6.jpg" alt="bash切换到cmd"></p>
-<h1 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h1><p>仓库本质上就是一个文件夹，一个目录，一个项目。</p>
-<h2 id="创建方法1"><a href="#创建方法1" class="headerlink" title="创建方法1"></a>创建方法1</h2><p>比如打开一个目录，输入<code>git init</code></p>
-<p><img src="/2018/02/01/git学习/2.jpg" alt="init"></p>
-<p>可以看到初始化了一个空的git仓库。</p>
-<p>然后切换到bash 输入<code>ls -la</code>酒吧当前目录下的所有的子目录列出来:</p>
-<p><img src="/2018/02/01/git学习/7.jpg" alt="列出目录"></p>
-<p>可以看到<code>.git</code>被列出来，它是个隐藏文件夹。</p>
-<p>这时候 test1 就已经是一个仓库了。</p>
-<h2 id="创建方法2"><a href="#创建方法2" class="headerlink" title="创建方法2"></a>创建方法2</h2><p>或者进入到根目录,如输入<code>cd ..</code>,然后输入 <code>git init test2</code>。</p>
-<p><img src="/2018/02/01/git学习/8.jpg" alt="init test2"></p>
-<p><img src="/2018/02/01/git学习/9.jpg" alt="test2"></p>
-<p>可以看到一样成功创建了tes2文件夹和其中的.git隐藏文件夹，和上面的创建方法是一样的。</p>
-<h2 id="从远程clone一个仓库"><a href="#从远程clone一个仓库" class="headerlink" title="从远程clone一个仓库"></a>从远程clone一个仓库</h2><p>比如在github上找到一个文件仓库，比如找到vue的github仓库<br><img src="/2018/02/01/git学习/10.jpg" alt="vue地址"></p>
-<p>输入<code>git clone https://github.com/vuejs/vue.git</code>回车</p>
-<p><img src="/2018/02/01/git学习/11.jpg" alt="clone"></p>
-<p><img src="/2018/02/01/git学习/12.jpg" alt="vue克隆成功"><br>可以看到正在clone。可以看到目录下多了<code>vue</code>文件夹，这就是从远程克隆的仓库。或者在输入clone命令时后面加个自己想要命名的文件夹名，这样下载下来就是以这个文件夹命名的，比如<code>git clone https://github.com/vuejs/vue.git test3</code>.可以自己试一下（可以换一个小一点的仓库克隆，这个我clone了好久 Orz）</p>
-<h1 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h1><h2 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h2><p><code>git status</code>是指查看仓库状态。</p>
-<p><img src="/2018/02/01/git学习/13.jpg" alt="git status"></p>
-<p>因为test1是一个空文件夹 所以显示上图的状态。</p>
-<h2 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h2><p><code>commit</code>的意思是提交，可以把它看做历史节点,而上图的提示是No commits yet，这就是说没有一条历史记录，因为我们创建了后还没有进行提交。 </p>
-<h2 id="Untracked-files"><a href="#Untracked-files" class="headerlink" title="Untracked files"></a>Untracked files</h2><p>如果我们新建一个文件，如test.txt,这时候执行<code>git status</code>命令，可以看到:<br><img src="/2018/02/01/git学习/14.jpg" alt="git status"><br><code>Untracked files</code>是指未跟踪的文件，也就是更改了文件还没有进行创建节点，即丢失后无法找回。</p>
-<p>在VS Code的git工具中也可以看到修改的状态为未跟踪的。<br><img src="/2018/02/01/git学习/15.jpg" alt=""></p>
-<h2 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h2><p><code>git add .</code>将所有的修改添加到暂存区</p>
-<p>如上，我们创建了一个test.txt,输入<code>git add .</code>回车,然后输入<code>git status</code>查看现在的状态。</p>
-<p><img src="/2018/02/01/git学习/17.jpg" alt=""></p>
-<p>可以看到vs code中的git工具也发生了变化：</p>
-<p><img src="/2018/02/01/git学习/16.jpg" alt=""></p>
-<h2 id="git-commit-m-“描述”"><a href="#git-commit-m-“描述”" class="headerlink" title="git commit -m “描述”"></a>git commit -m “描述”</h2><p><code>git commit -m &quot;描述&quot;</code>提交版本</p>
-<p><img src="/2018/02/01/git学习/18.jpg" alt="提交更改"></p>
-<p>输入命令后，可以看到 nothing to commit,working tree clean，也就是所有的更改都保存了。</p>
-<h2 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h2><p><code>git log</code>查看版本记录<br>可以查看所有的更改记录</p>
-<p><img src="/2018/02/01/git学习/19.jpg" alt="更改记录"></p>
-<p>这里只有一条更改记录。</p>
-<p>而上面的commit 后面的一串字符就是上次更改的记录码。</p>
-<p>我们这时候更改一下test.txt，保存。</p>
-<p><img src="/2018/02/01/git学习/20.jpg" alt="更改"></p>
-<p>这时候文件内容发生了变化，在进行一次提交操作</p>
-<p><img src="/2018/02/01/git学习/21.jpg" alt="提交"></p>
-<p>这时候再看记录，有两条记录：</p>
-<p><img src="/2018/02/01/git学习/22.jpg" alt="记录"></p>
-<h2 id="git-checkout-xxx"><a href="#git-checkout-xxx" class="headerlink" title="git checkout xxx"></a>git checkout xxx</h2><p><code>git checkout xxx</code>——穿越到指定的历史节点，也就是前面commit的节点。可以看描述选择退回到哪个节点，这也反映了写描述的重要性。</p>
-<p>xxx是指上面<code>git log</code>查看时commit后面的码，复制前七位就可以定位，当然也可以复制多于七位。</p>
-<p><img src="/2018/02/01/git学习/23.jpg" alt="查看历史版本"></p>
-<p>可以看到文件变了：<br><img src="/2018/02/01/git学习/24.jpg" alt="文件变了"></p>
-<h1 id="三种状态"><a href="#三种状态" class="headerlink" title="三种状态"></a>三种状态</h1><p>上面时回到了第一个节点，现在回到第二个节点。<br>输入<code>git checkout 1529b8c93ec</code>，确认退回成功。</p>
-<p>从上面可以看出，执行任何一个commit操作都要执行三步：<br><code>modified(已修改)</code> -&gt; <code>staged(已暂存)</code> -&gt; <code>committed</code></p>
-<p>staged 状态可以看到即将提交的文件，比如如果想只提交<code>test.txt</code>文件，可以在<code>git add .</code>的时候输入<code>git add test.txt</code>。<br>另外 <code>git log</code>只能查看提交的内容和描述，并不能看其中哪些内容修改了，使用<code>git log -p</code>可以查看具体修改了哪些内容.</p>
-<p><img src="/2018/02/01/git学习/25.jpg" alt="具体内容"></p>
-<p>可以看到+后面的就是修改的内容。</p>
-<p>commit的内容是添加到staged暂存区中的内容，比如在<code>git add .</code>后又进行了修改但是没有再次执行<code>git add .</code>命令，那么commit的时候就是暂存区中的内容而不包括最新修改的内容。</p>
-<h1 id="标签tag"><a href="#标签tag" class="headerlink" title="标签tag"></a>标签tag</h1><p>如果在项目中要很经常的进行修改，那么会产生很多个节点，但是会有一些节点非常重要，那么可以给这些关键的重要节点打一个标签。比如完成了代码的v1.0版本，后面又有了v2.0版本，中间的v1.1,v1.x并不重要，那么这些大版本就是重要节点。</p>
-<p>输入<code>git add . &amp;&amp; git commit -m &quot;v2.0&quot;</code>可以执行两条命令。</p>
-<p><code>git log --oneline</code>可以查看简写的版本</p>
-<p><img src="/2018/02/01/git学习/26.jpg" alt="oneline"></p>
-<p>那么可以给v2.0打一个标签,用法：<code>git tag -a 标签名 -m &quot;备注&quot;</code>，用它进行附注标签。这种方法是给最近的一个节点加标签。</p>
-<p>这时候输入<code>git tag</code>可以看到tag的信息。</p>
-<p><img src="/2018/02/01/git学习/27.jpg" alt="tag"></p>
-<p>如果想给某个节点加标签，则可以用<code>git tag -a 标签名 -m &quot;备注&quot; 版本码</code></p>
-<p><img src="/2018/02/01/git学习/28.jpg" alt="tag"><br>可以看到添加成功了（上面的v2.0加错了加了两个标签 orz）</p>
-<p><code>git show 标签名</code>：查看某个标签的详细信息</p>
-<p><code>git checkout 标签名</code>可以直接回溯到标签所在的提交，这样比使用版本码要方便</p>
-<p>在回溯到历史版本后 输入<code>git log --oneline --all</code>可以查看所有的节点</p>
-<h1 id="分支-branch"><a href="#分支-branch" class="headerlink" title="分支 branch"></a>分支 branch</h1><p>指在时间的维度上可以有多线，及时间一样的基础上进行其他的修改。主线为master时可以给分支命名其他的名。</p>
-<p>比如这里在test2目录下新建b.txt。<br>输入两行内容后分别commit。</p>
-<p><img src="/2018/02/01/git学习/30.jpg" alt=""></p>
-<p>现在的mater分支上有两个版本：</p>
-<p><img src="/2018/02/01/git学习/29.jpg" alt=""></p>
-<p>给文本添加第三行并且执行<code>git add .</code> 和<code>git commit -m &quot;&quot;</code>操作。</p>
-<p>然后<code>git branch 分支名</code>创建分支,然后<code>git checkout 分支名</code>切换到分支。<br><img src="/2018/02/01/git学习/31.jpg" alt="3"></p>
-<p><img src="/2018/02/01/git学习/32.jpg" alt="切换到分支"></p>
-<p>可以看到切换到了分支notmaster。</p>
-<p>这时候修改b.txt的内容，<br>然后执行<code>git add .</code> 和<code>git commit -m &quot;&quot;</code>操作</p>
-<p><img src="/2018/02/01/git学习/33.jpg" alt="修改内容"></p>
-<p><img src="/2018/02/01/git学习/34.jpg" alt="commit"></p>
-<p>然后<code>git log --oneline</code>可以看到多了的记录是在分支上的</p>
-<p><img src="/2018/02/01/git学习/35.jpg" alt="commit"></p>
-<p>这时候在分支后面的提交就是在分支上了。</p>
-<p>现在如果切换到mater-&gt;<code>git checkout master</code>，可以看到内容变回刚才的节点(即刚才创建分支的时候的节点)：</p>
-<p><img src="/2018/02/01/git学习/36.jpg" alt="master"></p>
-<p>这时候再添加一行然后执行commit操作,可以看到:<br><img src="/2018/02/01/git学习/37.jpg" alt="git log"></p>
-<p>或者<code>git log --all --graph</code>图示全部历史记录。</p>
-<p><code>git checkout -b 分支</code>，创建并切换到分支。</p>
-<p>分支的功能在做项目的时候可以经常用到，比如在1-&gt;2的时候没有bug，但是在2-&gt;3的时候发现有bug,这时候可以在2创建一个分支，专门在分支进行修改bug,且在master可以继续进行开发。在最后的第二版开发完成后，把分支的修改bug版本进行合并，这样就修改了bug也推进了项目。</p>
-<h1 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h1><p>上面讲到,在修改bug的同时可以进行项目的推进，但是在完成了bug的修改和第二版的项目后，要将两者合并，实现“完全体”,这就需要合并分支。</p>
-<p>现在回到branch，</p>
-<p><img src="/2018/02/01/git学习/38.jpg" alt="branch"></p>
-<p>可以看到HEAD所在的就是当前的节点和分支。在分支上修改了代码进行commit</p>
-<p><img src="/2018/02/01/git学习/39.jpg" alt="修改"></p>
-<p>现在虽然创建了分支并且更新了内容，但是还没有和master主分支合并</p>
-<h2 id="git-merge-分支名合并分支"><a href="#git-merge-分支名合并分支" class="headerlink" title="git merge 分支名合并分支"></a><code>git merge 分支名</code>合并分支</h2><p><img src="/2018/02/01/git学习/40.jpg" alt="合并"></p>
-<p><img src="/2018/02/01/git学习/41.jpg" alt="合并-2"></p>
-<p>可以看到 CONFLICT提示内容有冲突，在第三行开始冲突，所以git不知道该如何处理。</p>
-<p>这时候可以在文件中进行更改，然后再进行commit操作。然后这样就合并了两个分支。</p>
-<p>这时候可以输入命令查看，通过图解可以看到很清楚的解释了刚才的合并操作。</p>
-<p><img src="/2018/02/01/git学习/42.jpg" alt="查看"></p>
-<h1 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h1><p>我们可以将本机上的仓库内容存放在远程仓库（如github 和 码云或者远程的另一台电脑或服务器）</p>
-<p>即<code>local</code> -&gt; <code>server</code> -&gt; <code>loacl</code></p>
-<p>比如在commit了一个版本后，推送到服务器上时，我们用github。</p>
-<p>在github新建一个仓库，<code>Create a new repository</code>,创建成功后，可以看到仓库的地址。<br>那么接下来在本地指定远程仓库的地址。</p>
-<h2 id="git-remote-add-远程名称-远程地址-添加远程仓库"><a href="#git-remote-add-远程名称-远程地址-添加远程仓库" class="headerlink" title="git remote add 远程名称 远程地址 添加远程仓库"></a><code>git remote add 远程名称 远程地址</code> 添加远程仓库</h2><p>然后<code>git remote</code>可以列出所有远程仓库</p>
-<p><code>git remote -v</code>可以列出所有远程仓库和详细信息</p>
-<p><img src="/2018/02/01/git学习/43.jpg" alt="远程仓库"></p>
-<p>顾名思义,fetch是下载地址,push是上传地址。</p>
-<h2 id="git-push-u-远程名-分支名上传代码"><a href="#git-push-u-远程名-分支名上传代码" class="headerlink" title="git push -u 远程名 分支名上传代码"></a><code>git push -u 远程名 分支名</code>上传代码</h2><p>加-u的意思是在服务器端设置，如果有人想下载代码的时候，应该往那个分支上合并,所以要记得加-u.</p>
-<p><img src="/2018/02/01/git学习/44.jpg" alt="push成功"></p>
-<p>刷新仓库可以看到推送成功：</p>
-<p><img src="/2018/02/01/git学习/45.jpg" alt="push成功"></p>
-<p>在进行了修改添加后，可以同样执行这个操作。</p>
-<h2 id="git-clone-仓库地址从远端克隆仓库到本地"><a href="#git-clone-仓库地址从远端克隆仓库到本地" class="headerlink" title="git clone 仓库地址从远端克隆仓库到本地"></a><code>git clone 仓库地址</code>从远端克隆仓库到本地</h2><p>进入到刚克隆的仓库，输入<code>git log</code>同样可以看到操作的历史</p>
-<p>这时候从远端克隆下的分支默认名为origin，他只是一个分支的名字，和master等没有本质区别</p>
-<p>这时候在这个目录下进行了修改再推送时，要在<code>git push -u 远程名 master</code>这里将远程名改为现在的远程名，可以用<code>git remote</code>查看远程名，如果还用github进行推送会报错。</p>
-<p><img src="/2018/02/01/git学习/46.jpg" alt="远程名为origin"></p>
-<p><img src="/2018/02/01/git学习/47.jpg" alt="如果用github会报错"></p>
-<p><img src="/2018/02/01/git学习/48.jpg" alt="改为origin成功"></p>
-<h1 id="多人远程合作"><a href="#多人远程合作" class="headerlink" title="多人远程合作"></a>多人远程合作</h1><h2 id="git-pull获取远程更新"><a href="#git-pull获取远程更新" class="headerlink" title="git pull获取远程更新"></a><code>git pull</code>获取远程更新</h2><p>现在模拟A和B是两台电脑，他们都从仓库clone了项目，A进行了修改，通过<code>git push -u origin master</code>更新了项目，B使用<code>git pull</code>。即通过<code>git push -u origin master</code>和<code>git pull</code>进行推送和拉取。但是如果A先推送了一个版本，B不知情的情况下对某一行也进行了修改,这时候如果提交，会显示冲突的错误，这时就知道要先<code>git pull</code>一份服务器端的代码，这时候在本地可以看出来冲突的对比，<code>=</code>等号的上面和下面会显示冲突的内容对比,然后对冲突的代码进行整合后，在进行push操作。</p>
-<p>其实<code>git pull</code> 相当于<code>git fetch &amp;&amp; git merge</code>即下载和合并,放在已提交的阶段</p>
-<p>详情参见表严肃的速查表 <a href="http://biaoyansu.com/27.cheatsheet" target="_blank" rel="external">http://biaoyansu.com/27.cheatsheet</a></p>
-<p>完 </p>
-<p>根据 表严肃的课程整理书写，地址<a href="http://biaoyansu.com/i/6593023230131" target="_blank" rel="external">http://biaoyansu.com/i/6593023230131</a> </p>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> git </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[webpack的简单应用(entry 和 output)]]></title>
-      <url>/2018/01/31/webpack%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8-entry-%E5%92%8C-output/</url>
-      <content type="html"><![CDATA[<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/webpack-view.jpg" alt="webpack"><br><a id="more"></a></p>
-<p>在简单配置了webpack后，指定了它的入口和出口，即entry和output。但是在业务逻辑比较复杂的时候，页面不只有一页。<br>比如 有一个index.html页和signup.html注册页。<br><code>index.html</code>引用了<code>base.js</code> 和 <code>home.js</code>,<code>signup.html</code>引用了<code>base.js</code>和<code>signup.js</code>。<br><img src="/2018/01/31/webpack的简单应用-entry-和-output/1.png" alt="index.html"></p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/2.png" alt="signup.html"><br>即项目中如果有很多页，而且会有相同的依赖（比如这里的base.js），也有不同的js控制着各个不同的页面的业务逻辑。</p>
-<p>这时候在<code>webpack.config.js</code>中将entry设置为一个入口对象，同时出口也变了，他会根据不同的入口文件生成不同的出口文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">module.exports=&#123;</div><div class="line">	entry:&#123;</div><div class="line">		home:&apos;./js/home.js&apos;,</div><div class="line">		signup:&apos;./js/signup.js &apos;</div><div class="line">&#125;,</div><div class="line">output:&#123;</div><div class="line">        filename:&apos;[name].bundle.js&apos;, //这里的文件名是动态生成的，name即是entry中的键名</div><div class="line">        path:__dirname+&apos;/dist&apos;       //目录生成，如果没有dist文件夹则会自动创建这个文件夹，将上面的文件生成保存在这个目录</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在相应目录下创建这三个js文件：</p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/3.png" alt="js"></p>
-<p>这时候在index.html和signup.html中就不再需要引用base.js了。</p>
-<p>这时只需要引用webpack打包后的动态生成的[name].bundle.js文件即可：</p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/4.png" alt="index.html"></p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/5.png" alt="signup.html"></p>
-<p>假设base.js是整个网站的依赖（因为刚开始两个html也都引用了这个文件），这里面一般会存放一些重要的配置项。</p>
-<p>下面举例：</p>
-<h3 id="非ES6写法"><a href="#非ES6写法" class="headerlink" title="非ES6写法"></a>非ES6写法</h3><p><img src="/2018/01/31/webpack的简单应用-entry-和-output/6.png" alt="base.js"></p>
-<p>open 决定网站是否是开放注册的，这时候通过module.exports将open传出去。<br>home.js 和 signup.js 接收open参数值：</p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/7.png" alt="home.js"></p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/8.png" alt="signup.js"></p>
-<p>执行<code>npm run pack</code>命令</p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/9.png" alt="result"></p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/10.png" alt="result"></p>
-<p>这时候可以看到生成成功。</p>
-<p>这时候打开index.html。可以看到<br><img src="/2018/01/31/webpack的简单应用-entry-和-output/11.png" alt="result"></p>
-<p>页面生成成功，点击注册连接时，跳转到指定页面并且显示指定内容</p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/12.png" alt="result"></p>
-<p>如果把open 的值改为false。即open = false重新执行<code>npm run pack</code>命令，刷新可以看到：</p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/13.png" alt="result"></p>
-<p> 并且点击到index.html时，没有显示任何内容，这和我们在home.js中设置的结果是一样的。</p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/14.png" alt="result"></p>
-<p>一般类似于这种多页的应用，一般都会给每一页一个打包的地址，具体每一页的入口文件用到了哪些依赖我们不用管，只需交给webpack去处理即可。另外这种写法是node的写法，可以用ES6的写法更简单快捷。</p>
-<h3 id="ES6写法"><a href="#ES6写法" class="headerlink" title="ES6写法"></a>ES6写法</h3><p><img src="/2018/01/31/webpack的简单应用-entry-和-output/15.png" alt="base.js"></p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/16.png" alt="signup.js"></p>
-<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/17.png" alt="home.js"><br>这里open可以直接解构出来，在下面可以直接用，即不需要再var open=base.open，它直接知道from导进来的东西是个对象，而且把对象中的一个键（这里是open）变成了一个变量，可以直接在后面使用。<br>这时候重新npm run pack生成，结果是一样的。</p>
-<p>webpack中的多入口和多出口。完</p>
-<p>根据表严肃<a href="http://biaoyansu.com/i/6593023230131" target="_blank" rel="external">http://biaoyansu.com/i/6593023230131</a>  的视频总结。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> webpack </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[webpack的安装配置]]></title>
-      <url>/2018/01/31/webpack%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</url>
-      <content type="html"><![CDATA[<p><img src="/2018/01/31/webpack的安装配置/webpack-view.jpg" alt="webpack"><br><a id="more"></a></p>
-<h1 id="1-确保安装node和webpack"><a href="#1-确保安装node和webpack" class="headerlink" title="1.确保安装node和webpack"></a>1.确保安装node和webpack</h1><p>node:</p>
-<p><img src="/2018/01/31/webpack的安装配置/node.png" alt="node"></p>
-<p>webpack:</p>
-<p><img src="/2018/01/31/webpack的安装配置/webpack.png" alt="webpack"></p>
-<p>如果没有版本号则代表没有安装</p>
-<p>首先你需要安装一个全局的webpack</p>
-<p>执行 <code>pm install webpack -g</code></p>
-<p>这样你才可以正确的使用webpack这个命令</p>
-<p>推荐在当前项目里面也安装一个webpack, 这样就不用担心更换了电脑或者其他人使用时因为版本的不同而会导致错误</p>
-<p>这样就可以在你的webpack.config.js里面方便的引用webpack</p>
-<h1 id="2-在当前项目安装webpack"><a href="#2-在当前项目安装webpack" class="headerlink" title="2.在当前项目安装webpack"></a>2.在当前项目安装webpack</h1><h2 id="在当前目录生成package-json文件"><a href="#在当前目录生成package-json文件" class="headerlink" title="在当前目录生成package.json文件"></a>在当前目录生成package.json文件</h2><p>输入<code>npm init -y</code> 生成<code>package.json</code>文件</p>
-<p><img src="/2018/01/31/webpack的安装配置/package.json.png" alt="package.json"><br><img src="/2018/01/31/webpack的安装配置/package.json-1.png" alt="package.json-m"></p>
-<p>生成了package.json,npm就会认为整个目录是一个模块了。</p>
-<h2 id="在当前目录安装webpack"><a href="#在当前目录安装webpack" class="headerlink" title="在当前目录安装webpack"></a>在当前目录安装webpack</h2><p>执行<code>npm install webpack --save-dev</code></p>
-<p><img src="/2018/01/31/webpack的安装配置/install-webpack.png" alt="安装webpack"></p>
-<p><img src="/2018/01/31/webpack的安装配置/success-webpack.png" alt="安装成功提示"></p>
-<p>这里的WARN只是警告可以不用管</p>
-<p>可以看到安装成功</p>
-<p><img src="/2018/01/31/webpack的安装配置/success-webpack-1.png" alt="目录webpack"></p>
-<p>这时候package.json里面就有了webpack 和它的版本号：</p>
-<p><img src="/2018/01/31/webpack的安装配置/package.json-2.png" alt="package.json-v"></p>
-<h1 id="3-使用"><a href="#3-使用" class="headerlink" title="3.使用"></a>3.使用</h1><p>这时候可以直接用此目录下的webpack指令来执行操作：</p>
-<p><code>node_modules/.bin/webpack a.js bundle.js</code></p>
-<p>但是这个路径很长，输入并不方便，可以在package.json里面进行配置，然后直接调用命令即可。</p>
-<p><img src="/2018/01/31/webpack的安装配置/package.json-3.png" alt="package.json配置"></p>
-<p>pack和后面的字符串就是键值对的形式，pack即自定义的命令的名称，值就是上面的很长的命令。保存后执行<code>npm run pack</code></p>
-<p><img src="/2018/01/31/webpack的安装配置/package.json-result.png" alt="执行命令"></p>
-<p><img src="/2018/01/31/webpack的安装配置/package.json-result-1.png" alt="执行命令结果"></p>
-<p>可以看到这种方法仍然是生成成功的。</p>
-<h1 id="4-webpack-config-js"><a href="#4-webpack-config-js" class="headerlink" title="4.webpack.config.js"></a>4.webpack.config.js</h1><p>这个js文件顾名思义可以配置webpack。<br>基本写法是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">module.exports=&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在这里面可以传一些东西出去。<br>比如 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">module.exports=&#123;</div><div class="line">entry: &apos;../a&apos; //入口文件</div><div class="line">output: &#123;</div><div class="line">	filename:&apos;bundle.js&apos;,  //文件名</div><div class="line">	path:__dirname //__dirname是node里面一个特殊的变量，它会被node解释为当前的文件所在的目录</div><div class="line">&#125;    //输出文件</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><img src="/2018/01/31/webpack的安装配置/webpack.config.js.png" alt="配置文件"></p>
-<p>那么有了这两个设置参数，可以将package.json文件里面的<br><code>&quot;pack&quot;:&quot;node_modules/.bin/webpack a.js bundle.js&quot;</code>中的<code>a.js</code> 和 <code>bundel.js</code></p>
-<p><img src="/2018/01/31/webpack的安装配置/package.json-4.jpg" alt="配置文件"></p>
-<p>保存后,直接 <code>npm run pack</code>，执行结果也是成功的：</p>
-<p><img src="/2018/01/31/webpack的安装配置/package.json-result-2.png" alt="配置文件结果"></p>
-<p><img src="/2018/01/31/webpack的安装配置/package.json-result-3.png" alt="配置文件结果"></p>
-<p>完。</p>
-<p>根据表严肃的视频总结，地址：<a href="http://biaoyansu.com/i/6593023230131" target="_blank" rel="external">http://biaoyansu.com/i/6593023230131</a></p>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> webpack </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[WEBAPI解决跨域问题]]></title>
-      <url>/2017/12/27/WEBAPI%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
-      <content type="html"><![CDATA[<p><img src="/2017/12/27/WEBAPI解决跨域问题/WebApiConfig%E4%B8%AD%E9%85%8D%E7%BD%AE.jpg" alt="WebApiConfig" title="WebApiConfig中配置"><br>在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。<br><a id="more"></a><br>在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。</p>
-<h1 id="添加引用"><a href="#添加引用" class="headerlink" title="添加引用"></a>添加引用</h1><p>首先添加 <code>System.Web.cors.dll</code> 和 <code>System.Web.Http.cors.dll</code>。</p>
-<p><img src="/2017/12/27/WEBAPI解决跨域问题/System.Web.Http.Cors.jpg" alt="System.Web.Http.cors.dll" title="System.Web.Http.Cors"></p>
-<p><img src="/2017/12/27/WEBAPI解决跨域问题/System.Web.cors.jpg" alt="System.Web.cors.dll" title="System.Web.Cors"></p>
-<h1 id="Web-Conefig配置"><a href="#Web-Conefig配置" class="headerlink" title="Web.Conefig配置"></a>Web.Conefig配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;appSettings&gt;</div><div class="line">   &lt;add key=&quot;cors_allowOrigins&quot; value=&quot;*&quot;/&gt;</div><div class="line">   &lt;add key=&quot;cors_allowHeaders&quot; value=&quot;*&quot;/&gt;</div><div class="line">   &lt;add key=&quot;cors_allowMethods&quot; value=&quot;*&quot;/&gt;</div><div class="line"> &lt;/appSettings&gt;</div></pre></td></tr></table></figure>
-<p>  <code>*</code> 代表允许所有</p>
-<p><img src="/2017/12/27/WEBAPI解决跨域问题/Web.config.jpg" alt="Web.config" title="Web.config"></p>
-<h1 id="WebApiConfig配置"><a href="#WebApiConfig配置" class="headerlink" title="WebApiConfig配置"></a>WebApiConfig配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  //解决API跨域访问的问题</div><div class="line">var allowOrigins = ConfigurationManager.AppSettings[&quot;cors_allowOrigins&quot;];</div><div class="line">var allowHeaders = ConfigurationManager.AppSettings[&quot;cors_allowHeaders&quot;];</div><div class="line">var allowMethods = ConfigurationManager.AppSettings[&quot;cors_allowMethods&quot;];</div><div class="line">var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) &#123; SupportsCredentials = true &#125;;</div><div class="line">config.EnableCors(globalCors);</div></pre></td></tr></table></figure>
-<p><img src="/2017/12/27/WEBAPI解决跨域问题/WebApiConfig%E4%B8%AD%E9%85%8D%E7%BD%AE.jpg" alt="WebApiConfig" title="WebApiConfig中配置"></p>
-<p>完。</p>
-]]></content>
-      
-        
-        <tags>
-            
-            <tag> WEBAPI </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[mysql学习小记系列（持续更新）]]></title>
-      <url>/2017/12/11/mysql%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0%E7%B3%BB%E5%88%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
-      <content type="html"><![CDATA[<p> 以下环境为mysql+Navicat Premium</p>
-<h1 id="在mysql中使用UUID"><a href="#在mysql中使用UUID" class="headerlink" title="在mysql中使用UUID"></a>在mysql中使用UUID</h1><p>效果如下：</p>
-<p><img src="/2017/12/11/mysql学习小记系列（持续更新）/UUID.jpg" alt="UUID"></p>
-<p>SQL语句有函数生成guid:UUID()，一般使用CHAR(36)或者BINARY(36)来存储uuid</p>
-<p>例如sql语句为：INSERT INTO USERS(UUID) VALUES (UUID())</p>
-<h1 id="mysql中写入时间"><a href="#mysql中写入时间" class="headerlink" title="mysql中写入时间"></a>mysql中写入时间</h1><p>  DATETIME 类型可用于需要同时包含日期和时间信息的值。MySQL 以 ‘YYYY-MM-DD HH:MM:SS’ 格式检索与显示 DATETIME 类型。支持的范围是 ‘1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’。</p>
-<p>  DATE 类型可用于需要一个日期值而不需要时间部分时。MySQL 以 ‘YYYY-MM-DD’ 格式检索与显示DATE 值。支持的范围是 ‘1000-01-01’ 到 ‘9999-12-31’。</p>
-<p>  TIMESTAMP 列类型提供了一种类型，通过它你可以以当前操作的日期和时间自动地标记 Insert或Update 操作。如果一张表中有多个 TIMESTAMP 列，只有第一个被自动更新。</p>
-<p>  目前我在项目中使用了DATETIME和DATE类型。</p>
-<p>  例如DATETIME类型的数据在数据库中如下：</p>
-<p>  <img src="/2017/12/11/mysql学习小记系列（持续更新）/DATETIME.jpg" alt="DATETIME"></p>
-<p>  在写入数据库中的时候，用了NOW()函数，让数据库自动写入当前系统时间，对应SQL语句如下：INSERT INTO USER(CREATEDATE)  VALUES(now())</p>
-<p>  DATE类型的数据在数据库中如下：</p>
-<p>   <img src="/2017/12/11/mysql学习小记系列（持续更新）/DATE.jpg" alt="DATE"></p>
-<p>  这条数据在应用中是通过前台传字符串，后台转为DATE格式的。例如前台传来的字符串为”2017-11-21”，用<code>STR_TO_DATE(&#39;2017-11-21&#39;,&#39;%Y-%m-%d&#39;)</code>来转换，当然也可以转换DATETIME格式的日期。</p>
-<p>  目前项目中还没有使用TIMESTAMP数据类型。暂时不予详细展开。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 学习 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> mysql </tag>
-            
-            <tag> 数据库 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[C#操作mysql数据库执行SqlDataReader.Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法]]></title>
-      <url>/2017/12/03/C-%E6%93%8D%E4%BD%9Cmysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%89%A7%E8%A1%8CSqlDataReader-Read%E5%90%8E%E4%BD%BF%E7%94%A8%E5%8F%A6%E4%B8%80%E4%B8%AASQLCommand%E6%89%A7%E8%A1%8CInsert%E6%93%8D%E4%BD%9C%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
-      <content type="html"><![CDATA[<p>今天在写WEBAPI的时候，进行用户注册的编写，发生了如下错误：</p>
-<p><img src="/2017/12/03/C-操作mysql数据库执行SqlDataReader-Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法/错误1.jpg" alt="错误"></p>
-<p>   后来确定了发生错误的原因是执行SqlDataReader.Read之后，如果还想用另一个SqlCommand执行Insert或者Update操作的话，会得到一个错误提示：There is already an open DataReader associated with this Command which must be closed first.，然后一般就会产生数据保存失败的异常。</p>
-<p>   注册用户的代码如下：<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"> public string RegisterUser(string uname,string upwd,string email,string mobile,string confirmpassword)</div><div class="line">        &#123;</div><div class="line">            MySqlConnection mysql = getMySqlConnection();</div><div class="line">            mysql.Open();</div><div class="line">            try</div><div class="line">            &#123;</div><div class="line">                if (uname == null || email == null || upwd == null || mobile == null || confirmpassword == null)</div><div class="line">                &#123;</div><div class="line">                    return &quot;请完善信息&quot;;</div><div class="line">                &#125;</div><div class="line">                if (!String.Equals(upwd, confirmpassword))</div><div class="line">                &#123;</div><div class="line">                    return &quot;两次输入密码不一致！&quot;;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                string CheckUser = &quot;Select * from name where username=&apos;&quot; + uname + &quot;&apos;&quot;;</div><div class="line">                MySqlCommand mySqlCommand = getSqlCommand(CheckUser, mysql);</div><div class="line">                MySqlDataReader reader = mySqlCommand.ExecuteReader();</div><div class="line">                if (reader.Read())</div><div class="line">                &#123;</div><div class="line">                    return &quot;用户已存在&quot;;</div><div class="line">                &#125;</div><div class="line">                else </div><div class="line">                &#123;              </div><div class="line">                string AddUser = @&quot;Insert into name(username,pword,email,mobile)Values(&apos;&quot; + uname + &quot;&apos;,&apos;&quot; + upwd + &quot;&apos;,&apos;&quot; + email + &quot;&apos;,&apos;&quot; + mobile + &quot;&apos;)&quot;;</div><div class="line">                MySqlCommand insertuser = new MySqlCommand(AddUser, mysql);</div><div class="line">                if (insertuser.ExecuteNonQuery() &gt; 0)</div><div class="line">                &#123; return &quot;注册成功！&quot;; &#125;</div><div class="line">                else &#123; return &quot;注册失败！&quot;; &#125;</div><div class="line">                &#125;</div><div class="line">     &#125;</div><div class="line">            catch</div><div class="line">            &#123;</div><div class="line">               return &quot;错误&quot;;</div><div class="line">            &#125;</div><div class="line">            finally</div><div class="line">            &#123;</div><div class="line">               mysql.Close();</div><div class="line">            &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>   在知道了报错原因后，在网上搜了两种方法：<br>   1.不要用共用一个connection,用完就释放，所以在下面先把connection关闭再连接，测试可行。<br>   <img src="/2017/12/03/C-操作mysql数据库执行SqlDataReader-Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法/成功1.jpg" alt="成功1"></p>
-<p>   2.关闭当前的reader方法。然后继续执行代码 ，可行。<br>    <img src="/2017/12/03/C-操作mysql数据库执行SqlDataReader-Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法/成功2.png" alt="成功2"></p>
-<p>暂时是用这两种方法解决了问题，以后有更好的方法再补充。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 项目 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> C# </tag>
-            
-            <tag> 遇到的坑 </tag>
-            
-            <tag> mysql </tag>
-            
-            <tag> 数据库 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[C#将多个文件打包成.zip文件]]></title>
-      <url>/2017/10/30/C-%E5%B0%86%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E6%89%93%E5%8C%85%E6%88%90-zip%E6%96%87%E4%BB%B6/</url>
-      <content type="html"><![CDATA[<p>近几天的项目作业过程中，遇到了需要一键下载多个文件的需求，于是想采取在后台将需要一键下载的文件打包成压缩文件，然后进行下载的方式。</p>
-<p>在.net4.5中可以使用调用winrar命令的方式来直接进行生成压缩文件。但是在这里我采用引入ICSharpCode.SharpZipLib.dll的方法，（官方下载地址：<a href="http://www.icsharpcode.net/opensource/sharpziplib/" target="_blank" rel="external">http://www.icsharpcode.net/opensource/sharpziplib/</a>  ） 用这个程序集将windows文件进行打包。</p>
-<p>首先，将打包的方法封装在一个类中，然后在一般应用程序.ashx文件中调用相应的方法。因为在项目中只需要进行打包文件，所以这里只写一下压缩文件的代码，解压缩的方法应该类似，我没有试过。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line">using System;</div><div class="line">using System.Linq;</div><div class="line">using System.IO;</div><div class="line">using ICSharpCode.SharpZipLib.Zip;</div><div class="line">using ICSharpCode.SharpZipLib.Checksums;</div><div class="line">using System.Diagnostics;</div><div class="line">using Microsoft.Win32;</div><div class="line"></div><div class="line">namespace ZipCommon</div><div class="line">&#123;</div><div class="line">    public class ZipHelper</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        #region 压缩多个文件</div><div class="line"></div><div class="line">        /// &lt;summary&gt;  </div><div class="line">        ///  压缩多个文件  </div><div class="line">        /// &lt;/summary&gt;  </div><div class="line">        /// &lt;param name=&quot;files&quot;&gt;文件名&lt;/param&gt;  </div><div class="line">        /// &lt;param name=&quot;ZipedFileName&quot;&gt;压缩包文件名&lt;/param&gt;  </div><div class="line">        /// &lt;param name=&quot;Password&quot;&gt;解压码&lt;/param&gt;  </div><div class="line">        /// &lt;returns&gt;&lt;/returns&gt;  </div><div class="line">        public static void Zip1(string[] files, string ZipedFileName, string Password)</div><div class="line">        &#123;</div><div class="line">            files = files.Where(f =&gt; File.Exists(f)).ToArray();</div><div class="line">            if (files.Length == 0) throw new FileNotFoundException(&quot;未找到指定打包的文件&quot;);</div><div class="line">            ZipOutputStream s = new ZipOutputStream(File.Create(ZipedFileName));</div><div class="line">            s.SetLevel(6);</div><div class="line">            if (!string.IsNullOrEmpty(Password.Trim())) s.Password = Password.Trim();</div><div class="line">            ZipFileDictory(files, s);</div><div class="line">            s.Finish();</div><div class="line">            s.Close();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        /// &lt;summary&gt;  </div><div class="line">        ///  压缩多个文件  </div><div class="line">        /// &lt;/summary&gt;  </div><div class="line">        /// &lt;param name=&quot;files&quot;&gt;文件名&lt;/param&gt;  </div><div class="line">        /// &lt;param name=&quot;ZipedFileName&quot;&gt;压缩包文件名&lt;/param&gt;  </div><div class="line">        /// &lt;returns&gt;&lt;/returns&gt;  </div><div class="line">        public static void Zip(string[] files, string ZipedFileName)</div><div class="line">        &#123;</div><div class="line">            Zip1(files, ZipedFileName, string.Empty);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public static void ZipFileDictory(string[] files, ZipOutputStream s)</div><div class="line">        &#123;</div><div class="line">            ZipEntry entry = null;</div><div class="line">            FileStream fs = null;</div><div class="line">            Crc32 crc = new Crc32();</div><div class="line">            try</div><div class="line">            &#123;</div><div class="line">                //创建当前文件夹  </div><div class="line">                entry = new ZipEntry(&quot;/&quot;);  //加上 “/” 才会当成是文件夹创建  </div><div class="line"></div><div class="line">                s.PutNextEntry(entry);</div><div class="line">                s.Flush();</div><div class="line">                foreach (string file in files)</div><div class="line">                &#123;</div><div class="line">                    //打开压缩文件  </div><div class="line">                    fs = File.OpenRead(file);</div><div class="line">                    byte[] buffer = new byte[fs.Length];</div><div class="line">                    fs.Read(buffer, 0, buffer.Length);</div><div class="line">                    entry = new ZipEntry(&quot;/&quot; + Path.GetFileName(file));</div><div class="line">                    entry.DateTime = DateTime.Now;</div><div class="line">                    entry.Size = fs.Length;</div><div class="line">                    fs.Close();</div><div class="line">                    crc.Reset();</div><div class="line">                    crc.Update(buffer);</div><div class="line">                    entry.Crc = crc.Value;</div><div class="line">                    s.PutNextEntry(entry);</div><div class="line">                    s.Write(buffer, 0, buffer.Length);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            finally</div><div class="line">            &#123;</div><div class="line">                if (fs != null)</div><div class="line">                &#123;</div><div class="line">                    fs.Close();</div><div class="line">                    fs = null;</div><div class="line">                &#125;</div><div class="line">                if (entry != null)</div><div class="line">                    entry = null;</div><div class="line">                GC.Collect();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        #endregion 压缩多个文件</div><div class="line">		</div><div class="line">		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>直接调用 ZipHelper.Zip（filepaths，zipedfilepath）即可。<br>注意： zipedfilepath的父级目录必须存在，否则在创建.zip文件时会报目录不存在的错误。这个坑我也遇到过。<br><img src="/2017/10/30/C-将多个文件打包成-zip文件/error1.jpg" alt="error"><br>还有一点要注意的是，这里的方法都是静态的，所以在调用方法时不需要进行实例化，只需写成 ZipHelper.Zip（filepaths，zipedfilepath） 这种形式就可以了。</p>
-<p>在.ashx文件中的代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> #region 打包</div><div class="line">public void CreateZip(string WORD002,string WORD003,string WORD004,string WORD005,string WORD006,string WORD007)</div><div class="line">    &#123;</div><div class="line">        string[] files = new string[6];</div><div class="line">        files[0] = WORD002;</div><div class="line">        files[1] = WORD003;</div><div class="line">        files[2] = WORD004;</div><div class="line">        files[3] = WORD005;</div><div class="line">        files[4] = WORD006;</div><div class="line">        files[5] = WORD007;</div><div class="line">        ZIPFILEPATH = 绝对路径+文件名+ &quot;.zip&quot;;//这里要加上拓展名</div><div class="line">        ZipHelper.Zip(files,ZIPFILEPATH);</div><div class="line">    &#125;</div><div class="line">    #endregion</div></pre></td></tr></table></figure>
-<p>这里的WORD002-007是要打包的文件的路径，将其存放在数组中，ZIPFILEPATH则是在服务器端要存放的打包文件的路径，需要绝对路径。</p>
-<p>看一下需要打包的六个文件：<br><img src="/2017/10/30/C-将多个文件打包成-zip文件/文件.png" alt="文件"></p>
-<p>生成ZIP文件成功：<br><img src="/2017/10/30/C-将多个文件打包成-zip文件/zip.jpg" alt="ZIP"></p>
-<p>解压后的文件也可以正常打开：</p>
-<p><img src="/2017/10/30/C-将多个文件打包成-zip文件/zip列表.jpg" alt="zip列表"></p>
-<p>在实施过程中还遇到了一个坑，刚开始我的服务器上并没有安装winrar，而是安装了360压缩，导致在生成ZIP文件后，出现压缩错误的提示，在装了winrar并使用后，发现时正常的。</p>
-<p>这时候只要把服务器上的zip路径传到前台，就可以下载了、</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 项目 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> C# </tag>
-            
-            <tag> 遇到的坑 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[通过C#向Word文档的表格中的任一行增加新行]]></title>
-      <url>/2017/10/25/%E9%80%9A%E8%BF%87C-%E5%90%91Word%E6%96%87%E6%A1%A3%E7%9A%84%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E4%BB%BB%E4%B8%80%E8%A1%8C%E5%A2%9E%E5%8A%A0%E6%96%B0%E8%A1%8C/</url>
-      <content type="html"><![CDATA[<p>今天在项目的作业过程中，遇到了需要通过C#操作Word模板向其中的表格添加内容。作业过程中发现，往往有的时候模板的表格的行数会多于或者少于所要写入的数据数量。而模板行数少于数据条数时会发生写入错误的提示，导致文档生成失败。因此需要根据需要写入的数据的数量来确定所需要的表格的数量，也就是能够动态的改变模板的表格的行数。在网上搜了一好久，发现很多给现有的表格添加一行的方法都是只能够在表格的最后一列添加，而项目需求的模板中需要动态改变添加行数的表格不在最前面也不在最后面，恰恰在中间。因此，搜了好久加上实验，终于找到了方法。在此做个记录。<br>    首先，说一下用C# .NET操作Word文档需要的引用：</p>
-<p><img src="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/DLL.jpg" alt="DLL"></p>
-<p>在新定义的类中添加头文件和书写代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div></pre></td><td class="code"><pre><div class="line">using System;</div><div class="line">using Microsoft.Office.Interop.Word;</div><div class="line"></div><div class="line">namespace WordDemo  //这边需要换成自己的命名空间名</div><div class="line">&#123;</div><div class="line">    public class Report</div><div class="line">    &#123;</div><div class="line">        private _Application wordApp = null;</div><div class="line">        private _Document wordDoc = null;</div><div class="line">        public _Application Application</div><div class="line">        &#123;</div><div class="line">            get</div><div class="line">            &#123;</div><div class="line">                return wordApp;</div><div class="line">            &#125;</div><div class="line">            set</div><div class="line">            &#123;</div><div class="line">                wordApp = value;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        public _Document Document</div><div class="line">        &#123;</div><div class="line">            get</div><div class="line">            &#123;</div><div class="line">                return wordDoc;</div><div class="line">            &#125;</div><div class="line">            set</div><div class="line">            &#123;</div><div class="line">                wordDoc = value;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //通过模板创建新文档</div><div class="line">        public void CreateNewDocument(string filePath)</div><div class="line">        &#123;</div><div class="line">            killWinWordProcess(); </div><div class="line">             wordApp = new ApplicationClass();</div><div class="line">            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;</div><div class="line">            wordApp.Visible = false;</div><div class="line">            object missing = System.Reflection.Missing.Value;</div><div class="line">            object templateName = filePath;</div><div class="line">            wordDoc = wordApp.Documents.Open(ref templateName, ref missing,</div><div class="line">                ref missing, ref missing, ref missing, ref missing, ref missing,</div><div class="line">                ref missing, ref missing, ref missing, ref missing, ref missing,</div><div class="line">                ref missing, ref missing, ref missing, ref missing);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //保存新文件</div><div class="line">        public void SaveDocument(string filePath)</div><div class="line">        &#123;</div><div class="line">            object fileName = filePath;</div><div class="line">            object format = WdSaveFormat.wdFormatDocument;//保存格式</div><div class="line">            object miss = System.Reflection.Missing.Value;</div><div class="line">            wordDoc.SaveAs(ref fileName, ref format, ref miss,</div><div class="line">                ref miss, ref miss, ref miss, ref miss,</div><div class="line">                ref miss, ref miss, ref miss, ref miss,</div><div class="line">                ref miss, ref miss, ref miss, ref miss,</div><div class="line">                ref miss);</div><div class="line">            //关闭wordDoc，wordApp对象</div><div class="line">            object SaveChanges = WdSaveOptions.wdSaveChanges;</div><div class="line">            object OriginalFormat = WdOriginalFormat.wdOriginalDocumentFormat;</div><div class="line">            object RouteDocument = false;</div><div class="line">            wordDoc.Close(ref SaveChanges, ref OriginalFormat, ref RouteDocument);</div><div class="line">            wordApp.Quit(ref SaveChanges, ref OriginalFormat, ref RouteDocument);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //给表格插入rows行,n为表格的序号</div><div class="line">        public void AddRow(int n, int rows)</div><div class="line">        &#123;</div><div class="line">            object miss = System.Reflection.Missing.Value;</div><div class="line">            Microsoft.Office.Interop.Word.Table table = wordDoc.Content.Tables[n];</div><div class="line">            for (int i = 0; i &lt; rows; i++)</div><div class="line">            &#123;</div><div class="line">                table.Rows.Add(ref miss);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">		</div><div class="line">	//在第n个表格的rows行前面插入新行,</div><div class="line">         public void AddNewRow(int n,int rows)</div><div class="line">        &#123;</div><div class="line">            object beforeRow = wordDoc.Tables[n].Rows[rows];</div><div class="line">            Microsoft.Office.Interop.Word.Table table = wordDoc.Content.Tables[n];</div><div class="line"></div><div class="line">            table.Rows.Add(beforeRow);</div><div class="line">          </div><div class="line">        &#125;</div><div class="line">    // 杀掉winword.exe进程</div><div class="line">        public void killWinWordProcess()</div><div class="line">        &#123;</div><div class="line">            System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcessesByName(&quot;WINWORD&quot;);</div><div class="line">            foreach (System.Diagnostics.Process process in processes)</div><div class="line">            &#123;</div><div class="line">                bool b = process.MainWindowTitle == &quot;&quot;;</div><div class="line">                if (process.MainWindowTitle == &quot;&quot;)</div><div class="line">                &#123;</div><div class="line">                    process.Kill();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在上面的 <code>AddNewRow(int n,int rows)</code>函数中，可以根据实际情况设置要插入第几个表格和在第几行前面插入新行。<br>调用代码：<br><img src="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/code.jpg" alt="code"></p>
-<p>插入前：<br><img src="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/before.jpg" alt="before"></p>
-<p>插入后：<br><img src="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/after.jpg" alt="after"></p>
-<p>可以根据实际情况设置循环的数量 ，实现动态添加。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 项目 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> C# </tag>
-            
-            <tag> 遇到的坑 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[将图片以二进制流方式存入数据库和从数据库读取(c#,oracle 11g)]]></title>
-      <url>/2017/10/23/%E5%B0%86%E5%9B%BE%E7%89%87%E4%BB%A5%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B5%81%E6%96%B9%E5%BC%8F%E5%AD%98%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93-c-oracle-11g/</url>
-      <content type="html"><![CDATA[<script src="/js/src/jquery-3.2.1.min.js"></script>
-
-
-<p>在项目的实施过程中，遇到了一个问题：项目需求网页前端读取一张照片，以二进制的方式存入oracle数据库中。这个问题，用了一天的时间解决，所以写此文记录一下。<br>      在网上搜了一圈，并加以实施发现实施过程如下：前台获取图片路径，用FileReader读取后，可以转换为base64编码的字符串，然后通过ajax 将base64格式编码字符串传到后台，C#读取前台传来的字符串，将其转化存到byte[] 数组中，最后写入数据库。</p>
-<p>下面为实现代码和预览结果：<br>前端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;form-group&quot;&gt;</div><div class="line">      &lt;label class=&quot;col-sm-2 control-label&quot; for=&quot;PHOTO&quot;&gt;个人照片&lt;/label&gt;</div><div class="line">      &lt;div id=&quot;imgForm&quot; class=&quot;col-sm-10&quot; style=&quot;margin:4px auto 5px auto&quot;&gt;</div><div class="line">      &lt;p id=&quot;imagesize&quot; style=&quot;display:none&quot;&gt;&lt;/p&gt;//上传图片后可以显示图片尺寸</div><div class="line">      &lt;img id=&quot;preview&quot; /&gt;</div><div class="line">      &lt;br /&gt;</div><div class="line">	  &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;img&quot; /&gt;//&lt;input&gt;标签有type=&quot;file&quot;用来上传文件</div><div class="line">      &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>预览结果：</p>
-<p>  <label class="col-sm-2 control-label" for="PHOTO">个人照片</label><br>   <div id="imgForm"><br>    <p id="imagesize"></p><br>    <img id="preview"><br>      <br><br>      <input type="file" name="file" id="img"><br>      </div></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"> var imgFile;</div><div class="line"> var justify = &quot;1&quot;;//用来判断图片大小是否超出尺寸，1代表没有超出，0代表超出</div><div class="line"> document.getElementById(&apos;img&apos;).onchange = function () &#123;//判断是否支持FileReader</div><div class="line">    if (window.FileReader) &#123;</div><div class="line">    var reader = new FileReader();</div><div class="line">    &#125; else &#123;</div><div class="line">        alert(&quot;不支持图片预览功能，如需该功能请升级！&quot;);</div><div class="line">    &#125;</div><div class="line">    justify = &quot;1&quot;;</div><div class="line">    var img = event.target.files[0];</div><div class="line">    // 判断是否图片</div><div class="line">    if (!img) &#123;</div><div class="line">    return false;</div><div class="line">    &#125;</div><div class="line">    // 判断图片格式</div><div class="line">    if (!(img.type.indexOf(&apos;image&apos;) == 0 &amp;&amp; img.type &amp;&amp; /\.(?:jpg|jpeg)$/.test(img.name))) &#123;</div><div class="line">    alert(&apos;图片只能是jpg jpeg&apos;);</div><div class="line">    return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   var reader = new FileReader();</div><div class="line">   reader.readAsDataURL(img);</div><div class="line">   reader.onload = function (e) &#123;</div><div class="line">   imgFile = e.target.result;</div><div class="line">   //获取图片dom</div><div class="line">   var img1 = document.getElementById(&quot;preview&quot;);</div><div class="line">    //图片路径设置为读取的图片</div><div class="line">   img1.src = e.target.result;</div><div class="line">   var imgwidth = img1.offsetWidth;//获取图片宽高</div><div class="line">   var imgheight = img1.offsetHeight;</div><div class="line">   var size = document.getElementById(&apos;imagesize&apos;);</div><div class="line">   size.style.display = &quot;block&quot;;</div><div class="line">   size.innerHTML = imgwidth + &quot;×&quot; + imgheight;</div><div class="line">   if (imgwidth &gt; 600 || imgheight &gt; 800) &#123;</div><div class="line">   justify = &quot;0&quot;;</div><div class="line">   alert(&quot;图片尺寸不应大于600×800&quot;);</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这时候写一个button 触发函数通过ajax来上传照片到后台：</p>
-<button id="btn2" type="submit" onclick="AddExperts()">提交</button>
-
-
-<p><br></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;box-footer&quot;&gt;</div><div class="line">      &lt;div class=&quot;box-tools col-sm-2&quot;&gt;</div><div class="line">              &lt;div class=&quot;has-feedback&quot;&gt;</div><div class="line">                        &lt;button id=&quot;btn2&quot; type=&quot;submit&quot; class=&quot;btn btn-primary&quot; onclick=&quot;AddExperts()&quot;&gt;提交&lt;/button&gt;</div><div class="line">              &lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">function AddExperts() &#123;</div><div class="line">   </div><div class="line">    var postimg = imgFile;</div><div class="line">    $.ajax(&#123;</div><div class="line">                type: &quot;POST&quot;,</div><div class="line">                async: false,</div><div class="line">                url: &quot;ashx/zlgly-zjgl-add.ashx&quot;,</div><div class="line">                contentType: &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;,</div><div class="line">                data: &#123;img: postimg, JUSTIFY: justify &#125;,</div><div class="line">    timeout: 1000,</div><div class="line">    cache: false,</div><div class="line">    success: function (result) &#123;</div><div class="line">                    if (result) &#123;</div><div class="line">                        alert(result);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>以一张照片为例，如果上传了一张jpg或者jepg格式的图片，postimg为很长的一串字符串。<br><img src="/2017/10/23/将图片以二进制流方式存入数据库-c-oracle-11g/base64.jpg" alt="base64"></p>
-<p>至此前端的操作就到此结束了，下面进入后台的.ashx文件查看相关代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">using System;</div><div class="line">using System.Data;</div><div class="line">using System.Configuration;</div><div class="line">using System.Web;</div><div class="line">using Oracle.ManagedDataAccess.Client;</div><div class="line">public class 后台文件 : IHttpHandler</div><div class="line">&#123;</div><div class="line"></div><div class="line">    public void ProcessRequest(HttpContext context)</div><div class="line">    &#123;</div><div class="line">        context.Response.ContentType = &quot;text/plain&quot;;</div><div class="line">        //从前端读取数据</div><div class="line"></div><div class="line">      </div><div class="line">        string myFile = context.Request.Form[&quot;img&quot;];</div><div class="line">        string text = myFile.Substring(23);//截取base64字符串23个字符之后的内容</div><div class="line">        string JUSTIFY = context.Request.Form[&quot;JUSTIFY&quot;];</div><div class="line"></div><div class="line">        byte[] imageBytes = Convert.FromBase64String(text);//将base64字符串转化为byte[] 格式</div><div class="line">        if (JUSTIFY == &quot;0&quot;)</div><div class="line">        &#123;</div><div class="line">            context.Response.Write(&quot;图片大小超出尺寸&quot;);</div><div class="line">            context.Response.End();</div><div class="line">        &#125;</div><div class="line">        else</div><div class="line">        &#123;</div><div class="line">            //与数据库连接</div><div class="line">            string myvar = ConfigurationManager.ConnectionStrings[&quot;Conn&quot;].ToString();</div><div class="line">            OracleConnection conn = new OracleConnection(myvar);</div><div class="line">            try</div><div class="line">            &#123;</div><div class="line">                conn.Open();</div><div class="line">            &#125;</div><div class="line">            catch (Exception ex)</div><div class="line">            &#123;</div><div class="line">                context.Response.Write(ex.Message);</div><div class="line">                context.Response.End();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">          string insertimg = &quot;update EXPERTS SET IMAGE=:imageBytes where 条件=&apos;&quot; + 条件 + &quot;&apos;&quot;;</div><div class="line">                OracleCommand cmd = new OracleCommand(insertimg, conn);</div><div class="line">                cmd.Parameters.Add(new OracleParameter(&quot;imageBytes&quot;, OracleDbType.Blob));</div><div class="line">                cmd.Parameters[&quot;imageBytes&quot;].Value = imageBytes;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里向c#数据库的blob中写入图片，在网上搜了一段代码，也可以用，思路更清晰：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">//打开数据库</div><div class="line">String   connectionstring = &quot;Data Source=apts_test;user id=aptstest;password=test&quot;;</div><div class="line">OracleConnection  con   =new OracleConnection(connectionstring);</div><div class="line">con.Open();</div><div class="line">//向指定记录添加blob字段，例如图片</div><div class="line">private void add_blob()</div><div class="line"> &#123; </div><div class="line">	String sql = @&quot;update testxx set image=:myimage  where ID=:myid&quot;;//在testxx表中有个字段叫image是blob类型的注意中的冒号，通过myid制定记录</div><div class="line">	OracleCommand cmd = new OracleCommand(sql, con);</div><div class="line">	cmd.Parameters.Add(new OracleParameter(&quot;myimage&quot;, 	OracleType.Blob));//给这个两个参数赋值myimage和myid</div><div class="line">	cmd.Parameters.Add(new OracleParameter(&quot;myid&quot;, OracleType.VarChar));</div><div class="line">	cmd.Parameters[&quot;myid&quot;].Value = &quot;1&quot;;</div><div class="line"> 	//给image字段赋值字节数组</div><div class="line"> 	FileStream fs     =  File.OpenRead(&quot;D:/ 2.jpg&quot;);</div><div class="line">	byte[] imagebyte  = new byte[fs.Length];</div><div class="line">	fs.Read(imagebyte, 0, (int)fs.Length);</div><div class="line">	cmd.Parameters[&quot;myimage&quot;].Value = imagebyte;</div><div class="line">	 try</div><div class="line">	 &#123;</div><div class="line">	  int result = cmd.ExecuteNonQuery();</div><div class="line"> 	 if (result &lt; 1)</div><div class="line">      System.Console.WriteLine(&quot;success&quot;);</div><div class="line">	  else</div><div class="line">      System.Console.WriteLine(&quot;error&quot;);</div><div class="line">	&#125;</div><div class="line">	catch (Exception e1)</div><div class="line">	&#123;             &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在pl/sql developer中查看上传结果可以看到已经上传成功了：<br><img src="/2017/10/23/将图片以二进制流方式存入数据库-c-oracle-11g/上传结果.jpg" alt="上传结果"></p>
-<p>当然因为这里在后台没有判断照片的尺寸，后期会进行更新。</p>
-<p>当然，读取的方式类似。将blob中byte[] 格式转换为base64 ，但这个时候要注意开始时是把base64最前面的23个字符给去掉了，这时候要加上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">DataTable td = new DataTable(&quot;Name&quot;);//创建datatable来存放</div><div class="line">td.Columns.Add(&quot;IMAGE&quot;, Type.GetType(&quot;System.String&quot;));//增加一列，列名为IMAGE</div><div class="line">td.Rows.Add();//增加一行</div><div class="line">string sql = &quot;SELECT * FROM 表名 WHERE 条件 &quot;+ 条件 + &quot;&apos;&quot;;</div><div class="line">OracleCommand cmd = new OracleCommand(sql, conn);</div><div class="line">cmd.CommandType = System.Data.CommandType.Text;</div><div class="line">OracleDataReader  = cmd.ExecuteReader();</div><div class="line">   if (sdr.Read())</div><div class="line">       &#123;           </div><div class="line">           if(!sdr.IsDBNull(12))</div><div class="line">           &#123;</div><div class="line">           byte[] img =(byte[])sdr[&quot;IMAGE&quot;];</div><div class="line">           string  pic =&quot;data:image/jpeg;base64,&quot;+ Convert.ToBase64String(img);//加上字符串</div><div class="line">           td.Rows[0][&quot;IMAGE&quot;] = pic;</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">           string jsonresult = JsonConvert.SerializeObject(td);</div><div class="line">           context.Response.Write(jsonresult);//传到前台</div><div class="line">           context.Response.End();</div><div class="line">       &#125;</div><div class="line">       else</div><div class="line">       &#123;</div><div class="line">           context.Response.Write(&quot;1&quot;);</div><div class="line">           context.Response.End();</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>这时候传到前台的还是base64字符串，而且img标签可以自动将base6码放入 img的 src=” “‘中,html会自动转码，至此就实现了图片导数据库和数据库到图片的整套读取方法了。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> 项目 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> C# </tag>
-            
-            <tag> 遇到的坑 </tag>
-            
-            <tag> 数据库 </tag>
-            
-            <tag> oracle </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Arguments的用法初试]]></title>
-      <url>/2017/09/03/Arguments%E7%9A%84%E7%94%A8%E6%B3%95%E5%88%9D%E8%AF%95/</url>
-      <content type="html"><![CDATA[<p>在FCC做题的过程中，遇到了一个初级的算法题，题目用到了arguments对象。在这里对arguments的用法进行一些总结。</p>
-<p>首先，在FCC中的题目如下：</p>
-<blockquote>
-<p>摧毁数组<br>实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function destroyer(arr) &#123;  //arr = (6) [1, 2, 3, 1, 2, 3]</div><div class="line">  var arr_arg=arguments; //arr_arg = (3) [Array(6), 2, 3]</div><div class="line">  for(var i = 1; i &lt; arr_arg.length; i++)&#123;   //先让arr_arg[1](也就是2)与arr的每一个元素比较，保留或者摧毁。第一次循环后arr=[1,2,1,2]然后第二次循环让arr_arg[2](也就是3)与arr的每一个元素比较，保留或者摧毁。第二次循环后arr=[1,1]</div><div class="line">    arr = arr.filter(function(val)&#123;  </div><div class="line">      return arr_arg[i] !== val;     </div><div class="line">    &#125;);  </div><div class="line">    &#125;  </div><div class="line">  return arr;</div><div class="line">&#125;</div><div class="line"></div><div class="line">destroyer([1, 2, 3, 1, 2, 3], 2, 3);//[1,1]</div><div class="line">destroyer([1, 2, 3, 5, 1, 2, 3], 2, 3) ;//[1, 5, 1]</div><div class="line">destroyer([3, 5, 1, 2, 2], 2, 3, 5);//[1]</div><div class="line">destroyer([2, 3, 2, 3], 2, 3);//[]</div><div class="line">destroyer([&quot;tree&quot;, &quot;hamburger&quot;, 53], &quot;tree&quot;, 53);//[&quot;hamburger&quot;]</div></pre></td></tr></table></figure>
-<p>先来看下《JavaScript高级程序设计》中对于arguments的一些解释：</p>
-<blockquote>
-<p>ECMAScript 函数的参数与大多数其他语言中函数的参数有所不同。 ECMAScript 函数不介意传递进来多少个参数，也不在乎传进来参数是什么数据类型。也就是说，即便你定义的函数只接收两个参数，在调用这个函数时也未必一定要传递两个参数。可以传递一个、三个甚至不传递参数，而解析器永远不会有什么怨言。之所以会这样，原因是ECMAScript 中的参数在内部是用一个数组来表示的。函数接收到的始终都是这个数组，而不关心数组中包含哪些参数（如果有参数的话）。如果这个数组中不包含任何元素，无所谓；如果包含多个元素，也没有问题。实际上，在函数体内可以通过 arguments 对象来访问这个参数数组，从而获取传递给函数的每一个参数。<br>  其实， arguments 对象只是与数组类似（它并不是 Array 的实例），因为可以使用方括号语法访问它的每一个元素（即第一个元素是 arguments[0]，第二个元素是 argumetns[1]，以此类推），使用 length 属性来确定传递进来多少个参数。在前面的例子中， sayHi()函数的第一个参数的名字叫name，而该参数的值也可以通过访问 arguments[0]来获取。因此，那个函数也可以像下面这样重写，即不显式地使用命名参数：</p>
-<p>   <code>function sayHi() {
-alert(&quot;Hello &quot; + arguments[0] + &quot;,&quot; + arguments[1]);}</code><br>这个重写后的函数中不包含命名的参数。虽然没有使用 name 和 message 标识符，但函数的功能依旧。这个事实说明了 ECMAScript 函数的一个重要特点：命名的参数只提供便利，但不是必需的。另外，在命名参数方面，其他语言可能需要事先创建一个函数签名，而将来的调用必须与该签名一致。但在 ECMAScript 中，没有这些条条框框，解析器不会验证命名参数。<br>通过访问 arguments 对象的 length 属性可以获知有多少个参数传递给了函数。下面这个函数会在每次被调用时，输出传入其中的参数个数：<br><code>function howManyArgs() {
-alert(arguments.length);
-}</code><br><code>howManyArgs(&quot;string&quot;, 45); //2</code><br><code>howManyArgs(); //0</code><br> <code>howManyArgs(12); //1</code><br> 执行以上代码会依次出现 3 个警告框，分别显示 2、 0 和 1。由此可见，开发人员可以利用这一点让函数能够接收任意个参数并分别实现适当的功能。请看下面的例子：<br> <code>function doAdd() {</code><br><code>if(arguments.length == 1) {</code><br><code>alert(arguments[0] + 10);</code><br><code>} else if (arguments.length == 2) {</code><br><code>alert(arguments[0] + arguments[1]);</code><br><code>}</code><br><code>}</code><br><code>doAdd(10); //20</code><br><code>doAdd(30, 20); //50</code><br>函数 doAdd()会在只有一个参数的情况下给该参数加上 10；如果是两个参数，则将那个参数简单相加并返回结果。因此， doAdd(10)会返回 20，而 doAdd(30,20)则返回 50。虽然这个特性算不上完美的重载，但也足够弥补 ECMAScript 的这一缺憾了。<br>另一个与参数相关的重要方面，就是 arguments 对象可以与命名参数一起使用，如下面的例子所示：<br><code>function doAdd(num1, num2) {</code><br><code>if(arguments.length == 1) {</code><br><code>alert(num1 + 10);</code><br><code>} else if (arguments.length == 2) {</code><br><code>alert(arguments[0] + num2);</code><br><code>}</code><br><code>}</code><br>在重写后的这个 doAdd()函数中，两个命名参数都与 arguments 对象一起使用。由于 num1 的值与 arguments[0]的值相同，因此它们可以互换使用（当然， num2 和 arguments[1]也是如此）。<br>关于 arguments 的行为，还有一点比较有意思。那就是它的值永远与对应命名参数的值保持同步。<br>例如：<br><code>function doAdd(num1, num2) {</code><br><code>arguments[1] = 10;</code><br><code>alert(arguments[0] + num2);</code><br><code>}</code><br>每次执行这个 doAdd()函数都会重写第二个参数，将第二个参数的值修改为 10。因为 arguments对象中的值会自动反映到对应的命名参数，所以修改 arguments[1]，也就修改了 num2，结果它们的值都会变成 10。不过，这并不是说读取这两个值会访问相同的内存空间；它们的内存空间是独立的，但它们的值会同步。另外还要记住，如果只传入了一个参数，那么为 arguments[1]设置的值不会反应到命名参数中。这是因为 arguments 对象的长度是由传入的参数个数决定的，不是由定义函数时的命名参数的个数决定的。<br>关于参数还要记住最后一点：没有传递值的命名参数将自动被赋予 undefined 值。这就跟定义了变量但又没有初始化一样。例如，如果只给 doAdd()函数传递了一个参数，则 num2 中就会保存undefined 值。<br>严格模式对如何使用 arguments 对象做出了一些限制。首先，像前面例子中那样的赋值会变得无效。也就是说，即使把 arguments[1]设置为 10， num2 的值仍然还是 undefined。其次，重写arguments 的值会导致语法错误（代码将不会执行）。</p>
-</blockquote>
-<p>  这里再回过头来看最开始的那个初级的算法题，就很简单了，传递的值是:<strong>([1,2,3,1,2,3],2,3)</strong>,即arguments[0] = [1,2,3,1,2,3], arguments[1] = 2 , arguemnts[2] = 3 .这样让arr_arg=arguments，即定义一个数组等于当前传入的数组，在后面进行使用。后面的部分就很好理解了，用<strong>Array.filter()</strong>方法调用括号内的function函数，让循环从1开始，即让待摧毁的值与数组中的每一个值比较，返回false或者true进而摧毁或者保留。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> JavaScript </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> JavaScript </tag>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[初级算法]]></title>
-      <url>/2017/09/02/%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95/</url>
-      <content type="html"><![CDATA[<p> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。</p>
-<h1 id="计算一个整数的阶乘"><a href="#计算一个整数的阶乘" class="headerlink" title="计算一个整数的阶乘"></a>计算一个整数的阶乘</h1><h2 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h2><p>普通方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  var number=1;</div><div class="line">  while(num&gt;=1)&#123;</div><div class="line">    number*=num;</div><div class="line">	num--;</div><div class="line">	&#125;</div><div class="line">	return number;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  factorialize(10);  //3628800</div><div class="line">  factorialize(20); // 2432902008176640000</div><div class="line">  factorialize(0); //1</div></pre></td></tr></table></figure>
-<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>下面是递归的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  if (num === 0)&#123;</div><div class="line">  return 1;</div><div class="line">  &#125;</div><div class="line">  else&#123;</div><div class="line">    return num * factorialize(num - 1);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">factorialize(10);  //3628800</div><div class="line">factorialize(20); // 2432902008176640000</div><div class="line">factorialize(0); //1</div></pre></td></tr></table></figure>
-<hr>
-<h1 id="分割数组"><a href="#分割数组" class="headerlink" title="分割数组"></a>分割数组</h1><p>把一个数组arr按照指定的数组大小size分割成若干个数组块。</p>
-<p>例如:chunk([1,2,3,4],2)=[[1,2],[3,4]];</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function chunk(arr, size) &#123;</div><div class="line">  var arr2=[];</div><div class="line">  for(var i=0;i&lt;arr.length;i=i+size)&#123;</div><div class="line">    arr2.push(arr.slice(i,i+size));</div><div class="line">	&#125;</div><div class="line">	return arr2;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">chunk([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 2);</div><div class="line">chunk([0, 1, 2, 3, 4, 5, 6], 3);  // [[0, 1, 2], [3, 4, 5], [6]]</div><div class="line">chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4);  // [[0, 1, 2, 3], [4, 5, 6, 7], [8]]</div></pre></td></tr></table></figure>
-<hr>
-<h1 id="截断数组"><a href="#截断数组" class="headerlink" title="截断数组"></a>截断数组</h1><p>截断数组的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function slasher(arr, howMany) &#123;</div><div class="line">  arr.splice(0,howMany); </div><div class="line">  return arr;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">slasher([1, 2, 3], 2);</div></pre></td></tr></table></figure>
-<blockquote>
-<p>splice() 方法通过删除现有元素和/或添加新元素来更改一个数组的内容。<br>splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。</p>
-</blockquote>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var myFish = [&apos;angel&apos;, &apos;clown&apos;, &apos;mandarin&apos;, &apos;sturgeon&apos;];</div><div class="line">myFish.splice(2, 0, &apos;drum&apos;); // 在索引为2的位置插入&apos;drum&apos;</div><div class="line">// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;drum&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]</div><div class="line">myFish.splice(2, 1); // 从索引为2的位置删除一项（也就是&apos;drum&apos;这一项）</div><div class="line">// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]</div></pre></td></tr></table></figure>
-<hr>
-<h1 id="比较字符串"><a href="#比较字符串" class="headerlink" title="比较字符串"></a>比较字符串</h1><p>比较字符串</p>
-<p>如果数组第一个字符串元素包含了第二个字符串元素的所有字符，函数返回true。</p>
-<p>举例，[“hello”, “Hello”]应该返回true，因为在忽略大小写的情况下，第二个字符串的所有字符都可以在第一个字符串找到。</p>
-<p>[“hello”, “hey”]应该返回false，因为字符串”hello”并不包含字符”y”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function mutation(arr) &#123;</div><div class="line">  var arr2=arr[1].toLowerCase().split(&quot;&quot;);// 先把后面的字符串拆分成数组</div><div class="line">  for(var i=0;i&lt;arr2.length;i++)&#123;</div><div class="line">    if(arr[0].toLowerCase().indexOf(arr2[i])&lt;0)&#123; //将前面的数组转化为小写后与后面拆分的数组的每一个字母比较， indexOf不包含的情况会返回-1</div><div class="line">      return false;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return true;</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">mutation([&quot;hello&quot;, &quot;hey&quot;]);//false</div><div class="line">mutation([&quot;hello&quot;, &quot;Hello&quot;]);//true</div><div class="line">mutation([&quot;zyxwvutsrqponmlkjihgfedcba&quot;, &quot;qrstu&quot;]);//true</div></pre></td></tr></table></figure>
-<blockquote>
-<p>split() 方法使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。</p>
-</blockquote>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split" target="_blank" rel="external">split()</a></p>
-<blockquote>
-<p>str.split([separator[, limit]])<br>separator<br>指定表示每个拆分应发生的点的字符串。separator 可以是一个字符串或正则表达式。 如果纯文本分隔符包含多个字符，则必须找到整个字符串来表示分割点。如果在str中省略或不出现分隔符，则返回的数组包含一个由整个字符串组成的元素。如果分隔符为空字符串，则将str原字符串中每个字符的数组形式返回。<br>limit<br>一个整数，限定返回的分割片段数量。当提供此参数时，split 方法会在指定分隔符的每次出现时分割该字符串，但在限制条目已放入数组时停止。如果在达到指定限制之前达到字符串的末尾，它可能仍然包含少于限制的条目。新数组中不返回剩下的文本。</p>
-</blockquote>
-<hr>
-<h1 id="过滤数组假值"><a href="#过滤数组假值" class="headerlink" title="过滤数组假值"></a>过滤数组假值</h1><p>删除数组中的所有假值。</p>
-<p>在JavaScript中，假值有false、null、0、””、undefined 和 NaN。</p>
-<p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Boolean" target="_blank" rel="external">Boolean Objects</a><br>          <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank" rel="external">Array.filter()</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function bouncer(arr) &#123;</div><div class="line">  return arr.filter(isBad);</div><div class="line">  function isBad(params)&#123; </div><div class="line">   var result = Boolean(params);</div><div class="line">   return result; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bouncer([7, &quot;ate&quot;, &quot;&quot;, false, 9]);//[7, &quot;ate&quot;, 9]</div><div class="line">bouncer([false, null, 0, NaN, undefined, &quot;&quot;]);// []</div></pre></td></tr></table></figure>
-<h1 id="数组排序并找出元素索引"><a href="#数组排序并找出元素索引" class="headerlink" title="数组排序并找出元素索引"></a>数组排序并找出元素索引</h1><p>先给数组排序，然后找到指定的值在数组的位置，最后返回位置对应的索引。</p>
-<p>举例：where([1,2,3,4], 1.5) 应该返回 1。因为1.5插入到数组[1,2,3,4]后变成[1,1.5,2,3,4]，而1.5对应的索引值就是1。</p>
-<p>同理，where([20,3,5], 19) 应该返回 2。因为数组会先排序为 [3,5,20]，19插入到数组[3,5,20]后变成[3,5,19,20]，而19对应的索引值就是2。</p>
-<p>这题的思路就比较简单了，先把后面的数加到前面的数组中，然后对加入新数的数组进行排序，最后找到新加入的数字的索引即可。下面是我自己写的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function where(arr, num) &#123;</div><div class="line">  var arr1=[];</div><div class="line">  arr.push(num);</div><div class="line">  arr.sort( function(a,b)&#123;</div><div class="line">    return a-b;</div><div class="line">  &#125;);</div><div class="line">  for(var i=0;i&lt;arr.length;i++)&#123;</div><div class="line">    if(arr[i]===num)&#123;</div><div class="line">      return i;</div><div class="line">    &#125;    </div><div class="line">  &#125;  </div><div class="line">&#125;</div><div class="line"></div><div class="line">where([40, 60], 50); //1</div><div class="line">where([10, 20, 30, 40, 50], 35);//3</div><div class="line">where([10, 20, 30, 40, 50], 30);// 2</div><div class="line">where([40, 60], 50);// 1</div><div class="line">where([3, 10, 5], 3);// 0</div><div class="line">where([5, 3, 20, 3], 5);// 2</div><div class="line">where([2, 20, 10], 19);// 2</div><div class="line">where([2, 5, 10], 15);// 3</div></pre></td></tr></table></figure>
-<p>后面再网上看到了一个其他的方法，可以用 <strong>Array.indexOf()</strong> 方法直接获取元素的索引值，其他的思路一样。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function where(arr, num) &#123;</div><div class="line">  var arr1=[];</div><div class="line">  arr.push(num);</div><div class="line">  arr.sort( function(a,b)&#123;</div><div class="line">    return a-b;</div><div class="line">  &#125;);</div><div class="line"> return arr.indexOf(num);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h1 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a>凯撒密码</h1><p>下面我们来介绍风靡全球的凯撒密码Caesar cipher，又叫移位密码。</p>
-<p>移位密码也就是密码中的字母会按照指定的数量来做移位。</p>
-<p>一个常见的案例就是ROT13密码，字母会移位13个位置。由’A’ ↔ ‘N’, ‘B’ ↔ ‘O’，以此类推。</p>
-<p>写一个ROT13函数，实现输入加密字符串，输出解密字符串。</p>
-<p>所有的字母都是大写，不要转化任何非字母形式的字符(例如：空格，标点符号)，遇到这些特殊字符，跳过它们。</p>
-<p>可能用到的内容：<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt" target="_blank" rel="external">String.charCodeAt()</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode" target="_blank" rel="external">String.fromCharCode()</a><br><a href="http://ascii.911cha.com/" target="_blank" rel="external">ASCII码对照表</a></p>
-<p>大写字母的对应关系如下：<br><code>ABCDEFGHIJKLMNOPQRSTUVWXYZ</code><br><code>NOPQRSTUVWXYZABCDEFGHIJKLM</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">function rot13(str) &#123; </div><div class="line">  var arr=[];</div><div class="line">  for(var i=0;i&lt;str.length;i++)&#123;  //遍历字符串的每一个字符</div><div class="line">  </div><div class="line">  	//其他字符等非大写字母字符  	</div><div class="line">  	if(str.charCodeAt(i)&lt;65||str.charCodeAt(i)&gt;90)&#123;</div><div class="line">  		arr.push(String.fromCharCode(str.charCodeAt(i)));</div><div class="line">  	&#125;</div><div class="line">  	//大写字母的ASCII码表对应的数值为65-90</div><div class="line">  	else if(str.charCodeAt(i)&gt;77)&#123;</div><div class="line">  		arr.push(String.fromCharCode(str.charCodeAt(i)-13));</div><div class="line">  	&#125;</div><div class="line">  	else&#123;</div><div class="line">  		arr.push(String.fromCharCode(str.charCodeAt(i)+13));</div><div class="line">  	&#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  return arr.join(&quot;&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log(rot13(&quot;SERR PBQR PNZC&quot;));  // FREE CODE CAMP</div><div class="line"></div><div class="line">rot13(&quot;SERR CVMMN!&quot;));  //  &quot;FREE PIZZA!&quot;</div><div class="line">rot13(&quot;SERR YBIR?&quot;) );  //  &quot;FREE LOVE?&quot;</div><div class="line">rot13(&quot;GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK.&quot;));  // &quot;THE QUICK BROWN DOG JUMPED OVER THE LAZY FOX.&quot;</div></pre></td></tr></table></figure>
-<h1 id="返回给定的两个数组中不同的值"><a href="#返回给定的两个数组中不同的值" class="headerlink" title="返回给定的两个数组中不同的值"></a>返回给定的两个数组中不同的值</h1><p>Diff Two Arrays<br>比较两个数组，然后返回一个新数组，该数组的元素为两个给定数组中所有独有的数组元素。换言之，返回两个数组的差异。</p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf" target="_blank" rel="external">Array.indexOf()</a></p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/concat" target="_blank" rel="external">Array.concat()</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function diff(arr1, arr2) &#123;</div><div class="line">  var newArr = [];</div><div class="line">  // Same, same; but different.</div><div class="line">  var arr3 = [];  </div><div class="line">  for (var i=0;i&lt;arr1.length;i++) &#123;  </div><div class="line">    if(arr2.indexOf(arr1[i]) === -1)     </div><div class="line">      arr3.push(arr1[i]);  </div><div class="line">  &#125;  </div><div class="line">   var arr4 = [];  </div><div class="line">  for (var j=0;j&lt;arr2.length;j++) &#123;  </div><div class="line">    if(arr1.indexOf(arr2[j]) === -1)  </div><div class="line">      arr4.push(arr2[j]);  </div><div class="line">  &#125;  </div><div class="line">   newArr = arr3.concat(arr4);  </div><div class="line">  return newArr;</div><div class="line">&#125;</div><div class="line"></div><div class="line">diff([1, 2, 3, 5], [1, 2, 3, 4, 5]);//[4]</div><div class="line">[1, &quot;calf&quot;, 3, &quot;piglet&quot;], [1, &quot;calf&quot;, 3, 4];// [&quot;piglet&quot;, 4]</div><div class="line">[], [&quot;snuffleupagus&quot;, &quot;cookie monster&quot;, &quot;elmo&quot;] ;// [&quot;snuffleupagus&quot;, &quot;cookie monster&quot;, &quot;elmo&quot;]</div><div class="line">[1, &quot;calf&quot;, 3, &quot;piglet&quot;], [7, &quot;filly&quot;];// [1, &quot;calf&quot;, 3, &quot;piglet&quot;, 7, &quot;filly&quot;]</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> 算法 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[Hello World]]></title>
-      <url>/2017/08/21/hello-world/</url>
-      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-]]></content>
-      
-        
-    </entry>
-    
-  
-  
+<search>
+  <entry>
+    <title><![CDATA[git学习]]></title>
+    <url>%2F2018%2F02%2F01%2Fgit%E5%AD%A6%E4%B9%A0%2F</url>
+    <content type="text"><![CDATA[安装 在命令行输入git --version如果显示版本信息则说明安装成功，否则要去官网进行安装。 Visual Studio Code 启用bashVS Code默认的终端窗口是只带cmd功能的，如果要在终端中唤出bash要进行配置： 首先找到本机的bash.exe的目录,比如我的目录如图： 然后在VS Code-&gt;首选项-&gt;设置-&gt;搜索terminal.integrated.shell.windows-&gt;将&quot;terminal.integrated.shell.windows&quot;: &quot;C:\\Program Files\\Git\\bin\\bash.exe&quot;放入设置中-&gt;保存 重新启动VS Code可以看到自动进入bash命令窗口 如果想切换到cmd命令窗口直接输入cmd回车即可,同理在cmd下切换到bash只需输入bash回车： 仓库仓库本质上就是一个文件夹，一个目录，一个项目。 创建方法1比如打开一个目录，输入git init 可以看到初始化了一个空的git仓库。 然后切换到bash 输入ls -la酒吧当前目录下的所有的子目录列出来: 可以看到.git被列出来，它是个隐藏文件夹。 这时候 test1 就已经是一个仓库了。 创建方法2或者进入到根目录,如输入cd ..,然后输入 git init test2。 可以看到一样成功创建了tes2文件夹和其中的.git隐藏文件夹，和上面的创建方法是一样的。 从远程clone一个仓库比如在github上找到一个文件仓库，比如找到vue的github仓库 输入git clone https://github.com/vuejs/vue.git回车 可以看到正在clone。可以看到目录下多了vue文件夹，这就是从远程克隆的仓库。或者在输入clone命令时后面加个自己想要命名的文件夹名，这样下载下来就是以这个文件夹命名的，比如git clone https://github.com/vuejs/vue.git test3.可以自己试一下（可以换一个小一点的仓库克隆，这个我clone了好久 Orz） 基本用法git statusgit status是指查看仓库状态。 因为test1是一个空文件夹 所以显示上图的状态。 commitcommit的意思是提交，可以把它看做历史节点,而上图的提示是No commits yet，这就是说没有一条历史记录，因为我们创建了后还没有进行提交。 Untracked files如果我们新建一个文件，如test.txt,这时候执行git status命令，可以看到:Untracked files是指未跟踪的文件，也就是更改了文件还没有进行创建节点，即丢失后无法找回。 在VS Code的git工具中也可以看到修改的状态为未跟踪的。 git addgit add .将所有的修改添加到暂存区 如上，我们创建了一个test.txt,输入git add .回车,然后输入git status查看现在的状态。 可以看到vs code中的git工具也发生了变化： git commit -m “描述”git commit -m &quot;描述&quot;提交版本 输入命令后，可以看到 nothing to commit,working tree clean，也就是所有的更改都保存了。 git loggit log查看版本记录可以查看所有的更改记录 这里只有一条更改记录。 而上面的commit 后面的一串字符就是上次更改的记录码。 我们这时候更改一下test.txt，保存。 这时候文件内容发生了变化，在进行一次提交操作 这时候再看记录，有两条记录： git checkout xxxgit checkout xxx——穿越到指定的历史节点，也就是前面commit的节点。可以看描述选择退回到哪个节点，这也反映了写描述的重要性。 xxx是指上面git log查看时commit后面的码，复制前七位就可以定位，当然也可以复制多于七位。 可以看到文件变了： 三种状态上面时回到了第一个节点，现在回到第二个节点。输入git checkout 1529b8c93ec，确认退回成功。 从上面可以看出，执行任何一个commit操作都要执行三步：modified(已修改) -&gt; staged(已暂存) -&gt; committed staged 状态可以看到即将提交的文件，比如如果想只提交test.txt文件，可以在git add .的时候输入git add test.txt。另外 git log只能查看提交的内容和描述，并不能看其中哪些内容修改了，使用git log -p可以查看具体修改了哪些内容. 可以看到+后面的就是修改的内容。 commit的内容是添加到staged暂存区中的内容，比如在git add .后又进行了修改但是没有再次执行git add .命令，那么commit的时候就是暂存区中的内容而不包括最新修改的内容。 标签tag如果在项目中要很经常的进行修改，那么会产生很多个节点，但是会有一些节点非常重要，那么可以给这些关键的重要节点打一个标签。比如完成了代码的v1.0版本，后面又有了v2.0版本，中间的v1.1,v1.x并不重要，那么这些大版本就是重要节点。 输入git add . &amp;&amp; git commit -m &quot;v2.0&quot;可以执行两条命令。 git log --oneline可以查看简写的版本 那么可以给v2.0打一个标签,用法：git tag -a 标签名 -m &quot;备注&quot;，用它进行附注标签。这种方法是给最近的一个节点加标签。 这时候输入git tag可以看到tag的信息。 如果想给某个节点加标签，则可以用git tag -a 标签名 -m &quot;备注&quot; 版本码 可以看到添加成功了（上面的v2.0加错了加了两个标签 orz） git show 标签名：查看某个标签的详细信息 git checkout 标签名可以直接回溯到标签所在的提交，这样比使用版本码要方便 在回溯到历史版本后 输入git log --oneline --all可以查看所有的节点 分支 branch指在时间的维度上可以有多线，及时间一样的基础上进行其他的修改。主线为master时可以给分支命名其他的名。 比如这里在test2目录下新建b.txt。输入两行内容后分别commit。 现在的mater分支上有两个版本： 给文本添加第三行并且执行git add . 和git commit -m &quot;&quot;操作。 然后git branch 分支名创建分支,然后git checkout 分支名切换到分支。 可以看到切换到了分支notmaster。 这时候修改b.txt的内容，然后执行git add . 和git commit -m &quot;&quot;操作 然后git log --oneline可以看到多了的记录是在分支上的 这时候在分支后面的提交就是在分支上了。 现在如果切换到mater-&gt;git checkout master，可以看到内容变回刚才的节点(即刚才创建分支的时候的节点)： 这时候再添加一行然后执行commit操作,可以看到: 或者git log --all --graph图示全部历史记录。 git checkout -b 分支，创建并切换到分支。 分支的功能在做项目的时候可以经常用到，比如在1-&gt;2的时候没有bug，但是在2-&gt;3的时候发现有bug,这时候可以在2创建一个分支，专门在分支进行修改bug,且在master可以继续进行开发。在最后的第二版开发完成后，把分支的修改bug版本进行合并，这样就修改了bug也推进了项目。 合并分支上面讲到,在修改bug的同时可以进行项目的推进，但是在完成了bug的修改和第二版的项目后，要将两者合并，实现“完全体”,这就需要合并分支。 现在回到branch， 可以看到HEAD所在的就是当前的节点和分支。在分支上修改了代码进行commit 现在虽然创建了分支并且更新了内容，但是还没有和master主分支合并 git merge 分支名合并分支 可以看到 CONFLICT提示内容有冲突，在第三行开始冲突，所以git不知道该如何处理。 这时候可以在文件中进行更改，然后再进行commit操作。然后这样就合并了两个分支。 这时候可以输入命令查看，通过图解可以看到很清楚的解释了刚才的合并操作。 远程仓库我们可以将本机上的仓库内容存放在远程仓库（如github 和 码云或者远程的另一台电脑或服务器） 即local -&gt; server -&gt; loacl 比如在commit了一个版本后，推送到服务器上时，我们用github。 在github新建一个仓库，Create a new repository,创建成功后，可以看到仓库的地址。那么接下来在本地指定远程仓库的地址。 git remote add 远程名称 远程地址 添加远程仓库然后git remote可以列出所有远程仓库 git remote -v可以列出所有远程仓库和详细信息 顾名思义,fetch是下载地址,push是上传地址。 git push -u 远程名 分支名上传代码加-u的意思是在服务器端设置，如果有人想下载代码的时候，应该往那个分支上合并,所以要记得加-u. 刷新仓库可以看到推送成功： 在进行了修改添加后，可以同样执行这个操作。 git clone 仓库地址从远端克隆仓库到本地进入到刚克隆的仓库，输入git log同样可以看到操作的历史 这时候从远端克隆下的分支默认名为origin，他只是一个分支的名字，和master等没有本质区别 这时候在这个目录下进行了修改再推送时，要在git push -u 远程名 master这里将远程名改为现在的远程名，可以用git remote查看远程名，如果还用github进行推送会报错。 多人远程合作git pull获取远程更新现在模拟A和B是两台电脑，他们都从仓库clone了项目，A进行了修改，通过git push -u origin master更新了项目，B使用git pull。即通过git push -u origin master和git pull进行推送和拉取。但是如果A先推送了一个版本，B不知情的情况下对某一行也进行了修改,这时候如果提交，会显示冲突的错误，这时就知道要先git pull一份服务器端的代码，这时候在本地可以看出来冲突的对比，=等号的上面和下面会显示冲突的内容对比,然后对冲突的代码进行整合后，在进行push操作。 其实git pull 相当于git fetch &amp;&amp; git merge即下载和合并,放在已提交的阶段 详情参见表严肃的速查表 http://biaoyansu.com/27.cheatsheet 完 根据 表严肃的课程整理书写，地址http://biaoyansu.com/i/6593023230131]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[webpack的简单应用(entry 和 output)]]></title>
+    <url>%2F2018%2F01%2F31%2Fwebpack%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8-entry-%E5%92%8C-output%2F</url>
+    <content type="text"><![CDATA[在简单配置了webpack后，指定了它的入口和出口，即entry和output。但是在业务逻辑比较复杂的时候，页面不只有一页。比如 有一个index.html页和signup.html注册页。index.html引用了base.js 和 home.js,signup.html引用了base.js和signup.js。 即项目中如果有很多页，而且会有相同的依赖（比如这里的base.js），也有不同的js控制着各个不同的页面的业务逻辑。 这时候在webpack.config.js中将entry设置为一个入口对象，同时出口也变了，他会根据不同的入口文件生成不同的出口文件：12345678910module.exports=&#123; entry:&#123; home:&apos;./js/home.js&apos;, signup:&apos;./js/signup.js &apos;&#125;,output:&#123; filename:&apos;[name].bundle.js&apos;, //这里的文件名是动态生成的，name即是entry中的键名 path:__dirname+&apos;/dist&apos; //目录生成，如果没有dist文件夹则会自动创建这个文件夹，将上面的文件生成保存在这个目录 &#125;&#125; 在相应目录下创建这三个js文件： 这时候在index.html和signup.html中就不再需要引用base.js了。 这时只需要引用webpack打包后的动态生成的[name].bundle.js文件即可： 假设base.js是整个网站的依赖（因为刚开始两个html也都引用了这个文件），这里面一般会存放一些重要的配置项。 下面举例： 非ES6写法 open 决定网站是否是开放注册的，这时候通过module.exports将open传出去。home.js 和 signup.js 接收open参数值： 执行npm run pack命令 这时候可以看到生成成功。 这时候打开index.html。可以看到 页面生成成功，点击注册连接时，跳转到指定页面并且显示指定内容 如果把open 的值改为false。即open = false重新执行npm run pack命令，刷新可以看到： 并且点击到index.html时，没有显示任何内容，这和我们在home.js中设置的结果是一样的。 一般类似于这种多页的应用，一般都会给每一页一个打包的地址，具体每一页的入口文件用到了哪些依赖我们不用管，只需交给webpack去处理即可。另外这种写法是node的写法，可以用ES6的写法更简单快捷。 ES6写法 这里open可以直接解构出来，在下面可以直接用，即不需要再var open=base.open，它直接知道from导进来的东西是个对象，而且把对象中的一个键（这里是open）变成了一个变量，可以直接在后面使用。这时候重新npm run pack生成，结果是一样的。 webpack中的多入口和多出口。完 根据表严肃http://biaoyansu.com/i/6593023230131 的视频总结。]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[webpack的安装配置]]></title>
+    <url>%2F2018%2F01%2F31%2Fwebpack%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%2F</url>
+    <content type="text"><![CDATA[1.确保安装node和webpacknode: webpack: 如果没有版本号则代表没有安装 首先你需要安装一个全局的webpack 执行 pm install webpack -g 这样你才可以正确的使用webpack这个命令 推荐在当前项目里面也安装一个webpack, 这样就不用担心更换了电脑或者其他人使用时因为版本的不同而会导致错误 这样就可以在你的webpack.config.js里面方便的引用webpack 2.在当前项目安装webpack在当前目录生成package.json文件输入npm init -y 生成package.json文件 生成了package.json,npm就会认为整个目录是一个模块了。 在当前目录安装webpack执行npm install webpack --save-dev 这里的WARN只是警告可以不用管 可以看到安装成功 这时候package.json里面就有了webpack 和它的版本号： 3.使用这时候可以直接用此目录下的webpack指令来执行操作： node_modules/.bin/webpack a.js bundle.js 但是这个路径很长，输入并不方便，可以在package.json里面进行配置，然后直接调用命令即可。 pack和后面的字符串就是键值对的形式，pack即自定义的命令的名称，值就是上面的很长的命令。保存后执行npm run pack 可以看到这种方法仍然是生成成功的。 4.webpack.config.js这个js文件顾名思义可以配置webpack。基本写法是123module.exports=&#123;&#125; 在这里面可以传一些东西出去。比如 :1234567module.exports=&#123;entry: &apos;../a&apos; //入口文件output: &#123; filename:&apos;bundle.js&apos;, //文件名 path:__dirname //__dirname是node里面一个特殊的变量，它会被node解释为当前的文件所在的目录&#125; //输出文件&#125; 那么有了这两个设置参数，可以将package.json文件里面的&quot;pack&quot;:&quot;node_modules/.bin/webpack a.js bundle.js&quot;中的a.js 和 bundel.js 保存后,直接 npm run pack，执行结果也是成功的： 完。 根据表严肃的视频总结，地址：http://biaoyansu.com/i/6593023230131]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[WEBAPI解决跨域问题]]></title>
+    <url>%2F2017%2F12%2F27%2FWEBAPI%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 System.Web.cors.dll 和 System.Web.Http.cors.dll。 Web.Conefig配置12345&lt;appSettings&gt; &lt;add key=&quot;cors_allowOrigins&quot; value=&quot;*&quot;/&gt; &lt;add key=&quot;cors_allowHeaders&quot; value=&quot;*&quot;/&gt; &lt;add key=&quot;cors_allowMethods&quot; value=&quot;*&quot;/&gt; &lt;/appSettings&gt; * 代表允许所有 WebApiConfig配置123456 //解决API跨域访问的问题var allowOrigins = ConfigurationManager.AppSettings[&quot;cors_allowOrigins&quot;];var allowHeaders = ConfigurationManager.AppSettings[&quot;cors_allowHeaders&quot;];var allowMethods = ConfigurationManager.AppSettings[&quot;cors_allowMethods&quot;];var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) &#123; SupportsCredentials = true &#125;;config.EnableCors(globalCors); 完。]]></content>
+      <tags>
+        <tag>WEBAPI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[mysql学习小记系列（持续更新）]]></title>
+    <url>%2F2017%2F12%2F11%2Fmysql%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0%E7%B3%BB%E5%88%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[以下环境为mysql+Navicat Premium 在mysql中使用UUID效果如下： SQL语句有函数生成guid:UUID()，一般使用CHAR(36)或者BINARY(36)来存储uuid 例如sql语句为：INSERT INTO USERS(UUID) VALUES (UUID()) mysql中写入时间 DATETIME 类型可用于需要同时包含日期和时间信息的值。MySQL 以 ‘YYYY-MM-DD HH:MM:SS’ 格式检索与显示 DATETIME 类型。支持的范围是 ‘1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’。 DATE 类型可用于需要一个日期值而不需要时间部分时。MySQL 以 ‘YYYY-MM-DD’ 格式检索与显示DATE 值。支持的范围是 ‘1000-01-01’ 到 ‘9999-12-31’。 TIMESTAMP 列类型提供了一种类型，通过它你可以以当前操作的日期和时间自动地标记 Insert或Update 操作。如果一张表中有多个 TIMESTAMP 列，只有第一个被自动更新。 目前我在项目中使用了DATETIME和DATE类型。 例如DATETIME类型的数据在数据库中如下： 在写入数据库中的时候，用了NOW()函数，让数据库自动写入当前系统时间，对应SQL语句如下：INSERT INTO USER(CREATEDATE) VALUES(now()) DATE类型的数据在数据库中如下： 这条数据在应用中是通过前台传字符串，后台转为DATE格式的。例如前台传来的字符串为”2017-11-21”，用STR_TO_DATE(&#39;2017-11-21&#39;,&#39;%Y-%m-%d&#39;)来转换，当然也可以转换DATETIME格式的日期。 目前项目中还没有使用TIMESTAMP数据类型。暂时不予详细展开。]]></content>
+      <categories>
+        <category>学习</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[C#操作mysql数据库执行SqlDataReader.Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法]]></title>
+    <url>%2F2017%2F12%2F03%2FC-%E6%93%8D%E4%BD%9Cmysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%89%A7%E8%A1%8CSqlDataReader-Read%E5%90%8E%E4%BD%BF%E7%94%A8%E5%8F%A6%E4%B8%80%E4%B8%AASQLCommand%E6%89%A7%E8%A1%8CInsert%E6%93%8D%E4%BD%9C%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[今天在写WEBAPI的时候，进行用户注册的编写，发生了如下错误： 后来确定了发生错误的原因是执行SqlDataReader.Read之后，如果还想用另一个SqlCommand执行Insert或者Update操作的话，会得到一个错误提示：There is already an open DataReader associated with this Command which must be closed first.，然后一般就会产生数据保存失败的异常。 注册用户的代码如下： 12345678910111213141516171819202122232425262728293031323334353637383940 public string RegisterUser(string uname,string upwd,string email,string mobile,string confirmpassword) &#123; MySqlConnection mysql = getMySqlConnection(); mysql.Open(); try &#123; if (uname == null || email == null || upwd == null || mobile == null || confirmpassword == null) &#123; return &quot;请完善信息&quot;; &#125; if (!String.Equals(upwd, confirmpassword)) &#123; return &quot;两次输入密码不一致！&quot;; &#125; string CheckUser = &quot;Select * from name where username=&apos;&quot; + uname + &quot;&apos;&quot;; MySqlCommand mySqlCommand = getSqlCommand(CheckUser, mysql); MySqlDataReader reader = mySqlCommand.ExecuteReader(); if (reader.Read()) &#123; return &quot;用户已存在&quot;; &#125; else &#123; string AddUser = @&quot;Insert into name(username,pword,email,mobile)Values(&apos;&quot; + uname + &quot;&apos;,&apos;&quot; + upwd + &quot;&apos;,&apos;&quot; + email + &quot;&apos;,&apos;&quot; + mobile + &quot;&apos;)&quot;; MySqlCommand insertuser = new MySqlCommand(AddUser, mysql); if (insertuser.ExecuteNonQuery() &gt; 0) &#123; return &quot;注册成功！&quot;; &#125; else &#123; return &quot;注册失败！&quot;; &#125; &#125; &#125; catch &#123; return &quot;错误&quot;; &#125; finally &#123; mysql.Close(); &#125;&#125; 在知道了报错原因后，在网上搜了两种方法： 1.不要用共用一个connection,用完就释放，所以在下面先把connection关闭再连接，测试可行。 2.关闭当前的reader方法。然后继续执行代码 ，可行。 暂时是用这两种方法解决了问题，以后有更好的方法再补充。]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>C#</tag>
+        <tag>遇到的坑</tag>
+        <tag>mysql</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[C#将多个文件打包成.zip文件]]></title>
+    <url>%2F2017%2F10%2F30%2FC-%E5%B0%86%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E6%89%93%E5%8C%85%E6%88%90-zip%E6%96%87%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[近几天的项目作业过程中，遇到了需要一键下载多个文件的需求，于是想采取在后台将需要一键下载的文件打包成压缩文件，然后进行下载的方式。 在.net4.5中可以使用调用winrar命令的方式来直接进行生成压缩文件。但是在这里我采用引入ICSharpCode.SharpZipLib.dll的方法，（官方下载地址：http://www.icsharpcode.net/opensource/sharpziplib/ ） 用这个程序集将windows文件进行打包。 首先，将打包的方法封装在一个类中，然后在一般应用程序.ashx文件中调用相应的方法。因为在项目中只需要进行打包文件，所以这里只写一下压缩文件的代码，解压缩的方法应该类似，我没有试过。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091using System;using System.Linq;using System.IO;using ICSharpCode.SharpZipLib.Zip;using ICSharpCode.SharpZipLib.Checksums;using System.Diagnostics;using Microsoft.Win32;namespace ZipCommon&#123; public class ZipHelper &#123; #region 压缩多个文件 /// &lt;summary&gt; /// 压缩多个文件 /// &lt;/summary&gt; /// &lt;param name=&quot;files&quot;&gt;文件名&lt;/param&gt; /// &lt;param name=&quot;ZipedFileName&quot;&gt;压缩包文件名&lt;/param&gt; /// &lt;param name=&quot;Password&quot;&gt;解压码&lt;/param&gt; /// &lt;returns&gt;&lt;/returns&gt; public static void Zip1(string[] files, string ZipedFileName, string Password) &#123; files = files.Where(f =&gt; File.Exists(f)).ToArray(); if (files.Length == 0) throw new FileNotFoundException(&quot;未找到指定打包的文件&quot;); ZipOutputStream s = new ZipOutputStream(File.Create(ZipedFileName)); s.SetLevel(6); if (!string.IsNullOrEmpty(Password.Trim())) s.Password = Password.Trim(); ZipFileDictory(files, s); s.Finish(); s.Close(); &#125; /// &lt;summary&gt; /// 压缩多个文件 /// &lt;/summary&gt; /// &lt;param name=&quot;files&quot;&gt;文件名&lt;/param&gt; /// &lt;param name=&quot;ZipedFileName&quot;&gt;压缩包文件名&lt;/param&gt; /// &lt;returns&gt;&lt;/returns&gt; public static void Zip(string[] files, string ZipedFileName) &#123; Zip1(files, ZipedFileName, string.Empty); &#125; public static void ZipFileDictory(string[] files, ZipOutputStream s) &#123; ZipEntry entry = null; FileStream fs = null; Crc32 crc = new Crc32(); try &#123; //创建当前文件夹 entry = new ZipEntry(&quot;/&quot;); //加上 “/” 才会当成是文件夹创建 s.PutNextEntry(entry); s.Flush(); foreach (string file in files) &#123; //打开压缩文件 fs = File.OpenRead(file); byte[] buffer = new byte[fs.Length]; fs.Read(buffer, 0, buffer.Length); entry = new ZipEntry(&quot;/&quot; + Path.GetFileName(file)); entry.DateTime = DateTime.Now; entry.Size = fs.Length; fs.Close(); crc.Reset(); crc.Update(buffer); entry.Crc = crc.Value; s.PutNextEntry(entry); s.Write(buffer, 0, buffer.Length); &#125; &#125; finally &#123; if (fs != null) &#123; fs.Close(); fs = null; &#125; if (entry != null) entry = null; GC.Collect(); &#125; &#125; #endregion 压缩多个文件 &#125;&#125; 直接调用 ZipHelper.Zip（filepaths，zipedfilepath）即可。注意： zipedfilepath的父级目录必须存在，否则在创建.zip文件时会报目录不存在的错误。这个坑我也遇到过。还有一点要注意的是，这里的方法都是静态的，所以在调用方法时不需要进行实例化，只需写成 ZipHelper.Zip（filepaths，zipedfilepath） 这种形式就可以了。 在.ashx文件中的代码如下： 1234567891011121314 #region 打包public void CreateZip(string WORD002,string WORD003,string WORD004,string WORD005,string WORD006,string WORD007) &#123; string[] files = new string[6]; files[0] = WORD002; files[1] = WORD003; files[2] = WORD004; files[3] = WORD005; files[4] = WORD006; files[5] = WORD007; ZIPFILEPATH = 绝对路径+文件名+ &quot;.zip&quot;;//这里要加上拓展名 ZipHelper.Zip(files,ZIPFILEPATH); &#125; #endregion 这里的WORD002-007是要打包的文件的路径，将其存放在数组中，ZIPFILEPATH则是在服务器端要存放的打包文件的路径，需要绝对路径。 看一下需要打包的六个文件： 生成ZIP文件成功： 解压后的文件也可以正常打开： 在实施过程中还遇到了一个坑，刚开始我的服务器上并没有安装winrar，而是安装了360压缩，导致在生成ZIP文件后，出现压缩错误的提示，在装了winrar并使用后，发现时正常的。 这时候只要把服务器上的zip路径传到前台，就可以下载了、]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>C#</tag>
+        <tag>遇到的坑</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[通过C#向Word文档的表格中的任一行增加新行]]></title>
+    <url>%2F2017%2F10%2F25%2F%E9%80%9A%E8%BF%87C-%E5%90%91Word%E6%96%87%E6%A1%A3%E7%9A%84%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E4%BB%BB%E4%B8%80%E8%A1%8C%E5%A2%9E%E5%8A%A0%E6%96%B0%E8%A1%8C%2F</url>
+    <content type="text"><![CDATA[今天在项目的作业过程中，遇到了需要通过C#操作Word模板向其中的表格添加内容。作业过程中发现，往往有的时候模板的表格的行数会多于或者少于所要写入的数据数量。而模板行数少于数据条数时会发生写入错误的提示，导致文档生成失败。因此需要根据需要写入的数据的数量来确定所需要的表格的数量，也就是能够动态的改变模板的表格的行数。在网上搜了一好久，发现很多给现有的表格添加一行的方法都是只能够在表格的最后一列添加，而项目需求的模板中需要动态改变添加行数的表格不在最前面也不在最后面，恰恰在中间。因此，搜了好久加上实验，终于找到了方法。在此做个记录。 首先，说一下用C# .NET操作Word文档需要的引用： 在新定义的类中添加头文件和书写代码：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101using System;using Microsoft.Office.Interop.Word;namespace WordDemo //这边需要换成自己的命名空间名&#123; public class Report &#123; private _Application wordApp = null; private _Document wordDoc = null; public _Application Application &#123; get &#123; return wordApp; &#125; set &#123; wordApp = value; &#125; &#125; public _Document Document &#123; get &#123; return wordDoc; &#125; set &#123; wordDoc = value; &#125; &#125; //通过模板创建新文档 public void CreateNewDocument(string filePath) &#123; killWinWordProcess(); wordApp = new ApplicationClass(); wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone; wordApp.Visible = false; object missing = System.Reflection.Missing.Value; object templateName = filePath; wordDoc = wordApp.Documents.Open(ref templateName, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing); &#125; //保存新文件 public void SaveDocument(string filePath) &#123; object fileName = filePath; object format = WdSaveFormat.wdFormatDocument;//保存格式 object miss = System.Reflection.Missing.Value; wordDoc.SaveAs(ref fileName, ref format, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss); //关闭wordDoc，wordApp对象 object SaveChanges = WdSaveOptions.wdSaveChanges; object OriginalFormat = WdOriginalFormat.wdOriginalDocumentFormat; object RouteDocument = false; wordDoc.Close(ref SaveChanges, ref OriginalFormat, ref RouteDocument); wordApp.Quit(ref SaveChanges, ref OriginalFormat, ref RouteDocument); &#125; //给表格插入rows行,n为表格的序号 public void AddRow(int n, int rows) &#123; object miss = System.Reflection.Missing.Value; Microsoft.Office.Interop.Word.Table table = wordDoc.Content.Tables[n]; for (int i = 0; i &lt; rows; i++) &#123; table.Rows.Add(ref miss); &#125; &#125; //在第n个表格的rows行前面插入新行, public void AddNewRow(int n,int rows) &#123; object beforeRow = wordDoc.Tables[n].Rows[rows]; Microsoft.Office.Interop.Word.Table table = wordDoc.Content.Tables[n]; table.Rows.Add(beforeRow); &#125; // 杀掉winword.exe进程 public void killWinWordProcess() &#123; System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcessesByName(&quot;WINWORD&quot;); foreach (System.Diagnostics.Process process in processes) &#123; bool b = process.MainWindowTitle == &quot;&quot;; if (process.MainWindowTitle == &quot;&quot;) &#123; process.Kill(); &#125; &#125; &#125; &#125;&#125; 在上面的 AddNewRow(int n,int rows)函数中，可以根据实际情况设置要插入第几个表格和在第几行前面插入新行。调用代码： 插入前： 插入后： 可以根据实际情况设置循环的数量 ，实现动态添加。]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>C#</tag>
+        <tag>遇到的坑</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[将图片以二进制流方式存入数据库和从数据库读取(c#,oracle 11g)]]></title>
+    <url>%2F2017%2F10%2F23%2F%E5%B0%86%E5%9B%BE%E7%89%87%E4%BB%A5%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B5%81%E6%96%B9%E5%BC%8F%E5%AD%98%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93-c-oracle-11g%2F</url>
+    <content type="text"><![CDATA[在项目的实施过程中，遇到了一个问题：项目需求网页前端读取一张照片，以二进制的方式存入oracle数据库中。这个问题，用了一天的时间解决，所以写此文记录一下。 在网上搜了一圈，并加以实施发现实施过程如下：前台获取图片路径，用FileReader读取后，可以转换为base64编码的字符串，然后通过ajax 将base64格式编码字符串传到后台，C#读取前台传来的字符串，将其转化存到byte[] 数组中，最后写入数据库。 下面为实现代码和预览结果：前端：123456789&lt;div class=&quot;form-group&quot;&gt; &lt;label class=&quot;col-sm-2 control-label&quot; for=&quot;PHOTO&quot;&gt;个人照片&lt;/label&gt; &lt;div id=&quot;imgForm&quot; class=&quot;col-sm-10&quot; style=&quot;margin:4px auto 5px auto&quot;&gt; &lt;p id=&quot;imagesize&quot; style=&quot;display:none&quot;&gt;&lt;/p&gt;//上传图片后可以显示图片尺寸 &lt;img id=&quot;preview&quot; /&gt; &lt;br /&gt; &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;img&quot; /&gt;//&lt;input&gt;标签有type=&quot;file&quot;用来上传文件 &lt;/div&gt;&lt;/div&gt; 预览结果： 个人照片 123456789101112131415161718192021222324252627282930313233343536373839 var imgFile; var justify = &quot;1&quot;;//用来判断图片大小是否超出尺寸，1代表没有超出，0代表超出 document.getElementById(&apos;img&apos;).onchange = function () &#123;//判断是否支持FileReader if (window.FileReader) &#123; var reader = new FileReader(); &#125; else &#123; alert(&quot;不支持图片预览功能，如需该功能请升级！&quot;); &#125; justify = &quot;1&quot;; var img = event.target.files[0]; // 判断是否图片 if (!img) &#123; return false; &#125; // 判断图片格式 if (!(img.type.indexOf(&apos;image&apos;) == 0 &amp;&amp; img.type &amp;&amp; /\.(?:jpg|jpeg)$/.test(img.name))) &#123; alert(&apos;图片只能是jpg jpeg&apos;); return false; &#125; var reader = new FileReader(); reader.readAsDataURL(img); reader.onload = function (e) &#123; imgFile = e.target.result; //获取图片dom var img1 = document.getElementById(&quot;preview&quot;); //图片路径设置为读取的图片 img1.src = e.target.result; var imgwidth = img1.offsetWidth;//获取图片宽高 var imgheight = img1.offsetHeight; var size = document.getElementById(&apos;imagesize&apos;); size.style.display = &quot;block&quot;; size.innerHTML = imgwidth + &quot;×&quot; + imgheight; if (imgwidth &gt; 600 || imgheight &gt; 800) &#123; justify = &quot;0&quot;; alert(&quot;图片尺寸不应大于600×800&quot;); &#125; &#125;&#125; 这时候写一个button 触发函数通过ajax来上传照片到后台： 提交 1234567&lt;div class=&quot;box-footer&quot;&gt; &lt;div class=&quot;box-tools col-sm-2&quot;&gt; &lt;div class=&quot;has-feedback&quot;&gt; &lt;button id=&quot;btn2&quot; type=&quot;submit&quot; class=&quot;btn btn-primary&quot; onclick=&quot;AddExperts()&quot;&gt;提交&lt;/button&gt; &lt;/div&gt; &lt;/div&gt;&lt;/div&gt; 123456789101112131415161718function AddExperts() &#123; var postimg = imgFile; $.ajax(&#123; type: &quot;POST&quot;, async: false, url: &quot;ashx/zlgly-zjgl-add.ashx&quot;, contentType: &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;, data: &#123;img: postimg, JUSTIFY: justify &#125;, timeout: 1000, cache: false, success: function (result) &#123; if (result) &#123; alert(result); &#125; &#125; &#125;); &#125; 以一张照片为例，如果上传了一张jpg或者jepg格式的图片，postimg为很长的一串字符串。 至此前端的操作就到此结束了，下面进入后台的.ashx文件查看相关代码： 123456789101112131415161718192021222324252627282930313233343536373839404142434445using System;using System.Data;using System.Configuration;using System.Web;using Oracle.ManagedDataAccess.Client;public class 后台文件 : IHttpHandler&#123; public void ProcessRequest(HttpContext context) &#123; context.Response.ContentType = &quot;text/plain&quot;; //从前端读取数据 string myFile = context.Request.Form[&quot;img&quot;]; string text = myFile.Substring(23);//截取base64字符串23个字符之后的内容 string JUSTIFY = context.Request.Form[&quot;JUSTIFY&quot;]; byte[] imageBytes = Convert.FromBase64String(text);//将base64字符串转化为byte[] 格式 if (JUSTIFY == &quot;0&quot;) &#123; context.Response.Write(&quot;图片大小超出尺寸&quot;); context.Response.End(); &#125; else &#123; //与数据库连接 string myvar = ConfigurationManager.ConnectionStrings[&quot;Conn&quot;].ToString(); OracleConnection conn = new OracleConnection(myvar); try &#123; conn.Open(); &#125; catch (Exception ex) &#123; context.Response.Write(ex.Message); context.Response.End(); &#125; string insertimg = &quot;update EXPERTS SET IMAGE=:imageBytes where 条件=&apos;&quot; + 条件 + &quot;&apos;&quot;; OracleCommand cmd = new OracleCommand(insertimg, conn); cmd.Parameters.Add(new OracleParameter(&quot;imageBytes&quot;, OracleDbType.Blob)); cmd.Parameters[&quot;imageBytes&quot;].Value = imageBytes; &#125;&#125; 这里向c#数据库的blob中写入图片，在网上搜了一段代码，也可以用，思路更清晰：12345678910111213141516171819202122232425262728//打开数据库String connectionstring = &quot;Data Source=apts_test;user id=aptstest;password=test&quot;;OracleConnection con =new OracleConnection(connectionstring);con.Open();//向指定记录添加blob字段，例如图片private void add_blob() &#123; String sql = @&quot;update testxx set image=:myimage where ID=:myid&quot;;//在testxx表中有个字段叫image是blob类型的注意中的冒号，通过myid制定记录 OracleCommand cmd = new OracleCommand(sql, con); cmd.Parameters.Add(new OracleParameter(&quot;myimage&quot;, OracleType.Blob));//给这个两个参数赋值myimage和myid cmd.Parameters.Add(new OracleParameter(&quot;myid&quot;, OracleType.VarChar)); cmd.Parameters[&quot;myid&quot;].Value = &quot;1&quot;; //给image字段赋值字节数组 FileStream fs = File.OpenRead(&quot;D:/ 2.jpg&quot;); byte[] imagebyte = new byte[fs.Length]; fs.Read(imagebyte, 0, (int)fs.Length); cmd.Parameters[&quot;myimage&quot;].Value = imagebyte; try &#123; int result = cmd.ExecuteNonQuery(); if (result &lt; 1) System.Console.WriteLine(&quot;success&quot;); else System.Console.WriteLine(&quot;error&quot;); &#125; catch (Exception e1) &#123; &#125;&#125; 在pl/sql developer中查看上传结果可以看到已经上传成功了： 当然因为这里在后台没有判断照片的尺寸，后期会进行更新。 当然，读取的方式类似。将blob中byte[] 格式转换为base64 ，但这个时候要注意开始时是把base64最前面的23个字符给去掉了，这时候要加上。 1234567891011121314151617181920212223242526DataTable td = new DataTable(&quot;Name&quot;);//创建datatable来存放td.Columns.Add(&quot;IMAGE&quot;, Type.GetType(&quot;System.String&quot;));//增加一列，列名为IMAGEtd.Rows.Add();//增加一行string sql = &quot;SELECT * FROM 表名 WHERE 条件 &quot;+ 条件 + &quot;&apos;&quot;;OracleCommand cmd = new OracleCommand(sql, conn);cmd.CommandType = System.Data.CommandType.Text;OracleDataReader = cmd.ExecuteReader(); if (sdr.Read()) &#123; if(!sdr.IsDBNull(12)) &#123; byte[] img =(byte[])sdr[&quot;IMAGE&quot;]; string pic =&quot;data:image/jpeg;base64,&quot;+ Convert.ToBase64String(img);//加上字符串 td.Rows[0][&quot;IMAGE&quot;] = pic; &#125; string jsonresult = JsonConvert.SerializeObject(td); context.Response.Write(jsonresult);//传到前台 context.Response.End(); &#125; else &#123; context.Response.Write(&quot;1&quot;); context.Response.End(); &#125; &#125; 这时候传到前台的还是base64字符串，而且img标签可以自动将base6码放入 img的 src=” “‘中,html会自动转码，至此就实现了图片导数据库和数据库到图片的整套读取方法了。]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>C#</tag>
+        <tag>遇到的坑</tag>
+        <tag>数据库</tag>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Arguments的用法初试]]></title>
+    <url>%2F2017%2F09%2F03%2FArguments%E7%9A%84%E7%94%A8%E6%B3%95%E5%88%9D%E8%AF%95%2F</url>
+    <content type="text"><![CDATA[在FCC做题的过程中，遇到了一个初级的算法题，题目用到了arguments对象。在这里对arguments的用法进行一些总结。 首先，在FCC中的题目如下： 摧毁数组实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。 123456789101112131415function destroyer(arr) &#123; //arr = (6) [1, 2, 3, 1, 2, 3] var arr_arg=arguments; //arr_arg = (3) [Array(6), 2, 3] for(var i = 1; i &lt; arr_arg.length; i++)&#123; //先让arr_arg[1](也就是2)与arr的每一个元素比较，保留或者摧毁。第一次循环后arr=[1,2,1,2]然后第二次循环让arr_arg[2](也就是3)与arr的每一个元素比较，保留或者摧毁。第二次循环后arr=[1,1] arr = arr.filter(function(val)&#123; return arr_arg[i] !== val; &#125;); &#125; return arr;&#125;destroyer([1, 2, 3, 1, 2, 3], 2, 3);//[1,1]destroyer([1, 2, 3, 5, 1, 2, 3], 2, 3) ;//[1, 5, 1]destroyer([3, 5, 1, 2, 2], 2, 3, 5);//[1]destroyer([2, 3, 2, 3], 2, 3);//[]destroyer([&quot;tree&quot;, &quot;hamburger&quot;, 53], &quot;tree&quot;, 53);//[&quot;hamburger&quot;] 先来看下《JavaScript高级程序设计》中对于arguments的一些解释： ECMAScript 函数的参数与大多数其他语言中函数的参数有所不同。 ECMAScript 函数不介意传递进来多少个参数，也不在乎传进来参数是什么数据类型。也就是说，即便你定义的函数只接收两个参数，在调用这个函数时也未必一定要传递两个参数。可以传递一个、三个甚至不传递参数，而解析器永远不会有什么怨言。之所以会这样，原因是ECMAScript 中的参数在内部是用一个数组来表示的。函数接收到的始终都是这个数组，而不关心数组中包含哪些参数（如果有参数的话）。如果这个数组中不包含任何元素，无所谓；如果包含多个元素，也没有问题。实际上，在函数体内可以通过 arguments 对象来访问这个参数数组，从而获取传递给函数的每一个参数。 其实， arguments 对象只是与数组类似（它并不是 Array 的实例），因为可以使用方括号语法访问它的每一个元素（即第一个元素是 arguments[0]，第二个元素是 argumetns[1]，以此类推），使用 length 属性来确定传递进来多少个参数。在前面的例子中， sayHi()函数的第一个参数的名字叫name，而该参数的值也可以通过访问 arguments[0]来获取。因此，那个函数也可以像下面这样重写，即不显式地使用命名参数： function sayHi() { alert(&quot;Hello &quot; + arguments[0] + &quot;,&quot; + arguments[1]);}这个重写后的函数中不包含命名的参数。虽然没有使用 name 和 message 标识符，但函数的功能依旧。这个事实说明了 ECMAScript 函数的一个重要特点：命名的参数只提供便利，但不是必需的。另外，在命名参数方面，其他语言可能需要事先创建一个函数签名，而将来的调用必须与该签名一致。但在 ECMAScript 中，没有这些条条框框，解析器不会验证命名参数。通过访问 arguments 对象的 length 属性可以获知有多少个参数传递给了函数。下面这个函数会在每次被调用时，输出传入其中的参数个数：function howManyArgs() { alert(arguments.length); }howManyArgs(&quot;string&quot;, 45); //2howManyArgs(); //0 howManyArgs(12); //1 执行以上代码会依次出现 3 个警告框，分别显示 2、 0 和 1。由此可见，开发人员可以利用这一点让函数能够接收任意个参数并分别实现适当的功能。请看下面的例子： function doAdd() {if(arguments.length == 1) {alert(arguments[0] + 10);} else if (arguments.length == 2) {alert(arguments[0] + arguments[1]);}}doAdd(10); //20doAdd(30, 20); //50函数 doAdd()会在只有一个参数的情况下给该参数加上 10；如果是两个参数，则将那个参数简单相加并返回结果。因此， doAdd(10)会返回 20，而 doAdd(30,20)则返回 50。虽然这个特性算不上完美的重载，但也足够弥补 ECMAScript 的这一缺憾了。另一个与参数相关的重要方面，就是 arguments 对象可以与命名参数一起使用，如下面的例子所示：function doAdd(num1, num2) {if(arguments.length == 1) {alert(num1 + 10);} else if (arguments.length == 2) {alert(arguments[0] + num2);}}在重写后的这个 doAdd()函数中，两个命名参数都与 arguments 对象一起使用。由于 num1 的值与 arguments[0]的值相同，因此它们可以互换使用（当然， num2 和 arguments[1]也是如此）。关于 arguments 的行为，还有一点比较有意思。那就是它的值永远与对应命名参数的值保持同步。例如：function doAdd(num1, num2) {arguments[1] = 10;alert(arguments[0] + num2);}每次执行这个 doAdd()函数都会重写第二个参数，将第二个参数的值修改为 10。因为 arguments对象中的值会自动反映到对应的命名参数，所以修改 arguments[1]，也就修改了 num2，结果它们的值都会变成 10。不过，这并不是说读取这两个值会访问相同的内存空间；它们的内存空间是独立的，但它们的值会同步。另外还要记住，如果只传入了一个参数，那么为 arguments[1]设置的值不会反应到命名参数中。这是因为 arguments 对象的长度是由传入的参数个数决定的，不是由定义函数时的命名参数的个数决定的。关于参数还要记住最后一点：没有传递值的命名参数将自动被赋予 undefined 值。这就跟定义了变量但又没有初始化一样。例如，如果只给 doAdd()函数传递了一个参数，则 num2 中就会保存undefined 值。严格模式对如何使用 arguments 对象做出了一些限制。首先，像前面例子中那样的赋值会变得无效。也就是说，即使把 arguments[1]设置为 10， num2 的值仍然还是 undefined。其次，重写arguments 的值会导致语法错误（代码将不会执行）。 这里再回过头来看最开始的那个初级的算法题，就很简单了，传递的值是:([1,2,3,1,2,3],2,3),即arguments[0] = [1,2,3,1,2,3], arguments[1] = 2 , arguemnts[2] = 3 .这样让arr_arg=arguments，即定义一个数组等于当前传入的数组，在后面进行使用。后面的部分就很好理解了，用Array.filter()方法调用括号内的function函数，让循环从1开始，即让待摧毁的值与数组中的每一个值比较，返回false或者true进而摧毁或者保留。]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[初级算法]]></title>
+    <url>%2F2017%2F09%2F02%2F%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法： 123456789101112function factorialize(num) &#123; var number=1; while(num&gt;=1)&#123; number*=num; num--; &#125; return number; &#125; factorialize(10); //3628800 factorialize(20); // 2432902008176640000 factorialize(0); //1 递归下面是递归的方法： 123456789101112function factorialize(num) &#123; if (num === 0)&#123; return 1; &#125; else&#123; return num * factorialize(num - 1); &#125;&#125;factorialize(10); //3628800factorialize(20); // 2432902008176640000factorialize(0); //1 分割数组把一个数组arr按照指定的数组大小size分割成若干个数组块。 例如:chunk([1,2,3,4],2)=[[1,2],[3,4]]; 1234567891011function chunk(arr, size) &#123; var arr2=[]; for(var i=0;i&lt;arr.length;i=i+size)&#123; arr2.push(arr.slice(i,i+size)); &#125; return arr2; &#125;chunk([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 2);chunk([0, 1, 2, 3, 4, 5, 6], 3); // [[0, 1, 2], [3, 4, 5], [6]]chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4); // [[0, 1, 2, 3], [4, 5, 6, 7], [8]] 截断数组截断数组的代码： 123456function slasher(arr, howMany) &#123; arr.splice(0,howMany); return arr; &#125; slasher([1, 2, 3], 2); splice() 方法通过删除现有元素和/或添加新元素来更改一个数组的内容。splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。 例如： 12345var myFish = [&apos;angel&apos;, &apos;clown&apos;, &apos;mandarin&apos;, &apos;sturgeon&apos;];myFish.splice(2, 0, &apos;drum&apos;); // 在索引为2的位置插入&apos;drum&apos;// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;drum&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]myFish.splice(2, 1); // 从索引为2的位置删除一项（也就是&apos;drum&apos;这一项）// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;] 比较字符串比较字符串 如果数组第一个字符串元素包含了第二个字符串元素的所有字符，函数返回true。 举例，[“hello”, “Hello”]应该返回true，因为在忽略大小写的情况下，第二个字符串的所有字符都可以在第一个字符串找到。 [“hello”, “hey”]应该返回false，因为字符串”hello”并不包含字符”y”。 1234567891011121314function mutation(arr) &#123; var arr2=arr[1].toLowerCase().split(&quot;&quot;);// 先把后面的字符串拆分成数组 for(var i=0;i&lt;arr2.length;i++)&#123; if(arr[0].toLowerCase().indexOf(arr2[i])&lt;0)&#123; //将前面的数组转化为小写后与后面拆分的数组的每一个字母比较， indexOf不包含的情况会返回-1 return false; &#125; &#125; return true; &#125;mutation([&quot;hello&quot;, &quot;hey&quot;]);//falsemutation([&quot;hello&quot;, &quot;Hello&quot;]);//truemutation([&quot;zyxwvutsrqponmlkjihgfedcba&quot;, &quot;qrstu&quot;]);//true split() 方法使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。 split() str.split([separator[, limit]])separator指定表示每个拆分应发生的点的字符串。separator 可以是一个字符串或正则表达式。 如果纯文本分隔符包含多个字符，则必须找到整个字符串来表示分割点。如果在str中省略或不出现分隔符，则返回的数组包含一个由整个字符串组成的元素。如果分隔符为空字符串，则将str原字符串中每个字符的数组形式返回。limit一个整数，限定返回的分割片段数量。当提供此参数时，split 方法会在指定分隔符的每次出现时分割该字符串，但在限制条目已放入数组时停止。如果在达到指定限制之前达到字符串的末尾，它可能仍然包含少于限制的条目。新数组中不返回剩下的文本。 过滤数组假值删除数组中的所有假值。 在JavaScript中，假值有false、null、0、””、undefined 和 NaN。 参考：Boolean Objects Array.filter() 123456789function bouncer(arr) &#123; return arr.filter(isBad); function isBad(params)&#123; var result = Boolean(params); return result; &#125;&#125;bouncer([7, &quot;ate&quot;, &quot;&quot;, false, 9]);//[7, &quot;ate&quot;, 9]bouncer([false, null, 0, NaN, undefined, &quot;&quot;]);// [] 数组排序并找出元素索引先给数组排序，然后找到指定的值在数组的位置，最后返回位置对应的索引。 举例：where([1,2,3,4], 1.5) 应该返回 1。因为1.5插入到数组[1,2,3,4]后变成[1,1.5,2,3,4]，而1.5对应的索引值就是1。 同理，where([20,3,5], 19) 应该返回 2。因为数组会先排序为 [3,5,20]，19插入到数组[3,5,20]后变成[3,5,19,20]，而19对应的索引值就是2。 这题的思路就比较简单了，先把后面的数加到前面的数组中，然后对加入新数的数组进行排序，最后找到新加入的数字的索引即可。下面是我自己写的代码： 123456789101112131415161718192021function where(arr, num) &#123; var arr1=[]; arr.push(num); arr.sort( function(a,b)&#123; return a-b; &#125;); for(var i=0;i&lt;arr.length;i++)&#123; if(arr[i]===num)&#123; return i; &#125; &#125; &#125;where([40, 60], 50); //1where([10, 20, 30, 40, 50], 35);//3where([10, 20, 30, 40, 50], 30);// 2where([40, 60], 50);// 1where([3, 10, 5], 3);// 0where([5, 3, 20, 3], 5);// 2where([2, 20, 10], 19);// 2where([2, 5, 10], 15);// 3 后面再网上看到了一个其他的方法，可以用 Array.indexOf() 方法直接获取元素的索引值，其他的思路一样。代码如下：12345678function where(arr, num) &#123; var arr1=[]; arr.push(num); arr.sort( function(a,b)&#123; return a-b; &#125;); return arr.indexOf(num);&#125; 凯撒密码下面我们来介绍风靡全球的凯撒密码Caesar cipher，又叫移位密码。 移位密码也就是密码中的字母会按照指定的数量来做移位。 一个常见的案例就是ROT13密码，字母会移位13个位置。由’A’ ↔ ‘N’, ‘B’ ↔ ‘O’，以此类推。 写一个ROT13函数，实现输入加密字符串，输出解密字符串。 所有的字母都是大写，不要转化任何非字母形式的字符(例如：空格，标点符号)，遇到这些特殊字符，跳过它们。 可能用到的内容：String.charCodeAt()String.fromCharCode()ASCII码对照表 大写字母的对应关系如下：ABCDEFGHIJKLMNOPQRSTUVWXYZNOPQRSTUVWXYZABCDEFGHIJKLM 12345678910111213141516171819202122232425function rot13(str) &#123; var arr=[]; for(var i=0;i&lt;str.length;i++)&#123; //遍历字符串的每一个字符 //其他字符等非大写字母字符 if(str.charCodeAt(i)&lt;65||str.charCodeAt(i)&gt;90)&#123; arr.push(String.fromCharCode(str.charCodeAt(i))); &#125; //大写字母的ASCII码表对应的数值为65-90 else if(str.charCodeAt(i)&gt;77)&#123; arr.push(String.fromCharCode(str.charCodeAt(i)-13)); &#125; else&#123; arr.push(String.fromCharCode(str.charCodeAt(i)+13)); &#125; &#125; return arr.join(&quot;&quot;);&#125;console.log(rot13(&quot;SERR PBQR PNZC&quot;)); // FREE CODE CAMProt13(&quot;SERR CVMMN!&quot;)); // &quot;FREE PIZZA!&quot;rot13(&quot;SERR YBIR?&quot;) ); // &quot;FREE LOVE?&quot;rot13(&quot;GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK.&quot;)); // &quot;THE QUICK BROWN DOG JUMPED OVER THE LAZY FOX.&quot; 返回给定的两个数组中不同的值Diff Two Arrays比较两个数组，然后返回一个新数组，该数组的元素为两个给定数组中所有独有的数组元素。换言之，返回两个数组的差异。 Array.indexOf() Array.concat() 123456789101112131415161718192021function diff(arr1, arr2) &#123; var newArr = []; // Same, same; but different. var arr3 = []; for (var i=0;i&lt;arr1.length;i++) &#123; if(arr2.indexOf(arr1[i]) === -1) arr3.push(arr1[i]); &#125; var arr4 = []; for (var j=0;j&lt;arr2.length;j++) &#123; if(arr1.indexOf(arr2[j]) === -1) arr4.push(arr2[j]); &#125; newArr = arr3.concat(arr4); return newArr;&#125;diff([1, 2, 3, 5], [1, 2, 3, 4, 5]);//[4][1, &quot;calf&quot;, 3, &quot;piglet&quot;], [1, &quot;calf&quot;, 3, 4];// [&quot;piglet&quot;, 4][], [&quot;snuffleupagus&quot;, &quot;cookie monster&quot;, &quot;elmo&quot;] ;// [&quot;snuffleupagus&quot;, &quot;cookie monster&quot;, &quot;elmo&quot;][1, &quot;calf&quot;, 3, &quot;piglet&quot;], [7, &quot;filly&quot;];// [1, &quot;calf&quot;, 3, &quot;piglet&quot;, 7, &quot;filly&quot;]]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2017%2F08%2F21%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
 </search>
