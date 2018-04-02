@@ -126,7 +126,7 @@
 <meta property="og:image" content="http://homxu.com/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/11.png">
 <meta property="og:image" content="http://homxu.com/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/12.png">
 <meta property="og:image" content="http://homxu.com/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/13.png">
-<meta property="og:updated_time" content="2018-04-02T11:31:22.974Z">
+<meta property="og:updated_time" content="2018-04-02T11:37:46.657Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据基础学习笔记（三）——HBase相关知识（二）">
 <meta name="twitter:description" content="HBase功能组件• HBase的实现包括三个主要的功能组件：– （1）库函数：链接到每个客户端– （2）一个Master主服务器（充当管家的作用）– （3）许多个Region服务器 • 主服务器Master负责管理和维护HBase表的分区信息，维护Region服务器列表，分配Region，负载均衡 • 一个大的表会被分成很多个Region，Region服务器负责存储和维护分配给自己的Region">
@@ -374,7 +374,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,849 字
+                  1,875 字
                 </span>
               
 
@@ -447,24 +447,18 @@
 <p>• 3. Master<br>• 主服务器Master主要负责表和Region的管理工作：<br>– 管理用户对表的增加、删除、修改、查询等操作<br>– 实现不同Region服务器之间的负载均衡<br>– 在Region分裂或合并后，负责重新调整Region的分布<br>– 对发生故障失效的Region服务器上的Region进行迁移</p>
 <p>• 4. Region服务器<br>– Region服务器是HBase中最核心的模块，负责维护分配给自己的Region，并响应用户的读写请求</p>
 <p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/10.png" alt="Region服务器向HDFS文件系统中读写数据"></p>
-<h2 id="Region服务器工作原理"><a href="#Region服务器工作原理" class="headerlink" title="Region服务器工作原理"></a>Region服务器工作原理</h2><ol>
-<li>用户读写数据过程</li>
-</ol>
+<h2 id="Region服务器工作原理"><a href="#Region服务器工作原理" class="headerlink" title="Region服务器工作原理"></a>Region服务器工作原理</h2><p>1.用户读写数据过程</p>
 <p>•用户写入数据时，被分配到相应Region服务器去执行</p>
 <p>•用户数据首先被写入到MemStore和Hlog中</p>
 <p>•只有当操作写入Hlog之后，commit()调用才会将其返回给客户端</p>
 <p>•当用户读取数据时，Region服务器会首先访问MemStore缓存，如果找不到，再去磁盘上面的StoreFile中寻找</p>
 <p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/11.png" alt="用户读写数据过程"></p>
 <p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/12.png" alt="用户读写数据过程"></p>
-<ol>
-<li>缓存的刷新</li>
-</ol>
+<p>2.缓存的刷新</p>
 <p>•系统会周期性地把MemStore缓存里的内容刷写到磁盘的StoreFile文件中，清空缓存，并在Hlog里面写入一个标记</p>
 <p>•每次刷写都生成一个新的StoreFile文件，因此，每个Store包含多个StoreFile文件</p>
 <p>•每个Region服务器都有一个自己的HLog 文件，每次启动都检查该文件，确认最近一次执行缓存刷新操作之后是否发生新的写入操作；如果发现更新，则先写入MemStore，再刷写到StoreFile，最后删除旧的Hlog文件，开始为用户提供服务</p>
-<ol>
-<li>StoreFile 的合并</li>
-</ol>
+<p>3.StoreFile 的合并</p>
 <p>•每次刷写都生成一个新的StoreFile，数量太多，影响查找速度</p>
 <p>•调用Store.compact()把多个合并成一个</p>
 <p>•合并操作比较耗费资源，只有数量达到一个阈值才启动合并</p>
@@ -480,6 +474,7 @@
 <p>• 系统会根据每条日志记录所属的Region对象对HLog数据进行拆分，<br>分别放到相应Region对象的目录下，然后，再将失效的Region重新<br>分配到可用的Region服务器中，并把与该Region对象相关的HLog日<br>志记录也发送给相应的Region服务器</p>
 <p>• Region服务器领取到分配给自己的Region对象以及与之相关的HLog日志记录以后，会重新做一遍日志记录中的各种操作，把日志记录中的数据写入到MemStore缓存中，然后，刷新到磁盘的StoreFile文件中，完成数据恢复</p>
 <p>• 共用日志优点：提高对表的写操作性能；缺点：恢复时需要分拆日志</p>
+<p>本笔记参考自厦门大学林子雨老师的公开课：<a href="https://www.icourse163.org/course/XMU-1002335004" target="_blank" rel="external">https://www.icourse163.org/course/XMU-1002335004</a></p>
 
       
     </div>
