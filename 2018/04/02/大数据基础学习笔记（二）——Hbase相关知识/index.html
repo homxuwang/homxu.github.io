@@ -108,7 +108,7 @@
 <meta name="description" content="Hbase简介HBase是一个高可靠、高性能、面向列、可伸缩的分布式数据库，是谷歌BigTable的开源实现，主要用来存储非结构化和半结构化的松散数据。HBase的目标是处理非常庞大的表，可以通过水平扩展的方式，利用廉价计算机集群处理由超过10亿行数据和数百万列元素组成的数据表。 底层的分布式文件系统用来存储完全非结构化的数据。 Hbase是架构在底层的分布式文件系统HDFS基础之上的同时MR可以">
 <meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="大数据基础学习笔记（二）——Hbase相关知识（一）">
+<meta property="og:title" content="大数据基础学习笔记（二）——HBase相关知识（一）">
 <meta property="og:url" content="http://homxu.com/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/index.html">
 <meta property="og:site_name" content="Homxu">
 <meta property="og:description" content="Hbase简介HBase是一个高可靠、高性能、面向列、可伸缩的分布式数据库，是谷歌BigTable的开源实现，主要用来存储非结构化和半结构化的松散数据。HBase的目标是处理非常庞大的表，可以通过水平扩展的方式，利用廉价计算机集群处理由超过10亿行数据和数百万列元素组成的数据表。 底层的分布式文件系统用来存储完全非结构化的数据。 Hbase是架构在底层的分布式文件系统HDFS基础之上的同时MR可以">
@@ -122,9 +122,9 @@
 <meta property="og:image" content="http://homxu.com/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/8.png">
 <meta property="og:image" content="http://homxu.com/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/7.png">
 <meta property="og:image" content="http://homxu.com/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/9.png">
-<meta property="og:updated_time" content="2018-04-02T08:25:31.459Z">
+<meta property="og:updated_time" content="2018-04-02T10:11:53.713Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大数据基础学习笔记（二）——Hbase相关知识（一）">
+<meta name="twitter:title" content="大数据基础学习笔记（二）——HBase相关知识（一）">
 <meta name="twitter:description" content="Hbase简介HBase是一个高可靠、高性能、面向列、可伸缩的分布式数据库，是谷歌BigTable的开源实现，主要用来存储非结构化和半结构化的松散数据。HBase的目标是处理非常庞大的表，可以通过水平扩展的方式，利用廉价计算机集群处理由超过10亿行数据和数百万列元素组成的数据表。 底层的分布式文件系统用来存储完全非结构化的数据。 Hbase是架构在底层的分布式文件系统HDFS基础之上的同时MR可以">
 <meta name="twitter:image" content="http://homxu.com/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/1.png">
 
@@ -162,7 +162,7 @@
 
 
 
-  <title>大数据基础学习笔记（二）——Hbase相关知识（一） | Homxu</title>
+  <title>大数据基础学习笔记（二）——HBase相关知识（一） | Homxu</title>
   
 
 
@@ -326,7 +326,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">大数据基础学习笔记（二）——Hbase相关知识（一）</h1>
+          <h1 class="post-title" itemprop="name headline">大数据基础学习笔记（二）——HBase相关知识（一）</h1>
         
 
         <div class="post-meta">
@@ -370,7 +370,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,890 字
+                  1,916 字
                 </span>
               
 
@@ -386,7 +386,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6 分钟
+                  7 分钟
                 </span>
               
             </div>
@@ -451,6 +451,7 @@
 <p>传统的数据库，以行为单位进行存储，一行包括ID,姓名，年龄，性别，IP，操作等。<br>但是按列存储，里面的姓名、年龄等进行单独存储。</p>
 <p>它们各自的优缺点：<br><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/9.png" alt="行式存储结构和列式存储结构"></p>
 <p>另外，使用列式存储，数据可以达到很高的数据压缩率。而行式存储，很难压缩。</p>
+<p>本笔记参考自厦门大学林子雨老师的公开课：<a href="https://www.icourse163.org/course/XMU-1002335004" target="_blank" rel="external">https://www.icourse163.org/course/XMU-1002335004</a></p>
 
       
     </div>
@@ -490,6 +491,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/" rel="prev" title="大数据基础学习笔记（三）——HBase相关知识（二）">
+                大数据基础学习笔记（三）——HBase相关知识（二） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -566,7 +571,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
