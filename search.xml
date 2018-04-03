@@ -1,160 +1,913 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[大数据基础学习笔记（三）——HBase相关知识（二）]]></title>
-    <url>%2F2018%2F04%2F02%2F%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94HBase%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%BA%8C%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[HBase功能组件• HBase的实现包括三个主要的功能组件：– （1）库函数：链接到每个客户端– （2）一个Master主服务器（充当管家的作用）– （3）许多个Region服务器 • 主服务器Master负责管理和维护HBase表的分区信息，维护Region服务器列表，分配Region，负载均衡 • 一个大的表会被分成很多个Region，Region服务器负责存储和维护分配给自己的Region，处理来自客户端的读写请求 • 客户端并不是直接从Master主服务器上读取数据，而是在获得Region的存储位置信息后，直接从Region服务器上读取数据 • 客户端并不依赖Master，而是通过Zookeeper来获得Region位置信息，大多数客户端甚至从来不和Master通信，这种设计方式使得Master负载很小 表和Region •开始只有一个Region，后来不断分裂 •Region拆分操作非常快，接近瞬间，因为拆分之后的Region读取的仍然是原存储文件，直到“合并”过程把存储文件异步地写到独立的文件之后，才会读取新文件 这种拆分只是逻辑上的拆分，只是数据的指向发生了变化，它的实际存储还是在原来的旧的Region中的数据。当读新的Region时，后台会有一个合并操作，会把拆分的数据进行重新操作，最终会写到新的文件中去。 一个Region只能存到一个Region服务器上。 Region的定位那么有一个问题，当一个Region被拆成很多个Region时，这些Region会把它打散，分布到不同的地方存储，那么怎么知道它被存到哪里去了呢？ •元数据表，又名.META.表，存储了Region和Region服务器的映射关系 •当HBase表很大时， .META.表也会被分裂成多个Region •根数据表，又名-ROOT-表，记录所有元数据的具体位置 •-ROOT-表只有唯一一个Region，名字是在程序中被写死的 •Zookeeper文件记录了-ROOT-表的位置 •一个-ROOT-表最多只能有一个Region，也就是最多只能有128MB，按照每行（一个映射条目）占用1KB内存计算，128MB空间可以容纳128MB/1KB=2^17 行，也就是说，一个-ROOT-表可以寻址2^17 个.META.表的Region。 •同理，每个.META.表的 Region可以寻址的用户数据表的Region个数是128MB/1KB=2^17 。 •最终，三层结构可以保存的Region数目是(128MB/1KB) × (128MB/1KB) = 2^34 个Region 所以三层架构能够满足企业的需求。 客户端访问数据时的“三级寻址”•为了加速寻址，客户端会缓存位置信息，同时，需要解决缓存失效问题 •寻址过程客户端只需要询问Zookeeper服务器，不需要连接Master服务器 这里的缓存机制采用的是惰性缓存，如果在使用缓存获取数据时，获取不到数据，那么就失效了，这时候再次进行三级寻址过程，以解决缓存失效问题。 HBase运行机制 • 1. 客户端– 客户端包含访问HBase的接口，同时在缓存中维护着已经访问过的Region位置信息，用来加快后续数据访问过程 • 2. Zookeeper服务器– Zookeeper可以帮助选举出一个Master作为集群的总管，并保证在任何时刻总有唯一一个Master在运行，这就避免了Master的“单点失效”问题Zookeeper是一个很好的集群管理工具，被大量用于分布式计算，提供配置维护、域名服务、分布式同步、组服务等。提供管家的功能，维护整个HBase集群。虽然有很多备用的Master，但是它保证只有一个Master是运行的。 • 3. Master• 主服务器Master主要负责表和Region的管理工作：– 管理用户对表的增加、删除、修改、查询等操作– 实现不同Region服务器之间的负载均衡– 在Region分裂或合并后，负责重新调整Region的分布– 对发生故障失效的Region服务器上的Region进行迁移 • 4. Region服务器– Region服务器是HBase中最核心的模块，负责维护分配给自己的Region，并响应用户的读写请求 Region服务器工作原理1.用户读写数据过程 •用户写入数据时，被分配到相应Region服务器去执行 •用户数据首先被写入到MemStore和Hlog中 •只有当操作写入Hlog之后，commit()调用才会将其返回给客户端 •当用户读取数据时，Region服务器会首先访问MemStore缓存，如果找不到，再去磁盘上面的StoreFile中寻找 2.缓存的刷新 •系统会周期性地把MemStore缓存里的内容刷写到磁盘的StoreFile文件中，清空缓存，并在Hlog里面写入一个标记 •每次刷写都生成一个新的StoreFile文件，因此，每个Store包含多个StoreFile文件 •每个Region服务器都有一个自己的HLog 文件，每次启动都检查该文件，确认最近一次执行缓存刷新操作之后是否发生新的写入操作；如果发现更新，则先写入MemStore，再刷写到StoreFile，最后删除旧的Hlog文件，开始为用户提供服务 3.StoreFile 的合并 •每次刷写都生成一个新的StoreFile，数量太多，影响查找速度 •调用Store.compact()把多个合并成一个 •合并操作比较耗费资源，只有数量达到一个阈值才启动合并 Store工作原理•Store是Region服务器的核心 •多个StoreFile合并成一个 •单个StoreFile过大时，又触发分裂操作，1个父Region被分裂成两个子Region HLog工作原理• 分布式环境必须要考虑系统出错。HBase采用HLog保证系统恢复 • HBase系统为每个Region服务器配置了一个HLog文件，它是一种预写式日志（Write Ahead Log） • 用户更新数据必须首先写入日志后，才能写入MemStore缓存，并且，直到MemStore缓存内容对应的日志已经写入磁盘，该缓存内容才能被刷写到磁盘 • Zookeeper会实时监测每个Region服务器的状态，当某个Region服务器发生故障时，Zookeeper会通知Master • Master首先会处理该故障Region服务器上面遗留的HLog文件，这个遗留的HLog文件中包含了来自多个Region对象的日志记录 • 系统会根据每条日志记录所属的Region对象对HLog数据进行拆分，分别放到相应Region对象的目录下，然后，再将失效的Region重新分配到可用的Region服务器中，并把与该Region对象相关的HLog日志记录也发送给相应的Region服务器 • Region服务器领取到分配给自己的Region对象以及与之相关的HLog日志记录以后，会重新做一遍日志记录中的各种操作，把日志记录中的数据写入到MemStore缓存中，然后，刷新到磁盘的StoreFile文件中，完成数据恢复 • 共用日志优点：提高对表的写操作性能；缺点：恢复时需要分拆日志 本笔记参考自厦门大学林子雨老师的公开课：https://www.icourse163.org/course/XMU-1002335004]]></content>
-      <tags>
-        <tag>大数据</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[大数据基础学习笔记（二）——HBase相关知识（一）]]></title>
-    <url>%2F2018%2F04%2F02%2F%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Hbase%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%2F</url>
-    <content type="text"><![CDATA[Hbase简介HBase是一个高可靠、高性能、面向列、可伸缩的分布式数据库，是谷歌BigTable的开源实现，主要用来存储非结构化和半结构化的松散数据。HBase的目标是处理非常庞大的表，可以通过水平扩展的方式，利用廉价计算机集群处理由超过10亿行数据和数百万列元素组成的数据表。 底层的分布式文件系统用来存储完全非结构化的数据。 Hbase是架构在底层的分布式文件系统HDFS基础之上的同时MR可以对Hbase的数据进行处理。同时Hive和Pig等都可以访问Hbase中的数据。 从上图可以看出，BigTable和HBase的底层技术的对比。 为什么要设计HBase这个数据产品呢？•Hadoop可以很好地解决大规模数据的离线批量处理问题，但是，受限于HadoopMapReduce编程框架的高延迟数据处理机制，使得Hadoop无法满足大规模数据实时处理应用的需求 •HDFS面向批量访问模式，不是随机访问模式 •传统的通用关系型数据库无法应对在数据规模剧增时导致的系统扩展性和性能问题（分库分表也不能很好解决） •传统关系数据库在数据结构变化时一般需要停机维护；空列浪费存储空间 •因此，业界出现了一类面向半结构化数据存储和处理的高可扩展、低写入/查询延迟的系统，例如，键值数据库、文档数据库和列族数据库（如BigTable和HBase等） •HBase已经成功应用于互联网服务领域和传统行业的众多在线式数据分析处理系统中 HBase与传统关系数据库的对比分析• HBase与传统的关系数据库的区别主要体现在以下几个方面： • （1）数据类型：关系数据库采用关系模型，具有丰富的数据类型（整型，字符型等等）和存储方式，HBase则采用了更加简单的数据模型，它把数据存储为未经解释的字符串（也就是Bytes数组） • （2）数据操作：关系数据库中包含了丰富的操作（增删改查），其中会涉及复杂的多表连接。HBase操作则不存在复杂的表与表之间的关系，只有简单的插入、查询、删除、清空等，因为HBase在设计上就避免了复杂的表和表之间的关系 • （3）存储模式：关系数据库是基于行模式存储的。HBase是基于列存储的，每个列族都由几个文件保存，不同列族的文件是分离的 • （4）数据索引：关系数据库通常可以针对不同列构建复杂的多个索引，以提高数据访问性能。HBase只有一个索引——行键，通过巧妙的设计，HBase中的所有访问方法，或者通过行键访问，或者通过行键扫描，从而使得整个系统不会慢下来 • （5）数据维护：在关系数据库中，更新操作会用最新的当前值去替换记录中原来的旧值，旧值被覆盖后就不会存在。而在HBase中执行更新操作时，并不会删除数据旧的版本，而是生成一个新的版本，旧有的版本仍然保留，只有在过了设置的参数期限之后，在系统后台清理的时候才会清理掉 • （6）可伸缩性：关系数据库很难实现横向扩展，纵向扩展（如添加内存，改进CPU等等）的空间也比较有限。相反，HBase和BigTable这些分布式数据库就是为了实现灵活的水平扩展而开发的，能够轻易地通过在集群中增加或者减少硬件数量来实现性能的伸缩 HBase的访问接口以后在使用Hbase的时候，可以通过哪些方式访问HBase数据库？见下图： HBase数据模型• HBase是一个稀疏、多维度、排序的映射表，这张表的索引是行键、列族、列限定符和时间戳 • 每个值是一个未经解释的字符串，没有数据类型 • 用户在表中存储数据，每一行都有一个可排序的行键和任意多的列 • 表在水平方向由一个或者多个列族组成，一个列族中可以包含任意多个列，同一个列族里面的数据存储在一起 • 列族支持动态扩展，可以很轻松地添加一个列族或列，无需预先定义列的数量以及类型，所有列均以字符串形式存储，用户需要自行进行数据类型转换 • HBase中执行更新操作时，并不会删除数据旧的版本，而是生成一个新的版本，旧有的版本仍然保留（这是和HDFS只允许追加不允许修改的特性相关的） • 表：HBase采用表来组织数据，表由行和列组成，列划分为若干个列族 • 行：每个HBase表都由若干行组成，每个行由行键（row key）来标识。 • 列族：一个HBase表被分组成许多“列族”（Column Family）的集合，它是基本的访问控制单元（支持动态拓展） • 列限定符：列族里的数据通过列限定符（或列）来定位 • 单元格：在HBase表中，通过行、列族和列限定符确定一个“单元格”（cell），单元格中存储的数据没有数据类型，总被视为字节数组byte[] • 时间戳：每个单元格都保存着同一份数据的多个版本，这些版本采用时间戳进行索引 HBase的数据坐标HBase中需要根据行键、列族、列限定符和时间戳来确定一个单元格，因此，可以视为一个“四维坐标”，即[行键, 列族, 列限定符, 时间戳] 概念视图HBase在概念上和实际的底层存储是有区分的，在概念上HBase只是一个表，如下面只给了一个行键： 如这一个行键给了两个列族，第一个列族contents中冒号前面的contents是列族的名称，冒号后面的html是列的名称，引号中的内容就是这一列的数据。一个时间戳并不一定会在所有列族插入数据，从图中就可以看出。所以这就导致了HBase的稀疏表的特性。这只是在概念上的视图。 物理视图实际上在实际存储中，并不是按上述的方式去存的。在底层存储时，是按列族为单位进行存储的。 上图是在实际存储时，存储在底层的实际的表。并没有像概念视图中存储了很多的空数据。所以概念视图和物理视图上是有区分的。 面向列的存储 传统的数据库，以行为单位进行存储，一行包括ID,姓名，年龄，性别，IP，操作等。但是按列存储，里面的姓名、年龄等进行单独存储。 它们各自的优缺点： 另外，使用列式存储，数据可以达到很高的数据压缩率。而行式存储，很难压缩。 本笔记参考自厦门大学林子雨老师的公开课：https://www.icourse163.org/course/XMU-1002335004]]></content>
-      <tags>
-        <tag>大数据</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[大数据基础学习笔记（一）——Hadoop相关知识]]></title>
-    <url>%2F2018%2F04%2F01%2F%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[HadoopHadoop的应用现状和构成简介下图为Hadoop在企业中的 应用架构 访问层不用多说，满足企业的数据分析、数据挖掘和数据实时查询功能。为了满足访问层的需求，大数据层的各个技术对其进行支撑。（1）离线分析：大量数据拿过来之后进行批量处理。其中MR是MapReduce的简称，Hive数据仓库和Pig也可以进行离线数据分析。（2）实时查询：其中Hbase是一个可以支持几十亿行数据的非常好的分布式数据库。（3）BI分析：Mahout是Hadoop平台上的一款数据挖掘应用。可以把各种数据挖掘，机器学习和商务智能的算法用MapReduce实现。否则开发人员要自己用MapReduce写决策树算法。 下图为一些大数据计算模式及其代表产品 下图为Hadoop项目结构 YARNz专门负责调度内存，CPU，带宽等计算资源。而上面的事完成具体的计算工作的。 Tez会把很多的MapReduce作业进行分析优化，构建成一个有向无环图，保证获得最好的处理效率。 Spark与MapReduce类似，也是进行相应的计算。但是Spark是基于内存的，而MapReduce是基于磁盘的计算。MR在计算时，先把数据写到磁盘中，然后c处理结束后再写到分布式文件系统中。所以Spark的性能要高。 Pig实现流数据处理，较MR属于轻量级。它也支持类似于SQL的语句。是一种轻量级的脚本语言。 Oozie是一个工作流管理系统，可以把一个工作分成不同的工作环节。 Zookeeper提供分布式协调一致性服务。 Hbase是一个非关系型数据库，可以支持随机读写。 Flume是专门负责日志收集的，分析一些实时生成的数据流。 Sqoopy用于在Hadoop与传统数据库之间进行数据传递（导入导出等）。可以把之前存到关系型数据库（如Oracle）中的数据导入到HDFS、Hive或者Hbase中，反之亦可。 Ambari是一个安装部署工具，可以在一个集群上面智能化的管理一整套Hadoop上的各个套件。 Hadoop各组件的功能如下： Hadoop集群的节点类型Hadoop框架中最核心的设计是为海量数据提供存储的HDFS和对数据进行计算的MapReduce MapReduce的作业主要包括：（1）从磁盘或从网络读取数据，即IO密集工作；（2）计算数据，即CPU密集工作 •Hadoop集群的整体性能取决于CPU、内存、网络以及存储之间的性能平衡。因此运营团队在选择机器配置时要针对不同的工作节点选择合适硬件类型•一个基本的Hadoop集群中的节点主要有: •NameNode：负责协调集群中的数据存储 •DataNode：存储被拆分的数据块 •JobTracker：协调数据计算任务 •TaskTracker：负责执行由JobTracker指派的任务 •SecondaryNameNode：帮助NameNode收集文件系统运行的状态信息 HDFS全称：Hadoop Distributed File System.解决海量数据的分布式存储问题。 分布式文件系统的结构分布式文件系统在物理结构上是由计算机集群中的多个节点构成的，这些节点分为两类，一类叫“主节点”(Master Node)或者也被称为“名称结点”(NameNode)，另一类叫“从节点”（Slave Node）或者也被称为“数据节点”(DataNode) HDFS的三个节点：Namenode，Datanode，Secondary Namenode Namenode：HDFS的守护进程，用来管理文件系统的命名空间，负责记录文件是如何分割成数据块，以及这些数据块分别被存储到那些数据节点上，它的主要功能是对内存及IO进行集中管理。 Datanode：文件系统的工作节点，根据需要存储和检索数据块，并且定期向namenode发送他们所存储的块的列表。 Secondary Namenode：辅助后台程序，与NameNode进行通信，以便定期保存HDFS元数据的快照。 HDFS采用了主从（Master/Slave）结构模型，一个HDFS集群包括一个名称节点（NameNode）和若干个数据节点（DataNode）（如图所示）。名称节点作为中心服务器，负责管理文件系统的命名空间及客户端对文件的访问。集群中的数据节点一般是一个节点运行一个数据节点进程，负责处理文件系统客户端的读/写请求，在名称节点的统一调度下进行数据块的创建、删除和复制等操作。每个数据节点的数据实际上是保存在本地Linux文件系统中的。 HDFS的缺点： 1.不适合低延迟的数据访问2.无法高效存储大量小文件3.不支持多用户写入及任意修改文件 名称节点和数据节点 在HDFS中，名称节点（NameNode）负责管理分布式文件系统的命名空间（Namespace），保存了两个核心的数据结构，即FsImage和EditLog。 •FsImage用于维护文件系统树以及文件树中所有的文件和文件夹的元数据 •操作日志文件EditLog中记录了所有针对文件的创建、删除、重命名等操作 •名称节点记录了每个文件中各个块所在的数据节点的位置信息。 客户端在访问数据时，先通过名称节点，获取元数据信息，从而知道被访问的数据存到哪些数据节点，获得数据块具体存储位置的信息之后，客户端就会到各个机器上去获取它所需要的数据。写入操作类似，客户端先访问名称节点，一个大文件（如1TB,2TB）要怎么写，然后名称节点会告诉它，把文件分成多少块，每个块放到哪个数据节点上。 FsImage 文件•FsImage文件包含文件系统中所有目录和文件inode的序列化形式。每个inode是一个文件或目录的元数据的内部表示，并包含此类信息：文件的复制等级、修改和访问时间、访问权限、块大小以及组成文件的块。对于目录，则存储修改时间、权限和配额元数据 •FsImage文件没有记录块存储在哪个数据节点。而是由名称节点把这些映射保留在内存中，当数据节点加入HDFS集群时，数据节点会把自己所包含的块列表告知给名称节点，此后会定期执行这种告知操作，以确保名称节点的块映射是最新的。 在名称节点启动的时候，它会将FsImage文件中的内容加载到内存中，之后再执行EditLog文件中的各项操作，使得内存中的元数据和实际的同步，存在内存中的元数据支持客户端的读操作。 •一旦在内存中成功建立文件系统元数据的映射，则创建一个新的FsImage文件和一个空的EditLog文件 •名称节点起来之后，HDFS中的更新操作会重新写到EditLog文件中，因为FsImage文件一般都很大（GB级别的很常见），如果所有的更新操作都往FsImage文件中添加，这样会导致系统运行的十分缓慢，但是，如果往EditLog文件里面写就不会这样，因为EditLog 要小很多。每次执行写操作之后，且在向客户端发送成功代码之前，edits文件都需要同步更新 第二名称节点第二名称节点是HDFS架构中的一个组成部分，它是用来保存名称节点中对HDFS 元数据信息的备份，并减少名称节点重启的时间。SecondaryNameNode一般是单独运行在一台机器上。 SecondaryNameNode的工作情况： （1）SecondaryNameNode会定期和NameNode通信，请求其停止使用EditLog文件，暂时将新的写操作写到一个新的文件edit.new上来，这个操作是瞬间完成，上层写日志的函数完全感觉不到差别； （2）SecondaryNameNode通过HTTP GET方式从NameNode上获取到FsImage和EditLog文件，并下载到本地的相应目录下； （3）SecondaryNameNode将下载下来的FsImage载入到内存，然后一条一条地执行EditLog文件中的各项更新操作，使得内存中的FsImage保持最新；这个过程就是EditLog和FsImage文件合并； （4）SecondaryNameNode执行完（3）操作之后，会通过post方式将新的FsImage文件发送到NameNode节点上； （5）NameNode将从SecondaryNameNode接收到的新的FsImage替换旧的FsImage文件，同时将edit.new替换EditLog文件，通过这个过程EditLog就变小。 数据节点（DataNode）数据节点是分布式文件系统HDFS的工作节点，负责数据的存储和读取，会根据客户端或者是名称节点的调度来进行数据的存储和检索，并且向名称节点定期发送自己所存储的块的列表 •每个数据节点中的数据会被保存在各自节点的本地Linux文件系统中 HDFS存储原理冗余数据保存作为一个分布式文件系统，为了保证系统的容错性和可用性，HDFS采用了多副本方式对数据进行冗余存储，通常一个数据块的多个副本会被分布到不同的数据节点上，数据块1被分别存放到数据节点A和C上，数据块2被存放在数据节点A和B上。这种多副本方式具有以下几个优点：（1） 加快数据传输速度 （2） 容易检查数据错误 （3） 保证数据可靠性 数据存取策略数据存放•第一个副本：放置在上传文件的数据节点；如果是集群外提交，则随机挑选一台磁盘不太满、CPU不太忙的节点 •第二个副本：放置在与第一个副本不同的机架的节点上 •第三个副本：与第一个副本相同机架的其他节点上 •更多副本：随机节点 数据读取•HDFS提供了一个API可以确定一个数据节点所属的机架ID，客户端也可以调用API获取自己所属的机架ID •当客户端读取数据时，从名称节点获得数据块不同副本的存放位置列表，列表中包含了副本所在的数据节点，可以调用API来确定客户端和这些数据节点所属的机架ID，当发现某个数据块副本对应的机架ID和客户端对应的机架ID相同时，就优先选择该副本读取数据，如果没有发现，就随机选择一个副本读取数据 数据错误与恢复HDFS具有较高的容错性，可以兼容廉价的硬件，它把硬件出错看作一种常态，而不是异常，并设计了相应的机制检测数据错误和进行自动恢复，主要包括以下几种情形：名称节点出错、数据节点出错和数据出错。 名称节点出错名称节点保存了所有的元数据信息，其中，最核心的两大数据结构是FsImage和Editlog，如果这两个文件发生损坏，那么整个HDFS实例将失效。因此，HDFS设置了备份机制，把这些核心文件同步复制到备份服务器SecondaryNameNode上。当名称节点出错时，就可以根据备份服务器SecondaryNameNode中的FsImage和Editlog数据进行恢复。 数据节点出错•每个数据节点会定期向名称节点发送“心跳”信息，向名称节点报告自己的状态 •当数据节点发生故障，或者网络发生断网时，名称节点就无法收到来自一些数据节点的心跳信息，这时，这些数据节点就会被标记为“宕机”，节点上面的所有数据都会被标记为“不可读”，名称节点不会再给它们发送任何I/O请求 •这时，有可能出现一种情形，即由于一些数据节点的不可用，会导致一些数据块的副本数量小于冗余因子•名称节点会定期检查这种情况，一旦发现某个数据块的副本数量小于冗余因子，就会启动数据冗余复制，为它生成新的副本 •HDFS和其它分布式文件系统的最大区别就是可以调整冗余数据的位置 数据出错•网络传输和磁盘错误等因素，都会造成数据错误 •客户端在读取到数据后，会采用md5和sha1对数据块进行校验，以确定读取到正确的数据 •在文件被创建时，客户端就会对每一个文件块进行信息摘录，并把这些信息写入到同一个路径的隐藏文件里面 •当客户端读取文件的时候，会先读取该信息文件，然后，利用该信息文件对每个读取的数据块进行校验，如果校验出错，客户端就会请求到另外一个数据节点读取该文件块，并且向名称节点报告这个文件块有错误，名称节点会定期检查并且重新复制这个块 本笔记的来源源自林子雨老师的MOOC课程和课件，地址：https://www.icourse163.org/course/XMU-1002335004]]></content>
-      <tags>
-        <tag>大数据</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[git学习]]></title>
-    <url>%2F2018%2F02%2F01%2Fgit%E5%AD%A6%E4%B9%A0%2F</url>
-    <content type="text"><![CDATA[安装 在命令行输入git --version如果显示版本信息则说明安装成功，否则要去官网进行安装。 Visual Studio Code 启用bashVS Code默认的终端窗口是只带cmd功能的，如果要在终端中唤出bash要进行配置： 首先找到本机的bash.exe的目录,比如我的目录如图： 然后在VS Code-&gt;首选项-&gt;设置-&gt;搜索terminal.integrated.shell.windows-&gt;将&quot;terminal.integrated.shell.windows&quot;: &quot;C:\\Program Files\\Git\\bin\\bash.exe&quot;放入设置中-&gt;保存 重新启动VS Code可以看到自动进入bash命令窗口 如果想切换到cmd命令窗口直接输入cmd回车即可,同理在cmd下切换到bash只需输入bash回车： 仓库仓库本质上就是一个文件夹，一个目录，一个项目。 创建方法1比如打开一个目录，输入git init 可以看到初始化了一个空的git仓库。 然后切换到bash 输入ls -la酒吧当前目录下的所有的子目录列出来: 可以看到.git被列出来，它是个隐藏文件夹。 这时候 test1 就已经是一个仓库了。 创建方法2或者进入到根目录,如输入cd ..,然后输入 git init test2。 可以看到一样成功创建了tes2文件夹和其中的.git隐藏文件夹，和上面的创建方法是一样的。 从远程clone一个仓库比如在github上找到一个文件仓库，比如找到vue的github仓库 输入git clone https://github.com/vuejs/vue.git回车 可以看到正在clone。可以看到目录下多了vue文件夹，这就是从远程克隆的仓库。或者在输入clone命令时后面加个自己想要命名的文件夹名，这样下载下来就是以这个文件夹命名的，比如git clone https://github.com/vuejs/vue.git test3.可以自己试一下（可以换一个小一点的仓库克隆，这个我clone了好久 Orz） 基本用法git statusgit status是指查看仓库状态。 因为test1是一个空文件夹 所以显示上图的状态。 commitcommit的意思是提交，可以把它看做历史节点,而上图的提示是No commits yet，这就是说没有一条历史记录，因为我们创建了后还没有进行提交。 Untracked files如果我们新建一个文件，如test.txt,这时候执行git status命令，可以看到:Untracked files是指未跟踪的文件，也就是更改了文件还没有进行创建节点，即丢失后无法找回。 在VS Code的git工具中也可以看到修改的状态为未跟踪的。 git addgit add .将所有的修改添加到暂存区 如上，我们创建了一个test.txt,输入git add .回车,然后输入git status查看现在的状态。 可以看到vs code中的git工具也发生了变化： git commit -m “描述”git commit -m &quot;描述&quot;提交版本 输入命令后，可以看到 nothing to commit,working tree clean，也就是所有的更改都保存了。 git loggit log查看版本记录可以查看所有的更改记录 这里只有一条更改记录。 而上面的commit 后面的一串字符就是上次更改的记录码。 我们这时候更改一下test.txt，保存。 这时候文件内容发生了变化，在进行一次提交操作 这时候再看记录，有两条记录： git checkout xxxgit checkout xxx——穿越到指定的历史节点，也就是前面commit的节点。可以看描述选择退回到哪个节点，这也反映了写描述的重要性。 xxx是指上面git log查看时commit后面的码，复制前七位就可以定位，当然也可以复制多于七位。 可以看到文件变了： 三种状态上面时回到了第一个节点，现在回到第二个节点。输入git checkout 1529b8c93ec，确认退回成功。 从上面可以看出，执行任何一个commit操作都要执行三步：modified(已修改) -&gt; staged(已暂存) -&gt; committed staged 状态可以看到即将提交的文件，比如如果想只提交test.txt文件，可以在git add .的时候输入git add test.txt。另外 git log只能查看提交的内容和描述，并不能看其中哪些内容修改了，使用git log -p可以查看具体修改了哪些内容. 可以看到+后面的就是修改的内容。 commit的内容是添加到staged暂存区中的内容，比如在git add .后又进行了修改但是没有再次执行git add .命令，那么commit的时候就是暂存区中的内容而不包括最新修改的内容。 标签tag如果在项目中要很经常的进行修改，那么会产生很多个节点，但是会有一些节点非常重要，那么可以给这些关键的重要节点打一个标签。比如完成了代码的v1.0版本，后面又有了v2.0版本，中间的v1.1,v1.x并不重要，那么这些大版本就是重要节点。 输入git add . &amp;&amp; git commit -m &quot;v2.0&quot;可以执行两条命令。 git log --oneline可以查看简写的版本 那么可以给v2.0打一个标签,用法：git tag -a 标签名 -m &quot;备注&quot;，用它进行附注标签。这种方法是给最近的一个节点加标签。 这时候输入git tag可以看到tag的信息。 如果想给某个节点加标签，则可以用git tag -a 标签名 -m &quot;备注&quot; 版本码 可以看到添加成功了（上面的v2.0加错了加了两个标签 orz） git show 标签名：查看某个标签的详细信息 git checkout 标签名可以直接回溯到标签所在的提交，这样比使用版本码要方便 在回溯到历史版本后 输入git log --oneline --all可以查看所有的节点 分支 branch指在时间的维度上可以有多线，及时间一样的基础上进行其他的修改。主线为master时可以给分支命名其他的名。 比如这里在test2目录下新建b.txt。输入两行内容后分别commit。 现在的mater分支上有两个版本： 给文本添加第三行并且执行git add . 和git commit -m &quot;&quot;操作。 然后git branch 分支名创建分支,然后git checkout 分支名切换到分支。 可以看到切换到了分支notmaster。 这时候修改b.txt的内容，然后执行git add . 和git commit -m &quot;&quot;操作 然后git log --oneline可以看到多了的记录是在分支上的 这时候在分支后面的提交就是在分支上了。 现在如果切换到mater-&gt;git checkout master，可以看到内容变回刚才的节点(即刚才创建分支的时候的节点)： 这时候再添加一行然后执行commit操作,可以看到: 或者git log --all --graph图示全部历史记录。 git checkout -b 分支，创建并切换到分支。 分支的功能在做项目的时候可以经常用到，比如在1-&gt;2的时候没有bug，但是在2-&gt;3的时候发现有bug,这时候可以在2创建一个分支，专门在分支进行修改bug,且在master可以继续进行开发。在最后的第二版开发完成后，把分支的修改bug版本进行合并，这样就修改了bug也推进了项目。 合并分支上面讲到,在修改bug的同时可以进行项目的推进，但是在完成了bug的修改和第二版的项目后，要将两者合并，实现“完全体”,这就需要合并分支。 现在回到branch， 可以看到HEAD所在的就是当前的节点和分支。在分支上修改了代码进行commit 现在虽然创建了分支并且更新了内容，但是还没有和master主分支合并 git merge 分支名合并分支 可以看到 CONFLICT提示内容有冲突，在第三行开始冲突，所以git不知道该如何处理。 这时候可以在文件中进行更改，然后再进行commit操作。然后这样就合并了两个分支。 这时候可以输入命令查看，通过图解可以看到很清楚的解释了刚才的合并操作。 远程仓库我们可以将本机上的仓库内容存放在远程仓库（如github 和 码云或者远程的另一台电脑或服务器） 即local -&gt; server -&gt; loacl 比如在commit了一个版本后，推送到服务器上时，我们用github。 在github新建一个仓库，Create a new repository,创建成功后，可以看到仓库的地址。那么接下来在本地指定远程仓库的地址。 git remote add 远程名称 远程地址 添加远程仓库然后git remote可以列出所有远程仓库 git remote -v可以列出所有远程仓库和详细信息 顾名思义,fetch是下载地址,push是上传地址。 git push -u 远程名 分支名上传代码加-u的意思是在服务器端设置，如果有人想下载代码的时候，应该往那个分支上合并,所以要记得加-u. 刷新仓库可以看到推送成功： 在进行了修改添加后，可以同样执行这个操作。 git clone 仓库地址从远端克隆仓库到本地进入到刚克隆的仓库，输入git log同样可以看到操作的历史 这时候从远端克隆下的分支默认名为origin，他只是一个分支的名字，和master等没有本质区别 这时候在这个目录下进行了修改再推送时，要在git push -u 远程名 master这里将远程名改为现在的远程名，可以用git remote查看远程名，如果还用github进行推送会报错。 多人远程合作git pull获取远程更新现在模拟A和B是两台电脑，他们都从仓库clone了项目，A进行了修改，通过git push -u origin master更新了项目，B使用git pull。即通过git push -u origin master和git pull进行推送和拉取。但是如果A先推送了一个版本，B不知情的情况下对某一行也进行了修改,这时候如果提交，会显示冲突的错误，这时就知道要先git pull一份服务器端的代码，这时候在本地可以看出来冲突的对比，=等号的上面和下面会显示冲突的内容对比,然后对冲突的代码进行整合后，在进行push操作。 其实git pull 相当于git fetch &amp;&amp; git merge即下载和合并,放在已提交的阶段 详情参见表严肃的速查表 http://biaoyansu.com/27.cheatsheet 完 根据 表严肃的课程整理书写，地址http://biaoyansu.com/i/6593023230131]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[webpack的简单应用(entry 和 output)]]></title>
-    <url>%2F2018%2F01%2F31%2Fwebpack%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8-entry-%E5%92%8C-output%2F</url>
-    <content type="text"><![CDATA[在简单配置了webpack后，指定了它的入口和出口，即entry和output。但是在业务逻辑比较复杂的时候，页面不只有一页。比如 有一个index.html页和signup.html注册页。index.html引用了base.js 和 home.js,signup.html引用了base.js和signup.js。 即项目中如果有很多页，而且会有相同的依赖（比如这里的base.js），也有不同的js控制着各个不同的页面的业务逻辑。 这时候在webpack.config.js中将entry设置为一个入口对象，同时出口也变了，他会根据不同的入口文件生成不同的出口文件：12345678910module.exports=&#123; entry:&#123; home:&apos;./js/home.js&apos;, signup:&apos;./js/signup.js &apos;&#125;,output:&#123; filename:&apos;[name].bundle.js&apos;, //这里的文件名是动态生成的，name即是entry中的键名 path:__dirname+&apos;/dist&apos; //目录生成，如果没有dist文件夹则会自动创建这个文件夹，将上面的文件生成保存在这个目录 &#125;&#125; 在相应目录下创建这三个js文件： 这时候在index.html和signup.html中就不再需要引用base.js了。 这时只需要引用webpack打包后的动态生成的[name].bundle.js文件即可： 假设base.js是整个网站的依赖（因为刚开始两个html也都引用了这个文件），这里面一般会存放一些重要的配置项。 下面举例： 非ES6写法 open 决定网站是否是开放注册的，这时候通过module.exports将open传出去。home.js 和 signup.js 接收open参数值： 执行npm run pack命令 这时候可以看到生成成功。 这时候打开index.html。可以看到 页面生成成功，点击注册连接时，跳转到指定页面并且显示指定内容 如果把open 的值改为false。即open = false重新执行npm run pack命令，刷新可以看到： 并且点击到index.html时，没有显示任何内容，这和我们在home.js中设置的结果是一样的。 一般类似于这种多页的应用，一般都会给每一页一个打包的地址，具体每一页的入口文件用到了哪些依赖我们不用管，只需交给webpack去处理即可。另外这种写法是node的写法，可以用ES6的写法更简单快捷。 ES6写法 这里open可以直接解构出来，在下面可以直接用，即不需要再var open=base.open，它直接知道from导进来的东西是个对象，而且把对象中的一个键（这里是open）变成了一个变量，可以直接在后面使用。这时候重新npm run pack生成，结果是一样的。 webpack中的多入口和多出口。完 根据表严肃http://biaoyansu.com/i/6593023230131 的视频总结。]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>webpack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[webpack的安装配置]]></title>
-    <url>%2F2018%2F01%2F31%2Fwebpack%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%2F</url>
-    <content type="text"><![CDATA[1.确保安装node和webpacknode: webpack: 如果没有版本号则代表没有安装 首先你需要安装一个全局的webpack 执行 pm install webpack -g 这样你才可以正确的使用webpack这个命令 推荐在当前项目里面也安装一个webpack, 这样就不用担心更换了电脑或者其他人使用时因为版本的不同而会导致错误 这样就可以在你的webpack.config.js里面方便的引用webpack 2.在当前项目安装webpack在当前目录生成package.json文件输入npm init -y 生成package.json文件 生成了package.json,npm就会认为整个目录是一个模块了。 在当前目录安装webpack执行npm install webpack --save-dev 这里的WARN只是警告可以不用管 可以看到安装成功 这时候package.json里面就有了webpack 和它的版本号： 3.使用这时候可以直接用此目录下的webpack指令来执行操作： node_modules/.bin/webpack a.js bundle.js 但是这个路径很长，输入并不方便，可以在package.json里面进行配置，然后直接调用命令即可。 pack和后面的字符串就是键值对的形式，pack即自定义的命令的名称，值就是上面的很长的命令。保存后执行npm run pack 可以看到这种方法仍然是生成成功的。 4.webpack.config.js这个js文件顾名思义可以配置webpack。基本写法是123module.exports=&#123;&#125; 在这里面可以传一些东西出去。比如 :1234567module.exports=&#123;entry: &apos;../a&apos; //入口文件output: &#123; filename:&apos;bundle.js&apos;, //文件名 path:__dirname //__dirname是node里面一个特殊的变量，它会被node解释为当前的文件所在的目录&#125; //输出文件&#125; 那么有了这两个设置参数，可以将package.json文件里面的&quot;pack&quot;:&quot;node_modules/.bin/webpack a.js bundle.js&quot;中的a.js 和 bundel.js 保存后,直接 npm run pack，执行结果也是成功的： 完。 根据表严肃的视频总结，地址：http://biaoyansu.com/i/6593023230131]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>webpack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[WEBAPI解决跨域问题]]></title>
-    <url>%2F2017%2F12%2F27%2FWEBAPI%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。 添加引用首先添加 System.Web.cors.dll 和 System.Web.Http.cors.dll。 Web.Conefig配置12345&lt;appSettings&gt; &lt;add key=&quot;cors_allowOrigins&quot; value=&quot;*&quot;/&gt; &lt;add key=&quot;cors_allowHeaders&quot; value=&quot;*&quot;/&gt; &lt;add key=&quot;cors_allowMethods&quot; value=&quot;*&quot;/&gt; &lt;/appSettings&gt; * 代表允许所有 WebApiConfig配置123456 //解决API跨域访问的问题var allowOrigins = ConfigurationManager.AppSettings[&quot;cors_allowOrigins&quot;];var allowHeaders = ConfigurationManager.AppSettings[&quot;cors_allowHeaders&quot;];var allowMethods = ConfigurationManager.AppSettings[&quot;cors_allowMethods&quot;];var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) &#123; SupportsCredentials = true &#125;;config.EnableCors(globalCors); 完。]]></content>
-      <tags>
-        <tag>WEBAPI</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[mysql学习小记系列（持续更新）]]></title>
-    <url>%2F2017%2F12%2F11%2Fmysql%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0%E7%B3%BB%E5%88%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[以下环境为mysql+Navicat Premium 在mysql中使用UUID效果如下： SQL语句有函数生成guid:UUID()，一般使用CHAR(36)或者BINARY(36)来存储uuid 例如sql语句为：INSERT INTO USERS(UUID) VALUES (UUID()) mysql中写入时间 DATETIME 类型可用于需要同时包含日期和时间信息的值。MySQL 以 ‘YYYY-MM-DD HH:MM:SS’ 格式检索与显示 DATETIME 类型。支持的范围是 ‘1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’。 DATE 类型可用于需要一个日期值而不需要时间部分时。MySQL 以 ‘YYYY-MM-DD’ 格式检索与显示DATE 值。支持的范围是 ‘1000-01-01’ 到 ‘9999-12-31’。 TIMESTAMP 列类型提供了一种类型，通过它你可以以当前操作的日期和时间自动地标记 Insert或Update 操作。如果一张表中有多个 TIMESTAMP 列，只有第一个被自动更新。 目前我在项目中使用了DATETIME和DATE类型。 例如DATETIME类型的数据在数据库中如下： 在写入数据库中的时候，用了NOW()函数，让数据库自动写入当前系统时间，对应SQL语句如下：INSERT INTO USER(CREATEDATE) VALUES(now()) DATE类型的数据在数据库中如下： 这条数据在应用中是通过前台传字符串，后台转为DATE格式的。例如前台传来的字符串为”2017-11-21”，用STR_TO_DATE(&#39;2017-11-21&#39;,&#39;%Y-%m-%d&#39;)来转换，当然也可以转换DATETIME格式的日期。 目前项目中还没有使用TIMESTAMP数据类型。暂时不予详细展开。]]></content>
-      <categories>
-        <category>学习</category>
-      </categories>
-      <tags>
-        <tag>mysql</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[C#操作mysql数据库执行SqlDataReader.Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法]]></title>
-    <url>%2F2017%2F12%2F03%2FC-%E6%93%8D%E4%BD%9Cmysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%89%A7%E8%A1%8CSqlDataReader-Read%E5%90%8E%E4%BD%BF%E7%94%A8%E5%8F%A6%E4%B8%80%E4%B8%AASQLCommand%E6%89%A7%E8%A1%8CInsert%E6%93%8D%E4%BD%9C%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[今天在写WEBAPI的时候，进行用户注册的编写，发生了如下错误： 后来确定了发生错误的原因是执行SqlDataReader.Read之后，如果还想用另一个SqlCommand执行Insert或者Update操作的话，会得到一个错误提示：There is already an open DataReader associated with this Command which must be closed first.，然后一般就会产生数据保存失败的异常。 注册用户的代码如下： 12345678910111213141516171819202122232425262728293031323334353637383940 public string RegisterUser(string uname,string upwd,string email,string mobile,string confirmpassword) &#123; MySqlConnection mysql = getMySqlConnection(); mysql.Open(); try &#123; if (uname == null || email == null || upwd == null || mobile == null || confirmpassword == null) &#123; return &quot;请完善信息&quot;; &#125; if (!String.Equals(upwd, confirmpassword)) &#123; return &quot;两次输入密码不一致！&quot;; &#125; string CheckUser = &quot;Select * from name where username=&apos;&quot; + uname + &quot;&apos;&quot;; MySqlCommand mySqlCommand = getSqlCommand(CheckUser, mysql); MySqlDataReader reader = mySqlCommand.ExecuteReader(); if (reader.Read()) &#123; return &quot;用户已存在&quot;; &#125; else &#123; string AddUser = @&quot;Insert into name(username,pword,email,mobile)Values(&apos;&quot; + uname + &quot;&apos;,&apos;&quot; + upwd + &quot;&apos;,&apos;&quot; + email + &quot;&apos;,&apos;&quot; + mobile + &quot;&apos;)&quot;; MySqlCommand insertuser = new MySqlCommand(AddUser, mysql); if (insertuser.ExecuteNonQuery() &gt; 0) &#123; return &quot;注册成功！&quot;; &#125; else &#123; return &quot;注册失败！&quot;; &#125; &#125; &#125; catch &#123; return &quot;错误&quot;; &#125; finally &#123; mysql.Close(); &#125;&#125; 在知道了报错原因后，在网上搜了两种方法： 1.不要用共用一个connection,用完就释放，所以在下面先把connection关闭再连接，测试可行。 2.关闭当前的reader方法。然后继续执行代码 ，可行。 暂时是用这两种方法解决了问题，以后有更好的方法再补充。]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>C#</tag>
-        <tag>遇到的坑</tag>
-        <tag>mysql</tag>
-        <tag>数据库</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[C#将多个文件打包成.zip文件]]></title>
-    <url>%2F2017%2F10%2F30%2FC-%E5%B0%86%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E6%89%93%E5%8C%85%E6%88%90-zip%E6%96%87%E4%BB%B6%2F</url>
-    <content type="text"><![CDATA[近几天的项目作业过程中，遇到了需要一键下载多个文件的需求，于是想采取在后台将需要一键下载的文件打包成压缩文件，然后进行下载的方式。 在.net4.5中可以使用调用winrar命令的方式来直接进行生成压缩文件。但是在这里我采用引入ICSharpCode.SharpZipLib.dll的方法，（官方下载地址：http://www.icsharpcode.net/opensource/sharpziplib/ ） 用这个程序集将windows文件进行打包。 首先，将打包的方法封装在一个类中，然后在一般应用程序.ashx文件中调用相应的方法。因为在项目中只需要进行打包文件，所以这里只写一下压缩文件的代码，解压缩的方法应该类似，我没有试过。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091using System;using System.Linq;using System.IO;using ICSharpCode.SharpZipLib.Zip;using ICSharpCode.SharpZipLib.Checksums;using System.Diagnostics;using Microsoft.Win32;namespace ZipCommon&#123; public class ZipHelper &#123; #region 压缩多个文件 /// &lt;summary&gt; /// 压缩多个文件 /// &lt;/summary&gt; /// &lt;param name=&quot;files&quot;&gt;文件名&lt;/param&gt; /// &lt;param name=&quot;ZipedFileName&quot;&gt;压缩包文件名&lt;/param&gt; /// &lt;param name=&quot;Password&quot;&gt;解压码&lt;/param&gt; /// &lt;returns&gt;&lt;/returns&gt; public static void Zip1(string[] files, string ZipedFileName, string Password) &#123; files = files.Where(f =&gt; File.Exists(f)).ToArray(); if (files.Length == 0) throw new FileNotFoundException(&quot;未找到指定打包的文件&quot;); ZipOutputStream s = new ZipOutputStream(File.Create(ZipedFileName)); s.SetLevel(6); if (!string.IsNullOrEmpty(Password.Trim())) s.Password = Password.Trim(); ZipFileDictory(files, s); s.Finish(); s.Close(); &#125; /// &lt;summary&gt; /// 压缩多个文件 /// &lt;/summary&gt; /// &lt;param name=&quot;files&quot;&gt;文件名&lt;/param&gt; /// &lt;param name=&quot;ZipedFileName&quot;&gt;压缩包文件名&lt;/param&gt; /// &lt;returns&gt;&lt;/returns&gt; public static void Zip(string[] files, string ZipedFileName) &#123; Zip1(files, ZipedFileName, string.Empty); &#125; public static void ZipFileDictory(string[] files, ZipOutputStream s) &#123; ZipEntry entry = null; FileStream fs = null; Crc32 crc = new Crc32(); try &#123; //创建当前文件夹 entry = new ZipEntry(&quot;/&quot;); //加上 “/” 才会当成是文件夹创建 s.PutNextEntry(entry); s.Flush(); foreach (string file in files) &#123; //打开压缩文件 fs = File.OpenRead(file); byte[] buffer = new byte[fs.Length]; fs.Read(buffer, 0, buffer.Length); entry = new ZipEntry(&quot;/&quot; + Path.GetFileName(file)); entry.DateTime = DateTime.Now; entry.Size = fs.Length; fs.Close(); crc.Reset(); crc.Update(buffer); entry.Crc = crc.Value; s.PutNextEntry(entry); s.Write(buffer, 0, buffer.Length); &#125; &#125; finally &#123; if (fs != null) &#123; fs.Close(); fs = null; &#125; if (entry != null) entry = null; GC.Collect(); &#125; &#125; #endregion 压缩多个文件 &#125;&#125; 直接调用 ZipHelper.Zip（filepaths，zipedfilepath）即可。注意： zipedfilepath的父级目录必须存在，否则在创建.zip文件时会报目录不存在的错误。这个坑我也遇到过。还有一点要注意的是，这里的方法都是静态的，所以在调用方法时不需要进行实例化，只需写成 ZipHelper.Zip（filepaths，zipedfilepath） 这种形式就可以了。 在.ashx文件中的代码如下： 1234567891011121314 #region 打包public void CreateZip(string WORD002,string WORD003,string WORD004,string WORD005,string WORD006,string WORD007) &#123; string[] files = new string[6]; files[0] = WORD002; files[1] = WORD003; files[2] = WORD004; files[3] = WORD005; files[4] = WORD006; files[5] = WORD007; ZIPFILEPATH = 绝对路径+文件名+ &quot;.zip&quot;;//这里要加上拓展名 ZipHelper.Zip(files,ZIPFILEPATH); &#125; #endregion 这里的WORD002-007是要打包的文件的路径，将其存放在数组中，ZIPFILEPATH则是在服务器端要存放的打包文件的路径，需要绝对路径。 看一下需要打包的六个文件： 生成ZIP文件成功： 解压后的文件也可以正常打开： 在实施过程中还遇到了一个坑，刚开始我的服务器上并没有安装winrar，而是安装了360压缩，导致在生成ZIP文件后，出现压缩错误的提示，在装了winrar并使用后，发现时正常的。 这时候只要把服务器上的zip路径传到前台，就可以下载了、]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>C#</tag>
-        <tag>遇到的坑</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[通过C#向Word文档的表格中的任一行增加新行]]></title>
-    <url>%2F2017%2F10%2F25%2F%E9%80%9A%E8%BF%87C-%E5%90%91Word%E6%96%87%E6%A1%A3%E7%9A%84%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E4%BB%BB%E4%B8%80%E8%A1%8C%E5%A2%9E%E5%8A%A0%E6%96%B0%E8%A1%8C%2F</url>
-    <content type="text"><![CDATA[今天在项目的作业过程中，遇到了需要通过C#操作Word模板向其中的表格添加内容。作业过程中发现，往往有的时候模板的表格的行数会多于或者少于所要写入的数据数量。而模板行数少于数据条数时会发生写入错误的提示，导致文档生成失败。因此需要根据需要写入的数据的数量来确定所需要的表格的数量，也就是能够动态的改变模板的表格的行数。在网上搜了一好久，发现很多给现有的表格添加一行的方法都是只能够在表格的最后一列添加，而项目需求的模板中需要动态改变添加行数的表格不在最前面也不在最后面，恰恰在中间。因此，搜了好久加上实验，终于找到了方法。在此做个记录。 首先，说一下用C# .NET操作Word文档需要的引用： 在新定义的类中添加头文件和书写代码：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101using System;using Microsoft.Office.Interop.Word;namespace WordDemo //这边需要换成自己的命名空间名&#123; public class Report &#123; private _Application wordApp = null; private _Document wordDoc = null; public _Application Application &#123; get &#123; return wordApp; &#125; set &#123; wordApp = value; &#125; &#125; public _Document Document &#123; get &#123; return wordDoc; &#125; set &#123; wordDoc = value; &#125; &#125; //通过模板创建新文档 public void CreateNewDocument(string filePath) &#123; killWinWordProcess(); wordApp = new ApplicationClass(); wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone; wordApp.Visible = false; object missing = System.Reflection.Missing.Value; object templateName = filePath; wordDoc = wordApp.Documents.Open(ref templateName, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing); &#125; //保存新文件 public void SaveDocument(string filePath) &#123; object fileName = filePath; object format = WdSaveFormat.wdFormatDocument;//保存格式 object miss = System.Reflection.Missing.Value; wordDoc.SaveAs(ref fileName, ref format, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss); //关闭wordDoc，wordApp对象 object SaveChanges = WdSaveOptions.wdSaveChanges; object OriginalFormat = WdOriginalFormat.wdOriginalDocumentFormat; object RouteDocument = false; wordDoc.Close(ref SaveChanges, ref OriginalFormat, ref RouteDocument); wordApp.Quit(ref SaveChanges, ref OriginalFormat, ref RouteDocument); &#125; //给表格插入rows行,n为表格的序号 public void AddRow(int n, int rows) &#123; object miss = System.Reflection.Missing.Value; Microsoft.Office.Interop.Word.Table table = wordDoc.Content.Tables[n]; for (int i = 0; i &lt; rows; i++) &#123; table.Rows.Add(ref miss); &#125; &#125; //在第n个表格的rows行前面插入新行, public void AddNewRow(int n,int rows) &#123; object beforeRow = wordDoc.Tables[n].Rows[rows]; Microsoft.Office.Interop.Word.Table table = wordDoc.Content.Tables[n]; table.Rows.Add(beforeRow); &#125; // 杀掉winword.exe进程 public void killWinWordProcess() &#123; System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcessesByName(&quot;WINWORD&quot;); foreach (System.Diagnostics.Process process in processes) &#123; bool b = process.MainWindowTitle == &quot;&quot;; if (process.MainWindowTitle == &quot;&quot;) &#123; process.Kill(); &#125; &#125; &#125; &#125;&#125; 在上面的 AddNewRow(int n,int rows)函数中，可以根据实际情况设置要插入第几个表格和在第几行前面插入新行。调用代码： 插入前： 插入后： 可以根据实际情况设置循环的数量 ，实现动态添加。]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>C#</tag>
-        <tag>遇到的坑</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[将图片以二进制流方式存入数据库和从数据库读取(c#,oracle 11g)]]></title>
-    <url>%2F2017%2F10%2F23%2F%E5%B0%86%E5%9B%BE%E7%89%87%E4%BB%A5%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B5%81%E6%96%B9%E5%BC%8F%E5%AD%98%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93-c-oracle-11g%2F</url>
-    <content type="text"><![CDATA[在项目的实施过程中，遇到了一个问题：项目需求网页前端读取一张照片，以二进制的方式存入oracle数据库中。这个问题，用了一天的时间解决，所以写此文记录一下。 在网上搜了一圈，并加以实施发现实施过程如下：前台获取图片路径，用FileReader读取后，可以转换为base64编码的字符串，然后通过ajax 将base64格式编码字符串传到后台，C#读取前台传来的字符串，将其转化存到byte[] 数组中，最后写入数据库。 下面为实现代码和预览结果：前端：123456789&lt;div class=&quot;form-group&quot;&gt; &lt;label class=&quot;col-sm-2 control-label&quot; for=&quot;PHOTO&quot;&gt;个人照片&lt;/label&gt; &lt;div id=&quot;imgForm&quot; class=&quot;col-sm-10&quot; style=&quot;margin:4px auto 5px auto&quot;&gt; &lt;p id=&quot;imagesize&quot; style=&quot;display:none&quot;&gt;&lt;/p&gt;//上传图片后可以显示图片尺寸 &lt;img id=&quot;preview&quot; /&gt; &lt;br /&gt; &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;img&quot; /&gt;//&lt;input&gt;标签有type=&quot;file&quot;用来上传文件 &lt;/div&gt;&lt;/div&gt; 预览结果： 个人照片 123456789101112131415161718192021222324252627282930313233343536373839 var imgFile; var justify = &quot;1&quot;;//用来判断图片大小是否超出尺寸，1代表没有超出，0代表超出 document.getElementById(&apos;img&apos;).onchange = function () &#123;//判断是否支持FileReader if (window.FileReader) &#123; var reader = new FileReader(); &#125; else &#123; alert(&quot;不支持图片预览功能，如需该功能请升级！&quot;); &#125; justify = &quot;1&quot;; var img = event.target.files[0]; // 判断是否图片 if (!img) &#123; return false; &#125; // 判断图片格式 if (!(img.type.indexOf(&apos;image&apos;) == 0 &amp;&amp; img.type &amp;&amp; /\.(?:jpg|jpeg)$/.test(img.name))) &#123; alert(&apos;图片只能是jpg jpeg&apos;); return false; &#125; var reader = new FileReader(); reader.readAsDataURL(img); reader.onload = function (e) &#123; imgFile = e.target.result; //获取图片dom var img1 = document.getElementById(&quot;preview&quot;); //图片路径设置为读取的图片 img1.src = e.target.result; var imgwidth = img1.offsetWidth;//获取图片宽高 var imgheight = img1.offsetHeight; var size = document.getElementById(&apos;imagesize&apos;); size.style.display = &quot;block&quot;; size.innerHTML = imgwidth + &quot;×&quot; + imgheight; if (imgwidth &gt; 600 || imgheight &gt; 800) &#123; justify = &quot;0&quot;; alert(&quot;图片尺寸不应大于600×800&quot;); &#125; &#125;&#125; 这时候写一个button 触发函数通过ajax来上传照片到后台： 提交 1234567&lt;div class=&quot;box-footer&quot;&gt; &lt;div class=&quot;box-tools col-sm-2&quot;&gt; &lt;div class=&quot;has-feedback&quot;&gt; &lt;button id=&quot;btn2&quot; type=&quot;submit&quot; class=&quot;btn btn-primary&quot; onclick=&quot;AddExperts()&quot;&gt;提交&lt;/button&gt; &lt;/div&gt; &lt;/div&gt;&lt;/div&gt; 123456789101112131415161718function AddExperts() &#123; var postimg = imgFile; $.ajax(&#123; type: &quot;POST&quot;, async: false, url: &quot;ashx/zlgly-zjgl-add.ashx&quot;, contentType: &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;, data: &#123;img: postimg, JUSTIFY: justify &#125;, timeout: 1000, cache: false, success: function (result) &#123; if (result) &#123; alert(result); &#125; &#125; &#125;); &#125; 以一张照片为例，如果上传了一张jpg或者jepg格式的图片，postimg为很长的一串字符串。 至此前端的操作就到此结束了，下面进入后台的.ashx文件查看相关代码： 123456789101112131415161718192021222324252627282930313233343536373839404142434445using System;using System.Data;using System.Configuration;using System.Web;using Oracle.ManagedDataAccess.Client;public class 后台文件 : IHttpHandler&#123; public void ProcessRequest(HttpContext context) &#123; context.Response.ContentType = &quot;text/plain&quot;; //从前端读取数据 string myFile = context.Request.Form[&quot;img&quot;]; string text = myFile.Substring(23);//截取base64字符串23个字符之后的内容 string JUSTIFY = context.Request.Form[&quot;JUSTIFY&quot;]; byte[] imageBytes = Convert.FromBase64String(text);//将base64字符串转化为byte[] 格式 if (JUSTIFY == &quot;0&quot;) &#123; context.Response.Write(&quot;图片大小超出尺寸&quot;); context.Response.End(); &#125; else &#123; //与数据库连接 string myvar = ConfigurationManager.ConnectionStrings[&quot;Conn&quot;].ToString(); OracleConnection conn = new OracleConnection(myvar); try &#123; conn.Open(); &#125; catch (Exception ex) &#123; context.Response.Write(ex.Message); context.Response.End(); &#125; string insertimg = &quot;update EXPERTS SET IMAGE=:imageBytes where 条件=&apos;&quot; + 条件 + &quot;&apos;&quot;; OracleCommand cmd = new OracleCommand(insertimg, conn); cmd.Parameters.Add(new OracleParameter(&quot;imageBytes&quot;, OracleDbType.Blob)); cmd.Parameters[&quot;imageBytes&quot;].Value = imageBytes; &#125;&#125; 这里向c#数据库的blob中写入图片，在网上搜了一段代码，也可以用，思路更清晰：12345678910111213141516171819202122232425262728//打开数据库String connectionstring = &quot;Data Source=apts_test;user id=aptstest;password=test&quot;;OracleConnection con =new OracleConnection(connectionstring);con.Open();//向指定记录添加blob字段，例如图片private void add_blob() &#123; String sql = @&quot;update testxx set image=:myimage where ID=:myid&quot;;//在testxx表中有个字段叫image是blob类型的注意中的冒号，通过myid制定记录 OracleCommand cmd = new OracleCommand(sql, con); cmd.Parameters.Add(new OracleParameter(&quot;myimage&quot;, OracleType.Blob));//给这个两个参数赋值myimage和myid cmd.Parameters.Add(new OracleParameter(&quot;myid&quot;, OracleType.VarChar)); cmd.Parameters[&quot;myid&quot;].Value = &quot;1&quot;; //给image字段赋值字节数组 FileStream fs = File.OpenRead(&quot;D:/ 2.jpg&quot;); byte[] imagebyte = new byte[fs.Length]; fs.Read(imagebyte, 0, (int)fs.Length); cmd.Parameters[&quot;myimage&quot;].Value = imagebyte; try &#123; int result = cmd.ExecuteNonQuery(); if (result &lt; 1) System.Console.WriteLine(&quot;success&quot;); else System.Console.WriteLine(&quot;error&quot;); &#125; catch (Exception e1) &#123; &#125;&#125; 在pl/sql developer中查看上传结果可以看到已经上传成功了： 当然因为这里在后台没有判断照片的尺寸，后期会进行更新。 当然，读取的方式类似。将blob中byte[] 格式转换为base64 ，但这个时候要注意开始时是把base64最前面的23个字符给去掉了，这时候要加上。 1234567891011121314151617181920212223242526DataTable td = new DataTable(&quot;Name&quot;);//创建datatable来存放td.Columns.Add(&quot;IMAGE&quot;, Type.GetType(&quot;System.String&quot;));//增加一列，列名为IMAGEtd.Rows.Add();//增加一行string sql = &quot;SELECT * FROM 表名 WHERE 条件 &quot;+ 条件 + &quot;&apos;&quot;;OracleCommand cmd = new OracleCommand(sql, conn);cmd.CommandType = System.Data.CommandType.Text;OracleDataReader = cmd.ExecuteReader(); if (sdr.Read()) &#123; if(!sdr.IsDBNull(12)) &#123; byte[] img =(byte[])sdr[&quot;IMAGE&quot;]; string pic =&quot;data:image/jpeg;base64,&quot;+ Convert.ToBase64String(img);//加上字符串 td.Rows[0][&quot;IMAGE&quot;] = pic; &#125; string jsonresult = JsonConvert.SerializeObject(td); context.Response.Write(jsonresult);//传到前台 context.Response.End(); &#125; else &#123; context.Response.Write(&quot;1&quot;); context.Response.End(); &#125; &#125; 这时候传到前台的还是base64字符串，而且img标签可以自动将base6码放入 img的 src=” “‘中,html会自动转码，至此就实现了图片导数据库和数据库到图片的整套读取方法了。]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>C#</tag>
-        <tag>遇到的坑</tag>
-        <tag>数据库</tag>
-        <tag>oracle</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Arguments的用法初试]]></title>
-    <url>%2F2017%2F09%2F03%2FArguments%E7%9A%84%E7%94%A8%E6%B3%95%E5%88%9D%E8%AF%95%2F</url>
-    <content type="text"><![CDATA[在FCC做题的过程中，遇到了一个初级的算法题，题目用到了arguments对象。在这里对arguments的用法进行一些总结。 首先，在FCC中的题目如下： 摧毁数组实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。 123456789101112131415function destroyer(arr) &#123; //arr = (6) [1, 2, 3, 1, 2, 3] var arr_arg=arguments; //arr_arg = (3) [Array(6), 2, 3] for(var i = 1; i &lt; arr_arg.length; i++)&#123; //先让arr_arg[1](也就是2)与arr的每一个元素比较，保留或者摧毁。第一次循环后arr=[1,2,1,2]然后第二次循环让arr_arg[2](也就是3)与arr的每一个元素比较，保留或者摧毁。第二次循环后arr=[1,1] arr = arr.filter(function(val)&#123; return arr_arg[i] !== val; &#125;); &#125; return arr;&#125;destroyer([1, 2, 3, 1, 2, 3], 2, 3);//[1,1]destroyer([1, 2, 3, 5, 1, 2, 3], 2, 3) ;//[1, 5, 1]destroyer([3, 5, 1, 2, 2], 2, 3, 5);//[1]destroyer([2, 3, 2, 3], 2, 3);//[]destroyer([&quot;tree&quot;, &quot;hamburger&quot;, 53], &quot;tree&quot;, 53);//[&quot;hamburger&quot;] 先来看下《JavaScript高级程序设计》中对于arguments的一些解释： ECMAScript 函数的参数与大多数其他语言中函数的参数有所不同。 ECMAScript 函数不介意传递进来多少个参数，也不在乎传进来参数是什么数据类型。也就是说，即便你定义的函数只接收两个参数，在调用这个函数时也未必一定要传递两个参数。可以传递一个、三个甚至不传递参数，而解析器永远不会有什么怨言。之所以会这样，原因是ECMAScript 中的参数在内部是用一个数组来表示的。函数接收到的始终都是这个数组，而不关心数组中包含哪些参数（如果有参数的话）。如果这个数组中不包含任何元素，无所谓；如果包含多个元素，也没有问题。实际上，在函数体内可以通过 arguments 对象来访问这个参数数组，从而获取传递给函数的每一个参数。 其实， arguments 对象只是与数组类似（它并不是 Array 的实例），因为可以使用方括号语法访问它的每一个元素（即第一个元素是 arguments[0]，第二个元素是 argumetns[1]，以此类推），使用 length 属性来确定传递进来多少个参数。在前面的例子中， sayHi()函数的第一个参数的名字叫name，而该参数的值也可以通过访问 arguments[0]来获取。因此，那个函数也可以像下面这样重写，即不显式地使用命名参数： function sayHi() { alert(&quot;Hello &quot; + arguments[0] + &quot;,&quot; + arguments[1]);}这个重写后的函数中不包含命名的参数。虽然没有使用 name 和 message 标识符，但函数的功能依旧。这个事实说明了 ECMAScript 函数的一个重要特点：命名的参数只提供便利，但不是必需的。另外，在命名参数方面，其他语言可能需要事先创建一个函数签名，而将来的调用必须与该签名一致。但在 ECMAScript 中，没有这些条条框框，解析器不会验证命名参数。通过访问 arguments 对象的 length 属性可以获知有多少个参数传递给了函数。下面这个函数会在每次被调用时，输出传入其中的参数个数：function howManyArgs() { alert(arguments.length); }howManyArgs(&quot;string&quot;, 45); //2howManyArgs(); //0 howManyArgs(12); //1 执行以上代码会依次出现 3 个警告框，分别显示 2、 0 和 1。由此可见，开发人员可以利用这一点让函数能够接收任意个参数并分别实现适当的功能。请看下面的例子： function doAdd() {if(arguments.length == 1) {alert(arguments[0] + 10);} else if (arguments.length == 2) {alert(arguments[0] + arguments[1]);}}doAdd(10); //20doAdd(30, 20); //50函数 doAdd()会在只有一个参数的情况下给该参数加上 10；如果是两个参数，则将那个参数简单相加并返回结果。因此， doAdd(10)会返回 20，而 doAdd(30,20)则返回 50。虽然这个特性算不上完美的重载，但也足够弥补 ECMAScript 的这一缺憾了。另一个与参数相关的重要方面，就是 arguments 对象可以与命名参数一起使用，如下面的例子所示：function doAdd(num1, num2) {if(arguments.length == 1) {alert(num1 + 10);} else if (arguments.length == 2) {alert(arguments[0] + num2);}}在重写后的这个 doAdd()函数中，两个命名参数都与 arguments 对象一起使用。由于 num1 的值与 arguments[0]的值相同，因此它们可以互换使用（当然， num2 和 arguments[1]也是如此）。关于 arguments 的行为，还有一点比较有意思。那就是它的值永远与对应命名参数的值保持同步。例如：function doAdd(num1, num2) {arguments[1] = 10;alert(arguments[0] + num2);}每次执行这个 doAdd()函数都会重写第二个参数，将第二个参数的值修改为 10。因为 arguments对象中的值会自动反映到对应的命名参数，所以修改 arguments[1]，也就修改了 num2，结果它们的值都会变成 10。不过，这并不是说读取这两个值会访问相同的内存空间；它们的内存空间是独立的，但它们的值会同步。另外还要记住，如果只传入了一个参数，那么为 arguments[1]设置的值不会反应到命名参数中。这是因为 arguments 对象的长度是由传入的参数个数决定的，不是由定义函数时的命名参数的个数决定的。关于参数还要记住最后一点：没有传递值的命名参数将自动被赋予 undefined 值。这就跟定义了变量但又没有初始化一样。例如，如果只给 doAdd()函数传递了一个参数，则 num2 中就会保存undefined 值。严格模式对如何使用 arguments 对象做出了一些限制。首先，像前面例子中那样的赋值会变得无效。也就是说，即使把 arguments[1]设置为 10， num2 的值仍然还是 undefined。其次，重写arguments 的值会导致语法错误（代码将不会执行）。 这里再回过头来看最开始的那个初级的算法题，就很简单了，传递的值是:([1,2,3,1,2,3],2,3),即arguments[0] = [1,2,3,1,2,3], arguments[1] = 2 , arguemnts[2] = 3 .这样让arr_arg=arguments，即定义一个数组等于当前传入的数组，在后面进行使用。后面的部分就很好理解了，用Array.filter()方法调用括号内的function函数，让循环从1开始，即让待摧毁的值与数组中的每一个值比较，返回false或者true进而摧毁或者保留。]]></content>
-      <categories>
-        <category>JavaScript</category>
-      </categories>
-      <tags>
-        <tag>JavaScript</tag>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[初级算法]]></title>
-    <url>%2F2017%2F09%2F02%2F%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95%2F</url>
-    <content type="text"><![CDATA[因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。 计算一个整数的阶乘算法1普通方法： 123456789101112function factorialize(num) &#123; var number=1; while(num&gt;=1)&#123; number*=num; num--; &#125; return number; &#125; factorialize(10); //3628800 factorialize(20); // 2432902008176640000 factorialize(0); //1 递归下面是递归的方法： 123456789101112function factorialize(num) &#123; if (num === 0)&#123; return 1; &#125; else&#123; return num * factorialize(num - 1); &#125;&#125;factorialize(10); //3628800factorialize(20); // 2432902008176640000factorialize(0); //1 分割数组把一个数组arr按照指定的数组大小size分割成若干个数组块。 例如:chunk([1,2,3,4],2)=[[1,2],[3,4]]; 1234567891011function chunk(arr, size) &#123; var arr2=[]; for(var i=0;i&lt;arr.length;i=i+size)&#123; arr2.push(arr.slice(i,i+size)); &#125; return arr2; &#125;chunk([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 2);chunk([0, 1, 2, 3, 4, 5, 6], 3); // [[0, 1, 2], [3, 4, 5], [6]]chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4); // [[0, 1, 2, 3], [4, 5, 6, 7], [8]] 截断数组截断数组的代码： 123456function slasher(arr, howMany) &#123; arr.splice(0,howMany); return arr; &#125; slasher([1, 2, 3], 2); splice() 方法通过删除现有元素和/或添加新元素来更改一个数组的内容。splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。 例如： 12345var myFish = [&apos;angel&apos;, &apos;clown&apos;, &apos;mandarin&apos;, &apos;sturgeon&apos;];myFish.splice(2, 0, &apos;drum&apos;); // 在索引为2的位置插入&apos;drum&apos;// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;drum&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]myFish.splice(2, 1); // 从索引为2的位置删除一项（也就是&apos;drum&apos;这一项）// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;] 比较字符串比较字符串 如果数组第一个字符串元素包含了第二个字符串元素的所有字符，函数返回true。 举例，[“hello”, “Hello”]应该返回true，因为在忽略大小写的情况下，第二个字符串的所有字符都可以在第一个字符串找到。 [“hello”, “hey”]应该返回false，因为字符串”hello”并不包含字符”y”。 1234567891011121314function mutation(arr) &#123; var arr2=arr[1].toLowerCase().split(&quot;&quot;);// 先把后面的字符串拆分成数组 for(var i=0;i&lt;arr2.length;i++)&#123; if(arr[0].toLowerCase().indexOf(arr2[i])&lt;0)&#123; //将前面的数组转化为小写后与后面拆分的数组的每一个字母比较， indexOf不包含的情况会返回-1 return false; &#125; &#125; return true; &#125;mutation([&quot;hello&quot;, &quot;hey&quot;]);//falsemutation([&quot;hello&quot;, &quot;Hello&quot;]);//truemutation([&quot;zyxwvutsrqponmlkjihgfedcba&quot;, &quot;qrstu&quot;]);//true split() 方法使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。 split() str.split([separator[, limit]])separator指定表示每个拆分应发生的点的字符串。separator 可以是一个字符串或正则表达式。 如果纯文本分隔符包含多个字符，则必须找到整个字符串来表示分割点。如果在str中省略或不出现分隔符，则返回的数组包含一个由整个字符串组成的元素。如果分隔符为空字符串，则将str原字符串中每个字符的数组形式返回。limit一个整数，限定返回的分割片段数量。当提供此参数时，split 方法会在指定分隔符的每次出现时分割该字符串，但在限制条目已放入数组时停止。如果在达到指定限制之前达到字符串的末尾，它可能仍然包含少于限制的条目。新数组中不返回剩下的文本。 过滤数组假值删除数组中的所有假值。 在JavaScript中，假值有false、null、0、””、undefined 和 NaN。 参考：Boolean Objects Array.filter() 123456789function bouncer(arr) &#123; return arr.filter(isBad); function isBad(params)&#123; var result = Boolean(params); return result; &#125;&#125;bouncer([7, &quot;ate&quot;, &quot;&quot;, false, 9]);//[7, &quot;ate&quot;, 9]bouncer([false, null, 0, NaN, undefined, &quot;&quot;]);// [] 数组排序并找出元素索引先给数组排序，然后找到指定的值在数组的位置，最后返回位置对应的索引。 举例：where([1,2,3,4], 1.5) 应该返回 1。因为1.5插入到数组[1,2,3,4]后变成[1,1.5,2,3,4]，而1.5对应的索引值就是1。 同理，where([20,3,5], 19) 应该返回 2。因为数组会先排序为 [3,5,20]，19插入到数组[3,5,20]后变成[3,5,19,20]，而19对应的索引值就是2。 这题的思路就比较简单了，先把后面的数加到前面的数组中，然后对加入新数的数组进行排序，最后找到新加入的数字的索引即可。下面是我自己写的代码： 123456789101112131415161718192021function where(arr, num) &#123; var arr1=[]; arr.push(num); arr.sort( function(a,b)&#123; return a-b; &#125;); for(var i=0;i&lt;arr.length;i++)&#123; if(arr[i]===num)&#123; return i; &#125; &#125; &#125;where([40, 60], 50); //1where([10, 20, 30, 40, 50], 35);//3where([10, 20, 30, 40, 50], 30);// 2where([40, 60], 50);// 1where([3, 10, 5], 3);// 0where([5, 3, 20, 3], 5);// 2where([2, 20, 10], 19);// 2where([2, 5, 10], 15);// 3 后面再网上看到了一个其他的方法，可以用 Array.indexOf() 方法直接获取元素的索引值，其他的思路一样。代码如下：12345678function where(arr, num) &#123; var arr1=[]; arr.push(num); arr.sort( function(a,b)&#123; return a-b; &#125;); return arr.indexOf(num);&#125; 凯撒密码下面我们来介绍风靡全球的凯撒密码Caesar cipher，又叫移位密码。 移位密码也就是密码中的字母会按照指定的数量来做移位。 一个常见的案例就是ROT13密码，字母会移位13个位置。由’A’ ↔ ‘N’, ‘B’ ↔ ‘O’，以此类推。 写一个ROT13函数，实现输入加密字符串，输出解密字符串。 所有的字母都是大写，不要转化任何非字母形式的字符(例如：空格，标点符号)，遇到这些特殊字符，跳过它们。 可能用到的内容：String.charCodeAt()String.fromCharCode()ASCII码对照表 大写字母的对应关系如下：ABCDEFGHIJKLMNOPQRSTUVWXYZNOPQRSTUVWXYZABCDEFGHIJKLM 12345678910111213141516171819202122232425function rot13(str) &#123; var arr=[]; for(var i=0;i&lt;str.length;i++)&#123; //遍历字符串的每一个字符 //其他字符等非大写字母字符 if(str.charCodeAt(i)&lt;65||str.charCodeAt(i)&gt;90)&#123; arr.push(String.fromCharCode(str.charCodeAt(i))); &#125; //大写字母的ASCII码表对应的数值为65-90 else if(str.charCodeAt(i)&gt;77)&#123; arr.push(String.fromCharCode(str.charCodeAt(i)-13)); &#125; else&#123; arr.push(String.fromCharCode(str.charCodeAt(i)+13)); &#125; &#125; return arr.join(&quot;&quot;);&#125;console.log(rot13(&quot;SERR PBQR PNZC&quot;)); // FREE CODE CAMProt13(&quot;SERR CVMMN!&quot;)); // &quot;FREE PIZZA!&quot;rot13(&quot;SERR YBIR?&quot;) ); // &quot;FREE LOVE?&quot;rot13(&quot;GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK.&quot;)); // &quot;THE QUICK BROWN DOG JUMPED OVER THE LAZY FOX.&quot; 返回给定的两个数组中不同的值Diff Two Arrays比较两个数组，然后返回一个新数组，该数组的元素为两个给定数组中所有独有的数组元素。换言之，返回两个数组的差异。 Array.indexOf() Array.concat() 123456789101112131415161718192021function diff(arr1, arr2) &#123; var newArr = []; // Same, same; but different. var arr3 = []; for (var i=0;i&lt;arr1.length;i++) &#123; if(arr2.indexOf(arr1[i]) === -1) arr3.push(arr1[i]); &#125; var arr4 = []; for (var j=0;j&lt;arr2.length;j++) &#123; if(arr1.indexOf(arr2[j]) === -1) arr4.push(arr2[j]); &#125; newArr = arr3.concat(arr4); return newArr;&#125;diff([1, 2, 3, 5], [1, 2, 3, 4, 5]);//[4][1, &quot;calf&quot;, 3, &quot;piglet&quot;], [1, &quot;calf&quot;, 3, 4];// [&quot;piglet&quot;, 4][], [&quot;snuffleupagus&quot;, &quot;cookie monster&quot;, &quot;elmo&quot;] ;// [&quot;snuffleupagus&quot;, &quot;cookie monster&quot;, &quot;elmo&quot;][1, &quot;calf&quot;, 3, &quot;piglet&quot;], [7, &quot;filly&quot;];// [1, &quot;calf&quot;, 3, &quot;piglet&quot;, 7, &quot;filly&quot;]]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2017%2F08%2F21%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
-  </entry>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[大数据基础学习笔记（四）——HBase相关知识（三）]]></title>
+      <url>/2018/04/03/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94HBase%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%B8%89%EF%BC%89/</url>
+      <content type="html"><![CDATA[<h1 id="HBase应用方案"><a href="#HBase应用方案" class="headerlink" title="HBase应用方案"></a>HBase应用方案</h1><h2 id="HBase实际应用中的性能优化方法"><a href="#HBase实际应用中的性能优化方法" class="headerlink" title="HBase实际应用中的性能优化方法"></a>HBase实际应用中的性能优化方法</h2><p><code>行键（Row Key ）</code></p>
+<p>行键是按照 字典序存储，因此，设计行键时，要充分利用这个排序特点，将经常一起读取的数据存储到一块，将最近可能会被访问的数据放在一块。</p>
+<p>举个例子：如果最近写入HBase表中的数据是最可能被访问的，可以考虑将时间戳<br>作为行键的一部分，由于是字典序排序，所以可以使用Long.MAX_VALUE -<br>timestamp作为行键，这样能保证新写入的数据在读取时可以被快速命中。</p>
+<p><img src="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/1.png" alt="行键"></p>
+<p><code>InMemory</code><br>创建表的时候，可以通过HColumnDescriptor.setInMemory(true)将表放到Region服务器的缓存中，保证在读取的时候被cache命中。</p>
+<p><code>Max Version</code><br>创建表的时候，可以通过HColumnDescriptor.setMaxVersions(int maxVersions)设置表中数据的最大版本，如果只需要保存最新版本的数据，那么可以设置setMaxVersions(1)。</p>
+<p><code>Time To Live</code><br>创建表的时候，可以通过HColumnDescriptor.setTimeToLive(int timeToLive)设置表中数据的存储生命期，过期数据将自动被删除，例如如果只需要存储最近两天的数据，那么可以设置setTimeToLive(2 <em> 24 </em> 60 * 60)。</p>
+<h2 id="HBase性能监视"><a href="#HBase性能监视" class="headerlink" title="HBase性能监视"></a>HBase性能监视</h2><p><code>Master-status(自带)</code></p>
+<p>•HBase Master默认基于Web的UI服务端口为60010，HBase region服务器默认基于Web的UI服务端口为60030.如果master运行在名为master.foo.com的主机中，mater的主页地址就是<a href="http://master.foo.com:60010，用户可以通过Web浏览器输入这个地址查看该页面" target="_blank" rel="external">http://master.foo.com:60010，用户可以通过Web浏览器输入这个地址查看该页面</a></p>
+<p>•可以查看HBase集群的当前状态</p>
+<p><code>Ganglia</code></p>
+<p>Ganglia是UC Berkeley发起的一个开源集群监视项目，用于监控系统性能</p>
+<p><code>OpenTSDB</code></p>
+<p>OpenTSDB可以从大规模的集群（包括集群中的网络设备、操作系统、应用程序）中获取相应的metrics并进行存储、索引以及服务，从而使得这些数据更容易让人理解，如web化，图形化等</p>
+<p><code>Ambari</code></p>
+<p>Ambari 的作用就是创建、管理、监视 Hadoop 的集群</p>
+<h2 id="在HBase之上构建SQL引擎"><a href="#在HBase之上构建SQL引擎" class="headerlink" title="在HBase之上构建SQL引擎"></a>在HBase之上构建SQL引擎</h2><p>NoSQL区别于关系型数据库的一点就是NoSQL不使用SQL作为查询语言，至于为何在NoSQL数据存储HBase上提供SQL接口，有如下原因：</p>
+<ol>
+<li><p>易使用。使用诸如SQL这样易于理解的语言，使人们能够更加轻松地使用HBase。</p>
+</li>
+<li><p>减少编码。使用诸如SQL这样更高层次的语言来编写，减少了编写的代码量。<br>方案：</p>
+</li>
+</ol>
+<p>1.Hive整合HBase<br>2.Phoenix</p>
+<p>1.Hive 整合HBase</p>
+<p>Hive与HBase的整合功能从Hive0.6.0版本已经开始出现，利用两者对外的API接口互相通信，通信主要依靠hive_hbase-handler.jar工具包(Hive Storage Handlers)。由于HBase有一次比较大的版本变动，所以并不是每个版本的Hive都能和现有的HBase版本进行整合，所以在使用过程中特别注意的就是两者版本的一致性。</p>
+<p>2.Phoenix</p>
+<p>Phoenix由Salesforce.com开源，是构建在Apache HBase之上的一个SQL中间层，可以让开发者在HBase上执行SQL查询。</p>
+<h2 id="构建HBase二级索引"><a href="#构建HBase二级索引" class="headerlink" title="构建HBase二级索引"></a>构建HBase二级索引</h2><p>二级索引，又叫辅助索引</p>
+<p>HBase只有一个针对行健的索引访问HBase表中的行，只有三种方式：</p>
+<p>•通过单个行健访问</p>
+<p>•通过一个行健的区间来访问</p>
+<p>•全表扫描</p>
+<p>使用其他产品为HBase行健提供索引功能：</p>
+<p>•Hindex二级索引</p>
+<p>•HBase+Redis</p>
+<p>•HBase+solr</p>
+<p>原理：采用HBase0.92版本之后引入的Coprocessor特性</p>
+<p><img src="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/2.png" alt="二级索引"></p>
+<p><code>Coprocessor构建二级索引</code></p>
+<p>•Coprocessor提供了两个实现：endpoint和observer，endpoint相当于关系型数据库的<br>存储过程，而observer则相当于触发器</p>
+<p>•observer允许我们在记录put前后做一些处理，因此，而我们可以在插入数据时同步写<br>入索引表</p>
+<p>•Coprocessor构建二级索引•缺点：每插入一条数据需要向索引表插入数据，即耗时是双倍的，对HBase的集群的压力也是双倍的</p>
+<p>优点：<br>非侵入性：引擎构建在HBase之上，既没有对HBase进行任何改动，也不需要上层应用做任何妥协</p>
+<p>Hindex二级索引</p>
+<p>Hindex 是华为公司开发的纯 Java 编写的HBase二级索引，兼容 Apache HBase 0.94.8。当前的特性如下：</p>
+<p>•多个表索引</p>
+<p>•多个列索引</p>
+<p>•基于部分列值的索引</p>
+<p><code>HBase+Redis</code></p>
+<p>•Redis+HBase方案</p>
+<p>•Coprocessor构建二级索引</p>
+<p>•Redis做客户端缓存</p>
+<p>•将索引实时更新到Redis等KV系统中，定时从KV更新索引到HBase的索引表中</p>
+<p><img src="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/3.png" alt="HBase+Redis"></p>
+<p><code>Solr+HBase</code></p>
+<p>Solr是一个高性能，采用Java5开发，基于Lucene的全文搜索服务器。同时对其进行<br>了扩展，提供了比Lucene更为丰富的查询语言，同时实现了可配置、可扩展并对查询<br>性能进行了优化，并且提供了一个完善的功能管理界面，是一款非常优秀的全文搜索<br>引擎。</p>
+<p><img src="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/4.png" alt="Solr+HBase"></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 大数据 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[大数据基础学习笔记（三）——HBase相关知识（二）]]></title>
+      <url>/2018/04/02/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94HBase%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86%EF%BC%88%E4%BA%8C%EF%BC%89/</url>
+      <content type="html"><![CDATA[<h1 id="HBase功能组件"><a href="#HBase功能组件" class="headerlink" title="HBase功能组件"></a>HBase功能组件</h1><p>• HBase的实现包括三个主要的功能组件：<br>– （1）库函数：链接到每个客户端<br>– （2）一个Master主服务器（充当管家的作用）<br>– （3）许多个Region服务器</p>
+<p>• 主服务器Master负责管理和维护HBase表的分区信息，维护Region服务器列表，分配Region，负载均衡</p>
+<p>• 一个大的表会被分成很多个Region，Region服务器负责存储和维护分配给自己的Region，处理来自客户端的读写请求</p>
+<p>• 客户端并不是直接从Master主服务器上读取数据，而是在获得Region的存储位置信息后，直接从Region服务器上读取数据</p>
+<p>• 客户端并不依赖Master，而是通过Zookeeper来获得Region位置信息，大多数客户端甚至从来不和Master通信，这种设计方式使得Master负载很小</p>
+<h2 id="表和Region"><a href="#表和Region" class="headerlink" title="表和Region"></a>表和Region</h2><p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/1.png" alt="一个HBase表被划分成多个Region"></p>
+<p>•开始只有一个Region，后来不断分裂</p>
+<p>•Region拆分操作非常快，接近瞬间，因为拆分之后的Region读取的仍然是原存储文件，直到“合并”过程把存储文件异步地写到独立的文件之后，才会读取新文件</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/2.png" alt="一个Region会分裂成多个新的Region"></p>
+<p>这种拆分只是逻辑上的拆分，只是数据的指向发生了变化，它的实际存储还是在原来的旧的Region中的数据。<br>当读新的Region时，后台会有一个合并操作，会把拆分的数据进行重新操作，最终会写到新的文件中去。</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/3.png" alt="不同的Region可以分布在不同的Region服务器上"></p>
+<p>一个Region只能存到一个Region服务器上。</p>
+<h2 id="Region的定位"><a href="#Region的定位" class="headerlink" title="Region的定位"></a>Region的定位</h2><p>那么有一个问题，当一个Region被拆成很多个Region时，这些Region会把它打散，分布到不同的地方存储，那么怎么知道它被存到哪里去了呢？</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/4.png" alt="映射表"></p>
+<p>•元数据表，又名.META.表，存储了Region和Region服务器的映射关系</p>
+<p>•当HBase表很大时， .META.表也会被分裂成多个Region</p>
+<p>•根数据表，又名-ROOT-表，记录所有元数据的具体位置</p>
+<p>•-ROOT-表只有唯一一个Region，名字是在程序中被写死的</p>
+<p>•Zookeeper文件记录了-ROOT-表的位置</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/5.png" alt="HBase的三层结构"></p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/6.png" alt="HBase的三层结构中各层次的名称和作用"></p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/7.png" alt="Region定位"></p>
+<p>•一个-ROOT-表最多只能有一个Region，也就是最多只能有128MB，按照每行（一个映射条目）占用1KB内存计算，128MB空间可以容纳128MB/1KB=2^17 行，也就是说，一个-ROOT-表可以寻址2^17 个.META.表的Region。</p>
+<p>•同理，每个.META.表的 Region可以寻址的用户数据表的Region个数是128MB/1KB=2^17 。</p>
+<p>•最终，三层结构可以保存的Region数目是(128MB/1KB) × (128MB/1KB) = 2^34 个Region</p>
+<p>所以三层架构能够满足企业的需求。</p>
+<p>客户端访问数据时的“三级寻址”<br>•为了加速寻址，客户端会缓存位置信息，同时，需要解决缓存失效问题</p>
+<p>•寻址过程客户端只需要询问Zookeeper服务器，不需要连接Master服务器</p>
+<p>这里的缓存机制采用的是惰性缓存，如果在使用缓存获取数据时，获取不到数据，那么就失效了，这时候再次进行三级寻址过程，以解决缓存失效问题。</p>
+<h1 id="HBase运行机制"><a href="#HBase运行机制" class="headerlink" title="HBase运行机制"></a>HBase运行机制</h1><p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/8.png" alt="HBase的系统架构"></p>
+<p>• 1. 客户端<br>– 客户端包含访问HBase的接口，同时在缓存中维护着已经访问过的Region位置信息，用来加快后续数据访问过程</p>
+<p>• 2. Zookeeper服务器<br>– Zookeeper可以帮助选举出一个Master作为集群的总管，并保证在任何时刻总有唯一一个Master在运行，这就避免了Master的“单点失效”问题Zookeeper是一个很好的集群管理工具，被大量用于分布式计算，提供配置维护、域名服务、分布式同步、组服务等。提供管家的功能，维护整个HBase集群。虽然有很多备用的Master，但是它保证只有一个Master是运行的。</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/9.png" alt="ZooKeeper"></p>
+<p>• 3. Master<br>• 主服务器Master主要负责表和Region的管理工作：<br>– 管理用户对表的增加、删除、修改、查询等操作<br>– 实现不同Region服务器之间的负载均衡<br>– 在Region分裂或合并后，负责重新调整Region的分布<br>– 对发生故障失效的Region服务器上的Region进行迁移</p>
+<p>• 4. Region服务器<br>– Region服务器是HBase中最核心的模块，负责维护分配给自己的Region，并响应用户的读写请求</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/10.png" alt="Region服务器向HDFS文件系统中读写数据"></p>
+<h2 id="Region服务器工作原理"><a href="#Region服务器工作原理" class="headerlink" title="Region服务器工作原理"></a>Region服务器工作原理</h2><p>1.用户读写数据过程</p>
+<p>•用户写入数据时，被分配到相应Region服务器去执行</p>
+<p>•用户数据首先被写入到MemStore和Hlog中</p>
+<p>•只有当操作写入Hlog之后，commit()调用才会将其返回给客户端</p>
+<p>•当用户读取数据时，Region服务器会首先访问MemStore缓存，如果找不到，再去磁盘上面的StoreFile中寻找</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/11.png" alt="用户读写数据过程"></p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/12.png" alt="用户读写数据过程"></p>
+<p>2.缓存的刷新</p>
+<p>•系统会周期性地把MemStore缓存里的内容刷写到磁盘的StoreFile文件中，清空缓存，并在Hlog里面写入一个标记</p>
+<p>•每次刷写都生成一个新的StoreFile文件，因此，每个Store包含多个StoreFile文件</p>
+<p>•每个Region服务器都有一个自己的HLog 文件，每次启动都检查该文件，确认最近一次执行缓存刷新操作之后是否发生新的写入操作；如果发现更新，则先写入MemStore，再刷写到StoreFile，最后删除旧的Hlog文件，开始为用户提供服务</p>
+<p>3.StoreFile 的合并</p>
+<p>•每次刷写都生成一个新的StoreFile，数量太多，影响查找速度</p>
+<p>•调用Store.compact()把多个合并成一个</p>
+<p>•合并操作比较耗费资源，只有数量达到一个阈值才启动合并</p>
+<h2 id="Store工作原理"><a href="#Store工作原理" class="headerlink" title="Store工作原理"></a>Store工作原理</h2><p>•Store是Region服务器的核心</p>
+<p>•多个StoreFile合并成一个</p>
+<p>•单个StoreFile过大时，又触发分裂操作，1个父Region被分裂成两个子Region</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/13.png" alt="StoreFile的合并和分裂过程"></p>
+<h2 id="HLog工作原理"><a href="#HLog工作原理" class="headerlink" title="HLog工作原理"></a>HLog工作原理</h2><p>• 分布式环境必须要考虑系统出错。HBase采用HLog保证系统恢复</p>
+<p>• HBase系统为每个Region服务器配置了一个HLog文件，它是一种预<br>写式日志（Write Ahead Log）</p>
+<p>• 用户更新数据必须首先写入日志后，才能写入MemStore缓存，并且<br>，直到MemStore缓存内容对应的日志已经写入磁盘，该缓存内容才能被刷写到磁盘</p>
+<p>• Zookeeper会实时监测每个Region服务器的状态，当某个Region服<br>务器发生故障时，Zookeeper会通知Master</p>
+<p>• Master首先会处理该故障Region服务器上面遗留的HLog文件，这个遗留的HLog文件中包含了来自多个Region对象的日志记录</p>
+<p>• 系统会根据每条日志记录所属的Region对象对HLog数据进行拆分，<br>分别放到相应Region对象的目录下，然后，再将失效的Region重新<br>分配到可用的Region服务器中，并把与该Region对象相关的HLog日<br>志记录也发送给相应的Region服务器</p>
+<p>• Region服务器领取到分配给自己的Region对象以及与之相关的HLog日志记录以后，会重新做一遍日志记录中的各种操作，把日志记录中的数据写入到MemStore缓存中，然后，刷新到磁盘的StoreFile文件中，完成数据恢复</p>
+<p>• 共用日志优点：提高对表的写操作性能；缺点：恢复时需要分拆日志</p>
+<p>本笔记参考自厦门大学林子雨老师的公开课：<a href="https://www.icourse163.org/course/XMU-1002335004" target="_blank" rel="external">https://www.icourse163.org/course/XMU-1002335004</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 大数据 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[大数据基础学习笔记（二）——HBase相关知识（一）]]></title>
+      <url>/2018/04/02/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94Hbase%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86/</url>
+      <content type="html"><![CDATA[<h1 id="Hbase简介"><a href="#Hbase简介" class="headerlink" title="Hbase简介"></a>Hbase简介</h1><p>HBase是一个高可靠、高性能、面向列、可伸缩的分布式数据库，是谷歌BigTable的开源实现，主要用来存储非结构化和半结构化的松散数据。HBase的目标是处理非常庞大的表，可以通过水平扩展的方式，利用廉价计算机集群处理由超过10亿行数据和数百万列元素组成的数据表。</p>
+<p>底层的分布式文件系统用来存储完全非结构化的数据。</p>
+<p>Hbase是架构在底层的分布式文件系统HDFS基础之上的同时MR可以对Hbase的数据进行处理。同时Hive和Pig等都可以访问Hbase中的数据。</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/1.png" alt="Hbase和Big Table的底层技术对应关系"></p>
+<p>从上图可以看出，BigTable和HBase的底层技术的对比。</p>
+<h2 id="为什么要设计HBase这个数据产品呢？"><a href="#为什么要设计HBase这个数据产品呢？" class="headerlink" title="为什么要设计HBase这个数据产品呢？"></a>为什么要设计HBase这个数据产品呢？</h2><p>•Hadoop可以很好地解决大规模数据的离线批量处理问题，但是，受限于HadoopMapReduce编程框架的高延迟数据处理机制，使得Hadoop无法满足大规模数据实时处理应用的需求</p>
+<p>•HDFS面向批量访问模式，不是随机访问模式</p>
+<p>•传统的通用关系型数据库无法应对在数据规模剧增时导致的系统扩展性和性能问题（分库分表也不能很好解决）</p>
+<p>•传统关系数据库在数据结构变化时一般需要停机维护；空列浪费存储空间</p>
+<p>•因此，业界出现了一类面向半结构化数据存储和处理的高可扩展、低写入/查询延迟的系统，例如，键值数据库、文档数据库和列族数据库（如BigTable和HBase等）</p>
+<p>•HBase已经成功应用于互联网服务领域和传统行业的众多在线式数据分析处理系统中</p>
+<h2 id="HBase与传统关系数据库的对比分析"><a href="#HBase与传统关系数据库的对比分析" class="headerlink" title="HBase与传统关系数据库的对比分析"></a>HBase与传统关系数据库的对比分析</h2><p>• HBase与传统的关系数据库的区别主要体现在以下几个方面：</p>
+<p>• （1）数据类型：关系数据库采用关系模型，具有丰富的数据类型（整型，字符型等等）和存储方式，HBase则采用了更加简单的数据模型，它把数据存储为未经解释的字符串（也就是Bytes数组）</p>
+<p>• （2）数据操作：关系数据库中包含了丰富的操作（增删改查），其中会涉及复杂的多表连接。HBase操作则不存在复杂的表与表之间的关系，只有简单的插入、查询、删除、清空等，因为HBase在设计上就避免了复杂的表和表之间的关系</p>
+<p>• （3）存储模式：关系数据库是基于行模式存储的。HBase是基于列存储的，每个列族都由几个文件保存，不同列族的文件是分离的</p>
+<p>• （4）数据索引：关系数据库通常可以针对不同列构建复杂的多个索引，以提高数据访问性能。HBase只有一个索引——行键，通过巧妙的设计，HBase中的所有访问方法，或者通过行键访问，或者通过行键扫描，从而使得整个系统不会慢下来</p>
+<p>• （5）数据维护：在关系数据库中，更新操作会用最新的当前值去替换记录中原来的旧值，旧值被覆盖后就不会存在。而在HBase中执行更新操作时，并不会删除数据旧的版本，而是生成一个新的版本，旧有的版本仍然保留，只有在过了设置的参数期限之后，在系统后台清理的时候才会清理掉</p>
+<p>• （6）可伸缩性：关系数据库很难实现横向扩展，纵向扩展（如添加内存，改进CPU等等）的空间也比较有限。相反，HBase和BigTable这些分布式数据库就是为了实现灵活的水平扩展而开发的，能够轻易地通过在集群中增加或者减少硬件数量来实现性能的伸缩</p>
+<h2 id="HBase的访问接口"><a href="#HBase的访问接口" class="headerlink" title="HBase的访问接口"></a>HBase的访问接口</h2><p>以后在使用Hbase的时候，可以通过哪些方式访问HBase数据库？<br>见下图：<br><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/2.png" alt="HBase访问接口"></p>
+<h2 id="HBase数据模型"><a href="#HBase数据模型" class="headerlink" title="HBase数据模型"></a>HBase数据模型</h2><p>• HBase是一个稀疏、多维度、排序的映射表，这张表的索引是行键、列族、列限定符和时间戳</p>
+<p>• 每个值是一个未经解释的字符串，没有数据类型</p>
+<p>• 用户在表中存储数据，每一行都有一个可排序的行键和任意多的列</p>
+<p>• 表在水平方向由一个或者多个列族组成，一个列族中可以包含任意多个列，同一个列族里面的数据存储在一起</p>
+<p>• 列族支持动态扩展，可以很轻松地添加一个列族或列，无需预先定义列的数量以及类型，所有列均以字符串形式存储，用户需要自行进行数据类型转换</p>
+<p>• HBase中执行更新操作时，并不会删除数据旧的版本，而是生成一个新的版本，旧有的版本仍然保留（这是和HDFS只允许追加不允许修改的特性相关的）</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/3.png" alt="HBase访问接口"></p>
+<p>• 表：HBase采用表来组织数据，表由行和列组成，列划分为若干个列族</p>
+<p>• 行：每个HBase表都由若干行组成，每个行由行键（row key）来标识。</p>
+<p>• 列族：一个HBase表被分组成许多“列族”（Column Family）的集合，它是基本的访问控制单元（支持动态拓展）</p>
+<p>• 列限定符：列族里的数据通过列限定符（或列）来定位</p>
+<p>• 单元格：在HBase表中，通过行、列族和列限定符确定一个“单元格”（cell），单元格中存储的数据没有数据类型，总被视为字节数组byte[]</p>
+<p>• 时间戳：每个单元格都保存着同一份数据的多个版本，这些版本采用时间戳进行索引</p>
+<h3 id="HBase的数据坐标"><a href="#HBase的数据坐标" class="headerlink" title="HBase的数据坐标"></a>HBase的数据坐标</h3><p>HBase中需要根据行键、列族、列限定符和时间戳来确定一个单元格，因此，可以视为一个“四维坐标”，即[行键, 列族, 列限定符, 时间戳]</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/4.png" alt="HBase数据坐标"></p>
+<h3 id="概念视图"><a href="#概念视图" class="headerlink" title="概念视图"></a>概念视图</h3><p>HBase在概念上和实际的底层存储是有区分的，在概念上HBase只是一个表，如下面只给了一个行键：</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/5.png" alt="概念视图"><br>如这一个行键给了两个列族，第一个列族contents中冒号前面的contents是列族的名称，冒号后面的html是列的名称，引号中的内容就是这一列的数据。一个时间戳并不一定会在所有列族插入数据，从图中就可以看出。所以这就导致了HBase的稀疏表的特性。这只是在概念上的视图。</p>
+<h3 id="物理视图"><a href="#物理视图" class="headerlink" title="物理视图"></a>物理视图</h3><p>实际上在实际存储中，并不是按上述的方式去存的。在底层存储时，是按列族为单位进行存储的。</p>
+<p><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/6.png" alt="HBase数据的物理视图"></p>
+<p>上图是在实际存储时，存储在底层的实际的表。并没有像概念视图中存储了很多的空数据。所以概念视图和物理视图上是有区分的。</p>
+<h3 id="面向列的存储"><a href="#面向列的存储" class="headerlink" title="面向列的存储"></a>面向列的存储</h3><p><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/8.png" alt="行式数据库和列式数据库示意图"></p>
+<p><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/7.png" alt="行式存储结构和列式存储结构"></p>
+<p>传统的数据库，以行为单位进行存储，一行包括ID,姓名，年龄，性别，IP，操作等。<br>但是按列存储，里面的姓名、年龄等进行单独存储。</p>
+<p>它们各自的优缺点：<br><img src="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/9.png" alt="行式存储结构和列式存储结构"></p>
+<p>另外，使用列式存储，数据可以达到很高的数据压缩率。而行式存储，很难压缩。</p>
+<p>本笔记参考自厦门大学林子雨老师的公开课：<a href="https://www.icourse163.org/course/XMU-1002335004" target="_blank" rel="external">https://www.icourse163.org/course/XMU-1002335004</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 大数据 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[大数据基础学习笔记（一）——Hadoop相关知识]]></title>
+      <url>/2018/04/01/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<h1 id="Hadoop"><a href="#Hadoop" class="headerlink" title="Hadoop"></a>Hadoop</h1><h2 id="Hadoop的应用现状和构成简介"><a href="#Hadoop的应用现状和构成简介" class="headerlink" title="Hadoop的应用现状和构成简介"></a>Hadoop的应用现状和构成简介</h2><p>下图为Hadoop在企业中的 应用架构</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/1.png" alt="Hadoop在企业中的应用架构"></p>
+<p>访问层不用多说，满足企业的数据分析、数据挖掘和数据实时查询功能。<br>为了满足访问层的需求，大数据层的各个技术对其进行支撑。<br>（1）离线分析：大量数据拿过来之后进行批量处理。其中MR是MapReduce的简称，Hive数据仓库和Pig也可以进行离线数据分析。<br>（2）实时查询：其中Hbase是一个可以支持几十亿行数据的非常好的分布式数据库。<br>（3）BI分析：Mahout是Hadoop平台上的一款数据挖掘应用。可以把各种数据挖掘，机器学习和商务智能的算法用MapReduce实现。否则开发人员要自己用MapReduce写决策树算法。</p>
+<p>下图为一些大数据计算模式及其代表产品</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/2.png" alt="大数据计算模式及其代表产品"></p>
+<p>下图为Hadoop项目结构</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/3.png" alt="Hadoop项目结构"></p>
+<p>YARNz专门负责调度内存，CPU，带宽等计算资源。而上面的事完成具体的计算工作的。</p>
+<p>Tez会把很多的MapReduce作业进行分析优化，构建成一个有向无环图，保证获得最好的处理效率。</p>
+<p>Spark与MapReduce类似，也是进行相应的计算。但是Spark是基于内存的，而MapReduce是基于磁盘的计算。MR在计算时，先把数据写到磁盘中，然后c处理结束后再写到分布式文件系统中。所以Spark的性能要高。</p>
+<p>Pig实现流数据处理，较MR属于轻量级。它也支持类似于SQL的语句。是一种轻量级的脚本语言。</p>
+<p>Oozie是一个工作流管理系统，可以把一个工作分成不同的工作环节。</p>
+<p>Zookeeper提供分布式协调一致性服务。</p>
+<p>Hbase是一个非关系型数据库，可以支持随机读写。</p>
+<p>Flume是专门负责日志收集的，分析一些实时生成的数据流。</p>
+<p>Sqoopy用于在Hadoop与传统数据库之间进行数据传递（导入导出等）。可以把之前存到关系型数据库（如Oracle）中的数据导入到HDFS、Hive或者Hbase中，反之亦可。</p>
+<p>Ambari是一个安装部署工具，可以在一个集群上面智能化的管理一整套Hadoop上的各个套件。</p>
+<p>Hadoop各组件的功能如下：</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/4.png" alt="Hadoop组件及功能"></p>
+<h2 id="Hadoop集群的节点类型"><a href="#Hadoop集群的节点类型" class="headerlink" title="Hadoop集群的节点类型"></a>Hadoop集群的节点类型</h2><p>Hadoop框架中最核心的设计是为海量数据提供存储的<code>HDFS</code>和对数据进行计算的<code>MapReduce</code></p>
+<p>MapReduce的作业主要包括：<br>（1）从磁盘或从网络读取数据，即IO密集工作；<br>（2）计算数据，即CPU密集工作</p>
+<p>•Hadoop集群的整体性能取决于CPU、内存、网络以及存储之间的性能平衡。因此运营团队在选择机器配置时要针对不同的工作节点选择合适硬件类型<br>•一个基本的Hadoop集群中的节点主要有:</p>
+<p>•NameNode：负责协调集群中的数据存储</p>
+<p>•DataNode：存储被拆分的数据块</p>
+<p>•JobTracker：协调数据计算任务</p>
+<p>•TaskTracker：负责执行由JobTracker指派的任务</p>
+<p>•SecondaryNameNode：帮助NameNode收集文件系统运行的状态信息</p>
+<h1 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h1><p>全称：Hadoop Distributed File System.解决海量数据的分布式存储问题。</p>
+<h2 id="分布式文件系统的结构"><a href="#分布式文件系统的结构" class="headerlink" title="分布式文件系统的结构"></a>分布式文件系统的结构</h2><p>分布式文件系统在物理结构上是由计算机集群中的多个节点构成的，这些节点分为两类，一类叫“主节点”(Master Node)或者也被称为“名称结点”(NameNode)，另一类叫“从节点”（Slave Node）或者也被称为“数据节点”(DataNode)</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/5.png" alt="大规模文件系统的整体结构"></p>
+<p>HDFS的三个节点：Namenode，Datanode，Secondary Namenode</p>
+<p>Namenode：HDFS的守护进程，用来管理文件系统的命名空间，负责记录文件是如何分割成数据块，以及这些数据块分别被存储到那些数据节点上，它的主要功能是对内存及IO进行集中管理。</p>
+<p>Datanode：文件系统的工作节点，根据需要存储和检索数据块，并且定期向namenode发送他们所存储的块的列表。</p>
+<p>Secondary Namenode：辅助后台程序，与NameNode进行通信，以便定期保存HDFS元数据的快照。</p>
+<p>HDFS采用了主从（Master/Slave）结构模型，一个HDFS集群包括一个名称节点（<br>NameNode）和若干个数据节点（DataNode）（如图所示）。名称节点作为中心服务器，负责管理文件系统的命名空间及客户端对文件的访问。集群中的数据节点一般是一个节点运行一个数据节点进程，负责处理文件系统客户端的读/写请求，在名称节点的统一调度下进行数据块的创建、删除和复制等操作。每个数据节点的数据实际上是保存在本地Linux文件系统中的。</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/10.png" alt="HDFS体系结构"><br>HDFS的缺点：</p>
+<p>1.不适合低延迟的数据访问<br>2.无法高效存储大量小文件<br>3.不支持多用户写入及任意修改文件</p>
+<h3 id="名称节点和数据节点"><a href="#名称节点和数据节点" class="headerlink" title="名称节点和数据节点"></a>名称节点和数据节点</h3><p><img src="/2018/04/01/大数据基础学习笔记/7.png" alt="HDFS主要组件的功能"></p>
+<p>在HDFS中，名称节点（NameNode）负责管理分布式文件系统的命名空间（Namespace），保存了两个核心的数据结构，即FsImage和EditLog。</p>
+<p>•FsImage用于维护文件系统树以及文件树中所有的文件和文件夹的元数据</p>
+<p>•操作日志文件EditLog中记录了所有针对文件的创建、删除、重命名等操作</p>
+<p>•名称节点记录了每个文件中各个块所在的数据节点的位置信息。</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/6.png" alt="名称节点的数据结构"></p>
+<p>客户端在访问数据时，先通过名称节点，获取元数据信息，从而知道被访问的数据存到哪些数据节点，获得数据块具体存储位置的信息之后，客户端就会到各个机器上去获取它所需要的数据。写入操作类似，客户端先访问名称节点，一个大文件（如1TB,2TB）要怎么写，然后名称节点会告诉它，把文件分成多少块，每个块放到哪个数据节点上。</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/9.png" alt="局限性"></p>
+<h4 id="FsImage-文件"><a href="#FsImage-文件" class="headerlink" title="FsImage 文件"></a>FsImage 文件</h4><p>•FsImage文件包含文件系统中所有目录和文件inode的序列化形式。每个inode是一个文件或目录的元数据的内部表示，并包含此类信息：文件的复制等级、修改和访问时间、访问权限、块大小以及组成文件的块。对于目录，则存储修改时间、权限和配额元数据</p>
+<p>•FsImage文件没有记录块存储在哪个数据节点。而是由名称节点把这些映射保留在内存中，当数据节点加入HDFS集群时，数据节点会把自己所包含的块列表告知给名称节点，此后会定期执行这种告知操作，以确保名称节点的块映射是最新的。</p>
+<p>在名称节点启动的时候，它会将FsImage文件中的内容加载到内存中，之后再执行<br>EditLog文件中的各项操作，使得内存中的元数据和实际的同步，存在内存中的元数据支持客户端的读操作。</p>
+<p>•一旦在内存中成功建立文件系统元数据的映射，则创建一个新的FsImage文件和一个空的EditLog文件</p>
+<p>•名称节点起来之后，HDFS中的更新操作会重新写到EditLog文件中，因为FsImage文件一般都很大（GB级别的很常见），如果所有的更新操作都往FsImage文件中添加，这样会导致系统运行的十分缓慢，但是，如果往EditLog文件里面写就不会这样，因为EditLog 要小很多。每次执行写操作之后，且在向客户端发送成功代码之前，edits文件都需要同步更新</p>
+<h4 id="第二名称节点"><a href="#第二名称节点" class="headerlink" title="第二名称节点"></a>第二名称节点</h4><p>第二名称节点是HDFS架构中的一个组成部分，它是用来保存名称节点中对HDFS 元<br>数据信息的备份，并减少名称节点重启的时间。SecondaryNameNode一般是单独运行在一台机器上。</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/8.png" alt=""></p>
+<p>SecondaryNameNode的工作情况：</p>
+<p>（1）SecondaryNameNode会定期和NameNode通信，请求其停止使用EditLog文件，暂时将新的写操作写到一个新的文件edit.new上来，这个操作是瞬间完成，上层写日志的函数完全感觉不到差别；</p>
+<p>（2）SecondaryNameNode通过HTTP GET方式从NameNode上获取到FsImage和EditLog文件，并下载到本地的相应目录下；</p>
+<p>（3）SecondaryNameNode将下载下来的FsImage载入到内存，然后一条一条地执行EditLog文件中的各项更新操作，使得内存中的FsImage保持最新；这个过程就是EditLog和FsImage文件合并；</p>
+<p>（4）SecondaryNameNode执行完（3）操作之后，会通过post方式将新的FsImage文件发送到NameNode节点上；</p>
+<p>（5）NameNode将从SecondaryNameNode接收到的新的FsImage替换旧的FsImage文件，同时将edit.new替换EditLog文件，通过这个过程EditLog就变小。</p>
+<h4 id="数据节点（DataNode）"><a href="#数据节点（DataNode）" class="headerlink" title="数据节点（DataNode）"></a>数据节点（DataNode）</h4><p>数据节点是分布式文件系统HDFS的工作节点，负责数据的存储和读取，会根据客<br>户端或者是名称节点的调度来进行数据的存储和检索，并且向名称节点定期发送自己所存储的块的列表</p>
+<p>•每个数据节点中的数据会被保存在各自节点的本地Linux文件系统中</p>
+<h2 id="HDFS存储原理"><a href="#HDFS存储原理" class="headerlink" title="HDFS存储原理"></a>HDFS存储原理</h2><h3 id="冗余数据保存"><a href="#冗余数据保存" class="headerlink" title="冗余数据保存"></a>冗余数据保存</h3><p>作为一个分布式文件系统，为了保证系统的容错性和可用性，HDFS采用了多副<br>本方式对数据进行冗余存储，通常一个数据块的多个副本会被分布到不同的数据节点上，数据块1被分别存放到数据节点A和C上，数据块2被存放在数据节点A和B上。这种多副本方式具有以下几个优点：<br>（1） 加快数据传输速度</p>
+<p>（2） 容易检查数据错误</p>
+<p>（3） 保证数据可靠性</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/11.png" alt="HDFS数据块多副本存储"></p>
+<h3 id="数据存取策略"><a href="#数据存取策略" class="headerlink" title="数据存取策略"></a>数据存取策略</h3><h4 id="数据存放"><a href="#数据存放" class="headerlink" title="数据存放"></a>数据存放</h4><p>•第一个副本：放置在上传文件的数据节点；如果是集群外提交，则随机挑选一台磁盘不太满、CPU不太忙的节点</p>
+<p>•第二个副本：放置在与第一个副本不同的机架的节点上</p>
+<p>•第三个副本：与第一个副本相同机架的其他节点上</p>
+<p>•更多副本：随机节点</p>
+<p><img src="/2018/04/01/大数据基础学习笔记/12.png" alt="Block的副本放置策略"></p>
+<h4 id="数据读取"><a href="#数据读取" class="headerlink" title="数据读取"></a>数据读取</h4><p>•HDFS提供了一个API可以确定一个数据节点所属的机架ID，客户端也可以调用API<br>获取自己所属的机架ID</p>
+<p>•当客户端读取数据时，从名称节点获得数据块不同副本的存放位置列表，列表中包含了副本所在的数据节点，可以调用API来确定客户端和这些数据节点所属的机架ID，当发现某个数据块副本对应的机架ID和客户端对应的机架ID相同时，就优先选择该副本读取数据，如果没有发现，就随机选择一个副本读取数据</p>
+<h3 id="数据错误与恢复"><a href="#数据错误与恢复" class="headerlink" title="数据错误与恢复"></a>数据错误与恢复</h3><p>HDFS具有较高的容错性，可以兼容廉价的硬件，它把硬件出错看作一种常态，<br>而不是异常，并设计了相应的机制检测数据错误和进行自动恢复，主要包括以下几种情形：名称节点出错、数据节点出错和数据出错。</p>
+<h4 id="名称节点出错"><a href="#名称节点出错" class="headerlink" title="名称节点出错"></a>名称节点出错</h4><p>名称节点保存了所有的元数据信息，其中，最核心的两大数据结构是FsImage和Editlog，如果这两个文件发生损坏，那么整个HDFS实例将失效。因此，HDFS设<br>置了备份机制，把这些核心文件同步复制到备份服务器SecondaryNameNode上。当名称节点出错时，就可以根据备份服务器SecondaryNameNode中的FsImage和<br>Editlog数据进行恢复。</p>
+<h4 id="数据节点出错"><a href="#数据节点出错" class="headerlink" title="数据节点出错"></a>数据节点出错</h4><p>•每个数据节点会定期向名称节点发送“心跳”信息，向名称节点报告自己的状态</p>
+<p>•当数据节点发生故障，或者网络发生断网时，名称节点就无法收到来自一些数据节点的心跳信息，这时，这些数据节点就会被标记为“宕机”，节点上面的所有数据都会被标记为“不可读”，名称节点不会再给它们发送任何I/O请求</p>
+<p>•这时，有可能出现一种情形，即由于一些数据节点的不可用，会导致一些数据块的副本数量小于冗余因子•名称节点会定期检查这种情况，一旦发现某个数据块的副本数量小于冗余因子，就会启动数据冗余复制，为它生成新的副本</p>
+<p>•HDFS和其它分布式文件系统的最大区别就是可以调整冗余数据的位置</p>
+<h4 id="数据出错"><a href="#数据出错" class="headerlink" title="数据出错"></a>数据出错</h4><p>•网络传输和磁盘错误等因素，都会造成数据错误</p>
+<p>•客户端在读取到数据后，会采用md5和sha1对数据块进行校验，以确定读取到正确的数据</p>
+<p>•在文件被创建时，客户端就会对每一个文件块进行信息摘录，并把这些信息写入到同一个路径的隐藏文件里面</p>
+<p>•当客户端读取文件的时候，会先读取该信息文件，然后，利用该信息文件对每个读取的数据块进行校验，如果校验出错，客户端就会请求到另外一个数据节点读取该文件块，并且向名称节点报告这个文件块有错误，名称节点会定期检查并且重新复制这个块</p>
+<p>本笔记的来源源自林子雨老师的MOOC课程和课件，地址：<a href="https://www.icourse163.org/course/XMU-1002335004" target="_blank" rel="external">https://www.icourse163.org/course/XMU-1002335004</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> 大数据 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[git学习]]></title>
+      <url>/2018/02/01/git%E5%AD%A6%E4%B9%A0/</url>
+      <content type="html"><![CDATA[<p><img src="/2018/02/01/git学习/git.jpg" alt="git"><br><a id="more"></a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><img src="/2018/02/01/git学习/1.jpg" alt="安装成功"></p>
+<p>在命令行输入<code>git --version</code>如果显示版本信息则说明安装成功，否则要去官网进行安装。</p>
+<h2 id="Visual-Studio-Code-启用bash"><a href="#Visual-Studio-Code-启用bash" class="headerlink" title="Visual Studio Code 启用bash"></a>Visual Studio Code 启用bash</h2><p>VS Code默认的终端窗口是只带cmd功能的，如果要在终端中唤出bash要进行配置：</p>
+<p>首先找到本机的<code>bash.exe</code>的目录,比如我的目录如图：</p>
+<p><img src="/2018/02/01/git学习/3.jpg" alt="bash.exe"></p>
+<p>然后在<code>VS Code</code>-&gt;<code>首选项</code>-&gt;<code>设置</code>-&gt;搜索<code>terminal.integrated.shell.windows</code>-&gt;将<code>&quot;terminal.integrated.shell.windows&quot;: &quot;C:\\Program Files\\Git\\bin\\bash.exe&quot;</code>放入设置中-&gt;保存</p>
+<p><img src="/2018/02/01/git学习/4.jpg" alt="配置"></p>
+<p>重新启动VS Code可以看到自动进入bash命令窗口</p>
+<p><img src="/2018/02/01/git学习/5.jpg" alt="bash终端命令窗口"></p>
+<p>如果想切换到cmd命令窗口直接输入<code>cmd</code>回车即可,同理在cmd下切换到<code>bash</code>只需输入<code>bash</code>回车：</p>
+<p><img src="/2018/02/01/git学习/6.jpg" alt="bash切换到cmd"></p>
+<h1 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h1><p>仓库本质上就是一个文件夹，一个目录，一个项目。</p>
+<h2 id="创建方法1"><a href="#创建方法1" class="headerlink" title="创建方法1"></a>创建方法1</h2><p>比如打开一个目录，输入<code>git init</code></p>
+<p><img src="/2018/02/01/git学习/2.jpg" alt="init"></p>
+<p>可以看到初始化了一个空的git仓库。</p>
+<p>然后切换到bash 输入<code>ls -la</code>酒吧当前目录下的所有的子目录列出来:</p>
+<p><img src="/2018/02/01/git学习/7.jpg" alt="列出目录"></p>
+<p>可以看到<code>.git</code>被列出来，它是个隐藏文件夹。</p>
+<p>这时候 test1 就已经是一个仓库了。</p>
+<h2 id="创建方法2"><a href="#创建方法2" class="headerlink" title="创建方法2"></a>创建方法2</h2><p>或者进入到根目录,如输入<code>cd ..</code>,然后输入 <code>git init test2</code>。</p>
+<p><img src="/2018/02/01/git学习/8.jpg" alt="init test2"></p>
+<p><img src="/2018/02/01/git学习/9.jpg" alt="test2"></p>
+<p>可以看到一样成功创建了tes2文件夹和其中的.git隐藏文件夹，和上面的创建方法是一样的。</p>
+<h2 id="从远程clone一个仓库"><a href="#从远程clone一个仓库" class="headerlink" title="从远程clone一个仓库"></a>从远程clone一个仓库</h2><p>比如在github上找到一个文件仓库，比如找到vue的github仓库<br><img src="/2018/02/01/git学习/10.jpg" alt="vue地址"></p>
+<p>输入<code>git clone https://github.com/vuejs/vue.git</code>回车</p>
+<p><img src="/2018/02/01/git学习/11.jpg" alt="clone"></p>
+<p><img src="/2018/02/01/git学习/12.jpg" alt="vue克隆成功"><br>可以看到正在clone。可以看到目录下多了<code>vue</code>文件夹，这就是从远程克隆的仓库。或者在输入clone命令时后面加个自己想要命名的文件夹名，这样下载下来就是以这个文件夹命名的，比如<code>git clone https://github.com/vuejs/vue.git test3</code>.可以自己试一下（可以换一个小一点的仓库克隆，这个我clone了好久 Orz）</p>
+<h1 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h1><h2 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h2><p><code>git status</code>是指查看仓库状态。</p>
+<p><img src="/2018/02/01/git学习/13.jpg" alt="git status"></p>
+<p>因为test1是一个空文件夹 所以显示上图的状态。</p>
+<h2 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h2><p><code>commit</code>的意思是提交，可以把它看做历史节点,而上图的提示是No commits yet，这就是说没有一条历史记录，因为我们创建了后还没有进行提交。 </p>
+<h2 id="Untracked-files"><a href="#Untracked-files" class="headerlink" title="Untracked files"></a>Untracked files</h2><p>如果我们新建一个文件，如test.txt,这时候执行<code>git status</code>命令，可以看到:<br><img src="/2018/02/01/git学习/14.jpg" alt="git status"><br><code>Untracked files</code>是指未跟踪的文件，也就是更改了文件还没有进行创建节点，即丢失后无法找回。</p>
+<p>在VS Code的git工具中也可以看到修改的状态为未跟踪的。<br><img src="/2018/02/01/git学习/15.jpg" alt=""></p>
+<h2 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h2><p><code>git add .</code>将所有的修改添加到暂存区</p>
+<p>如上，我们创建了一个test.txt,输入<code>git add .</code>回车,然后输入<code>git status</code>查看现在的状态。</p>
+<p><img src="/2018/02/01/git学习/17.jpg" alt=""></p>
+<p>可以看到vs code中的git工具也发生了变化：</p>
+<p><img src="/2018/02/01/git学习/16.jpg" alt=""></p>
+<h2 id="git-commit-m-“描述”"><a href="#git-commit-m-“描述”" class="headerlink" title="git commit -m “描述”"></a>git commit -m “描述”</h2><p><code>git commit -m &quot;描述&quot;</code>提交版本</p>
+<p><img src="/2018/02/01/git学习/18.jpg" alt="提交更改"></p>
+<p>输入命令后，可以看到 nothing to commit,working tree clean，也就是所有的更改都保存了。</p>
+<h2 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h2><p><code>git log</code>查看版本记录<br>可以查看所有的更改记录</p>
+<p><img src="/2018/02/01/git学习/19.jpg" alt="更改记录"></p>
+<p>这里只有一条更改记录。</p>
+<p>而上面的commit 后面的一串字符就是上次更改的记录码。</p>
+<p>我们这时候更改一下test.txt，保存。</p>
+<p><img src="/2018/02/01/git学习/20.jpg" alt="更改"></p>
+<p>这时候文件内容发生了变化，在进行一次提交操作</p>
+<p><img src="/2018/02/01/git学习/21.jpg" alt="提交"></p>
+<p>这时候再看记录，有两条记录：</p>
+<p><img src="/2018/02/01/git学习/22.jpg" alt="记录"></p>
+<h2 id="git-checkout-xxx"><a href="#git-checkout-xxx" class="headerlink" title="git checkout xxx"></a>git checkout xxx</h2><p><code>git checkout xxx</code>——穿越到指定的历史节点，也就是前面commit的节点。可以看描述选择退回到哪个节点，这也反映了写描述的重要性。</p>
+<p>xxx是指上面<code>git log</code>查看时commit后面的码，复制前七位就可以定位，当然也可以复制多于七位。</p>
+<p><img src="/2018/02/01/git学习/23.jpg" alt="查看历史版本"></p>
+<p>可以看到文件变了：<br><img src="/2018/02/01/git学习/24.jpg" alt="文件变了"></p>
+<h1 id="三种状态"><a href="#三种状态" class="headerlink" title="三种状态"></a>三种状态</h1><p>上面时回到了第一个节点，现在回到第二个节点。<br>输入<code>git checkout 1529b8c93ec</code>，确认退回成功。</p>
+<p>从上面可以看出，执行任何一个commit操作都要执行三步：<br><code>modified(已修改)</code> -&gt; <code>staged(已暂存)</code> -&gt; <code>committed</code></p>
+<p>staged 状态可以看到即将提交的文件，比如如果想只提交<code>test.txt</code>文件，可以在<code>git add .</code>的时候输入<code>git add test.txt</code>。<br>另外 <code>git log</code>只能查看提交的内容和描述，并不能看其中哪些内容修改了，使用<code>git log -p</code>可以查看具体修改了哪些内容.</p>
+<p><img src="/2018/02/01/git学习/25.jpg" alt="具体内容"></p>
+<p>可以看到+后面的就是修改的内容。</p>
+<p>commit的内容是添加到staged暂存区中的内容，比如在<code>git add .</code>后又进行了修改但是没有再次执行<code>git add .</code>命令，那么commit的时候就是暂存区中的内容而不包括最新修改的内容。</p>
+<h1 id="标签tag"><a href="#标签tag" class="headerlink" title="标签tag"></a>标签tag</h1><p>如果在项目中要很经常的进行修改，那么会产生很多个节点，但是会有一些节点非常重要，那么可以给这些关键的重要节点打一个标签。比如完成了代码的v1.0版本，后面又有了v2.0版本，中间的v1.1,v1.x并不重要，那么这些大版本就是重要节点。</p>
+<p>输入<code>git add . &amp;&amp; git commit -m &quot;v2.0&quot;</code>可以执行两条命令。</p>
+<p><code>git log --oneline</code>可以查看简写的版本</p>
+<p><img src="/2018/02/01/git学习/26.jpg" alt="oneline"></p>
+<p>那么可以给v2.0打一个标签,用法：<code>git tag -a 标签名 -m &quot;备注&quot;</code>，用它进行附注标签。这种方法是给最近的一个节点加标签。</p>
+<p>这时候输入<code>git tag</code>可以看到tag的信息。</p>
+<p><img src="/2018/02/01/git学习/27.jpg" alt="tag"></p>
+<p>如果想给某个节点加标签，则可以用<code>git tag -a 标签名 -m &quot;备注&quot; 版本码</code></p>
+<p><img src="/2018/02/01/git学习/28.jpg" alt="tag"><br>可以看到添加成功了（上面的v2.0加错了加了两个标签 orz）</p>
+<p><code>git show 标签名</code>：查看某个标签的详细信息</p>
+<p><code>git checkout 标签名</code>可以直接回溯到标签所在的提交，这样比使用版本码要方便</p>
+<p>在回溯到历史版本后 输入<code>git log --oneline --all</code>可以查看所有的节点</p>
+<h1 id="分支-branch"><a href="#分支-branch" class="headerlink" title="分支 branch"></a>分支 branch</h1><p>指在时间的维度上可以有多线，及时间一样的基础上进行其他的修改。主线为master时可以给分支命名其他的名。</p>
+<p>比如这里在test2目录下新建b.txt。<br>输入两行内容后分别commit。</p>
+<p><img src="/2018/02/01/git学习/30.jpg" alt=""></p>
+<p>现在的mater分支上有两个版本：</p>
+<p><img src="/2018/02/01/git学习/29.jpg" alt=""></p>
+<p>给文本添加第三行并且执行<code>git add .</code> 和<code>git commit -m &quot;&quot;</code>操作。</p>
+<p>然后<code>git branch 分支名</code>创建分支,然后<code>git checkout 分支名</code>切换到分支。<br><img src="/2018/02/01/git学习/31.jpg" alt="3"></p>
+<p><img src="/2018/02/01/git学习/32.jpg" alt="切换到分支"></p>
+<p>可以看到切换到了分支notmaster。</p>
+<p>这时候修改b.txt的内容，<br>然后执行<code>git add .</code> 和<code>git commit -m &quot;&quot;</code>操作</p>
+<p><img src="/2018/02/01/git学习/33.jpg" alt="修改内容"></p>
+<p><img src="/2018/02/01/git学习/34.jpg" alt="commit"></p>
+<p>然后<code>git log --oneline</code>可以看到多了的记录是在分支上的</p>
+<p><img src="/2018/02/01/git学习/35.jpg" alt="commit"></p>
+<p>这时候在分支后面的提交就是在分支上了。</p>
+<p>现在如果切换到mater-&gt;<code>git checkout master</code>，可以看到内容变回刚才的节点(即刚才创建分支的时候的节点)：</p>
+<p><img src="/2018/02/01/git学习/36.jpg" alt="master"></p>
+<p>这时候再添加一行然后执行commit操作,可以看到:<br><img src="/2018/02/01/git学习/37.jpg" alt="git log"></p>
+<p>或者<code>git log --all --graph</code>图示全部历史记录。</p>
+<p><code>git checkout -b 分支</code>，创建并切换到分支。</p>
+<p>分支的功能在做项目的时候可以经常用到，比如在1-&gt;2的时候没有bug，但是在2-&gt;3的时候发现有bug,这时候可以在2创建一个分支，专门在分支进行修改bug,且在master可以继续进行开发。在最后的第二版开发完成后，把分支的修改bug版本进行合并，这样就修改了bug也推进了项目。</p>
+<h1 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h1><p>上面讲到,在修改bug的同时可以进行项目的推进，但是在完成了bug的修改和第二版的项目后，要将两者合并，实现“完全体”,这就需要合并分支。</p>
+<p>现在回到branch，</p>
+<p><img src="/2018/02/01/git学习/38.jpg" alt="branch"></p>
+<p>可以看到HEAD所在的就是当前的节点和分支。在分支上修改了代码进行commit</p>
+<p><img src="/2018/02/01/git学习/39.jpg" alt="修改"></p>
+<p>现在虽然创建了分支并且更新了内容，但是还没有和master主分支合并</p>
+<h2 id="git-merge-分支名合并分支"><a href="#git-merge-分支名合并分支" class="headerlink" title="git merge 分支名合并分支"></a><code>git merge 分支名</code>合并分支</h2><p><img src="/2018/02/01/git学习/40.jpg" alt="合并"></p>
+<p><img src="/2018/02/01/git学习/41.jpg" alt="合并-2"></p>
+<p>可以看到 CONFLICT提示内容有冲突，在第三行开始冲突，所以git不知道该如何处理。</p>
+<p>这时候可以在文件中进行更改，然后再进行commit操作。然后这样就合并了两个分支。</p>
+<p>这时候可以输入命令查看，通过图解可以看到很清楚的解释了刚才的合并操作。</p>
+<p><img src="/2018/02/01/git学习/42.jpg" alt="查看"></p>
+<h1 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h1><p>我们可以将本机上的仓库内容存放在远程仓库（如github 和 码云或者远程的另一台电脑或服务器）</p>
+<p>即<code>local</code> -&gt; <code>server</code> -&gt; <code>loacl</code></p>
+<p>比如在commit了一个版本后，推送到服务器上时，我们用github。</p>
+<p>在github新建一个仓库，<code>Create a new repository</code>,创建成功后，可以看到仓库的地址。<br>那么接下来在本地指定远程仓库的地址。</p>
+<h2 id="git-remote-add-远程名称-远程地址-添加远程仓库"><a href="#git-remote-add-远程名称-远程地址-添加远程仓库" class="headerlink" title="git remote add 远程名称 远程地址 添加远程仓库"></a><code>git remote add 远程名称 远程地址</code> 添加远程仓库</h2><p>然后<code>git remote</code>可以列出所有远程仓库</p>
+<p><code>git remote -v</code>可以列出所有远程仓库和详细信息</p>
+<p><img src="/2018/02/01/git学习/43.jpg" alt="远程仓库"></p>
+<p>顾名思义,fetch是下载地址,push是上传地址。</p>
+<h2 id="git-push-u-远程名-分支名上传代码"><a href="#git-push-u-远程名-分支名上传代码" class="headerlink" title="git push -u 远程名 分支名上传代码"></a><code>git push -u 远程名 分支名</code>上传代码</h2><p>加-u的意思是在服务器端设置，如果有人想下载代码的时候，应该往那个分支上合并,所以要记得加-u.</p>
+<p><img src="/2018/02/01/git学习/44.jpg" alt="push成功"></p>
+<p>刷新仓库可以看到推送成功：</p>
+<p><img src="/2018/02/01/git学习/45.jpg" alt="push成功"></p>
+<p>在进行了修改添加后，可以同样执行这个操作。</p>
+<h2 id="git-clone-仓库地址从远端克隆仓库到本地"><a href="#git-clone-仓库地址从远端克隆仓库到本地" class="headerlink" title="git clone 仓库地址从远端克隆仓库到本地"></a><code>git clone 仓库地址</code>从远端克隆仓库到本地</h2><p>进入到刚克隆的仓库，输入<code>git log</code>同样可以看到操作的历史</p>
+<p>这时候从远端克隆下的分支默认名为origin，他只是一个分支的名字，和master等没有本质区别</p>
+<p>这时候在这个目录下进行了修改再推送时，要在<code>git push -u 远程名 master</code>这里将远程名改为现在的远程名，可以用<code>git remote</code>查看远程名，如果还用github进行推送会报错。</p>
+<p><img src="/2018/02/01/git学习/46.jpg" alt="远程名为origin"></p>
+<p><img src="/2018/02/01/git学习/47.jpg" alt="如果用github会报错"></p>
+<p><img src="/2018/02/01/git学习/48.jpg" alt="改为origin成功"></p>
+<h1 id="多人远程合作"><a href="#多人远程合作" class="headerlink" title="多人远程合作"></a>多人远程合作</h1><h2 id="git-pull获取远程更新"><a href="#git-pull获取远程更新" class="headerlink" title="git pull获取远程更新"></a><code>git pull</code>获取远程更新</h2><p>现在模拟A和B是两台电脑，他们都从仓库clone了项目，A进行了修改，通过<code>git push -u origin master</code>更新了项目，B使用<code>git pull</code>。即通过<code>git push -u origin master</code>和<code>git pull</code>进行推送和拉取。但是如果A先推送了一个版本，B不知情的情况下对某一行也进行了修改,这时候如果提交，会显示冲突的错误，这时就知道要先<code>git pull</code>一份服务器端的代码，这时候在本地可以看出来冲突的对比，<code>=</code>等号的上面和下面会显示冲突的内容对比,然后对冲突的代码进行整合后，在进行push操作。</p>
+<p>其实<code>git pull</code> 相当于<code>git fetch &amp;&amp; git merge</code>即下载和合并,放在已提交的阶段</p>
+<p>详情参见表严肃的速查表 <a href="http://biaoyansu.com/27.cheatsheet" target="_blank" rel="external">http://biaoyansu.com/27.cheatsheet</a></p>
+<p>完 </p>
+<p>根据 表严肃的课程整理书写，地址<a href="http://biaoyansu.com/i/6593023230131" target="_blank" rel="external">http://biaoyansu.com/i/6593023230131</a> </p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[webpack的简单应用(entry 和 output)]]></title>
+      <url>/2018/01/31/webpack%E7%9A%84%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8-entry-%E5%92%8C-output/</url>
+      <content type="html"><![CDATA[<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/webpack-view.jpg" alt="webpack"><br><a id="more"></a></p>
+<p>在简单配置了webpack后，指定了它的入口和出口，即entry和output。但是在业务逻辑比较复杂的时候，页面不只有一页。<br>比如 有一个index.html页和signup.html注册页。<br><code>index.html</code>引用了<code>base.js</code> 和 <code>home.js</code>,<code>signup.html</code>引用了<code>base.js</code>和<code>signup.js</code>。<br><img src="/2018/01/31/webpack的简单应用-entry-和-output/1.png" alt="index.html"></p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/2.png" alt="signup.html"><br>即项目中如果有很多页，而且会有相同的依赖（比如这里的base.js），也有不同的js控制着各个不同的页面的业务逻辑。</p>
+<p>这时候在<code>webpack.config.js</code>中将entry设置为一个入口对象，同时出口也变了，他会根据不同的入口文件生成不同的出口文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">module.exports=&#123;</div><div class="line">	entry:&#123;</div><div class="line">		home:&apos;./js/home.js&apos;,</div><div class="line">		signup:&apos;./js/signup.js &apos;</div><div class="line">&#125;,</div><div class="line">output:&#123;</div><div class="line">        filename:&apos;[name].bundle.js&apos;, //这里的文件名是动态生成的，name即是entry中的键名</div><div class="line">        path:__dirname+&apos;/dist&apos;       //目录生成，如果没有dist文件夹则会自动创建这个文件夹，将上面的文件生成保存在这个目录</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在相应目录下创建这三个js文件：</p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/3.png" alt="js"></p>
+<p>这时候在index.html和signup.html中就不再需要引用base.js了。</p>
+<p>这时只需要引用webpack打包后的动态生成的[name].bundle.js文件即可：</p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/4.png" alt="index.html"></p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/5.png" alt="signup.html"></p>
+<p>假设base.js是整个网站的依赖（因为刚开始两个html也都引用了这个文件），这里面一般会存放一些重要的配置项。</p>
+<p>下面举例：</p>
+<h3 id="非ES6写法"><a href="#非ES6写法" class="headerlink" title="非ES6写法"></a>非ES6写法</h3><p><img src="/2018/01/31/webpack的简单应用-entry-和-output/6.png" alt="base.js"></p>
+<p>open 决定网站是否是开放注册的，这时候通过module.exports将open传出去。<br>home.js 和 signup.js 接收open参数值：</p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/7.png" alt="home.js"></p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/8.png" alt="signup.js"></p>
+<p>执行<code>npm run pack</code>命令</p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/9.png" alt="result"></p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/10.png" alt="result"></p>
+<p>这时候可以看到生成成功。</p>
+<p>这时候打开index.html。可以看到<br><img src="/2018/01/31/webpack的简单应用-entry-和-output/11.png" alt="result"></p>
+<p>页面生成成功，点击注册连接时，跳转到指定页面并且显示指定内容</p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/12.png" alt="result"></p>
+<p>如果把open 的值改为false。即open = false重新执行<code>npm run pack</code>命令，刷新可以看到：</p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/13.png" alt="result"></p>
+<p> 并且点击到index.html时，没有显示任何内容，这和我们在home.js中设置的结果是一样的。</p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/14.png" alt="result"></p>
+<p>一般类似于这种多页的应用，一般都会给每一页一个打包的地址，具体每一页的入口文件用到了哪些依赖我们不用管，只需交给webpack去处理即可。另外这种写法是node的写法，可以用ES6的写法更简单快捷。</p>
+<h3 id="ES6写法"><a href="#ES6写法" class="headerlink" title="ES6写法"></a>ES6写法</h3><p><img src="/2018/01/31/webpack的简单应用-entry-和-output/15.png" alt="base.js"></p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/16.png" alt="signup.js"></p>
+<p><img src="/2018/01/31/webpack的简单应用-entry-和-output/17.png" alt="home.js"><br>这里open可以直接解构出来，在下面可以直接用，即不需要再var open=base.open，它直接知道from导进来的东西是个对象，而且把对象中的一个键（这里是open）变成了一个变量，可以直接在后面使用。<br>这时候重新npm run pack生成，结果是一样的。</p>
+<p>webpack中的多入口和多出口。完</p>
+<p>根据表严肃<a href="http://biaoyansu.com/i/6593023230131" target="_blank" rel="external">http://biaoyansu.com/i/6593023230131</a>  的视频总结。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> webpack </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[webpack的安装配置]]></title>
+      <url>/2018/01/31/webpack%E7%9A%84%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE/</url>
+      <content type="html"><![CDATA[<p><img src="/2018/01/31/webpack的安装配置/webpack-view.jpg" alt="webpack"><br><a id="more"></a></p>
+<h1 id="1-确保安装node和webpack"><a href="#1-确保安装node和webpack" class="headerlink" title="1.确保安装node和webpack"></a>1.确保安装node和webpack</h1><p>node:</p>
+<p><img src="/2018/01/31/webpack的安装配置/node.png" alt="node"></p>
+<p>webpack:</p>
+<p><img src="/2018/01/31/webpack的安装配置/webpack.png" alt="webpack"></p>
+<p>如果没有版本号则代表没有安装</p>
+<p>首先你需要安装一个全局的webpack</p>
+<p>执行 <code>pm install webpack -g</code></p>
+<p>这样你才可以正确的使用webpack这个命令</p>
+<p>推荐在当前项目里面也安装一个webpack, 这样就不用担心更换了电脑或者其他人使用时因为版本的不同而会导致错误</p>
+<p>这样就可以在你的webpack.config.js里面方便的引用webpack</p>
+<h1 id="2-在当前项目安装webpack"><a href="#2-在当前项目安装webpack" class="headerlink" title="2.在当前项目安装webpack"></a>2.在当前项目安装webpack</h1><h2 id="在当前目录生成package-json文件"><a href="#在当前目录生成package-json文件" class="headerlink" title="在当前目录生成package.json文件"></a>在当前目录生成package.json文件</h2><p>输入<code>npm init -y</code> 生成<code>package.json</code>文件</p>
+<p><img src="/2018/01/31/webpack的安装配置/package.json.png" alt="package.json"><br><img src="/2018/01/31/webpack的安装配置/package.json-1.png" alt="package.json-m"></p>
+<p>生成了package.json,npm就会认为整个目录是一个模块了。</p>
+<h2 id="在当前目录安装webpack"><a href="#在当前目录安装webpack" class="headerlink" title="在当前目录安装webpack"></a>在当前目录安装webpack</h2><p>执行<code>npm install webpack --save-dev</code></p>
+<p><img src="/2018/01/31/webpack的安装配置/install-webpack.png" alt="安装webpack"></p>
+<p><img src="/2018/01/31/webpack的安装配置/success-webpack.png" alt="安装成功提示"></p>
+<p>这里的WARN只是警告可以不用管</p>
+<p>可以看到安装成功</p>
+<p><img src="/2018/01/31/webpack的安装配置/success-webpack-1.png" alt="目录webpack"></p>
+<p>这时候package.json里面就有了webpack 和它的版本号：</p>
+<p><img src="/2018/01/31/webpack的安装配置/package.json-2.png" alt="package.json-v"></p>
+<h1 id="3-使用"><a href="#3-使用" class="headerlink" title="3.使用"></a>3.使用</h1><p>这时候可以直接用此目录下的webpack指令来执行操作：</p>
+<p><code>node_modules/.bin/webpack a.js bundle.js</code></p>
+<p>但是这个路径很长，输入并不方便，可以在package.json里面进行配置，然后直接调用命令即可。</p>
+<p><img src="/2018/01/31/webpack的安装配置/package.json-3.png" alt="package.json配置"></p>
+<p>pack和后面的字符串就是键值对的形式，pack即自定义的命令的名称，值就是上面的很长的命令。保存后执行<code>npm run pack</code></p>
+<p><img src="/2018/01/31/webpack的安装配置/package.json-result.png" alt="执行命令"></p>
+<p><img src="/2018/01/31/webpack的安装配置/package.json-result-1.png" alt="执行命令结果"></p>
+<p>可以看到这种方法仍然是生成成功的。</p>
+<h1 id="4-webpack-config-js"><a href="#4-webpack-config-js" class="headerlink" title="4.webpack.config.js"></a>4.webpack.config.js</h1><p>这个js文件顾名思义可以配置webpack。<br>基本写法是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">module.exports=&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这里面可以传一些东西出去。<br>比如 :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">module.exports=&#123;</div><div class="line">entry: &apos;../a&apos; //入口文件</div><div class="line">output: &#123;</div><div class="line">	filename:&apos;bundle.js&apos;,  //文件名</div><div class="line">	path:__dirname //__dirname是node里面一个特殊的变量，它会被node解释为当前的文件所在的目录</div><div class="line">&#125;    //输出文件</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/01/31/webpack的安装配置/webpack.config.js.png" alt="配置文件"></p>
+<p>那么有了这两个设置参数，可以将package.json文件里面的<br><code>&quot;pack&quot;:&quot;node_modules/.bin/webpack a.js bundle.js&quot;</code>中的<code>a.js</code> 和 <code>bundel.js</code></p>
+<p><img src="/2018/01/31/webpack的安装配置/package.json-4.jpg" alt="配置文件"></p>
+<p>保存后,直接 <code>npm run pack</code>，执行结果也是成功的：</p>
+<p><img src="/2018/01/31/webpack的安装配置/package.json-result-2.png" alt="配置文件结果"></p>
+<p><img src="/2018/01/31/webpack的安装配置/package.json-result-3.png" alt="配置文件结果"></p>
+<p>完。</p>
+<p>根据表严肃的视频总结，地址：<a href="http://biaoyansu.com/i/6593023230131" target="_blank" rel="external">http://biaoyansu.com/i/6593023230131</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> webpack </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[WEBAPI解决跨域问题]]></title>
+      <url>/2017/12/27/WEBAPI%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<p><img src="/2017/12/27/WEBAPI解决跨域问题/WebApiConfig%E4%B8%AD%E9%85%8D%E7%BD%AE.jpg" alt="WebApiConfig" title="WebApiConfig中配置"><br>在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。<br><a id="more"></a><br>在WEBAPI的工程中，解决跨域问题有很多方法，这里介绍在服务端配置的方法。</p>
+<h1 id="添加引用"><a href="#添加引用" class="headerlink" title="添加引用"></a>添加引用</h1><p>首先添加 <code>System.Web.cors.dll</code> 和 <code>System.Web.Http.cors.dll</code>。</p>
+<p><img src="/2017/12/27/WEBAPI解决跨域问题/System.Web.Http.Cors.jpg" alt="System.Web.Http.cors.dll" title="System.Web.Http.Cors"></p>
+<p><img src="/2017/12/27/WEBAPI解决跨域问题/System.Web.cors.jpg" alt="System.Web.cors.dll" title="System.Web.Cors"></p>
+<h1 id="Web-Conefig配置"><a href="#Web-Conefig配置" class="headerlink" title="Web.Conefig配置"></a>Web.Conefig配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;appSettings&gt;</div><div class="line">   &lt;add key=&quot;cors_allowOrigins&quot; value=&quot;*&quot;/&gt;</div><div class="line">   &lt;add key=&quot;cors_allowHeaders&quot; value=&quot;*&quot;/&gt;</div><div class="line">   &lt;add key=&quot;cors_allowMethods&quot; value=&quot;*&quot;/&gt;</div><div class="line"> &lt;/appSettings&gt;</div></pre></td></tr></table></figure>
+<p>  <code>*</code> 代表允许所有</p>
+<p><img src="/2017/12/27/WEBAPI解决跨域问题/Web.config.jpg" alt="Web.config" title="Web.config"></p>
+<h1 id="WebApiConfig配置"><a href="#WebApiConfig配置" class="headerlink" title="WebApiConfig配置"></a>WebApiConfig配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  //解决API跨域访问的问题</div><div class="line">var allowOrigins = ConfigurationManager.AppSettings[&quot;cors_allowOrigins&quot;];</div><div class="line">var allowHeaders = ConfigurationManager.AppSettings[&quot;cors_allowHeaders&quot;];</div><div class="line">var allowMethods = ConfigurationManager.AppSettings[&quot;cors_allowMethods&quot;];</div><div class="line">var globalCors = new EnableCorsAttribute(allowOrigins, allowHeaders, allowMethods) &#123; SupportsCredentials = true &#125;;</div><div class="line">config.EnableCors(globalCors);</div></pre></td></tr></table></figure>
+<p><img src="/2017/12/27/WEBAPI解决跨域问题/WebApiConfig%E4%B8%AD%E9%85%8D%E7%BD%AE.jpg" alt="WebApiConfig" title="WebApiConfig中配置"></p>
+<p>完。</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> WEBAPI </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[mysql学习小记系列（持续更新）]]></title>
+      <url>/2017/12/11/mysql%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0%E7%B3%BB%E5%88%97%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
+      <content type="html"><![CDATA[<p> 以下环境为mysql+Navicat Premium</p>
+<h1 id="在mysql中使用UUID"><a href="#在mysql中使用UUID" class="headerlink" title="在mysql中使用UUID"></a>在mysql中使用UUID</h1><p>效果如下：</p>
+<p><img src="/2017/12/11/mysql学习小记系列（持续更新）/UUID.jpg" alt="UUID"></p>
+<p>SQL语句有函数生成guid:UUID()，一般使用CHAR(36)或者BINARY(36)来存储uuid</p>
+<p>例如sql语句为：INSERT INTO USERS(UUID) VALUES (UUID())</p>
+<h1 id="mysql中写入时间"><a href="#mysql中写入时间" class="headerlink" title="mysql中写入时间"></a>mysql中写入时间</h1><p>  DATETIME 类型可用于需要同时包含日期和时间信息的值。MySQL 以 ‘YYYY-MM-DD HH:MM:SS’ 格式检索与显示 DATETIME 类型。支持的范围是 ‘1000-01-01 00:00:00’ 到 ‘9999-12-31 23:59:59’。</p>
+<p>  DATE 类型可用于需要一个日期值而不需要时间部分时。MySQL 以 ‘YYYY-MM-DD’ 格式检索与显示DATE 值。支持的范围是 ‘1000-01-01’ 到 ‘9999-12-31’。</p>
+<p>  TIMESTAMP 列类型提供了一种类型，通过它你可以以当前操作的日期和时间自动地标记 Insert或Update 操作。如果一张表中有多个 TIMESTAMP 列，只有第一个被自动更新。</p>
+<p>  目前我在项目中使用了DATETIME和DATE类型。</p>
+<p>  例如DATETIME类型的数据在数据库中如下：</p>
+<p>  <img src="/2017/12/11/mysql学习小记系列（持续更新）/DATETIME.jpg" alt="DATETIME"></p>
+<p>  在写入数据库中的时候，用了NOW()函数，让数据库自动写入当前系统时间，对应SQL语句如下：INSERT INTO USER(CREATEDATE)  VALUES(now())</p>
+<p>  DATE类型的数据在数据库中如下：</p>
+<p>   <img src="/2017/12/11/mysql学习小记系列（持续更新）/DATE.jpg" alt="DATE"></p>
+<p>  这条数据在应用中是通过前台传字符串，后台转为DATE格式的。例如前台传来的字符串为”2017-11-21”，用<code>STR_TO_DATE(&#39;2017-11-21&#39;,&#39;%Y-%m-%d&#39;)</code>来转换，当然也可以转换DATETIME格式的日期。</p>
+<p>  目前项目中还没有使用TIMESTAMP数据类型。暂时不予详细展开。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 学习 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> mysql </tag>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C#操作mysql数据库执行SqlDataReader.Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法]]></title>
+      <url>/2017/12/03/C-%E6%93%8D%E4%BD%9Cmysql%E6%95%B0%E6%8D%AE%E5%BA%93%E6%89%A7%E8%A1%8CSqlDataReader-Read%E5%90%8E%E4%BD%BF%E7%94%A8%E5%8F%A6%E4%B8%80%E4%B8%AASQLCommand%E6%89%A7%E8%A1%8CInsert%E6%93%8D%E4%BD%9C%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AF%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>今天在写WEBAPI的时候，进行用户注册的编写，发生了如下错误：</p>
+<p><img src="/2017/12/03/C-操作mysql数据库执行SqlDataReader-Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法/错误1.jpg" alt="错误"></p>
+<p>   后来确定了发生错误的原因是执行SqlDataReader.Read之后，如果还想用另一个SqlCommand执行Insert或者Update操作的话，会得到一个错误提示：There is already an open DataReader associated with this Command which must be closed first.，然后一般就会产生数据保存失败的异常。</p>
+<p>   注册用户的代码如下：<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"> public string RegisterUser(string uname,string upwd,string email,string mobile,string confirmpassword)</div><div class="line">        &#123;</div><div class="line">            MySqlConnection mysql = getMySqlConnection();</div><div class="line">            mysql.Open();</div><div class="line">            try</div><div class="line">            &#123;</div><div class="line">                if (uname == null || email == null || upwd == null || mobile == null || confirmpassword == null)</div><div class="line">                &#123;</div><div class="line">                    return &quot;请完善信息&quot;;</div><div class="line">                &#125;</div><div class="line">                if (!String.Equals(upwd, confirmpassword))</div><div class="line">                &#123;</div><div class="line">                    return &quot;两次输入密码不一致！&quot;;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                string CheckUser = &quot;Select * from name where username=&apos;&quot; + uname + &quot;&apos;&quot;;</div><div class="line">                MySqlCommand mySqlCommand = getSqlCommand(CheckUser, mysql);</div><div class="line">                MySqlDataReader reader = mySqlCommand.ExecuteReader();</div><div class="line">                if (reader.Read())</div><div class="line">                &#123;</div><div class="line">                    return &quot;用户已存在&quot;;</div><div class="line">                &#125;</div><div class="line">                else </div><div class="line">                &#123;              </div><div class="line">                string AddUser = @&quot;Insert into name(username,pword,email,mobile)Values(&apos;&quot; + uname + &quot;&apos;,&apos;&quot; + upwd + &quot;&apos;,&apos;&quot; + email + &quot;&apos;,&apos;&quot; + mobile + &quot;&apos;)&quot;;</div><div class="line">                MySqlCommand insertuser = new MySqlCommand(AddUser, mysql);</div><div class="line">                if (insertuser.ExecuteNonQuery() &gt; 0)</div><div class="line">                &#123; return &quot;注册成功！&quot;; &#125;</div><div class="line">                else &#123; return &quot;注册失败！&quot;; &#125;</div><div class="line">                &#125;</div><div class="line">     &#125;</div><div class="line">            catch</div><div class="line">            &#123;</div><div class="line">               return &quot;错误&quot;;</div><div class="line">            &#125;</div><div class="line">            finally</div><div class="line">            &#123;</div><div class="line">               mysql.Close();</div><div class="line">            &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>   在知道了报错原因后，在网上搜了两种方法：<br>   1.不要用共用一个connection,用完就释放，所以在下面先把connection关闭再连接，测试可行。<br>   <img src="/2017/12/03/C-操作mysql数据库执行SqlDataReader-Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法/成功1.jpg" alt="成功1"></p>
+<p>   2.关闭当前的reader方法。然后继续执行代码 ，可行。<br>    <img src="/2017/12/03/C-操作mysql数据库执行SqlDataReader-Read后使用另一个SQLCommand执行Insert操作出现错误的解决办法/成功2.png" alt="成功2"></p>
+<p>暂时是用这两种方法解决了问题，以后有更好的方法再补充。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 项目 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C# </tag>
+            
+            <tag> 遇到的坑 </tag>
+            
+            <tag> mysql </tag>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C#将多个文件打包成.zip文件]]></title>
+      <url>/2017/10/30/C-%E5%B0%86%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%E6%89%93%E5%8C%85%E6%88%90-zip%E6%96%87%E4%BB%B6/</url>
+      <content type="html"><![CDATA[<p>近几天的项目作业过程中，遇到了需要一键下载多个文件的需求，于是想采取在后台将需要一键下载的文件打包成压缩文件，然后进行下载的方式。</p>
+<p>在.net4.5中可以使用调用winrar命令的方式来直接进行生成压缩文件。但是在这里我采用引入ICSharpCode.SharpZipLib.dll的方法，（官方下载地址：<a href="http://www.icsharpcode.net/opensource/sharpziplib/" target="_blank" rel="external">http://www.icsharpcode.net/opensource/sharpziplib/</a>  ） 用这个程序集将windows文件进行打包。</p>
+<p>首先，将打包的方法封装在一个类中，然后在一般应用程序.ashx文件中调用相应的方法。因为在项目中只需要进行打包文件，所以这里只写一下压缩文件的代码，解压缩的方法应该类似，我没有试过。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div></pre></td><td class="code"><pre><div class="line">using System;</div><div class="line">using System.Linq;</div><div class="line">using System.IO;</div><div class="line">using ICSharpCode.SharpZipLib.Zip;</div><div class="line">using ICSharpCode.SharpZipLib.Checksums;</div><div class="line">using System.Diagnostics;</div><div class="line">using Microsoft.Win32;</div><div class="line"></div><div class="line">namespace ZipCommon</div><div class="line">&#123;</div><div class="line">    public class ZipHelper</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        #region 压缩多个文件</div><div class="line"></div><div class="line">        /// &lt;summary&gt;  </div><div class="line">        ///  压缩多个文件  </div><div class="line">        /// &lt;/summary&gt;  </div><div class="line">        /// &lt;param name=&quot;files&quot;&gt;文件名&lt;/param&gt;  </div><div class="line">        /// &lt;param name=&quot;ZipedFileName&quot;&gt;压缩包文件名&lt;/param&gt;  </div><div class="line">        /// &lt;param name=&quot;Password&quot;&gt;解压码&lt;/param&gt;  </div><div class="line">        /// &lt;returns&gt;&lt;/returns&gt;  </div><div class="line">        public static void Zip1(string[] files, string ZipedFileName, string Password)</div><div class="line">        &#123;</div><div class="line">            files = files.Where(f =&gt; File.Exists(f)).ToArray();</div><div class="line">            if (files.Length == 0) throw new FileNotFoundException(&quot;未找到指定打包的文件&quot;);</div><div class="line">            ZipOutputStream s = new ZipOutputStream(File.Create(ZipedFileName));</div><div class="line">            s.SetLevel(6);</div><div class="line">            if (!string.IsNullOrEmpty(Password.Trim())) s.Password = Password.Trim();</div><div class="line">            ZipFileDictory(files, s);</div><div class="line">            s.Finish();</div><div class="line">            s.Close();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        /// &lt;summary&gt;  </div><div class="line">        ///  压缩多个文件  </div><div class="line">        /// &lt;/summary&gt;  </div><div class="line">        /// &lt;param name=&quot;files&quot;&gt;文件名&lt;/param&gt;  </div><div class="line">        /// &lt;param name=&quot;ZipedFileName&quot;&gt;压缩包文件名&lt;/param&gt;  </div><div class="line">        /// &lt;returns&gt;&lt;/returns&gt;  </div><div class="line">        public static void Zip(string[] files, string ZipedFileName)</div><div class="line">        &#123;</div><div class="line">            Zip1(files, ZipedFileName, string.Empty);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public static void ZipFileDictory(string[] files, ZipOutputStream s)</div><div class="line">        &#123;</div><div class="line">            ZipEntry entry = null;</div><div class="line">            FileStream fs = null;</div><div class="line">            Crc32 crc = new Crc32();</div><div class="line">            try</div><div class="line">            &#123;</div><div class="line">                //创建当前文件夹  </div><div class="line">                entry = new ZipEntry(&quot;/&quot;);  //加上 “/” 才会当成是文件夹创建  </div><div class="line"></div><div class="line">                s.PutNextEntry(entry);</div><div class="line">                s.Flush();</div><div class="line">                foreach (string file in files)</div><div class="line">                &#123;</div><div class="line">                    //打开压缩文件  </div><div class="line">                    fs = File.OpenRead(file);</div><div class="line">                    byte[] buffer = new byte[fs.Length];</div><div class="line">                    fs.Read(buffer, 0, buffer.Length);</div><div class="line">                    entry = new ZipEntry(&quot;/&quot; + Path.GetFileName(file));</div><div class="line">                    entry.DateTime = DateTime.Now;</div><div class="line">                    entry.Size = fs.Length;</div><div class="line">                    fs.Close();</div><div class="line">                    crc.Reset();</div><div class="line">                    crc.Update(buffer);</div><div class="line">                    entry.Crc = crc.Value;</div><div class="line">                    s.PutNextEntry(entry);</div><div class="line">                    s.Write(buffer, 0, buffer.Length);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            finally</div><div class="line">            &#123;</div><div class="line">                if (fs != null)</div><div class="line">                &#123;</div><div class="line">                    fs.Close();</div><div class="line">                    fs = null;</div><div class="line">                &#125;</div><div class="line">                if (entry != null)</div><div class="line">                    entry = null;</div><div class="line">                GC.Collect();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        #endregion 压缩多个文件</div><div class="line">		</div><div class="line">		&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>直接调用 ZipHelper.Zip（filepaths，zipedfilepath）即可。<br>注意： zipedfilepath的父级目录必须存在，否则在创建.zip文件时会报目录不存在的错误。这个坑我也遇到过。<br><img src="/2017/10/30/C-将多个文件打包成-zip文件/error1.jpg" alt="error"><br>还有一点要注意的是，这里的方法都是静态的，所以在调用方法时不需要进行实例化，只需写成 ZipHelper.Zip（filepaths，zipedfilepath） 这种形式就可以了。</p>
+<p>在.ashx文件中的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> #region 打包</div><div class="line">public void CreateZip(string WORD002,string WORD003,string WORD004,string WORD005,string WORD006,string WORD007)</div><div class="line">    &#123;</div><div class="line">        string[] files = new string[6];</div><div class="line">        files[0] = WORD002;</div><div class="line">        files[1] = WORD003;</div><div class="line">        files[2] = WORD004;</div><div class="line">        files[3] = WORD005;</div><div class="line">        files[4] = WORD006;</div><div class="line">        files[5] = WORD007;</div><div class="line">        ZIPFILEPATH = 绝对路径+文件名+ &quot;.zip&quot;;//这里要加上拓展名</div><div class="line">        ZipHelper.Zip(files,ZIPFILEPATH);</div><div class="line">    &#125;</div><div class="line">    #endregion</div></pre></td></tr></table></figure>
+<p>这里的WORD002-007是要打包的文件的路径，将其存放在数组中，ZIPFILEPATH则是在服务器端要存放的打包文件的路径，需要绝对路径。</p>
+<p>看一下需要打包的六个文件：<br><img src="/2017/10/30/C-将多个文件打包成-zip文件/文件.png" alt="文件"></p>
+<p>生成ZIP文件成功：<br><img src="/2017/10/30/C-将多个文件打包成-zip文件/zip.jpg" alt="ZIP"></p>
+<p>解压后的文件也可以正常打开：</p>
+<p><img src="/2017/10/30/C-将多个文件打包成-zip文件/zip列表.jpg" alt="zip列表"></p>
+<p>在实施过程中还遇到了一个坑，刚开始我的服务器上并没有安装winrar，而是安装了360压缩，导致在生成ZIP文件后，出现压缩错误的提示，在装了winrar并使用后，发现时正常的。</p>
+<p>这时候只要把服务器上的zip路径传到前台，就可以下载了、</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 项目 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C# </tag>
+            
+            <tag> 遇到的坑 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[通过C#向Word文档的表格中的任一行增加新行]]></title>
+      <url>/2017/10/25/%E9%80%9A%E8%BF%87C-%E5%90%91Word%E6%96%87%E6%A1%A3%E7%9A%84%E8%A1%A8%E6%A0%BC%E4%B8%AD%E7%9A%84%E4%BB%BB%E4%B8%80%E8%A1%8C%E5%A2%9E%E5%8A%A0%E6%96%B0%E8%A1%8C/</url>
+      <content type="html"><![CDATA[<p>今天在项目的作业过程中，遇到了需要通过C#操作Word模板向其中的表格添加内容。作业过程中发现，往往有的时候模板的表格的行数会多于或者少于所要写入的数据数量。而模板行数少于数据条数时会发生写入错误的提示，导致文档生成失败。因此需要根据需要写入的数据的数量来确定所需要的表格的数量，也就是能够动态的改变模板的表格的行数。在网上搜了一好久，发现很多给现有的表格添加一行的方法都是只能够在表格的最后一列添加，而项目需求的模板中需要动态改变添加行数的表格不在最前面也不在最后面，恰恰在中间。因此，搜了好久加上实验，终于找到了方法。在此做个记录。<br>    首先，说一下用C# .NET操作Word文档需要的引用：</p>
+<p><img src="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/DLL.jpg" alt="DLL"></p>
+<p>在新定义的类中添加头文件和书写代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div></pre></td><td class="code"><pre><div class="line">using System;</div><div class="line">using Microsoft.Office.Interop.Word;</div><div class="line"></div><div class="line">namespace WordDemo  //这边需要换成自己的命名空间名</div><div class="line">&#123;</div><div class="line">    public class Report</div><div class="line">    &#123;</div><div class="line">        private _Application wordApp = null;</div><div class="line">        private _Document wordDoc = null;</div><div class="line">        public _Application Application</div><div class="line">        &#123;</div><div class="line">            get</div><div class="line">            &#123;</div><div class="line">                return wordApp;</div><div class="line">            &#125;</div><div class="line">            set</div><div class="line">            &#123;</div><div class="line">                wordApp = value;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        public _Document Document</div><div class="line">        &#123;</div><div class="line">            get</div><div class="line">            &#123;</div><div class="line">                return wordDoc;</div><div class="line">            &#125;</div><div class="line">            set</div><div class="line">            &#123;</div><div class="line">                wordDoc = value;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //通过模板创建新文档</div><div class="line">        public void CreateNewDocument(string filePath)</div><div class="line">        &#123;</div><div class="line">            killWinWordProcess(); </div><div class="line">             wordApp = new ApplicationClass();</div><div class="line">            wordApp.DisplayAlerts = WdAlertLevel.wdAlertsNone;</div><div class="line">            wordApp.Visible = false;</div><div class="line">            object missing = System.Reflection.Missing.Value;</div><div class="line">            object templateName = filePath;</div><div class="line">            wordDoc = wordApp.Documents.Open(ref templateName, ref missing,</div><div class="line">                ref missing, ref missing, ref missing, ref missing, ref missing,</div><div class="line">                ref missing, ref missing, ref missing, ref missing, ref missing,</div><div class="line">                ref missing, ref missing, ref missing, ref missing);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //保存新文件</div><div class="line">        public void SaveDocument(string filePath)</div><div class="line">        &#123;</div><div class="line">            object fileName = filePath;</div><div class="line">            object format = WdSaveFormat.wdFormatDocument;//保存格式</div><div class="line">            object miss = System.Reflection.Missing.Value;</div><div class="line">            wordDoc.SaveAs(ref fileName, ref format, ref miss,</div><div class="line">                ref miss, ref miss, ref miss, ref miss,</div><div class="line">                ref miss, ref miss, ref miss, ref miss,</div><div class="line">                ref miss, ref miss, ref miss, ref miss,</div><div class="line">                ref miss);</div><div class="line">            //关闭wordDoc，wordApp对象</div><div class="line">            object SaveChanges = WdSaveOptions.wdSaveChanges;</div><div class="line">            object OriginalFormat = WdOriginalFormat.wdOriginalDocumentFormat;</div><div class="line">            object RouteDocument = false;</div><div class="line">            wordDoc.Close(ref SaveChanges, ref OriginalFormat, ref RouteDocument);</div><div class="line">            wordApp.Quit(ref SaveChanges, ref OriginalFormat, ref RouteDocument);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //给表格插入rows行,n为表格的序号</div><div class="line">        public void AddRow(int n, int rows)</div><div class="line">        &#123;</div><div class="line">            object miss = System.Reflection.Missing.Value;</div><div class="line">            Microsoft.Office.Interop.Word.Table table = wordDoc.Content.Tables[n];</div><div class="line">            for (int i = 0; i &lt; rows; i++)</div><div class="line">            &#123;</div><div class="line">                table.Rows.Add(ref miss);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">		</div><div class="line">	//在第n个表格的rows行前面插入新行,</div><div class="line">         public void AddNewRow(int n,int rows)</div><div class="line">        &#123;</div><div class="line">            object beforeRow = wordDoc.Tables[n].Rows[rows];</div><div class="line">            Microsoft.Office.Interop.Word.Table table = wordDoc.Content.Tables[n];</div><div class="line"></div><div class="line">            table.Rows.Add(beforeRow);</div><div class="line">          </div><div class="line">        &#125;</div><div class="line">    // 杀掉winword.exe进程</div><div class="line">        public void killWinWordProcess()</div><div class="line">        &#123;</div><div class="line">            System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcessesByName(&quot;WINWORD&quot;);</div><div class="line">            foreach (System.Diagnostics.Process process in processes)</div><div class="line">            &#123;</div><div class="line">                bool b = process.MainWindowTitle == &quot;&quot;;</div><div class="line">                if (process.MainWindowTitle == &quot;&quot;)</div><div class="line">                &#123;</div><div class="line">                    process.Kill();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在上面的 <code>AddNewRow(int n,int rows)</code>函数中，可以根据实际情况设置要插入第几个表格和在第几行前面插入新行。<br>调用代码：<br><img src="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/code.jpg" alt="code"></p>
+<p>插入前：<br><img src="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/before.jpg" alt="before"></p>
+<p>插入后：<br><img src="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/after.jpg" alt="after"></p>
+<p>可以根据实际情况设置循环的数量 ，实现动态添加。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 项目 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C# </tag>
+            
+            <tag> 遇到的坑 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[将图片以二进制流方式存入数据库和从数据库读取(c#,oracle 11g)]]></title>
+      <url>/2017/10/23/%E5%B0%86%E5%9B%BE%E7%89%87%E4%BB%A5%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%B5%81%E6%96%B9%E5%BC%8F%E5%AD%98%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93-c-oracle-11g/</url>
+      <content type="html"><![CDATA[<script src="/js/src/jquery-3.2.1.min.js"></script>
+
+
+<p>在项目的实施过程中，遇到了一个问题：项目需求网页前端读取一张照片，以二进制的方式存入oracle数据库中。这个问题，用了一天的时间解决，所以写此文记录一下。<br>      在网上搜了一圈，并加以实施发现实施过程如下：前台获取图片路径，用FileReader读取后，可以转换为base64编码的字符串，然后通过ajax 将base64格式编码字符串传到后台，C#读取前台传来的字符串，将其转化存到byte[] 数组中，最后写入数据库。</p>
+<p>下面为实现代码和预览结果：<br>前端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;form-group&quot;&gt;</div><div class="line">      &lt;label class=&quot;col-sm-2 control-label&quot; for=&quot;PHOTO&quot;&gt;个人照片&lt;/label&gt;</div><div class="line">      &lt;div id=&quot;imgForm&quot; class=&quot;col-sm-10&quot; style=&quot;margin:4px auto 5px auto&quot;&gt;</div><div class="line">      &lt;p id=&quot;imagesize&quot; style=&quot;display:none&quot;&gt;&lt;/p&gt;//上传图片后可以显示图片尺寸</div><div class="line">      &lt;img id=&quot;preview&quot; /&gt;</div><div class="line">      &lt;br /&gt;</div><div class="line">	  &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;img&quot; /&gt;//&lt;input&gt;标签有type=&quot;file&quot;用来上传文件</div><div class="line">      &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>预览结果：</p>
+<p>  <label class="col-sm-2 control-label" for="PHOTO">个人照片</label><br>   <div id="imgForm"><br>    <p id="imagesize"></p><br>    <img id="preview"><br>      <br><br>      <input type="file" name="file" id="img"><br>      </div></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"> var imgFile;</div><div class="line"> var justify = &quot;1&quot;;//用来判断图片大小是否超出尺寸，1代表没有超出，0代表超出</div><div class="line"> document.getElementById(&apos;img&apos;).onchange = function () &#123;//判断是否支持FileReader</div><div class="line">    if (window.FileReader) &#123;</div><div class="line">    var reader = new FileReader();</div><div class="line">    &#125; else &#123;</div><div class="line">        alert(&quot;不支持图片预览功能，如需该功能请升级！&quot;);</div><div class="line">    &#125;</div><div class="line">    justify = &quot;1&quot;;</div><div class="line">    var img = event.target.files[0];</div><div class="line">    // 判断是否图片</div><div class="line">    if (!img) &#123;</div><div class="line">    return false;</div><div class="line">    &#125;</div><div class="line">    // 判断图片格式</div><div class="line">    if (!(img.type.indexOf(&apos;image&apos;) == 0 &amp;&amp; img.type &amp;&amp; /\.(?:jpg|jpeg)$/.test(img.name))) &#123;</div><div class="line">    alert(&apos;图片只能是jpg jpeg&apos;);</div><div class="line">    return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   var reader = new FileReader();</div><div class="line">   reader.readAsDataURL(img);</div><div class="line">   reader.onload = function (e) &#123;</div><div class="line">   imgFile = e.target.result;</div><div class="line">   //获取图片dom</div><div class="line">   var img1 = document.getElementById(&quot;preview&quot;);</div><div class="line">    //图片路径设置为读取的图片</div><div class="line">   img1.src = e.target.result;</div><div class="line">   var imgwidth = img1.offsetWidth;//获取图片宽高</div><div class="line">   var imgheight = img1.offsetHeight;</div><div class="line">   var size = document.getElementById(&apos;imagesize&apos;);</div><div class="line">   size.style.display = &quot;block&quot;;</div><div class="line">   size.innerHTML = imgwidth + &quot;×&quot; + imgheight;</div><div class="line">   if (imgwidth &gt; 600 || imgheight &gt; 800) &#123;</div><div class="line">   justify = &quot;0&quot;;</div><div class="line">   alert(&quot;图片尺寸不应大于600×800&quot;);</div><div class="line">   &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这时候写一个button 触发函数通过ajax来上传照片到后台：</p>
+<button id="btn2" type="submit" onclick="AddExperts()">提交</button>
+
+
+<p><br></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;div class=&quot;box-footer&quot;&gt;</div><div class="line">      &lt;div class=&quot;box-tools col-sm-2&quot;&gt;</div><div class="line">              &lt;div class=&quot;has-feedback&quot;&gt;</div><div class="line">                        &lt;button id=&quot;btn2&quot; type=&quot;submit&quot; class=&quot;btn btn-primary&quot; onclick=&quot;AddExperts()&quot;&gt;提交&lt;/button&gt;</div><div class="line">              &lt;/div&gt;</div><div class="line">    &lt;/div&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">function AddExperts() &#123;</div><div class="line">   </div><div class="line">    var postimg = imgFile;</div><div class="line">    $.ajax(&#123;</div><div class="line">                type: &quot;POST&quot;,</div><div class="line">                async: false,</div><div class="line">                url: &quot;ashx/zlgly-zjgl-add.ashx&quot;,</div><div class="line">                contentType: &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;,</div><div class="line">                data: &#123;img: postimg, JUSTIFY: justify &#125;,</div><div class="line">    timeout: 1000,</div><div class="line">    cache: false,</div><div class="line">    success: function (result) &#123;</div><div class="line">                    if (result) &#123;</div><div class="line">                        alert(result);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>以一张照片为例，如果上传了一张jpg或者jepg格式的图片，postimg为很长的一串字符串。<br><img src="/2017/10/23/将图片以二进制流方式存入数据库-c-oracle-11g/base64.jpg" alt="base64"></p>
+<p>至此前端的操作就到此结束了，下面进入后台的.ashx文件查看相关代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">using System;</div><div class="line">using System.Data;</div><div class="line">using System.Configuration;</div><div class="line">using System.Web;</div><div class="line">using Oracle.ManagedDataAccess.Client;</div><div class="line">public class 后台文件 : IHttpHandler</div><div class="line">&#123;</div><div class="line"></div><div class="line">    public void ProcessRequest(HttpContext context)</div><div class="line">    &#123;</div><div class="line">        context.Response.ContentType = &quot;text/plain&quot;;</div><div class="line">        //从前端读取数据</div><div class="line"></div><div class="line">      </div><div class="line">        string myFile = context.Request.Form[&quot;img&quot;];</div><div class="line">        string text = myFile.Substring(23);//截取base64字符串23个字符之后的内容</div><div class="line">        string JUSTIFY = context.Request.Form[&quot;JUSTIFY&quot;];</div><div class="line"></div><div class="line">        byte[] imageBytes = Convert.FromBase64String(text);//将base64字符串转化为byte[] 格式</div><div class="line">        if (JUSTIFY == &quot;0&quot;)</div><div class="line">        &#123;</div><div class="line">            context.Response.Write(&quot;图片大小超出尺寸&quot;);</div><div class="line">            context.Response.End();</div><div class="line">        &#125;</div><div class="line">        else</div><div class="line">        &#123;</div><div class="line">            //与数据库连接</div><div class="line">            string myvar = ConfigurationManager.ConnectionStrings[&quot;Conn&quot;].ToString();</div><div class="line">            OracleConnection conn = new OracleConnection(myvar);</div><div class="line">            try</div><div class="line">            &#123;</div><div class="line">                conn.Open();</div><div class="line">            &#125;</div><div class="line">            catch (Exception ex)</div><div class="line">            &#123;</div><div class="line">                context.Response.Write(ex.Message);</div><div class="line">                context.Response.End();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">          string insertimg = &quot;update EXPERTS SET IMAGE=:imageBytes where 条件=&apos;&quot; + 条件 + &quot;&apos;&quot;;</div><div class="line">                OracleCommand cmd = new OracleCommand(insertimg, conn);</div><div class="line">                cmd.Parameters.Add(new OracleParameter(&quot;imageBytes&quot;, OracleDbType.Blob));</div><div class="line">                cmd.Parameters[&quot;imageBytes&quot;].Value = imageBytes;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里向c#数据库的blob中写入图片，在网上搜了一段代码，也可以用，思路更清晰：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">//打开数据库</div><div class="line">String   connectionstring = &quot;Data Source=apts_test;user id=aptstest;password=test&quot;;</div><div class="line">OracleConnection  con   =new OracleConnection(connectionstring);</div><div class="line">con.Open();</div><div class="line">//向指定记录添加blob字段，例如图片</div><div class="line">private void add_blob()</div><div class="line"> &#123; </div><div class="line">	String sql = @&quot;update testxx set image=:myimage  where ID=:myid&quot;;//在testxx表中有个字段叫image是blob类型的注意中的冒号，通过myid制定记录</div><div class="line">	OracleCommand cmd = new OracleCommand(sql, con);</div><div class="line">	cmd.Parameters.Add(new OracleParameter(&quot;myimage&quot;, 	OracleType.Blob));//给这个两个参数赋值myimage和myid</div><div class="line">	cmd.Parameters.Add(new OracleParameter(&quot;myid&quot;, OracleType.VarChar));</div><div class="line">	cmd.Parameters[&quot;myid&quot;].Value = &quot;1&quot;;</div><div class="line"> 	//给image字段赋值字节数组</div><div class="line"> 	FileStream fs     =  File.OpenRead(&quot;D:/ 2.jpg&quot;);</div><div class="line">	byte[] imagebyte  = new byte[fs.Length];</div><div class="line">	fs.Read(imagebyte, 0, (int)fs.Length);</div><div class="line">	cmd.Parameters[&quot;myimage&quot;].Value = imagebyte;</div><div class="line">	 try</div><div class="line">	 &#123;</div><div class="line">	  int result = cmd.ExecuteNonQuery();</div><div class="line"> 	 if (result &lt; 1)</div><div class="line">      System.Console.WriteLine(&quot;success&quot;);</div><div class="line">	  else</div><div class="line">      System.Console.WriteLine(&quot;error&quot;);</div><div class="line">	&#125;</div><div class="line">	catch (Exception e1)</div><div class="line">	&#123;             &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在pl/sql developer中查看上传结果可以看到已经上传成功了：<br><img src="/2017/10/23/将图片以二进制流方式存入数据库-c-oracle-11g/上传结果.jpg" alt="上传结果"></p>
+<p>当然因为这里在后台没有判断照片的尺寸，后期会进行更新。</p>
+<p>当然，读取的方式类似。将blob中byte[] 格式转换为base64 ，但这个时候要注意开始时是把base64最前面的23个字符给去掉了，这时候要加上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">DataTable td = new DataTable(&quot;Name&quot;);//创建datatable来存放</div><div class="line">td.Columns.Add(&quot;IMAGE&quot;, Type.GetType(&quot;System.String&quot;));//增加一列，列名为IMAGE</div><div class="line">td.Rows.Add();//增加一行</div><div class="line">string sql = &quot;SELECT * FROM 表名 WHERE 条件 &quot;+ 条件 + &quot;&apos;&quot;;</div><div class="line">OracleCommand cmd = new OracleCommand(sql, conn);</div><div class="line">cmd.CommandType = System.Data.CommandType.Text;</div><div class="line">OracleDataReader  = cmd.ExecuteReader();</div><div class="line">   if (sdr.Read())</div><div class="line">       &#123;           </div><div class="line">           if(!sdr.IsDBNull(12))</div><div class="line">           &#123;</div><div class="line">           byte[] img =(byte[])sdr[&quot;IMAGE&quot;];</div><div class="line">           string  pic =&quot;data:image/jpeg;base64,&quot;+ Convert.ToBase64String(img);//加上字符串</div><div class="line">           td.Rows[0][&quot;IMAGE&quot;] = pic;</div><div class="line">           &#125;</div><div class="line">           </div><div class="line">           string jsonresult = JsonConvert.SerializeObject(td);</div><div class="line">           context.Response.Write(jsonresult);//传到前台</div><div class="line">           context.Response.End();</div><div class="line">       &#125;</div><div class="line">       else</div><div class="line">       &#123;</div><div class="line">           context.Response.Write(&quot;1&quot;);</div><div class="line">           context.Response.End();</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>这时候传到前台的还是base64字符串，而且img标签可以自动将base6码放入 img的 src=” “‘中,html会自动转码，至此就实现了图片导数据库和数据库到图片的整套读取方法了。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 项目 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C# </tag>
+            
+            <tag> 遇到的坑 </tag>
+            
+            <tag> 数据库 </tag>
+            
+            <tag> oracle </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Arguments的用法初试]]></title>
+      <url>/2017/09/03/Arguments%E7%9A%84%E7%94%A8%E6%B3%95%E5%88%9D%E8%AF%95/</url>
+      <content type="html"><![CDATA[<p>在FCC做题的过程中，遇到了一个初级的算法题，题目用到了arguments对象。在这里对arguments的用法进行一些总结。</p>
+<p>首先，在FCC中的题目如下：</p>
+<blockquote>
+<p>摧毁数组<br>实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function destroyer(arr) &#123;  //arr = (6) [1, 2, 3, 1, 2, 3]</div><div class="line">  var arr_arg=arguments; //arr_arg = (3) [Array(6), 2, 3]</div><div class="line">  for(var i = 1; i &lt; arr_arg.length; i++)&#123;   //先让arr_arg[1](也就是2)与arr的每一个元素比较，保留或者摧毁。第一次循环后arr=[1,2,1,2]然后第二次循环让arr_arg[2](也就是3)与arr的每一个元素比较，保留或者摧毁。第二次循环后arr=[1,1]</div><div class="line">    arr = arr.filter(function(val)&#123;  </div><div class="line">      return arr_arg[i] !== val;     </div><div class="line">    &#125;);  </div><div class="line">    &#125;  </div><div class="line">  return arr;</div><div class="line">&#125;</div><div class="line"></div><div class="line">destroyer([1, 2, 3, 1, 2, 3], 2, 3);//[1,1]</div><div class="line">destroyer([1, 2, 3, 5, 1, 2, 3], 2, 3) ;//[1, 5, 1]</div><div class="line">destroyer([3, 5, 1, 2, 2], 2, 3, 5);//[1]</div><div class="line">destroyer([2, 3, 2, 3], 2, 3);//[]</div><div class="line">destroyer([&quot;tree&quot;, &quot;hamburger&quot;, 53], &quot;tree&quot;, 53);//[&quot;hamburger&quot;]</div></pre></td></tr></table></figure>
+<p>先来看下《JavaScript高级程序设计》中对于arguments的一些解释：</p>
+<blockquote>
+<p>ECMAScript 函数的参数与大多数其他语言中函数的参数有所不同。 ECMAScript 函数不介意传递进来多少个参数，也不在乎传进来参数是什么数据类型。也就是说，即便你定义的函数只接收两个参数，在调用这个函数时也未必一定要传递两个参数。可以传递一个、三个甚至不传递参数，而解析器永远不会有什么怨言。之所以会这样，原因是ECMAScript 中的参数在内部是用一个数组来表示的。函数接收到的始终都是这个数组，而不关心数组中包含哪些参数（如果有参数的话）。如果这个数组中不包含任何元素，无所谓；如果包含多个元素，也没有问题。实际上，在函数体内可以通过 arguments 对象来访问这个参数数组，从而获取传递给函数的每一个参数。<br>  其实， arguments 对象只是与数组类似（它并不是 Array 的实例），因为可以使用方括号语法访问它的每一个元素（即第一个元素是 arguments[0]，第二个元素是 argumetns[1]，以此类推），使用 length 属性来确定传递进来多少个参数。在前面的例子中， sayHi()函数的第一个参数的名字叫name，而该参数的值也可以通过访问 arguments[0]来获取。因此，那个函数也可以像下面这样重写，即不显式地使用命名参数：</p>
+<p>   <code>function sayHi() {
+alert(&quot;Hello &quot; + arguments[0] + &quot;,&quot; + arguments[1]);}</code><br>这个重写后的函数中不包含命名的参数。虽然没有使用 name 和 message 标识符，但函数的功能依旧。这个事实说明了 ECMAScript 函数的一个重要特点：命名的参数只提供便利，但不是必需的。另外，在命名参数方面，其他语言可能需要事先创建一个函数签名，而将来的调用必须与该签名一致。但在 ECMAScript 中，没有这些条条框框，解析器不会验证命名参数。<br>通过访问 arguments 对象的 length 属性可以获知有多少个参数传递给了函数。下面这个函数会在每次被调用时，输出传入其中的参数个数：<br><code>function howManyArgs() {
+alert(arguments.length);
+}</code><br><code>howManyArgs(&quot;string&quot;, 45); //2</code><br><code>howManyArgs(); //0</code><br> <code>howManyArgs(12); //1</code><br> 执行以上代码会依次出现 3 个警告框，分别显示 2、 0 和 1。由此可见，开发人员可以利用这一点让函数能够接收任意个参数并分别实现适当的功能。请看下面的例子：<br> <code>function doAdd() {</code><br><code>if(arguments.length == 1) {</code><br><code>alert(arguments[0] + 10);</code><br><code>} else if (arguments.length == 2) {</code><br><code>alert(arguments[0] + arguments[1]);</code><br><code>}</code><br><code>}</code><br><code>doAdd(10); //20</code><br><code>doAdd(30, 20); //50</code><br>函数 doAdd()会在只有一个参数的情况下给该参数加上 10；如果是两个参数，则将那个参数简单相加并返回结果。因此， doAdd(10)会返回 20，而 doAdd(30,20)则返回 50。虽然这个特性算不上完美的重载，但也足够弥补 ECMAScript 的这一缺憾了。<br>另一个与参数相关的重要方面，就是 arguments 对象可以与命名参数一起使用，如下面的例子所示：<br><code>function doAdd(num1, num2) {</code><br><code>if(arguments.length == 1) {</code><br><code>alert(num1 + 10);</code><br><code>} else if (arguments.length == 2) {</code><br><code>alert(arguments[0] + num2);</code><br><code>}</code><br><code>}</code><br>在重写后的这个 doAdd()函数中，两个命名参数都与 arguments 对象一起使用。由于 num1 的值与 arguments[0]的值相同，因此它们可以互换使用（当然， num2 和 arguments[1]也是如此）。<br>关于 arguments 的行为，还有一点比较有意思。那就是它的值永远与对应命名参数的值保持同步。<br>例如：<br><code>function doAdd(num1, num2) {</code><br><code>arguments[1] = 10;</code><br><code>alert(arguments[0] + num2);</code><br><code>}</code><br>每次执行这个 doAdd()函数都会重写第二个参数，将第二个参数的值修改为 10。因为 arguments对象中的值会自动反映到对应的命名参数，所以修改 arguments[1]，也就修改了 num2，结果它们的值都会变成 10。不过，这并不是说读取这两个值会访问相同的内存空间；它们的内存空间是独立的，但它们的值会同步。另外还要记住，如果只传入了一个参数，那么为 arguments[1]设置的值不会反应到命名参数中。这是因为 arguments 对象的长度是由传入的参数个数决定的，不是由定义函数时的命名参数的个数决定的。<br>关于参数还要记住最后一点：没有传递值的命名参数将自动被赋予 undefined 值。这就跟定义了变量但又没有初始化一样。例如，如果只给 doAdd()函数传递了一个参数，则 num2 中就会保存undefined 值。<br>严格模式对如何使用 arguments 对象做出了一些限制。首先，像前面例子中那样的赋值会变得无效。也就是说，即使把 arguments[1]设置为 10， num2 的值仍然还是 undefined。其次，重写arguments 的值会导致语法错误（代码将不会执行）。</p>
+</blockquote>
+<p>  这里再回过头来看最开始的那个初级的算法题，就很简单了，传递的值是:<strong>([1,2,3,1,2,3],2,3)</strong>,即arguments[0] = [1,2,3,1,2,3], arguments[1] = 2 , arguemnts[2] = 3 .这样让arr_arg=arguments，即定义一个数组等于当前传入的数组，在后面进行使用。后面的部分就很好理解了，用<strong>Array.filter()</strong>方法调用括号内的function函数，让循环从1开始，即让待摧毁的值与数组中的每一个值比较，返回false或者true进而摧毁或者保留。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> JavaScript </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[初级算法]]></title>
+      <url>/2017/09/02/%E5%88%9D%E7%BA%A7%E7%AE%97%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p> 因为是刚开始学习JS，之前对算法的学习也很少，先从最基本的算法开始写起。基本都是FCC题目上的算法。</p>
+<h1 id="计算一个整数的阶乘"><a href="#计算一个整数的阶乘" class="headerlink" title="计算一个整数的阶乘"></a>计算一个整数的阶乘</h1><h2 id="算法1"><a href="#算法1" class="headerlink" title="算法1"></a>算法1</h2><p>普通方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  var number=1;</div><div class="line">  while(num&gt;=1)&#123;</div><div class="line">    number*=num;</div><div class="line">	num--;</div><div class="line">	&#125;</div><div class="line">	return number;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  factorialize(10);  //3628800</div><div class="line">  factorialize(20); // 2432902008176640000</div><div class="line">  factorialize(0); //1</div></pre></td></tr></table></figure>
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>下面是递归的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">function factorialize(num) &#123;</div><div class="line">  if (num === 0)&#123;</div><div class="line">  return 1;</div><div class="line">  &#125;</div><div class="line">  else&#123;</div><div class="line">    return num * factorialize(num - 1);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">factorialize(10);  //3628800</div><div class="line">factorialize(20); // 2432902008176640000</div><div class="line">factorialize(0); //1</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="分割数组"><a href="#分割数组" class="headerlink" title="分割数组"></a>分割数组</h1><p>把一个数组arr按照指定的数组大小size分割成若干个数组块。</p>
+<p>例如:chunk([1,2,3,4],2)=[[1,2],[3,4]];</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function chunk(arr, size) &#123;</div><div class="line">  var arr2=[];</div><div class="line">  for(var i=0;i&lt;arr.length;i=i+size)&#123;</div><div class="line">    arr2.push(arr.slice(i,i+size));</div><div class="line">	&#125;</div><div class="line">	return arr2;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">chunk([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 2);</div><div class="line">chunk([0, 1, 2, 3, 4, 5, 6], 3);  // [[0, 1, 2], [3, 4, 5], [6]]</div><div class="line">chunk([0, 1, 2, 3, 4, 5, 6, 7, 8], 4);  // [[0, 1, 2, 3], [4, 5, 6, 7], [8]]</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="截断数组"><a href="#截断数组" class="headerlink" title="截断数组"></a>截断数组</h1><p>截断数组的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function slasher(arr, howMany) &#123;</div><div class="line">  arr.splice(0,howMany); </div><div class="line">  return arr;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">slasher([1, 2, 3], 2);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>splice() 方法通过删除现有元素和/或添加新元素来更改一个数组的内容。<br>splice() 方法与 slice() 方法的作用是不同的，splice() 方法会直接对数组进行修改。</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var myFish = [&apos;angel&apos;, &apos;clown&apos;, &apos;mandarin&apos;, &apos;sturgeon&apos;];</div><div class="line">myFish.splice(2, 0, &apos;drum&apos;); // 在索引为2的位置插入&apos;drum&apos;</div><div class="line">// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;drum&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]</div><div class="line">myFish.splice(2, 1); // 从索引为2的位置删除一项（也就是&apos;drum&apos;这一项）</div><div class="line">// myFish 变为 [&quot;angel&quot;, &quot;clown&quot;, &quot;mandarin&quot;, &quot;sturgeon&quot;]</div></pre></td></tr></table></figure>
+<hr>
+<h1 id="比较字符串"><a href="#比较字符串" class="headerlink" title="比较字符串"></a>比较字符串</h1><p>比较字符串</p>
+<p>如果数组第一个字符串元素包含了第二个字符串元素的所有字符，函数返回true。</p>
+<p>举例，[“hello”, “Hello”]应该返回true，因为在忽略大小写的情况下，第二个字符串的所有字符都可以在第一个字符串找到。</p>
+<p>[“hello”, “hey”]应该返回false，因为字符串”hello”并不包含字符”y”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function mutation(arr) &#123;</div><div class="line">  var arr2=arr[1].toLowerCase().split(&quot;&quot;);// 先把后面的字符串拆分成数组</div><div class="line">  for(var i=0;i&lt;arr2.length;i++)&#123;</div><div class="line">    if(arr[0].toLowerCase().indexOf(arr2[i])&lt;0)&#123; //将前面的数组转化为小写后与后面拆分的数组的每一个字母比较， indexOf不包含的情况会返回-1</div><div class="line">      return false;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  return true;</div><div class="line">  </div><div class="line">&#125;</div><div class="line"></div><div class="line">mutation([&quot;hello&quot;, &quot;hey&quot;]);//false</div><div class="line">mutation([&quot;hello&quot;, &quot;Hello&quot;]);//true</div><div class="line">mutation([&quot;zyxwvutsrqponmlkjihgfedcba&quot;, &quot;qrstu&quot;]);//true</div></pre></td></tr></table></figure>
+<blockquote>
+<p>split() 方法使用指定的分隔符字符串将一个String对象分割成字符串数组，以将字符串分隔为子字符串，以确定每个拆分的位置。</p>
+</blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/split" target="_blank" rel="external">split()</a></p>
+<blockquote>
+<p>str.split([separator[, limit]])<br>separator<br>指定表示每个拆分应发生的点的字符串。separator 可以是一个字符串或正则表达式。 如果纯文本分隔符包含多个字符，则必须找到整个字符串来表示分割点。如果在str中省略或不出现分隔符，则返回的数组包含一个由整个字符串组成的元素。如果分隔符为空字符串，则将str原字符串中每个字符的数组形式返回。<br>limit<br>一个整数，限定返回的分割片段数量。当提供此参数时，split 方法会在指定分隔符的每次出现时分割该字符串，但在限制条目已放入数组时停止。如果在达到指定限制之前达到字符串的末尾，它可能仍然包含少于限制的条目。新数组中不返回剩下的文本。</p>
+</blockquote>
+<hr>
+<h1 id="过滤数组假值"><a href="#过滤数组假值" class="headerlink" title="过滤数组假值"></a>过滤数组假值</h1><p>删除数组中的所有假值。</p>
+<p>在JavaScript中，假值有false、null、0、””、undefined 和 NaN。</p>
+<p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Boolean" target="_blank" rel="external">Boolean Objects</a><br>          <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter" target="_blank" rel="external">Array.filter()</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function bouncer(arr) &#123;</div><div class="line">  return arr.filter(isBad);</div><div class="line">  function isBad(params)&#123; </div><div class="line">   var result = Boolean(params);</div><div class="line">   return result; &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bouncer([7, &quot;ate&quot;, &quot;&quot;, false, 9]);//[7, &quot;ate&quot;, 9]</div><div class="line">bouncer([false, null, 0, NaN, undefined, &quot;&quot;]);// []</div></pre></td></tr></table></figure>
+<h1 id="数组排序并找出元素索引"><a href="#数组排序并找出元素索引" class="headerlink" title="数组排序并找出元素索引"></a>数组排序并找出元素索引</h1><p>先给数组排序，然后找到指定的值在数组的位置，最后返回位置对应的索引。</p>
+<p>举例：where([1,2,3,4], 1.5) 应该返回 1。因为1.5插入到数组[1,2,3,4]后变成[1,1.5,2,3,4]，而1.5对应的索引值就是1。</p>
+<p>同理，where([20,3,5], 19) 应该返回 2。因为数组会先排序为 [3,5,20]，19插入到数组[3,5,20]后变成[3,5,19,20]，而19对应的索引值就是2。</p>
+<p>这题的思路就比较简单了，先把后面的数加到前面的数组中，然后对加入新数的数组进行排序，最后找到新加入的数字的索引即可。下面是我自己写的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function where(arr, num) &#123;</div><div class="line">  var arr1=[];</div><div class="line">  arr.push(num);</div><div class="line">  arr.sort( function(a,b)&#123;</div><div class="line">    return a-b;</div><div class="line">  &#125;);</div><div class="line">  for(var i=0;i&lt;arr.length;i++)&#123;</div><div class="line">    if(arr[i]===num)&#123;</div><div class="line">      return i;</div><div class="line">    &#125;    </div><div class="line">  &#125;  </div><div class="line">&#125;</div><div class="line"></div><div class="line">where([40, 60], 50); //1</div><div class="line">where([10, 20, 30, 40, 50], 35);//3</div><div class="line">where([10, 20, 30, 40, 50], 30);// 2</div><div class="line">where([40, 60], 50);// 1</div><div class="line">where([3, 10, 5], 3);// 0</div><div class="line">where([5, 3, 20, 3], 5);// 2</div><div class="line">where([2, 20, 10], 19);// 2</div><div class="line">where([2, 5, 10], 15);// 3</div></pre></td></tr></table></figure>
+<p>后面再网上看到了一个其他的方法，可以用 <strong>Array.indexOf()</strong> 方法直接获取元素的索引值，其他的思路一样。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function where(arr, num) &#123;</div><div class="line">  var arr1=[];</div><div class="line">  arr.push(num);</div><div class="line">  arr.sort( function(a,b)&#123;</div><div class="line">    return a-b;</div><div class="line">  &#125;);</div><div class="line"> return arr.indexOf(num);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a>凯撒密码</h1><p>下面我们来介绍风靡全球的凯撒密码Caesar cipher，又叫移位密码。</p>
+<p>移位密码也就是密码中的字母会按照指定的数量来做移位。</p>
+<p>一个常见的案例就是ROT13密码，字母会移位13个位置。由’A’ ↔ ‘N’, ‘B’ ↔ ‘O’，以此类推。</p>
+<p>写一个ROT13函数，实现输入加密字符串，输出解密字符串。</p>
+<p>所有的字母都是大写，不要转化任何非字母形式的字符(例如：空格，标点符号)，遇到这些特殊字符，跳过它们。</p>
+<p>可能用到的内容：<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt" target="_blank" rel="external">String.charCodeAt()</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode" target="_blank" rel="external">String.fromCharCode()</a><br><a href="http://ascii.911cha.com/" target="_blank" rel="external">ASCII码对照表</a></p>
+<p>大写字母的对应关系如下：<br><code>ABCDEFGHIJKLMNOPQRSTUVWXYZ</code><br><code>NOPQRSTUVWXYZABCDEFGHIJKLM</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">function rot13(str) &#123; </div><div class="line">  var arr=[];</div><div class="line">  for(var i=0;i&lt;str.length;i++)&#123;  //遍历字符串的每一个字符</div><div class="line">  </div><div class="line">  	//其他字符等非大写字母字符  	</div><div class="line">  	if(str.charCodeAt(i)&lt;65||str.charCodeAt(i)&gt;90)&#123;</div><div class="line">  		arr.push(String.fromCharCode(str.charCodeAt(i)));</div><div class="line">  	&#125;</div><div class="line">  	//大写字母的ASCII码表对应的数值为65-90</div><div class="line">  	else if(str.charCodeAt(i)&gt;77)&#123;</div><div class="line">  		arr.push(String.fromCharCode(str.charCodeAt(i)-13));</div><div class="line">  	&#125;</div><div class="line">  	else&#123;</div><div class="line">  		arr.push(String.fromCharCode(str.charCodeAt(i)+13));</div><div class="line">  	&#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  return arr.join(&quot;&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log(rot13(&quot;SERR PBQR PNZC&quot;));  // FREE CODE CAMP</div><div class="line"></div><div class="line">rot13(&quot;SERR CVMMN!&quot;));  //  &quot;FREE PIZZA!&quot;</div><div class="line">rot13(&quot;SERR YBIR?&quot;) );  //  &quot;FREE LOVE?&quot;</div><div class="line">rot13(&quot;GUR DHVPX OEBJA QBT WHZCRQ BIRE GUR YNML SBK.&quot;));  // &quot;THE QUICK BROWN DOG JUMPED OVER THE LAZY FOX.&quot;</div></pre></td></tr></table></figure>
+<h1 id="返回给定的两个数组中不同的值"><a href="#返回给定的两个数组中不同的值" class="headerlink" title="返回给定的两个数组中不同的值"></a>返回给定的两个数组中不同的值</h1><p>Diff Two Arrays<br>比较两个数组，然后返回一个新数组，该数组的元素为两个给定数组中所有独有的数组元素。换言之，返回两个数组的差异。</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf" target="_blank" rel="external">Array.indexOf()</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/concat" target="_blank" rel="external">Array.concat()</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function diff(arr1, arr2) &#123;</div><div class="line">  var newArr = [];</div><div class="line">  // Same, same; but different.</div><div class="line">  var arr3 = [];  </div><div class="line">  for (var i=0;i&lt;arr1.length;i++) &#123;  </div><div class="line">    if(arr2.indexOf(arr1[i]) === -1)     </div><div class="line">      arr3.push(arr1[i]);  </div><div class="line">  &#125;  </div><div class="line">   var arr4 = [];  </div><div class="line">  for (var j=0;j&lt;arr2.length;j++) &#123;  </div><div class="line">    if(arr1.indexOf(arr2[j]) === -1)  </div><div class="line">      arr4.push(arr2[j]);  </div><div class="line">  &#125;  </div><div class="line">   newArr = arr3.concat(arr4);  </div><div class="line">  return newArr;</div><div class="line">&#125;</div><div class="line"></div><div class="line">diff([1, 2, 3, 5], [1, 2, 3, 4, 5]);//[4]</div><div class="line">[1, &quot;calf&quot;, 3, &quot;piglet&quot;], [1, &quot;calf&quot;, 3, 4];// [&quot;piglet&quot;, 4]</div><div class="line">[], [&quot;snuffleupagus&quot;, &quot;cookie monster&quot;, &quot;elmo&quot;] ;// [&quot;snuffleupagus&quot;, &quot;cookie monster&quot;, &quot;elmo&quot;]</div><div class="line">[1, &quot;calf&quot;, 3, &quot;piglet&quot;], [7, &quot;filly&quot;];// [1, &quot;calf&quot;, 3, &quot;piglet&quot;, 7, &quot;filly&quot;]</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> 算法 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hello World]]></title>
+      <url>/2017/08/21/hello-world/</url>
+      <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+      
+        
+    </entry>
+    
+  
+  
 </search>
