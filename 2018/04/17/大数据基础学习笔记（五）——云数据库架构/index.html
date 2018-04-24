@@ -105,20 +105,20 @@
 
 
 
-<meta name="description" content="不同的云数据库产品采用的系统架构差异很大，这里以阿里巴巴集团核心系统数据库团队开发的UMP(Unified MySQL Platform)系统为例进行介绍。 1.UMP系统概述•UMP系统是低成本和高性能的MySQL云数据库方案 总的来说，UMP系统架构设计遵循了以下原则： •保持单一的系统对外入口，并且为系统内部维护单一的资源池（CPU、内存、带宽、磁盘等放在一个统一的资源池，供上部组件调用）">
+<meta name="description" content="不同的云数据库产品采用的系统架构差异很大，这里以阿里巴巴集团核心系统数据库团队开发的UMP(Unified MySQL Platform)系统为例进行介绍。 UMP系统概述•UMP系统是低成本和高性能的MySQL云数据库方案 总的来说，UMP系统架构设计遵循了以下原则： •保持单一的系统对外入口，并且为系统内部维护单一的资源池（CPU、内存、带宽、磁盘等放在一个统一的资源池，供上部组件调用） •消">
 <meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大数据基础学习笔记（五）——云数据库架构">
 <meta property="og:url" content="http://homxu.com/2018/04/17/大数据基础学习笔记（五）——云数据库架构/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="不同的云数据库产品采用的系统架构差异很大，这里以阿里巴巴集团核心系统数据库团队开发的UMP(Unified MySQL Platform)系统为例进行介绍。 1.UMP系统概述•UMP系统是低成本和高性能的MySQL云数据库方案 总的来说，UMP系统架构设计遵循了以下原则： •保持单一的系统对外入口，并且为系统内部维护单一的资源池（CPU、内存、带宽、磁盘等放在一个统一的资源池，供上部组件调用）">
+<meta property="og:description" content="不同的云数据库产品采用的系统架构差异很大，这里以阿里巴巴集团核心系统数据库团队开发的UMP(Unified MySQL Platform)系统为例进行介绍。 UMP系统概述•UMP系统是低成本和高性能的MySQL云数据库方案 总的来说，UMP系统架构设计遵循了以下原则： •保持单一的系统对外入口，并且为系统内部维护单一的资源池（CPU、内存、带宽、磁盘等放在一个统一的资源池，供上部组件调用） •消">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://homxu.com/2018/04/17/大数据基础学习笔记（五）——云数据库架构/1.png">
 <meta property="og:image" content="http://homxu.com/2018/04/17/大数据基础学习笔记（五）——云数据库架构/2.png">
-<meta property="og:updated_time" content="2018-04-18T02:01:03.929Z">
+<meta property="og:updated_time" content="2018-04-18T02:02:41.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据基础学习笔记（五）——云数据库架构">
-<meta name="twitter:description" content="不同的云数据库产品采用的系统架构差异很大，这里以阿里巴巴集团核心系统数据库团队开发的UMP(Unified MySQL Platform)系统为例进行介绍。 1.UMP系统概述•UMP系统是低成本和高性能的MySQL云数据库方案 总的来说，UMP系统架构设计遵循了以下原则： •保持单一的系统对外入口，并且为系统内部维护单一的资源池（CPU、内存、带宽、磁盘等放在一个统一的资源池，供上部组件调用）">
+<meta name="twitter:description" content="不同的云数据库产品采用的系统架构差异很大，这里以阿里巴巴集团核心系统数据库团队开发的UMP(Unified MySQL Platform)系统为例进行介绍。 UMP系统概述•UMP系统是低成本和高性能的MySQL云数据库方案 总的来说，UMP系统架构设计遵循了以下原则： •保持单一的系统对外入口，并且为系统内部维护单一的资源池（CPU、内存、带宽、磁盘等放在一个统一的资源池，供上部组件调用） •消">
 <meta name="twitter:image" content="http://homxu.com/2018/04/17/大数据基础学习笔记（五）——云数据库架构/1.png">
 
 
@@ -363,7 +363,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,954 字
+                  1,952 字
                 </span>
               
 
@@ -401,13 +401,13 @@
 
       
         <p>不同的云数据库产品采用的系统架构差异很大，这里以阿里巴巴集团核心系统数据库团队开发的UMP(Unified MySQL Platform)系统为例进行介绍。</p>
-<h1 id="1-UMP系统概述"><a href="#1-UMP系统概述" class="headerlink" title="1.UMP系统概述"></a>1.UMP系统概述</h1><p>•UMP系统是低成本和高性能的MySQL云数据库方案</p>
+<h1 id="UMP系统概述"><a href="#UMP系统概述" class="headerlink" title="UMP系统概述"></a>UMP系统概述</h1><p>•UMP系统是低成本和高性能的MySQL云数据库方案</p>
 <p>总的来说，UMP系统架构设计遵循了以下原则：</p>
 <p>•保持单一的系统对外入口，并且为系统内部维护单一的资源池（CPU、内存、带宽、磁盘等放在一个统一的资源池，供上部组件调用）</p>
 <p>•消除单点故障，保证服务的高可用性（设置多个管家（Controller））</p>
 <p>•保证系统具有良好的可伸缩，能够动态地增加、删减计算与存储节点</p>
 <p>•保证分配给用户的资源也是弹性可伸缩的，资源之间相互隔离，确保<br>应用和数据安全（多租户之间隔离，当一个用户使用过多资源时，对其进行限制，以免影响其他用户的使用）</p>
-<h1 id="2-UMP系统架构"><a href="#2-UMP系统架构" class="headerlink" title="2.UMP系统架构"></a>2.UMP系统架构</h1><p><img src="/2018/04/17/大数据基础学习笔记（五）——云数据库架构/1.png" alt="UMP系统架构"></p>
+<h1 id="UMP系统架构"><a href="#UMP系统架构" class="headerlink" title="UMP系统架构"></a>UMP系统架构</h1><p><img src="/2018/04/17/大数据基础学习笔记（五）——云数据库架构/1.png" alt="UMP系统架构"></p>
 <h2 id="Mnesia"><a href="#Mnesia" class="headerlink" title="Mnesia"></a>Mnesia</h2><p>•Mnesia是一个分布式数据库管理系统</p>
 <p>•Mnesia支持事务，支持透明的数据分片，利用两阶段锁实现分布式事务，可以线性扩展到至少50个节点</p>
 <p>•Mnesia的数据库模式(schema)可在运行时动态重配置，表能被迁移或复制到多个节点来改进容错性</p>
@@ -475,6 +475,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/24/大数据基础学习笔记（六）——MapReduce/" rel="prev" title="大数据基础学习笔记（六）——MapReduce">
+                大数据基础学习笔记（六）——MapReduce <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -562,7 +566,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -573,7 +577,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -632,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-UMP系统概述"><span class="nav-number">1.</span> <span class="nav-text">1.UMP系统概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-UMP系统架构"><span class="nav-number">2.</span> <span class="nav-text">2.UMP系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mnesia"><span class="nav-number">2.1.</span> <span class="nav-text">Mnesia</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMQ"><span class="nav-number">2.2.</span> <span class="nav-text">RabbitMQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zookeeper"><span class="nav-number">2.3.</span> <span class="nav-text">Zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LVS"><span class="nav-number">2.4.</span> <span class="nav-text">LVS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller服务器"><span class="nav-number">2.5.</span> <span class="nav-text">Controller服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-控制台"><span class="nav-number">2.6.</span> <span class="nav-text">Web 控制台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy-服务器"><span class="nav-number">2.7.</span> <span class="nav-text">Proxy 服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Agent-服务器"><span class="nav-number">2.8.</span> <span class="nav-text">Agent 服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志分析服务器"><span class="nav-number">2.9.</span> <span class="nav-text">日志分析服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息统计服务器"><span class="nav-number">2.10.</span> <span class="nav-text">信息统计服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#愚公系统"><span class="nav-number">2.11.</span> <span class="nav-text">愚公系统</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UMP系统概述"><span class="nav-number">1.</span> <span class="nav-text">UMP系统概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UMP系统架构"><span class="nav-number">2.</span> <span class="nav-text">UMP系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mnesia"><span class="nav-number">2.1.</span> <span class="nav-text">Mnesia</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RabbitMQ"><span class="nav-number">2.2.</span> <span class="nav-text">RabbitMQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zookeeper"><span class="nav-number">2.3.</span> <span class="nav-text">Zookeeper</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LVS"><span class="nav-number">2.4.</span> <span class="nav-text">LVS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller服务器"><span class="nav-number">2.5.</span> <span class="nav-text">Controller服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-控制台"><span class="nav-number">2.6.</span> <span class="nav-text">Web 控制台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy-服务器"><span class="nav-number">2.7.</span> <span class="nav-text">Proxy 服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Agent-服务器"><span class="nav-number">2.8.</span> <span class="nav-text">Agent 服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志分析服务器"><span class="nav-number">2.9.</span> <span class="nav-text">日志分析服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息统计服务器"><span class="nav-number">2.10.</span> <span class="nav-text">信息统计服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#愚公系统"><span class="nav-number">2.11.</span> <span class="nav-text">愚公系统</span></a></li></ol></li></ol></div>
             
 
           </div>
