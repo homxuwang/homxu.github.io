@@ -127,7 +127,7 @@
 <meta property="og:image" content="http://homxu.com/2018/05/17/大数据基础学习笔记（八）——Spark/12.png">
 <meta property="og:image" content="http://homxu.com/2018/05/17/大数据基础学习笔记（八）——Spark/13.png">
 <meta property="og:image" content="http://homxu.com/2018/05/17/大数据基础学习笔记（八）——Spark/14.png">
-<meta property="og:updated_time" content="2018-05-17T02:58:33.394Z">
+<meta property="og:updated_time" content="2018-05-17T03:05:15.033Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据基础学习笔记（八）——Spark">
 <meta name="twitter:description" content="Spark的特点•运行速度快：使用DAG执行引擎以支持循环数据流与内存计算 •容易使用：支持使用Scala、Java、Python和R语言进行编程，可以通过Spark Shell进行交互式编程 •通用性：Spark提供了完整而强大的技术栈，包括SQL查询、流式计算、机器学习和图算法组件 •运行模式多样：可运行于独立的集群模式中，可运行于Hadoop中，也可运行于Amazon EC2等云环境中，并且">
@@ -481,15 +481,11 @@
 <p>（1）每个Application都有自己专属的Executor进程，并且该进程在Application运行期间一直驻留。Executor进程以多线程的方式运行Task</p>
 <p>（2）Spark运行过程与资源管理器无关，只要能够获取Executor进程并保持通信即可</p>
 <p>（3）Task采用了数据本地性和推测执行等优化机制</p>
-<h1 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h1><ol>
-<li>设计背景</li>
-</ol>
+<h1 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h1><p>1.设计背景</p>
 <p>•许多迭代式算法（比如机器学习、图算法等）和交互式数据挖掘工具，共同之处是，不同计算阶段之间会重用中间结果</p>
 <p>•目前的MapReduce框架都是把中间结果写入到HDFS中，带来了大量的数据复制、磁盘IO和序列化开销</p>
 <p>•RDD就是为了满足这种需求而出现的，它提供了一个抽象的数据架构，我们不必担心底层数据的分布式特性，只需将具体的应用逻辑表达为一系列转换处理，不同RDD之间的转换操作形成依赖关系，可以实现管道化，避免中间数据存储</p>
-<ol>
-<li>RDD 概念</li>
-</ol>
+<p>2.RDD 概念</p>
 <p>•一个RDD就是一个分布式对象集合，本质上是一个只读的分区记录集合，每个RDD可分成多个分区，每个分区就是一个数据集片段，并且一个RDD的不同分区可以被保存到集群中不同的节点上，从而可以在集群中的不同节点上进行并行计算</p>
 <p>•RDD提供了一种高度受限的共享内存模型，即RDD是只读的记录分区的集合，不能直接修改，只能基于稳定的物理存储中的数据集创建RDD，或者通过在其他RDD上执行确定的转换操作（如map、join和group by）而创建得到新的RDD</p>
 <p>•RDD提供了一组丰富的操作以支持常见的数据运算，分为“动作”（Action）和“转换”（Transformation）两种类型</p>
@@ -502,24 +498,18 @@
 <p>•最后一个RDD经过“动作”操作进行转换，并输出到外部数据源这一系列处理称为一个Lineage（血缘关系），即DAG拓扑排序的结果</p>
 <p>优点：惰性调用、管道化、避免同步等待、不需要保存中间结果、每次操作变得简单</p>
 <p><img src="/2018/05/17/大数据基础学习笔记（八）——Spark/9.png" alt="Spark运行基本流程图"></p>
-<ol>
-<li>RDD特性</li>
-</ol>
+<p>3.RDD特性</p>
 <p>Spark采用RDD以后能够实现高效计算的原因主要在于：</p>
 <p>（1）高效的容错性</p>
 <p>•现有容错机制：数据复制或者记录日志</p>
 <p>•RDD：血缘关系、重新计算丢失分区、无需回滚系统、重算过程在不同节点之间并行、只记录粗粒度的操作</p>
 <p>（2）中间结果持久化到内存，数据在内存中的多个RDD操作之间进行传递，避免了不必要的读写磁盘开销</p>
 <p>（3）存放的数据可以是Java对象，避免了不必要的对象序列化和反序列化</p>
-<ol>
-<li>RDD之间的依赖关系</li>
-</ol>
+<p>4.RDD之间的依赖关系</p>
 <p>窄依赖表现为一个父RDD的分区对应于一个子RDD的分区或多个父RDD的分区对应于一个子RDD的分区</p>
 <p>•宽依赖则表现为存在一个父RDD的一个分区对应一个子RDD的多个分区</p>
 <p><img src="/2018/05/17/大数据基础学习笔记（八）——Spark/10.png" alt="窄依赖与宽依赖的区别"></p>
-<ol>
-<li>Stage的划分</li>
-</ol>
+<p>5.Stage的划分</p>
 <p>Spark通过分析各个RDD的依赖关系生成了DAG，再通过分析各个RDD中的分区之间的依赖关系来决定如何划分Stage，具体划分方法是：</p>
 <p>•在DAG中进行反向解析，遇到宽依赖就断开</p>
 <p>•遇到窄依赖就把当前的RDD加入到Stage中</p>
@@ -528,9 +518,7 @@
 <p>Stage的类型包括两种：ShuffleMapStage和ResultStage，具体如下：</p>
 <p>（1）ShuffleMapStage：不是最终的Stage，在它之后还有其他Stage，所以，它的输出一定需要经过Shuffle过程，并作为后续Stage的输入；这种Stage是以Shuffle为输出边界，其输入边界可以是从外部获取数据，也可以是另一个ShuffleMapStage的输出，其输出可以是另一个Stage的开始；在一个Job里可能有该类型的Stage，也可能没有该类型Stage；</p>
 <p>（2）ResultStage：最终的Stage，没有输出，而是直接产生结果或存储。这种Stage是直接输出结果，其输入边界可以是从外部获取数据，也可以是另一个ShuffleMapStage的输出。在一个Job里必定有该类型Stage。<br>因此，一个Job含有一个或多个Stage，其中至少含有一个ResultStage。</p>
-<ol>
-<li>RDD运行过程</li>
-</ol>
+<p>6.RDD运行过程</p>
 <p>通过上述对RDD概念、依赖关系和Stage划分的介绍，结合之前介绍的Spark运行<br>基本流程，再总结一下RDD在Spark架构中的运行过程：</p>
 <p>（1）创建RDD对象；</p>
 <p>（2）SparkContext负责计算RDD之间的依赖关系，构建DAG；</p>
@@ -579,6 +567,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/22/大数据基础学习笔记（九）——流计算/" rel="prev" title="大数据基础学习笔记（九）——流计算">
+                大数据基础学习笔记（九）——流计算 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -655,7 +647,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
