@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="算法," />
 
 
 
@@ -105,13 +105,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Homxu">
-<meta property="og:url" content="http://homxu.com/index.html">
+<meta name="description" content="最近在学习数据结构和算法，这里总结一下学习的排序算法。 选择排序 - SelectionSort基本思路:假设有一个数组（如图所示），进行从小到大的排序。首先在整个数组范围里，找出要放在第一个位置的数，也就是最小的数：1，然后将1和现在的第一名的位置8进行换位，经过交换以后，1所处的位置就是最终排序所在的位置，这样就继续在剩下的部分找此时最小的数，也就是2，然后把2和相应的第二个位置所在的元素进行">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序算法">
+<meta property="og:url" content="http://homxu.com/2018/06/09/排序算法/index.html">
 <meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="最近在学习数据结构和算法，这里总结一下学习的排序算法。 选择排序 - SelectionSort基本思路:假设有一个数组（如图所示），进行从小到大的排序。首先在整个数组范围里，找出要放在第一个位置的数，也就是最小的数：1，然后将1和现在的第一名的位置8进行换位，经过交换以后，1所处的位置就是最终排序所在的位置，这样就继续在剩下的部分找此时最小的数，也就是2，然后把2和相应的第二个位置所在的元素进行">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/06/09/排序算法/SelectionSort.jpg">
+<meta property="og:image" content="http://homxu.com/2018/06/09/排序算法/InsertionSort_.png">
+<meta property="og:image" content="http://homxu.com/2018/06/09/排序算法/InsertionSort-2_.png">
+<meta property="og:updated_time" content="2018-06-09T12:49:15.322Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Homxu">
+<meta name="twitter:title" content="排序算法">
+<meta name="twitter:description" content="最近在学习数据结构和算法，这里总结一下学习的排序算法。 选择排序 - SelectionSort基本思路:假设有一个数组（如图所示），进行从小到大的排序。首先在整个数组范围里，找出要放在第一个位置的数，也就是最小的数：1，然后将1和现在的第一名的位置8进行换位，经过交换以后，1所处的位置就是最终排序所在的位置，这样就继续在剩下的部分找此时最小的数，也就是2，然后把2和相应的第二个位置所在的元素进行">
+<meta name="twitter:image" content="http://homxu.com/2018/06/09/排序算法/SelectionSort.jpg">
 
 
 
@@ -141,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="http://homxu.com/"/>
+  <link rel="canonical" href="http://homxu.com/2018/06/09/排序算法/"/>
 
 
 
 
 
-  <title>Homxu</title>
+  <title>排序算法 | Homxu</title>
   
 
 
@@ -176,9 +185,7 @@
     
   
   
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,9 +288,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -313,9 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/09/排序算法/" itemprop="url">排序算法</a></h1>
+          <h1 class="post-title" itemprop="name headline">排序算法</h1>
         
 
         <div class="post-meta">
@@ -396,19 +401,24 @@
       
 
       
-        
-          
-          最近在学习数据结构和算法，这里总结一下学习的排序算法。
-选择排序 - SelectionSort基本思路:假设有一个数组（如图所示），进行从小到大的排序。首先在整个数组范围里，找出要放在第一个位置的数，也就是最小的数：1，然后将1和现在的第一名的位置8进行换位，经过交换以后，1所处的位置就是最终排序所在的位置，这样就继续在剩下的部分找此时最小的数，也就是2，然后把2和相应的第二个位置所在的元素进行
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/09/排序算法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <p>最近在学习数据结构和算法，这里总结一下学习的排序算法。</p>
+<h1 id="选择排序-SelectionSort"><a href="#选择排序-SelectionSort" class="headerlink" title="选择排序 - SelectionSort"></a>选择排序 - SelectionSort</h1><p><strong>基本思路</strong>:<br>假设有一个数组（如图所示），进行从小到大的排序。首先在整个数组范围里，找出要放在第一个位置的数，也就是最小的数：1，然后将1和现在的第一名的位置8进行换位，经过交换以后，1所处的位置就是最终排序所在的位置，这样就继续在剩下的部分找此时最小的数，也就是2，然后把2和相应的第二个位置所在的元素进行交换，此时1和2两个元素也已经是最终排好序的结果。整个过程以此类推，继续在剩下的部分中找此时最小的元素，然后进行交换位置。。。。。</p>
+<p><img src="/2018/06/09/排序算法/SelectionSort.jpg" alt="选择排序"></p>
+<p><strong>代码实现</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//arr为要进行排序的数组，</div><div class="line">//n为数组的元素个数，即数组大小</div><div class="line"></div><div class="line">template&lt;typename T&gt;</div><div class="line">void selectionSort(T arr[],int n )&#123;</div><div class="line">    for(int i=0;i&lt;n;i++)&#123;</div><div class="line">        //寻找[i,n)区间里的最小值</div><div class="line">        int minIndex = i;  //记录当前所找的最小值所处索引的位置，初始化在位置i</div><div class="line">        for( int j= i+1;j&lt;n;j++)&#123;</div><div class="line">            if(arr[j] &lt; arr[minIndex]) //比较j位置的元素是否小于minIndex位置的元素，如果小于则更新当前的minIndex</div><div class="line">                minIndex = j;</div><div class="line">        &#125;  //此时已经找到了[i,n)区间里的最小值，并且记录其位置已经记录下来</div><div class="line">        swap(arr[i] , arr[minIndex]);  //如果使用std标准库不行，有可能需要引入algorithm标准库</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="插入排序-InsertionSort"><a href="#插入排序-InsertionSort" class="headerlink" title="插入排序 - InsertionSort"></a>插入排序 - InsertionSort</h1><p><strong>基本思路</strong>：<br>开始只考虑8这个元素的时候，它就已经排好序了。<br>接着看6这个元素,接下来的步骤是把6与它前面的数组进行比较，放在合适的位置，当6与8比较时，6&lt;8，所以6在8前面位置。<br>接着看2这个元素，2与它前面的数组进行比较，2&lt;8，所以2和8交换一次位置，2继续和6比较，2&lt;6，所以2和6交换位置，此时2在最前面的位置。<br>接着看3这个元素，3比8小，所以交换一次位置，3又比6小，所以交换一次位置，3比2大所以不进行交换操作，3插入在2和6中间，这时前面的4个元素排序完成。<br>以此类推。</p>
+<p><img src="/2018/06/09/排序算法/InsertionSort_.png" alt="插入排序"></p>
+<p><strong>代码实现</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">void insertionSort (T arr[] , int n)&#123;</div><div class="line">    //从i=1开始，因为对插入排序来说，第0个位置不用考虑</div><div class="line">    for(int i = 1 ; i &lt; n ; i++)&#123;</div><div class="line">        //寻找arr[i]合适的插入位置</div><div class="line">        for(int j = i ; j &gt; 0 ; j-- )&#123;</div><div class="line">            if ( arr[j] &lt; arr[j-1] )</div><div class="line">                swap(arr[j] , arr[j-1]);</div><div class="line">            else //如果arr[i]元素已经在合适的位置，则可以直接进入下一个循环</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">      //下面是简化后的代码</div><div class="line">      //  for(int j = i ; j &gt; 0 &amp;&amp; arr[j] &lt; arr[j-1] ; j-- )&#123;</div><div class="line">      //      swap(arr[j] , arr[j-1]);</div><div class="line">      //  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>插入排序和选择排序相比，如果满足了条件就有机会提前结束，所以它的排序效率理论上要比选择排序高<br>但是实际上它的运行时间比选择排序要慢，这是因为其swap操作较多，浪费了时间，所以针对这个地方进行改进</p>
+<p><img src="/2018/06/09/排序算法/InsertionSort-2_.png" alt="插入排序"></p>
+<p><strong>改进代码思路</strong>:<br>首先,对位置0处的元素不作处理。</p>
+<p>接着，看<code>位置1</code>处的<code>元素6</code>，首先对<code>元素6</code>做一个副本保存起来，然后看<code>元素6</code>是否应该在当前位置，即让他与前面的元素进行对比，如果小于前面的元素，则当前元素位置的值赋值为前一个元素的值，前一个元素位置的值赋值为刚才保存起来的副本（即当前元素的值）。（其实这也是相当于一个交换操作，在满足前一个元素大于当前元素值的情况下，进行交换值操作）</p>
+<p>接着，看<code>位置2</code>处的<code>元素2</code>，首先对<code>元素2</code>做一个副本保存起来，然后<code>元素2</code>与前一个<code>元素8</code>比较，2&lt;8，则将<code>元素2</code>处的值赋值为8；接着再比较<code>位置1</code>处的<code>元素8</code>与<code>位置1</code>处的<code>元素6</code>的大小，将<code>位置1</code>处的值赋值为<code>元素6</code>，接着将<code>元素2</code>放在第一个位置。这样就少进行了交换的操作。</p>
+<p>接着，看<code>元素3</code>，首先对<code>元素3</code>做一个副本保存起来，然后看<code>元素3</code>该不该放在当前位置，发现3&lt;8，所以这个位置赋值为8；然后看3是不是该放在刚才<code>元素8</code>的位置，发现<code>元素3</code>比<code>元素6</code>小，所以<code>元素6</code>放在刚才<code>元素8</code>的位置；然后看<code>元素3</code>是不是该放在刚才<code>元素6</code>的位置，发现<code>元素3</code>比<code>元素2</code>大，所以<code>元素3</code>应该放在这个位置。</p>
+<p>这样很多交换操作就通过赋值进行取代了，所以性能更好。</p>
+<p><strong>改进代码</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//改进代码</div><div class="line">template&lt;typename T&gt;</div><div class="line">void insertionSort (T arr[] , int n)&#123;</div><div class="line">    //从i=1开始</div><div class="line">    for(int i = 1 ; i &lt; n ; i++)&#123;</div><div class="line">        T e = arr[i]; //用e暂存i位置的数</div><div class="line">        int j;        //保存元素e应该插入的位置</div><div class="line">        for(j = i ; j &gt; 0 &amp;&amp; arr[j-1] &gt; e ; j--)&#123;</div><div class="line">            arr[j] = arr[j-1];</div><div class="line">        &#125;</div><div class="line">        arr[j] = e;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -423,14 +433,20 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -440,10 +456,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -451,6 +468,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="vcomments"></div>
+    
+  </div>
+
 
         </div>
         
@@ -471,8 +494,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/star.png"
@@ -558,6 +590,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#选择排序-SelectionSort"><span class="nav-number">1.</span> <span class="nav-text">选择排序 - SelectionSort</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序-InsertionSort"><span class="nav-number">2.</span> <span class="nav-text">插入排序 - InsertionSort</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -681,10 +729,10 @@
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
