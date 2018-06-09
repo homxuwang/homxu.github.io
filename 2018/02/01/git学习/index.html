@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="git," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="keywords" content="git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git学习">
+<meta property="og:url" content="http://homxu.com/2018/02/01/git学习/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/git.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/1.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/3.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/4.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/5.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/6.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/2.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/7.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/8.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/9.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/10.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/11.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/12.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/13.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/14.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/15.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/17.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/16.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/18.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/19.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/20.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/21.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/22.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/23.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/24.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/25.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/26.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/27.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/28.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/30.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/29.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/31.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/32.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/33.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/34.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/35.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/36.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/37.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/38.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/39.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/40.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/41.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/42.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/43.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/44.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/45.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/46.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/47.jpg">
+<meta property="og:image" content="http://homxu.com/2018/02/01/git学习/48.jpg">
+<meta property="og:updated_time" content="2018-02-01T14:16:29.039Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git学习">
+<meta name="twitter:image" content="http://homxu.com/2018/02/01/git学习/git.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://homxu.com/2018/02/01/git学习/"/>
+
+
+
+
+
+  <title>git学习 | Homxu</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea1a8a8ef2efecad905ef14fce61783f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Homxu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序员也要好好生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-我的足迹">
+          <a href="/我的足迹" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bus"></i> <br />
+            
+            我的足迹
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://homxu.com/2018/02/01/git学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Homxu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/star.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Homxu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">git学习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-01T17:10:59+08:00">
+                2018-02-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,792 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2018/02/01/git学习/git.jpg" alt="git"><br><a id="more"></a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p><img src="/2018/02/01/git学习/1.jpg" alt="安装成功"></p>
+<p>在命令行输入<code>git --version</code>如果显示版本信息则说明安装成功，否则要去官网进行安装。</p>
+<h2 id="Visual-Studio-Code-启用bash"><a href="#Visual-Studio-Code-启用bash" class="headerlink" title="Visual Studio Code 启用bash"></a>Visual Studio Code 启用bash</h2><p>VS Code默认的终端窗口是只带cmd功能的，如果要在终端中唤出bash要进行配置：</p>
+<p>首先找到本机的<code>bash.exe</code>的目录,比如我的目录如图：</p>
+<p><img src="/2018/02/01/git学习/3.jpg" alt="bash.exe"></p>
+<p>然后在<code>VS Code</code>-&gt;<code>首选项</code>-&gt;<code>设置</code>-&gt;搜索<code>terminal.integrated.shell.windows</code>-&gt;将<code>&quot;terminal.integrated.shell.windows&quot;: &quot;C:\\Program Files\\Git\\bin\\bash.exe&quot;</code>放入设置中-&gt;保存</p>
+<p><img src="/2018/02/01/git学习/4.jpg" alt="配置"></p>
+<p>重新启动VS Code可以看到自动进入bash命令窗口</p>
+<p><img src="/2018/02/01/git学习/5.jpg" alt="bash终端命令窗口"></p>
+<p>如果想切换到cmd命令窗口直接输入<code>cmd</code>回车即可,同理在cmd下切换到<code>bash</code>只需输入<code>bash</code>回车：</p>
+<p><img src="/2018/02/01/git学习/6.jpg" alt="bash切换到cmd"></p>
+<h1 id="仓库"><a href="#仓库" class="headerlink" title="仓库"></a>仓库</h1><p>仓库本质上就是一个文件夹，一个目录，一个项目。</p>
+<h2 id="创建方法1"><a href="#创建方法1" class="headerlink" title="创建方法1"></a>创建方法1</h2><p>比如打开一个目录，输入<code>git init</code></p>
+<p><img src="/2018/02/01/git学习/2.jpg" alt="init"></p>
+<p>可以看到初始化了一个空的git仓库。</p>
+<p>然后切换到bash 输入<code>ls -la</code>酒吧当前目录下的所有的子目录列出来:</p>
+<p><img src="/2018/02/01/git学习/7.jpg" alt="列出目录"></p>
+<p>可以看到<code>.git</code>被列出来，它是个隐藏文件夹。</p>
+<p>这时候 test1 就已经是一个仓库了。</p>
+<h2 id="创建方法2"><a href="#创建方法2" class="headerlink" title="创建方法2"></a>创建方法2</h2><p>或者进入到根目录,如输入<code>cd ..</code>,然后输入 <code>git init test2</code>。</p>
+<p><img src="/2018/02/01/git学习/8.jpg" alt="init test2"></p>
+<p><img src="/2018/02/01/git学习/9.jpg" alt="test2"></p>
+<p>可以看到一样成功创建了tes2文件夹和其中的.git隐藏文件夹，和上面的创建方法是一样的。</p>
+<h2 id="从远程clone一个仓库"><a href="#从远程clone一个仓库" class="headerlink" title="从远程clone一个仓库"></a>从远程clone一个仓库</h2><p>比如在github上找到一个文件仓库，比如找到vue的github仓库<br><img src="/2018/02/01/git学习/10.jpg" alt="vue地址"></p>
+<p>输入<code>git clone https://github.com/vuejs/vue.git</code>回车</p>
+<p><img src="/2018/02/01/git学习/11.jpg" alt="clone"></p>
+<p><img src="/2018/02/01/git学习/12.jpg" alt="vue克隆成功"><br>可以看到正在clone。可以看到目录下多了<code>vue</code>文件夹，这就是从远程克隆的仓库。或者在输入clone命令时后面加个自己想要命名的文件夹名，这样下载下来就是以这个文件夹命名的，比如<code>git clone https://github.com/vuejs/vue.git test3</code>.可以自己试一下（可以换一个小一点的仓库克隆，这个我clone了好久 Orz）</p>
+<h1 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h1><h2 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h2><p><code>git status</code>是指查看仓库状态。</p>
+<p><img src="/2018/02/01/git学习/13.jpg" alt="git status"></p>
+<p>因为test1是一个空文件夹 所以显示上图的状态。</p>
+<h2 id="commit"><a href="#commit" class="headerlink" title="commit"></a>commit</h2><p><code>commit</code>的意思是提交，可以把它看做历史节点,而上图的提示是No commits yet，这就是说没有一条历史记录，因为我们创建了后还没有进行提交。 </p>
+<h2 id="Untracked-files"><a href="#Untracked-files" class="headerlink" title="Untracked files"></a>Untracked files</h2><p>如果我们新建一个文件，如test.txt,这时候执行<code>git status</code>命令，可以看到:<br><img src="/2018/02/01/git学习/14.jpg" alt="git status"><br><code>Untracked files</code>是指未跟踪的文件，也就是更改了文件还没有进行创建节点，即丢失后无法找回。</p>
+<p>在VS Code的git工具中也可以看到修改的状态为未跟踪的。<br><img src="/2018/02/01/git学习/15.jpg" alt=""></p>
+<h2 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h2><p><code>git add .</code>将所有的修改添加到暂存区</p>
+<p>如上，我们创建了一个test.txt,输入<code>git add .</code>回车,然后输入<code>git status</code>查看现在的状态。</p>
+<p><img src="/2018/02/01/git学习/17.jpg" alt=""></p>
+<p>可以看到vs code中的git工具也发生了变化：</p>
+<p><img src="/2018/02/01/git学习/16.jpg" alt=""></p>
+<h2 id="git-commit-m-“描述”"><a href="#git-commit-m-“描述”" class="headerlink" title="git commit -m “描述”"></a>git commit -m “描述”</h2><p><code>git commit -m &quot;描述&quot;</code>提交版本</p>
+<p><img src="/2018/02/01/git学习/18.jpg" alt="提交更改"></p>
+<p>输入命令后，可以看到 nothing to commit,working tree clean，也就是所有的更改都保存了。</p>
+<h2 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a>git log</h2><p><code>git log</code>查看版本记录<br>可以查看所有的更改记录</p>
+<p><img src="/2018/02/01/git学习/19.jpg" alt="更改记录"></p>
+<p>这里只有一条更改记录。</p>
+<p>而上面的commit 后面的一串字符就是上次更改的记录码。</p>
+<p>我们这时候更改一下test.txt，保存。</p>
+<p><img src="/2018/02/01/git学习/20.jpg" alt="更改"></p>
+<p>这时候文件内容发生了变化，在进行一次提交操作</p>
+<p><img src="/2018/02/01/git学习/21.jpg" alt="提交"></p>
+<p>这时候再看记录，有两条记录：</p>
+<p><img src="/2018/02/01/git学习/22.jpg" alt="记录"></p>
+<h2 id="git-checkout-xxx"><a href="#git-checkout-xxx" class="headerlink" title="git checkout xxx"></a>git checkout xxx</h2><p><code>git checkout xxx</code>——穿越到指定的历史节点，也就是前面commit的节点。可以看描述选择退回到哪个节点，这也反映了写描述的重要性。</p>
+<p>xxx是指上面<code>git log</code>查看时commit后面的码，复制前七位就可以定位，当然也可以复制多于七位。</p>
+<p><img src="/2018/02/01/git学习/23.jpg" alt="查看历史版本"></p>
+<p>可以看到文件变了：<br><img src="/2018/02/01/git学习/24.jpg" alt="文件变了"></p>
+<h1 id="三种状态"><a href="#三种状态" class="headerlink" title="三种状态"></a>三种状态</h1><p>上面时回到了第一个节点，现在回到第二个节点。<br>输入<code>git checkout 1529b8c93ec</code>，确认退回成功。</p>
+<p>从上面可以看出，执行任何一个commit操作都要执行三步：<br><code>modified(已修改)</code> -&gt; <code>staged(已暂存)</code> -&gt; <code>committed</code></p>
+<p>staged 状态可以看到即将提交的文件，比如如果想只提交<code>test.txt</code>文件，可以在<code>git add .</code>的时候输入<code>git add test.txt</code>。<br>另外 <code>git log</code>只能查看提交的内容和描述，并不能看其中哪些内容修改了，使用<code>git log -p</code>可以查看具体修改了哪些内容.</p>
+<p><img src="/2018/02/01/git学习/25.jpg" alt="具体内容"></p>
+<p>可以看到+后面的就是修改的内容。</p>
+<p>commit的内容是添加到staged暂存区中的内容，比如在<code>git add .</code>后又进行了修改但是没有再次执行<code>git add .</code>命令，那么commit的时候就是暂存区中的内容而不包括最新修改的内容。</p>
+<h1 id="标签tag"><a href="#标签tag" class="headerlink" title="标签tag"></a>标签tag</h1><p>如果在项目中要很经常的进行修改，那么会产生很多个节点，但是会有一些节点非常重要，那么可以给这些关键的重要节点打一个标签。比如完成了代码的v1.0版本，后面又有了v2.0版本，中间的v1.1,v1.x并不重要，那么这些大版本就是重要节点。</p>
+<p>输入<code>git add . &amp;&amp; git commit -m &quot;v2.0&quot;</code>可以执行两条命令。</p>
+<p><code>git log --oneline</code>可以查看简写的版本</p>
+<p><img src="/2018/02/01/git学习/26.jpg" alt="oneline"></p>
+<p>那么可以给v2.0打一个标签,用法：<code>git tag -a 标签名 -m &quot;备注&quot;</code>，用它进行附注标签。这种方法是给最近的一个节点加标签。</p>
+<p>这时候输入<code>git tag</code>可以看到tag的信息。</p>
+<p><img src="/2018/02/01/git学习/27.jpg" alt="tag"></p>
+<p>如果想给某个节点加标签，则可以用<code>git tag -a 标签名 -m &quot;备注&quot; 版本码</code></p>
+<p><img src="/2018/02/01/git学习/28.jpg" alt="tag"><br>可以看到添加成功了（上面的v2.0加错了加了两个标签 orz）</p>
+<p><code>git show 标签名</code>：查看某个标签的详细信息</p>
+<p><code>git checkout 标签名</code>可以直接回溯到标签所在的提交，这样比使用版本码要方便</p>
+<p>在回溯到历史版本后 输入<code>git log --oneline --all</code>可以查看所有的节点</p>
+<h1 id="分支-branch"><a href="#分支-branch" class="headerlink" title="分支 branch"></a>分支 branch</h1><p>指在时间的维度上可以有多线，及时间一样的基础上进行其他的修改。主线为master时可以给分支命名其他的名。</p>
+<p>比如这里在test2目录下新建b.txt。<br>输入两行内容后分别commit。</p>
+<p><img src="/2018/02/01/git学习/30.jpg" alt=""></p>
+<p>现在的mater分支上有两个版本：</p>
+<p><img src="/2018/02/01/git学习/29.jpg" alt=""></p>
+<p>给文本添加第三行并且执行<code>git add .</code> 和<code>git commit -m &quot;&quot;</code>操作。</p>
+<p>然后<code>git branch 分支名</code>创建分支,然后<code>git checkout 分支名</code>切换到分支。<br><img src="/2018/02/01/git学习/31.jpg" alt="3"></p>
+<p><img src="/2018/02/01/git学习/32.jpg" alt="切换到分支"></p>
+<p>可以看到切换到了分支notmaster。</p>
+<p>这时候修改b.txt的内容，<br>然后执行<code>git add .</code> 和<code>git commit -m &quot;&quot;</code>操作</p>
+<p><img src="/2018/02/01/git学习/33.jpg" alt="修改内容"></p>
+<p><img src="/2018/02/01/git学习/34.jpg" alt="commit"></p>
+<p>然后<code>git log --oneline</code>可以看到多了的记录是在分支上的</p>
+<p><img src="/2018/02/01/git学习/35.jpg" alt="commit"></p>
+<p>这时候在分支后面的提交就是在分支上了。</p>
+<p>现在如果切换到mater-&gt;<code>git checkout master</code>，可以看到内容变回刚才的节点(即刚才创建分支的时候的节点)：</p>
+<p><img src="/2018/02/01/git学习/36.jpg" alt="master"></p>
+<p>这时候再添加一行然后执行commit操作,可以看到:<br><img src="/2018/02/01/git学习/37.jpg" alt="git log"></p>
+<p>或者<code>git log --all --graph</code>图示全部历史记录。</p>
+<p><code>git checkout -b 分支</code>，创建并切换到分支。</p>
+<p>分支的功能在做项目的时候可以经常用到，比如在1-&gt;2的时候没有bug，但是在2-&gt;3的时候发现有bug,这时候可以在2创建一个分支，专门在分支进行修改bug,且在master可以继续进行开发。在最后的第二版开发完成后，把分支的修改bug版本进行合并，这样就修改了bug也推进了项目。</p>
+<h1 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h1><p>上面讲到,在修改bug的同时可以进行项目的推进，但是在完成了bug的修改和第二版的项目后，要将两者合并，实现“完全体”,这就需要合并分支。</p>
+<p>现在回到branch，</p>
+<p><img src="/2018/02/01/git学习/38.jpg" alt="branch"></p>
+<p>可以看到HEAD所在的就是当前的节点和分支。在分支上修改了代码进行commit</p>
+<p><img src="/2018/02/01/git学习/39.jpg" alt="修改"></p>
+<p>现在虽然创建了分支并且更新了内容，但是还没有和master主分支合并</p>
+<h2 id="git-merge-分支名合并分支"><a href="#git-merge-分支名合并分支" class="headerlink" title="git merge 分支名合并分支"></a><code>git merge 分支名</code>合并分支</h2><p><img src="/2018/02/01/git学习/40.jpg" alt="合并"></p>
+<p><img src="/2018/02/01/git学习/41.jpg" alt="合并-2"></p>
+<p>可以看到 CONFLICT提示内容有冲突，在第三行开始冲突，所以git不知道该如何处理。</p>
+<p>这时候可以在文件中进行更改，然后再进行commit操作。然后这样就合并了两个分支。</p>
+<p>这时候可以输入命令查看，通过图解可以看到很清楚的解释了刚才的合并操作。</p>
+<p><img src="/2018/02/01/git学习/42.jpg" alt="查看"></p>
+<h1 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h1><p>我们可以将本机上的仓库内容存放在远程仓库（如github 和 码云或者远程的另一台电脑或服务器）</p>
+<p>即<code>local</code> -&gt; <code>server</code> -&gt; <code>loacl</code></p>
+<p>比如在commit了一个版本后，推送到服务器上时，我们用github。</p>
+<p>在github新建一个仓库，<code>Create a new repository</code>,创建成功后，可以看到仓库的地址。<br>那么接下来在本地指定远程仓库的地址。</p>
+<h2 id="git-remote-add-远程名称-远程地址-添加远程仓库"><a href="#git-remote-add-远程名称-远程地址-添加远程仓库" class="headerlink" title="git remote add 远程名称 远程地址 添加远程仓库"></a><code>git remote add 远程名称 远程地址</code> 添加远程仓库</h2><p>然后<code>git remote</code>可以列出所有远程仓库</p>
+<p><code>git remote -v</code>可以列出所有远程仓库和详细信息</p>
+<p><img src="/2018/02/01/git学习/43.jpg" alt="远程仓库"></p>
+<p>顾名思义,fetch是下载地址,push是上传地址。</p>
+<h2 id="git-push-u-远程名-分支名上传代码"><a href="#git-push-u-远程名-分支名上传代码" class="headerlink" title="git push -u 远程名 分支名上传代码"></a><code>git push -u 远程名 分支名</code>上传代码</h2><p>加-u的意思是在服务器端设置，如果有人想下载代码的时候，应该往那个分支上合并,所以要记得加-u.</p>
+<p><img src="/2018/02/01/git学习/44.jpg" alt="push成功"></p>
+<p>刷新仓库可以看到推送成功：</p>
+<p><img src="/2018/02/01/git学习/45.jpg" alt="push成功"></p>
+<p>在进行了修改添加后，可以同样执行这个操作。</p>
+<h2 id="git-clone-仓库地址从远端克隆仓库到本地"><a href="#git-clone-仓库地址从远端克隆仓库到本地" class="headerlink" title="git clone 仓库地址从远端克隆仓库到本地"></a><code>git clone 仓库地址</code>从远端克隆仓库到本地</h2><p>进入到刚克隆的仓库，输入<code>git log</code>同样可以看到操作的历史</p>
+<p>这时候从远端克隆下的分支默认名为origin，他只是一个分支的名字，和master等没有本质区别</p>
+<p>这时候在这个目录下进行了修改再推送时，要在<code>git push -u 远程名 master</code>这里将远程名改为现在的远程名，可以用<code>git remote</code>查看远程名，如果还用github进行推送会报错。</p>
+<p><img src="/2018/02/01/git学习/46.jpg" alt="远程名为origin"></p>
+<p><img src="/2018/02/01/git学习/47.jpg" alt="如果用github会报错"></p>
+<p><img src="/2018/02/01/git学习/48.jpg" alt="改为origin成功"></p>
+<h1 id="多人远程合作"><a href="#多人远程合作" class="headerlink" title="多人远程合作"></a>多人远程合作</h1><h2 id="git-pull获取远程更新"><a href="#git-pull获取远程更新" class="headerlink" title="git pull获取远程更新"></a><code>git pull</code>获取远程更新</h2><p>现在模拟A和B是两台电脑，他们都从仓库clone了项目，A进行了修改，通过<code>git push -u origin master</code>更新了项目，B使用<code>git pull</code>。即通过<code>git push -u origin master</code>和<code>git pull</code>进行推送和拉取。但是如果A先推送了一个版本，B不知情的情况下对某一行也进行了修改,这时候如果提交，会显示冲突的错误，这时就知道要先<code>git pull</code>一份服务器端的代码，这时候在本地可以看出来冲突的对比，<code>=</code>等号的上面和下面会显示冲突的内容对比,然后对冲突的代码进行整合后，在进行push操作。</p>
+<p>其实<code>git pull</code> 相当于<code>git fetch &amp;&amp; git merge</code>即下载和合并,放在已提交的阶段</p>
+<p>详情参见表严肃的速查表 <a href="http://biaoyansu.com/27.cheatsheet" target="_blank" rel="external">http://biaoyansu.com/27.cheatsheet</a></p>
+<p>完 </p>
+<p>根据 表严肃的课程整理书写，地址<a href="http://biaoyansu.com/i/6593023230131" target="_blank" rel="external">http://biaoyansu.com/i/6593023230131</a> </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/25/通过C-向Word文档的表格中的任一行增加新行/" rel="next" title="通过C#向Word文档的表格中的任一行增加新行">
+                <i class="fa fa-chevron-left"></i> 通过C#向Word文档的表格中的任一行增加新行
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/01/大数据基础学习笔记/" rel="prev" title="大数据基础学习笔记（一）——Hadoop相关知识">
+                大数据基础学习笔记（一）——Hadoop相关知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="vcomments"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/star.png"
+               alt="Homxu" />
+          <p class="site-author-name" itemprop="name">Homxu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/homxuwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/b341e509ef8d" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-heart"></i>
+                  
+                    
+                      Jianshu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Visual-Studio-Code-启用bash"><span class="nav-number">1.1.</span> <span class="nav-text">Visual Studio Code 启用bash</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仓库"><span class="nav-number">2.</span> <span class="nav-text">仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建方法1"><span class="nav-number">2.1.</span> <span class="nav-text">创建方法1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建方法2"><span class="nav-number">2.2.</span> <span class="nav-text">创建方法2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从远程clone一个仓库"><span class="nav-number">2.3.</span> <span class="nav-text">从远程clone一个仓库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本用法"><span class="nav-number">3.</span> <span class="nav-text">基本用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-status"><span class="nav-number">3.1.</span> <span class="nav-text">git status</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#commit"><span class="nav-number">3.2.</span> <span class="nav-text">commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Untracked-files"><span class="nav-number">3.3.</span> <span class="nav-text">Untracked files</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-add"><span class="nav-number">3.4.</span> <span class="nav-text">git add</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-commit-m-“描述”"><span class="nav-number">3.5.</span> <span class="nav-text">git commit -m “描述”</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-log"><span class="nav-number">3.6.</span> <span class="nav-text">git log</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-checkout-xxx"><span class="nav-number">3.7.</span> <span class="nav-text">git checkout xxx</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三种状态"><span class="nav-number">4.</span> <span class="nav-text">三种状态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#标签tag"><span class="nav-number">5.</span> <span class="nav-text">标签tag</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分支-branch"><span class="nav-number">6.</span> <span class="nav-text">分支 branch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合并分支"><span class="nav-number">7.</span> <span class="nav-text">合并分支</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-merge-分支名合并分支"><span class="nav-number">7.1.</span> <span class="nav-text">git merge 分支名合并分支</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#远程仓库"><span class="nav-number">8.</span> <span class="nav-text">远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-remote-add-远程名称-远程地址-添加远程仓库"><span class="nav-number">8.1.</span> <span class="nav-text">git remote add 远程名称 远程地址 添加远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-push-u-远程名-分支名上传代码"><span class="nav-number">8.2.</span> <span class="nav-text">git push -u 远程名 分支名上传代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-clone-仓库地址从远端克隆仓库到本地"><span class="nav-number">8.3.</span> <span class="nav-text">git clone 仓库地址从远端克隆仓库到本地</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多人远程合作"><span class="nav-number">9.</span> <span class="nav-text">多人远程合作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-pull获取远程更新"><span class="nav-number">9.1.</span> <span class="nav-text">git pull获取远程更新</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Homxu</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站浏览量:<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  <script type="text/javascript">
+    new Valine({
+        av: AV,
+        el: '#vcomments' ,
+        verify: false,
+        notify: false,
+        app_id: 'iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz',
+        app_key: 'FpJsLvikc9nea305u094EDFf',
+        guest_info:['nick'] ,// 评论只需要提供昵称
+        avatar:'hide',
+        placeholder: 'Comment input placeholder'
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
