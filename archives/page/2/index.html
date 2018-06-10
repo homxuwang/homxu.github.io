@@ -30,7 +30,7 @@
         <div class="archive-container">
   <header id="header" class="header">
     <div class="mobile-nav">
-      <h1 class="nickname">NickName</h1>
+      <h1 class="nickname">Homxu&#39;s Blog</h1>
       <a id="menu">
         &#9776; Menu
       </a>
@@ -130,6 +130,29 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  <script>
+      var GUEST_INFO = ['nick','mail','link'];
+      var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+      });
+      var notify = 'false' == true;
+      var verify = 'false' == true;
+      var valine = new Valine();
+      valine.init({
+          el: '#valine_container',
+          notify: notify,
+          verify: verify,
+          appId: "iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz",
+          appKey: "FpJsLvikc9nea305u094EDFf",
+          placeholder: "Just go go",
+          pageSize:'10',
+          avatar:'mm',
+          lang:'zh-cn'
+      })
+  </script>
 
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>

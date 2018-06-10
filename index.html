@@ -30,9 +30,9 @@
         <div class="home">
   <div class="content">
     <div class="profile">
-      <h1 class="nickname">NickName</h1>
+      <h1 class="nickname">Homxu&#39;s Blog</h1>
       <div class="description">
-        <p><p>Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit.</strong> Fusce eget urna vitae velit <em>eleifend interdum at ac nisi. In nec ligula lacus. Cum sociis natoque</em> penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eu cursus erat, ut dapibus quam. Aliquam eleifend dolor vitae <a href="http://hexo.io">libero pharetra</a> adipiscing. Etiam adipiscing dolor a quam tempor, eu convallis nulla varius. Aliquam sollicitudin risus a porta aliquam.</p>
+        <p><p>Go Better</p>
 </p>
       </div>
     </div>
@@ -43,49 +43,13 @@
       
         <li>
 	  
-	    <a href="/archives/">book</a>
+	    <a href="/archives/">博文</a>
 	  
         </li>
       
         <li>
 	  
-	    <a href="https://github.com/geekplux/hexo-theme-typing">globe</a>
-	  
-        </li>
-      
-        <li>
-	  
-	    <a href="https://twitter.com/">twitter</a>
-	  
-        </li>
-      
-        <li>
-	  
-	    <a href="https://github.com/">github-alt</a>
-	  
-        </li>
-      
-        <li>
-	  
-	    <a href="https://www.youtube.com/">youtube-play</a>
-	  
-        </li>
-      
-        <li>
-	  
-	    <a href="https://stackoverflow.com/">stack-overflow</a>
-	  
-        </li>
-      
-        <li>
-	  
-	    <a href="https://plus.google.com/">google-plus</a>
-	  
-        </li>
-      
-        <li>
-	  
-	    <a href="/atom.xml">rss</a>
+	    <a href="https://github.com/homxuwang">github</a>
 	  
         </li>
       
@@ -104,6 +68,29 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  <script>
+      var GUEST_INFO = ['nick','mail','link'];
+      var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+      });
+      var notify = 'false' == true;
+      var verify = 'false' == true;
+      var valine = new Valine();
+      valine.init({
+          el: '#valine_container',
+          notify: notify,
+          verify: verify,
+          appId: "iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz",
+          appKey: "FpJsLvikc9nea305u094EDFf",
+          placeholder: "Just go go",
+          pageSize:'10',
+          avatar:'mm',
+          lang:'zh-cn'
+      })
+  </script>
 
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
