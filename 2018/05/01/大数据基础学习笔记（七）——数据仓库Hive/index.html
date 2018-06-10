@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="大数据," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="数据仓库概念数据仓库（Data Warehouse）是一个面向主题的（Subject Oriented）、集成的（Integrated）、相对稳定的（Non-Volatile）、反映历史变化（Time Variant）的数据集合，用于支持管理决策。  Hive简介•Hive是一个构建于Hadoop顶层的数据仓库工具 •支持大规模数据存储、分析，具有良好的可扩展性 •某种程度上可以看作是用户编程接口">
+<meta name="keywords" content="大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据基础学习笔记（七）——数据仓库Hive">
+<meta property="og:url" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="数据仓库概念数据仓库（Data Warehouse）是一个面向主题的（Subject Oriented）、集成的（Integrated）、相对稳定的（Non-Volatile）、反映历史变化（Time Variant）的数据集合，用于支持管理决策。  Hive简介•Hive是一个构建于Hadoop顶层的数据仓库工具 •支持大规模数据存储、分析，具有良好的可扩展性 •某种程度上可以看作是用户编程接口">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/1.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/2.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/3.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/4.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/5.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/6.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/7.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/8.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/9.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/10.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/11.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/12.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/13.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/14.png">
+<meta property="og:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/15.png">
+<meta property="og:updated_time" content="2018-05-01T07:28:50.520Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大数据基础学习笔记（七）——数据仓库Hive">
+<meta name="twitter:description" content="数据仓库概念数据仓库（Data Warehouse）是一个面向主题的（Subject Oriented）、集成的（Integrated）、相对稳定的（Non-Volatile）、反映历史变化（Time Variant）的数据集合，用于支持管理决策。  Hive简介•Hive是一个构建于Hadoop顶层的数据仓库工具 •支持大规模数据存储、分析，具有良好的可扩展性 •某种程度上可以看作是用户编程接口">
+<meta name="twitter:image" content="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/"/>
+
+
+
+
+
+  <title>大数据基础学习笔记（七）——数据仓库Hive | Homxu</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea1a8a8ef2efecad905ef14fce61783f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Homxu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序员也要好好生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-我的足迹">
+          <a href="/我的足迹" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bus"></i> <br />
+            
+            我的足迹
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://homxu.com/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Homxu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/star.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Homxu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">大数据基础学习笔记（七）——数据仓库Hive</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-01T10:46:51+08:00">
+                2018-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,413 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="数据仓库概念"><a href="#数据仓库概念" class="headerlink" title="数据仓库概念"></a>数据仓库概念</h1><p>数据仓库（Data Warehouse）是一个面向主题的（Subject Oriented）、集成<br>的（Integrated）、相对稳定的（Non-Volatile）、反映历史变化（Time Variant）的数据集合，用于支持管理决策。</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/1.png" alt="数据仓库的体系结构"></p>
+<h1 id="Hive简介"><a href="#Hive简介" class="headerlink" title="Hive简介"></a>Hive简介</h1><p>•Hive是一个构建于Hadoop顶层的数据仓库工具</p>
+<p>•支持大规模数据存储、分析，具有良好的可扩展性</p>
+<p>•某种程度上可以看作是用户编程接口，本身不存储和处理数据</p>
+<p>•依赖分布式文件系统HDFS存储数据</p>
+<p>•依赖分布式并行计算模型MapReduce处理数据</p>
+<p>•定义了简单的类似SQL 的查询语言——HiveQL</p>
+<p>•用户可以通过编写的HiveQL语句运行MapReduce任务</p>
+<p>•可以很容易把原来构建在关系数据库上的数据仓库应用程序移植到Hadoop平台上</p>
+<p>•是一个可以提供有效、合理、直观组织和使用数据的分析工具</p>
+<p>Hive具有的特点非常适用于数据仓库</p>
+<p>1 采用批处理方式处理海量数据</p>
+<p>•Hive需要把HiveQL语句转换成MapReduce任务进行运行</p>
+<p>•数据仓库存储的是静态数据，对静态数据的分析适合采用批处理方式，不需要快速响应给出结果，而且数据本身也不会频繁变化</p>
+<p>2 提供适合数据仓库操作的工具</p>
+<p>•Hive本身提供了一系列对数据进行提取、转换、加载（ETL）的工具，可以存储、查询和分析存储在Hadoop中的大规模数据</p>
+<p>•这些工具能够很好地满足数据仓库各种应用场景</p>
+<h1 id="Hive与Hadoop生态系统中其他组件的关系"><a href="#Hive与Hadoop生态系统中其他组件的关系" class="headerlink" title="Hive与Hadoop生态系统中其他组件的关系"></a>Hive与Hadoop生态系统中其他组件的关系</h1><p>•Hive 依赖于HDFS  存储数据</p>
+<p>•Hive 依赖于MapReduce  处理数据</p>
+<p>• 在某些场景下Pig 可以作为Hive 的替代工具</p>
+<p>•HBase 提供数据的实时访问</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/2.png" alt="Hive与Hadoop生态系统中其他组件的关系"></p>
+<h1 id="Hive-与传统数据库的对比分析"><a href="#Hive-与传统数据库的对比分析" class="headerlink" title="Hive 与传统数据库的对比分析"></a>Hive 与传统数据库的对比分析</h1><p>Hive在很多方面和传统的关系数据库类似，但是它的底层依赖的是HDFS和MapReduce，所以在很多方面又有别于传统数据库</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/3.png" alt="Hive 与传统数据库的对比分析"></p>
+<h1 id="Hive-在企业中的部署和应用"><a href="#Hive-在企业中的部署和应用" class="headerlink" title="Hive 在企业中的部署和应用"></a>Hive 在企业中的部署和应用</h1><ol>
+<li>Hive在企业大数据分析平台中的应用</li>
+</ol>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/4.png" alt="Hive 在企业中的部署和应用"></p>
+<ol>
+<li>Hive 在Facebook 公司中的应用</li>
+</ol>
+<p>•基于Oracle的数据仓库系统已经无法满足激增的业务需求</p>
+<p>•Facebook公司开发了数据仓库工具Hive，并在企业内部进行了大量部署</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/5.png" alt="Hive 在Facebook 公司中的应用"></p>
+<h1 id="Hive系统架构"><a href="#Hive系统架构" class="headerlink" title="Hive系统架构"></a>Hive系统架构</h1><p>•用户接口模块包括CLI、HWI、JDBC、ODBC、Thrift Server</p>
+<p>•驱动模块（Driver）包括编译器、优化器、执行器等，负责把HiveSQL语句转换成一系列MapReduce作业</p>
+<p>•元数据存储模块（Metastore）是一个独立的关系型数据库（自带derby数据库，或MySQL数据库）</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/6.png" alt="Hive系统架构"></p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/7.png" alt="Hive对外访问接口"></p>
+<h1 id="Hive-HA基本原理"><a href="#Hive-HA基本原理" class="headerlink" title="Hive HA基本原理"></a>Hive HA基本原理</h1><p>问题：在实际应用中，Hive也暴露出不稳定的问题</p>
+<p>解决方案：Hive HA（High Availability）</p>
+<p>•由多个Hive实例进行管理的，这些Hive实例被纳入到一个资源池中，并由HAProxy提供一个统一的对外接口</p>
+<p>•对于程序开发人员来说，可以把它认为是一台超强“Hive”</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/8.png" alt="Hive HA基本原理"></p>
+<h1 id="Hive工作原理"><a href="#Hive工作原理" class="headerlink" title="Hive工作原理"></a>Hive工作原理</h1><h2 id="SQL语句转换成MapReduce作业的基本原理"><a href="#SQL语句转换成MapReduce作业的基本原理" class="headerlink" title="SQL语句转换成MapReduce作业的基本原理"></a>SQL语句转换成MapReduce作业的基本原理</h2><ol>
+<li>join的实现原理</li>
+</ol>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/9.png" alt="join的实现原理"></p>
+<ol>
+<li>group by 的实现原理</li>
+</ol>
+<p>存在一个分组（Group By）操作，其功能是把表Score的不同片段按照rank和<br>level的组合值进行合并，计算不同rank和level的组合值分别有几条记录：<br>select rank, level ,count(*) as value from score group by rank, level</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/10.png" alt="group by 的实现原理"></p>
+<h2 id="Hive中SQL查询转换成MapReduce作业的过程"><a href="#Hive中SQL查询转换成MapReduce作业的过程" class="headerlink" title="Hive中SQL查询转换成MapReduce作业的过程"></a>Hive中SQL查询转换成MapReduce作业的过程</h2><p>•当用户向Hive输入一段命令或查询时，Hive需要与Hadoop交互工作来完成该操作：</p>
+<p>•驱动模块接收该命令或查询编译器</p>
+<p>•对该命令或查询进行解析编译</p>
+<p>•由优化器对该命令或查询进行优化计算</p>
+<p>•该命令或查询通过执行器进行执行</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/11.png" alt="Hive中SQL查询转换成MapReduce作业的过程"></p>
+<p>第1步：由Hive驱动模块中的编译器对用户输入的SQL语言进行词法和语法解析，将SQL语句转化为抽象语法树的形式</p>
+<p>第2步：抽象语法树的结构仍很复杂，不方便直接翻译为MapReduce算法程序，因此，把抽象语法书转化为查询块</p>
+<p>第3步：把查询块转换成逻辑查询计划，里面包含了许多逻辑操作符</p>
+<p>第4步：重写逻辑查询计划，进行优化，合并多余操作，减少MapReduce任务数量</p>
+<p>第5步：将逻辑操作符转换成需要执行的具体MapReduce任务</p>
+<p>第6步：对生成的MapReduce任务进行优化，生成最终的MapReduce任务执行计划</p>
+<p>第7步：由Hive驱动模块中的执行器，对最终的MapReduce任务进行执行输出</p>
+<p>几点说明：</p>
+<p>• 当启动MapReduce程序时，Hive本身是不会生成MapReduce算法程序的</p>
+<p>• 需要通过一个表示“Job执行计划”的XML文件驱动执行内置的、原生的Mapper和Reducer模块</p>
+<p>• Hive通过和JobTracker通信来初始化MapReduce任务，不必直接部署在JobTracker所在的管理节点上执行</p>
+<p>• 通常在大型集群上，会有专门的网关机来部署Hive工具。网关机的作用主要是远程操作和管理节点上的JobTracker通信来执行任务</p>
+<p>• 数据文件通常存储在HDFS上，HDFS由名称节点管理</p>
+<h1 id="Impala"><a href="#Impala" class="headerlink" title="Impala"></a>Impala</h1><h2 id="Impala简介"><a href="#Impala简介" class="headerlink" title="Impala简介"></a>Impala简介</h2><p>• Impala是由Cloudera公司开发的新型查询系统，它提供SQL语义，能查询存储在Hadoop的HDFS和HBase上的PB级大数据，在性能上比Hive高出3~30倍</p>
+<p>• Impala的运行需要依赖于Hive的元数据</p>
+<p>• Impala是参照 Dremel系统进行设计的</p>
+<p>• Impala采用了与商用并行关系数据库类似的分布式查询引擎，可以直接与HDFS和HBase进行交互查询</p>
+<p>• Impala和Hive采用相同的SQL语法、ODBC驱动程序和用户接口</p>
+<p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/12.png" alt="Impala简介"></p>
+<h2 id="Impala系统架构"><a href="#Impala系统架构" class="headerlink" title="Impala系统架构"></a>Impala系统架构</h2><p>Impala和Hive、HDFS、HBase等工具是统一部署在一个Hadoop平台上的Impala主要由Impalad，State Store和CLI三部分组成</p>
+<p>图中虚线组件是Impala的组件<br><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/13.png" alt="Impala系统架构"></p>
+<p>Impala主要由Impalad，State Store和CLI三部分组成</p>
+<ol>
+<li>Impalad</li>
+</ol>
+<p>• 负责协调客户端提交的查询的执行</p>
+<p>• 包含Query Planner、Query Coordinator和Query Exec Engine三个模块</p>
+<p>• 与HDFS的数据节点（HDFS DN）运行在同一节点上</p>
+<p>• 给其他Impalad分配任务以及收集其他Impalad的执行结果进行汇总</p>
+<p>• Impalad也会执行其他Impalad给其分配的任务，主要就是对本地HDFS和HBase里的部分数据进行操作</p>
+<ol>
+<li>State Store</li>
+</ol>
+<p>• 会创建一个statestored进程</p>
+<p>• 负责收集分布在集群中各个Impalad进程的资源信息，用于查询调度</p>
+<ol>
+<li>CLI</li>
+</ol>
+<p>• 给用户提供查询使用的命令行工具</p>
+<p>• 还提供了Hue、JDBC及ODBC的使用接口</p>
+<p>说明：Impala中的元数据直接存储在Hive中。Impala采用与Hive相同的元数据、SQL语法、ODBC驱动程序和用户接口，从而使得在一个Hadoop平台上，可以统一部署Hive和Impala等分析工具，同时支持批处理和实时查询</p>
+<h2 id="Impala查询执行过程"><a href="#Impala查询执行过程" class="headerlink" title="Impala查询执行过程"></a>Impala查询执行过程</h2><p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/14.png" alt="Impala查询执行过程"></p>
+<p>Impala执行查询的具体过程：</p>
+<p>• 第0步，当用户提交查询前，Impala先创建一个负责协调客户端提交的查询的Impalad进程，该进程会向Impala State Store提交注册订阅信息，State Store会创建一个statestored进程，statestored进程通过创建多个线程来处理Impalad的注册订阅信息。</p>
+<p>• 第1步，用户通过CLI客户端提交一个查询到impalad进程，Impalad的Query Planner对SQL语句进行解析，生成解析树；然后，Planner把这个查询的解析树变成若干PlanFragment，发送到Query Coordinator</p>
+<p>• 第2步，Coordinator通过从MySQL元数据库中获取元数据，从HDFS的名称节点中获取数据地址，以得到存储这个查询相关数据的所有数据节点。</p>
+<p>• 第3步，Coordinator初始化相应impalad上的任务执行，即把查询任务分配给所有存储这个查询相关数据的数据节点。</p>
+<p>• 第4步，Query Executor通过流式交换中间输出，并由Query Coordinator汇聚来自各个impalad的结果。</p>
+<p>• 第5步，Coordinator把汇总后的结果返回给CLI客户端。</p>
+<h1 id="Impala与Hive的比较"><a href="#Impala与Hive的比较" class="headerlink" title="Impala与Hive的比较"></a>Impala与Hive的比较</h1><p><img src="/2018/05/01/大数据基础学习笔记（七）——数据仓库Hive/15.png" alt="Impala与Hive的比较"></p>
+<p>Hive与Impala的 不同点总结如下：</p>
+<ol>
+<li><p>Hive适合于长时间的批处理查询分析，而Impala适合于实时交互式SQL查询</p>
+</li>
+<li><p>Hive依赖于MapReduce计算框架，Impala把执行计划表现为一棵完整的执行计划树，直接分发执行计划到各个Impalad执行查询</p>
+</li>
+<li><p>Hive在执行过程中，如果内存放不下所有数据，则会使用外存，以保证查询能顺序执行完成，而Impala在遇到内存放不下数据时，不会利用外存，所以Impala目前处理查询时会受到一定的限制</p>
+</li>
+</ol>
+<p>Hive与Impala的 相同点总结如下：</p>
+<ol>
+<li><p>Hive与Impala使用相同的存储数据池，都支持把数据存储于HDFS和HBase中</p>
+</li>
+<li><p>Hive与Impala使用相同的元数据</p>
+</li>
+<li><p>Hive与Impala中对SQL的解释处理比较相似，都是通过词法分析生成执行计划</p>
+</li>
+</ol>
+<p>总结</p>
+<p>•Impala的目的不在于替换现有的MapReduce工具</p>
+<p>•把Hive与Impala配合使用效果最佳</p>
+<p>•可以先使用Hive进行数据转换处理，之后再使用Impala在Hive处理后的结果数据集上进行快速的数据分析</p>
+<p>转自林子雨老师的公开课  视频地址：<a href="http://www.icourse163.org/learn/XMU-1002335004#/learn/content?type=detail&amp;id=1003836807&amp;cid=1004616536&amp;replay=true" target="_blank" rel="external">http://www.icourse163.org/learn/XMU-1002335004#/learn/content?type=detail&amp;id=1003836807&amp;cid=1004616536&amp;replay=true</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/大数据/" rel="tag"><i class="fa fa-tag"></i> 大数据</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/24/大数据基础学习笔记（六）——MapReduce/" rel="next" title="大数据基础学习笔记（六）——MapReduce">
+                <i class="fa fa-chevron-left"></i> 大数据基础学习笔记（六）——MapReduce
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/17/大数据基础学习笔记（八）——Spark/" rel="prev" title="大数据基础学习笔记（八）——Spark">
+                大数据基础学习笔记（八）——Spark <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="vcomments"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/star.png"
+               alt="Homxu" />
+          <p class="site-author-name" itemprop="name">Homxu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/homxuwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/b341e509ef8d" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-heart"></i>
+                  
+                    
+                      Jianshu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据仓库概念"><span class="nav-number">1.</span> <span class="nav-text">数据仓库概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive简介"><span class="nav-number">2.</span> <span class="nav-text">Hive简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive与Hadoop生态系统中其他组件的关系"><span class="nav-number">3.</span> <span class="nav-text">Hive与Hadoop生态系统中其他组件的关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive-与传统数据库的对比分析"><span class="nav-number">4.</span> <span class="nav-text">Hive 与传统数据库的对比分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive-在企业中的部署和应用"><span class="nav-number">5.</span> <span class="nav-text">Hive 在企业中的部署和应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive系统架构"><span class="nav-number">6.</span> <span class="nav-text">Hive系统架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive-HA基本原理"><span class="nav-number">7.</span> <span class="nav-text">Hive HA基本原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hive工作原理"><span class="nav-number">8.</span> <span class="nav-text">Hive工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL语句转换成MapReduce作业的基本原理"><span class="nav-number">8.1.</span> <span class="nav-text">SQL语句转换成MapReduce作业的基本原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hive中SQL查询转换成MapReduce作业的过程"><span class="nav-number">8.2.</span> <span class="nav-text">Hive中SQL查询转换成MapReduce作业的过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Impala"><span class="nav-number">9.</span> <span class="nav-text">Impala</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Impala简介"><span class="nav-number">9.1.</span> <span class="nav-text">Impala简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Impala系统架构"><span class="nav-number">9.2.</span> <span class="nav-text">Impala系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Impala查询执行过程"><span class="nav-number">9.3.</span> <span class="nav-text">Impala查询执行过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Impala与Hive的比较"><span class="nav-number">10.</span> <span class="nav-text">Impala与Hive的比较</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Homxu</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站浏览量:<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  <script type="text/javascript">
+    new Valine({
+        av: AV,
+        el: '#vcomments' ,
+        verify: false,
+        notify: false,
+        app_id: 'iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz',
+        app_key: 'FpJsLvikc9nea305u094EDFf',
+        guest_info:['nick'] ,// 评论只需要提供昵称
+        avatar:'hide',
+        placeholder: 'Comment input placeholder'
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
