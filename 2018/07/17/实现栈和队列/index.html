@@ -116,7 +116,8 @@
 <meta property="og:image" content="http://homxu.com/2018/07/17/实现栈和队列/1.png">
 <meta property="og:image" content="http://homxu.com/2018/07/17/实现栈和队列/2.png">
 <meta property="og:image" content="http://homxu.com/2018/07/17/实现栈和队列/3.png">
-<meta property="og:updated_time" content="2018-07-17T13:51:57.910Z">
+<meta property="og:image" content="http://homxu.com/2018/07/17/实现栈和队列/4.png">
+<meta property="og:updated_time" content="2018-07-18T01:09:58.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现栈和队列">
 <meta name="twitter:description" content="栈栈在计算机中有很广泛的应用，比如括号的匹配用到了栈，系统栈，撤销操作。 栈也是一种线性结构。相比数组，栈对应的操作是数组的子集。只能从一端添加元素，从同一端取出元素，即栈顶。是一种后进先出的数据结构(Last In First Out (LIFO)) 栈的实现栈的实际底层实现有多种方式，如动态数组，链表等。 这里只实现栈的几个基本操作：入栈，出栈，查看栈顶元素，查看栈元素数量，查看栈是否为空。">
@@ -364,7 +365,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,501 字
+                  1,505 字
                 </span>
               
 
@@ -427,6 +428,7 @@
 <p><img src="/2018/07/17/实现栈和队列/3.png" alt="环形队列满"></p>
 <p>循环队列底层不再使用上文将到的动态数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">public class LoopQueue&lt;E&gt; implements Queue&lt;E&gt; &#123;</div><div class="line"></div><div class="line">  private E[] data;</div><div class="line">  private int front, tail; //front表示队首所指的索引，tail指向队列最后一个元素的下一个位置所在的索引，也就是入队新的元素所存放的位置对应的索引</div><div class="line">  private int size; //队列中有多少元素(也可以用tail和front进行控制)</div><div class="line"></div><div class="line">  //构造函数</div><div class="line">  public LoopQueue(int capacity)&#123;</div><div class="line">    data = (E[])new Object[capacity + 1]; //因为上文提到要预留一个空间，所以这里+1</div><div class="line">    front = 0;</div><div class="line">    tail = 0;</div><div class="line">    size = 0;</div><div class="line">  &#125;</div><div class="line">  //无参构造函数</div><div class="line">  public LoopQueue()&#123;</div><div class="line">    this(10);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public int getCapacity()&#123;</div><div class="line">    return data.length - 1; //真正能够存储的数据大小是length - 1，因为预留了一个空间</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public boolean isEmpty()&#123;</div><div class="line">    return front == tail;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public int getSize()&#123;</div><div class="line">      return size;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public void enqueue(E e)&#123;</div><div class="line">    if((tail + 1) % data.length == front)&#123; //如果队列满了,则调用resize()函数</div><div class="line">      resize(getCapacity() * 2);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    data[tail] = e;</div><div class="line">    tail = (tail + 1) % data.length;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public E dequeue()&#123;</div><div class="line">    if(isEmpty())&#123;</div><div class="line">          throw new IllegalArgumentException(&quot;Canno dequeuq from an empty queue&quot;);</div><div class="line">    &#125;</div><div class="line">    E temp = data[front];</div><div class="line">    data[front] = null;</div><div class="line">    front = (front + 1) % data.length;</div><div class="line">    size --;</div><div class="line">    if(size == getCapacity() / 4 &amp;&amp; getCapacity() / 2 != 0)&#123; //如果队列元素个数小于容量的1/4则进行缩容</div><div class="line">      resize(getCapacity() / 2);</div><div class="line">    &#125;</div><div class="line">    return temp;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  @Override</div><div class="line">  public E getFront()&#123;</div><div class="line">      if(isEmpty())&#123;</div><div class="line">          throw new IllegalArgumentException(&quot;Queue is empty&quot;);</div><div class="line">      &#125;</div><div class="line">      return data[front];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  private void resize(int newCapacity)&#123;</div><div class="line">    E[] newData = (E[])new Object[newCapacity + 1];</div><div class="line">    for(int i = 0 ; i &lt; size ; i++)&#123;</div><div class="line">      newData[i] = data[(front + i) % data.length];</div><div class="line">    &#125;</div><div class="line">    data = newData;</div><div class="line">    front = 0;</div><div class="line">    tail = size;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  /**</div><div class="line">   *便于打印输出</div><div class="line">   */</div><div class="line">  @Override</div><div class="line">  public String toString()&#123;</div><div class="line">      StringBuilder res = new StringBuilder();</div><div class="line">      res.append(String.format(&quot;Queue: Size = %d , capacity = %d \n&quot;,size,getCapacity()));</div><div class="line">      res.append(&quot;front[&quot;);</div><div class="line">      for(int i = front ; i != tail ; i = (i + 1 ) % data.length)&#123;</div><div class="line">          res.append(data[i]);</div><div class="line">          if((i + 1) % data.length != tail)</div><div class="line">              res.append(&quot;, &quot;);</div><div class="line">      &#125;</div><div class="line">      res.append(&quot;] tail&quot;);</div><div class="line">      return res.toString();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>测试代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args)&#123;</div><div class="line">  LoopQueue&lt;Integer&gt;  queue = new LoopQueue&lt;&gt;();</div><div class="line">  for(int i = 0 ; i &lt; 10 ; i++)&#123;</div><div class="line">      queue.enqueue(i);</div><div class="line">      System.out.println(queue);</div><div class="line">      if(i % 3 == 2)&#123;</div><div class="line">          queue.dequeue();</div><div class="line">          System.out.println(queue);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>代码结果：<br><img src="/2018/07/17/实现栈和队列/4.png" alt="循环队列结果"></p>
 
       
     </div>
@@ -466,6 +468,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/18/git笔记/" rel="prev" title="git笔记">
+                git笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -544,7 +550,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -557,7 +563,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
