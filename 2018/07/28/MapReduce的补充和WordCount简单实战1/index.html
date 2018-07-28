@@ -114,7 +114,7 @@
 <meta property="og:description" content="官网介绍：http://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html 首先回顾一些MapReduce的基础知识：https://homxuwang.github.io/2018/04/24/%E5%A4%A7%E6%95%B0%E6">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/1.png">
-<meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/3(1">
+<meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/3_1.png">
 <meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/3.png">
 <meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/4.png">
 <meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/5.png">
@@ -124,7 +124,7 @@
 <meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/9.png">
 <meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/10.png">
 <meta property="og:image" content="http://homxu.com/2018/07/28/MapReduce的补充和WordCount简单实战1/1.jpeg">
-<meta property="og:updated_time" content="2018-07-28T12:55:34.744Z">
+<meta property="og:updated_time" content="2018-07-28T13:00:10.573Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce的补充和WordCount简单实战(一)">
 <meta name="twitter:description" content="官网介绍：http://hadoop.apache.org/docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html 首先回顾一些MapReduce的基础知识：https://homxuwang.github.io/2018/04/24/%E5%A4%A7%E6%95%B0%E6">
@@ -372,7 +372,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,582 字
+                  1,581 字
                 </span>
               
 
@@ -446,7 +446,7 @@
 <p>其中<code>k1</code>就是<code>偏移量</code>。第一行的第一个字符从0开始，<code>v1</code>就是这一行的数据<code>Deer Bear River</code>。那么第二行的偏移量就是第一行的字符的长度相加，值就是<code>Car Car River</code>。以此类推</p>
 <p>经过一层转换<code>k2</code>就是上面每一行的单词,每个单词相当于是从<code>v1</code>中拆分出来(Split(“ “))，是一个<code>Text</code>类型，每个单词就是一个1。<code>v2</code>就是一个<code>IntWritable</code>或<code>LongWritable</code>类型。</p>
 <p>reduce输出的就是每个单词输出的总和。<code>k3</code>就是每个单词，<code>v3</code>就是单词出现的总和。</p>
-<h2 id="JAVA-API的简单介绍"><a href="#JAVA-API的简单介绍" class="headerlink" title="JAVA API的简单介绍"></a>JAVA API的简单介绍</h2><p><img src="/2018/07/28/MapReduce的补充和WordCount简单实战1/3(1" alt="">.png)</p>
+<h2 id="JAVA-API的简单介绍"><a href="#JAVA-API的简单介绍" class="headerlink" title="JAVA API的简单介绍"></a>JAVA API的简单介绍</h2><p><img src="/2018/07/28/MapReduce的补充和WordCount简单实战1/3_1.png" alt=""></p>
 <ol>
 <li>看上图，首先读取文件使用<code>InputFormat</code>类，它是一个接口，在源码中描述为<blockquote>
 <p><code>InputFormat</code> describes the input-specification for a  Map-Reduce job.<br><img src="/2018/07/28/MapReduce的补充和WordCount简单实战1/3.png" alt="InputFormat的实现类"></p>
@@ -460,12 +460,10 @@
 <p>An {@link InputFormat} for plain text files.  Files are broken into lines.<br> Either linefeed or carriage-return are used to signal end of line.  Keys are<br> the position in the file, and values are the line of text.. </p>
 </blockquote>
 <p>其中<code>InputFormat</code>中有几个关键的方法：</p>
-<pre><code>1) `InputSplit[] getSplits(JobConf job, int numSplits) throws IOException;`
-即将一个输入文件分成很多Split，每一个Split交给一个MapTask处理的方法。它的返回值是一个数组，可见一个输入文件可能会的到好几个`InputSplit`
-</code></pre><p><img src="/2018/07/28/MapReduce的补充和WordCount简单实战1/6.png" alt="getSplits方法"></p>
-<pre><code>2) `RecordReader&lt;K, V&gt; getRecordReader(InputSplit split,JobConf job,Reporter reporter) throws IOException;`
-它是一个记录读取的方法，从参数可以看到，它从`InputSplit[]`数组中读进数据，可以知道每一行的数据是什么。
-</code></pre><p><img src="/2018/07/28/MapReduce的补充和WordCount简单实战1/7.png" alt="getRecordReader方法"></p>
+<p>1) <code>InputSplit[] getSplits(JobConf job, int numSplits) throws IOException;</code><br>即将一个输入文件分成很多Split，每一个Split交给一个MapTask处理的方法。它的返回值是一个数组，可见一个输入文件可能会的到好几个<code>InputSplit</code></p>
+<p><img src="/2018/07/28/MapReduce的补充和WordCount简单实战1/6.png" alt="getSplits方法"></p>
+<p>2) <code>RecordReader&lt;K, V&gt; getRecordReader(InputSplit split,JobConf job,Reporter reporter) throws IOException;</code><br>它是一个记录读取的方法，从参数可以看到，它从<code>InputSplit[]</code>数组中读进数据，可以知道每一行的数据是什么。</p>
+<p><img src="/2018/07/28/MapReduce的补充和WordCount简单实战1/7.png" alt="getRecordReader方法"></p>
 <p>在<code>InputFormat</code>读进数据后(对于文本就是使用<code>TextInputFormat</code>），从图中可以看出，被拆分成好多个<code>Split</code>。拿到<code>Split</code>后，使用RR(RecordReader)把每个<code>Split</code>中的数据读取出来,一行一行的读，每读一行，交由一个<code>map</code>处理.<code>Partitioner</code>将相同的<code>key</code>交到同一个<code>Reduce</code>上，从图中可以看出，<code>key</code>可能会被发送到node1或者node2.中间有一个<code>shuffle</code>的过程，结果交由<code>reduce</code>处理。处理完的结果交给<code>OutputFormat</code>。</p>
 <ol>
 <li><code>OutputFormat</code></li>
