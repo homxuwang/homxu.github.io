@@ -4,8 +4,27 @@
 
     
   <url>
+    <loc>http://homxu.com/2018/07/29/MapReduce%E7%9A%84%E8%A1%A5%E5%85%85%E5%92%8CWordCount%E7%AE%80%E5%8D%95%E5%AE%9E%E6%88%982/</loc>
+    <lastmod>2018-07-29T14:03:22.547Z</lastmod>
+    <data>
+        <display>
+        <title>MapReduce的补充和WordCount简单实战(二)</title>
+        <pubTime>2018-07-29T01:17:50.000Z</pubTime>
+        
+        <tag>大数据</tag>
+         
+        <tag>hadoop</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://homxu.com/2018/07/28/MapReduce%E7%9A%84%E8%A1%A5%E5%85%85%E5%92%8CWordCount%E7%AE%80%E5%8D%95%E5%AE%9E%E6%88%981/</loc>
-    <lastmod>2018-07-28T13:00:10.573Z</lastmod>
+    <lastmod>2018-07-29T01:15:14.207Z</lastmod>
     <data>
         <display>
         <title>MapReduce的补充和WordCount简单实战(一)</title>
