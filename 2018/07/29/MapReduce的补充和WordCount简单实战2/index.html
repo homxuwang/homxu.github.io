@@ -137,7 +137,7 @@
 <meta property="og:image" content="http://homxu.com/2018/07/29/MapReduce的补充和WordCount简单实战2/22.png">
 <meta property="og:image" content="http://homxu.com/2018/07/29/MapReduce的补充和WordCount简单实战2/23.png">
 <meta property="og:image" content="http://homxu.com/2018/07/29/MapReduce的补充和WordCount简单实战2/24.png">
-<meta property="og:updated_time" content="2018-07-29T14:03:22.547Z">
+<meta property="og:updated_time" content="2018-07-30T00:16:36.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MapReduce的补充和WordCount简单实战(二)">
 <meta name="twitter:description" content="MapReduce编程之WordCount基于JAVA开发  Text参数继承了BinaryComparable并实现了WritableComparable接口，可以把它理解为JAVA里面的字符串。 首先看一些基本的知识：  Mapper类    Context代表的上下文 setup代表任务开始的时候执行的操作，且只执行一次。可以在这里进行数据库链接等操作 map方法，对于输入的input在每个">
@@ -385,7 +385,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,058 字
+                  2,064 字
                 </span>
               
 
@@ -489,7 +489,7 @@
 <p>在ieda中，拷贝一份<code>WordCountApp</code>的代码，命名为<code>PartitionerApp</code>.<br>按照空格拆分其实就是<code>动物名字</code>和<code>动物数量</code>，所以在<code>Mapper</code>类的<code>map</code>方法中修改代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * Map:读取输入的文件</div><div class="line">    */</div><div class="line">   public static class MyMapper extends Mapper&lt;LongWritable,Text,Text,LongWritable&gt;&#123;</div><div class="line"></div><div class="line">       @Override</div><div class="line">       protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException &#123;</div><div class="line">           //先读入每一行数据</div><div class="line">           String line = value.toString();</div><div class="line">           //然后按照指定分隔符分割</div><div class="line">           String[] words = line.split(&quot; &quot;);</div><div class="line"></div><div class="line">           context.write(new Text(words[0]),new LongWritable(Long.parseLong(words[1])));</div><div class="line"></div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
 <p>还要新建一个<code>Partition</code>类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public static class MyPartitioner extends Partitioner&lt;Text,LongWritable&gt;&#123;</div><div class="line">       @Override</div><div class="line">       public int getPartition(Text key, LongWritable value, int numPartitions) &#123;</div><div class="line">           if(key.equals(&quot;cat&quot;))&#123;</div><div class="line">               return 0;</div><div class="line">           &#125;</div><div class="line">           if (key.equals(&quot;dog&quot;))&#123;</div><div class="line">               return 1;</div><div class="line">           &#125;</div><div class="line">           if(key.equals(&quot;bird&quot;))&#123;</div><div class="line">               return 2;</div><div class="line">           &#125;</div><div class="line">           return 3;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
 <p>在<code>step6</code> 和 <code>step7</code>之间添加代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//step6.5 设置job的Partition</div><div class="line">       job.setPartitionerClass(MyPartitioner.class);</div><div class="line">       //step6.5.1 设置reduce的数量，不然不生效,这里设置4个，因为MyPartitioner类中有4种情况</div><div class="line">       job.setNumReduceTasks(4);</div></pre></td></tr></table></figure></p>
-<p>然后编译，将执行的类名和输入的数据改一下<code>hadoop jar /home/hadoop/lib/hdfs-1.0-SNAPSHOT.jar hadoop.hdfs.mapreduce.PartitionerApp hdfs://localhost:9000//hdfsapi/animal.txt hdfs://localhost:9000/hdfsapi/Partitionresult</code></p>
+<p>然后编译，将执行的类名和输入的数据改一下<code>hadoop jar /home/hadoop/lib/hdfs-1.0-SNAPSHOT.jar hadoop.hdfs.mapreduce.PartitionerApphadoop.hdfs.mapreduce.PartitionerApp hdfs://localhost:9000//hdfsapi/animal.txt hdfs://localhost:9000/hdfsapi/Partitionresult</code></p>
 <p>运行后查看结果<br><img src="/2018/07/29/MapReduce的补充和WordCount简单实战2/19.png" alt=""></p>
 <p><img src="/2018/07/29/MapReduce的补充和WordCount简单实战2/20.png" alt=""></p>
 <p>Partition会把符合规则的key送到指定的reduce处理，分别生成相应的结果。</p>
@@ -499,8 +499,10 @@
 <p>保存后先停掉yarn再重启，启动之后还要再启动<code>mr-jobhistory-daemon.sh</code>使用<code>mr-jobhistory-daemon.sh start historyserver</code><br><img src="/2018/07/29/MapReduce的补充和WordCount简单实战2/22.png" alt=""><br>这样就启动成功了<br>可以看到这时候多了一个进程<code>JobHistoryServer</code><br><img src="/2018/07/29/MapReduce的补充和WordCount简单实战2/23.png" alt=""></p>
 <p>还要配置<code>yarn-site.xml</code>.在<code>&lt;configuration&gt;&lt;/configuration&gt;</code>中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;property&gt;  </div><div class="line">    &lt;name&gt;yarn.log-aggregation-enable&lt;/name&gt;  </div><div class="line">        &lt;value&gt;true&lt;/value&gt;  </div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure></p>
 <p>再次重新启动yarn</p>
-<p>使用mapreduce下的例子进行测试<code>/usr/local/hadoop/share/hadoop/mapreduce$ hadoop jar hadoop-mapreduce-examples-2.9.0.jar pi 2 3</code></p>
-<p>我在启动后仍然出现问题，重启了hdfs和yarn都没用，不过后来尝试关闭<code>jobhistory</code>(<code>./sbin/mr-jobhistory-daemon.sh stop historyserver</code>)再重启(<code>./sbin/mr-jobhistory-daemon.sh start historyserver</code>)竟然可以了</p>
+<p>使用mapreduce下的例子进行测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/hadoop/share/hadoop/mapreduce$ hadoop jar hadoop-mapreduce-examples-2.9.0.jar pi 2 3</div></pre></td></tr></table></figure></p>
+<p>我在启动后仍然出现问题，重启了hdfs和yarn都没用，不过后来尝试关闭<code>jobhistory</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./sbin/mr-jobhistory-daemon.sh stop historyserver</div></pre></td></tr></table></figure></p>
+<p>再重启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./sbin/mr-jobhistory-daemon.sh start historyserver</div></pre></td></tr></table></figure></p>
+<p>竟然可以了</p>
 <p><img src="/2018/07/29/MapReduce的补充和WordCount简单实战2/24.png" alt=""></p>
 
       
@@ -543,6 +545,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/01/实现集合/" rel="prev" title="实现集合">
+                实现集合 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -621,7 +627,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
