@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据结构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="映射也就是Map,这里是指一对一的映射。也成为字典。  映射迎来存储键值数据对(Key,Value) 根据Key寻找对应的Value 用链表或者二分搜索树实现比较简单  BST的结构:123456class Node &amp;#123;  K key;  V value;  Node left;  Node right;&amp;#125; 链表的结构:12345class Node &amp;#123;  K key">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现映射">
+<meta property="og:url" content="http://homxu.com/2018/08/01/实现映射/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="映射也就是Map,这里是指一对一的映射。也成为字典。  映射迎来存储键值数据对(Key,Value) 根据Key寻找对应的Value 用链表或者二分搜索树实现比较简单  BST的结构:123456class Node &amp;#123;  K key;  V value;  Node left;  Node right;&amp;#125; 链表的结构:12345class Node &amp;#123;  K key">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-02T09:21:17.166Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实现映射">
+<meta name="twitter:description" content="映射也就是Map,这里是指一对一的映射。也成为字典。  映射迎来存储键值数据对(Key,Value) 根据Key寻找对应的Value 用链表或者二分搜索树实现比较简单  BST的结构:123456class Node &amp;#123;  K key;  V value;  Node left;  Node right;&amp;#125; 链表的结构:12345class Node &amp;#123;  K key">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://homxu.com/2018/08/01/实现映射/"/>
+
+
+
+
+
+  <title>实现映射 | Homxu</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea1a8a8ef2efecad905ef14fce61783f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Homxu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序员也要好好生活</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-我的足迹">
+          <a href="/我的足迹" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bus"></i> <br />
+            
+            我的足迹
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://homxu.com/2018/08/01/实现映射/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Homxu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/star.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Homxu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">实现映射</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T20:55:47+08:00">
+                2018-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,164 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>映射也就是Map,这里是指一对一的映射。也成为<code>字典</code>。</p>
+<ul>
+<li>映射迎来存储键值数据对(Key,Value)</li>
+<li>根据Key寻找对应的Value</li>
+<li>用链表或者二分搜索树实现比较简单</li>
+</ul>
+<p>BST的结构:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class Node &#123;</div><div class="line">  K key;</div><div class="line">  V value;</div><div class="line">  Node left;</div><div class="line">  Node right;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>链表的结构:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">class Node &#123;</div><div class="line">  K key;</div><div class="line">  V value;</div><div class="line">  Node next;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>即本来存储一个数据的节点现在存储两个(Key,Value).</p>
+<p>定义Map接口:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public interface Map&lt;K,V&gt; &#123;</div><div class="line">    void add(K key,V value);</div><div class="line">    V remove(K key);            //删除key对应的键值对,并返回值</div><div class="line">    boolean contains(K key);  //是否存已在key</div><div class="line">    V get(K key);               //获得key对应的value值</div><div class="line">    void set(K key,V newValue); //更新值</div><div class="line">    int getSize();</div><div class="line">    boolean isEmpty();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="基于链表实现Map"><a href="#基于链表实现Map" class="headerlink" title="基于链表实现Map"></a>基于链表实现Map</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line">public class LinkedListMap&lt;K,V&gt; implements Map&lt;K,V&gt; &#123;</div><div class="line">    //定义节点</div><div class="line">    private class Node &#123;</div><div class="line">        public K key;</div><div class="line">        public V value;</div><div class="line">        public Node next;</div><div class="line">        public Node(K key,V value,Node node)&#123;</div><div class="line">            this.key = key;</div><div class="line">            this.value = value;</div><div class="line">            this.next = null;</div><div class="line">        &#125;</div><div class="line">        public Node(K key)&#123;</div><div class="line">            this(key,null,null);</div><div class="line">        &#125;</div><div class="line">        public Node()&#123;</div><div class="line">            this(null,null,null);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public String toString()&#123;</div><div class="line">            return key.toString() + &quot;:&quot; + value.toString();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private Node dummyHead;</div><div class="line">    private int size;</div><div class="line">    public LinkedListMap()&#123;</div><div class="line">        dummyHead = new Node();</div><div class="line">        size = 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void add(K key, V value) &#123;</div><div class="line">        Node node = getNode(key);</div><div class="line">        if(node == null)&#123;</div><div class="line">            dummyHead.next = new Node(key,value,dummyHead.next);</div><div class="line">            size ++;</div><div class="line">        &#125;</div><div class="line">        else //如果已经存在,则进行值的覆盖</div><div class="line">            node.value = value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public V remove(K key) &#123;</div><div class="line">        Node prev = dummyHead;</div><div class="line">        while(prev.next != null)&#123;</div><div class="line">            if(prev.next.key.equals(key))</div><div class="line">                break;</div><div class="line">            prev = prev.next;</div><div class="line">        &#125;</div><div class="line">        Node delNode;</div><div class="line">        if(prev.next != null)&#123;</div><div class="line">            delNode = prev.next;</div><div class="line">            prev.next = delNode.next;</div><div class="line">            delNode.next = null;</div><div class="line">            return delNode.value;</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean contains(K key) &#123;</div><div class="line">        return getNode(key) != null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public V get(K key) &#123;</div><div class="line">        Node result = getNode(key);</div><div class="line">        return result == null ? null : result.value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void set(K key, V newValue) &#123;</div><div class="line">        Node result = getNode(key);</div><div class="line">        if(result != null)</div><div class="line">            result.value = newValue;</div><div class="line">        else</div><div class="line">            throw new IllegalArgumentException(key + &quot;doesn&apos;t exists&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int getSize() &#123;</div><div class="line">        return size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean isEmpty() &#123;</div><div class="line">        return size == 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private Node getNode(K k)&#123;</div><div class="line">        Node cur = dummyHead.next;</div><div class="line">        while(cur != null)&#123;</div><div class="line">            if(cur.key.equals(k))</div><div class="line">                return cur;</div><div class="line">            cur = cur.next;</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="基于二分搜索树实现Map"><a href="#基于二分搜索树实现Map" class="headerlink" title="基于二分搜索树实现Map"></a>基于二分搜索树实现Map</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div></pre></td><td class="code"><pre><div class="line">public class BSTMap&lt;K extends Comparable&lt;K&gt;,V&gt; implements Map&lt;K,V&gt; &#123;</div><div class="line">    private class Node &#123;</div><div class="line">        public K key;</div><div class="line">        public V value;</div><div class="line">        public Node left,right;</div><div class="line"></div><div class="line">        public Node(K key,V value)&#123;</div><div class="line">            this.key = key;</div><div class="line">            this.value = value;</div><div class="line">            this.left = null;</div><div class="line">            this.right = null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    private Node root;</div><div class="line">    private int size;</div><div class="line">    @Override</div><div class="line">    //向二分搜索树中添加新元素(key,value)</div><div class="line">    public void add(K key, V value) &#123;</div><div class="line">        root = add(root,key,value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    //借助辅助函数remove(Node node,K key)</div><div class="line">    public V remove(K key) &#123;</div><div class="line">        Node node = getNode(root,key);</div><div class="line">        if(node != null)&#123;</div><div class="line">            root = remove(root,key);</div><div class="line">            return node.value;</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean contains(K key) &#123;</div><div class="line">        return getNode(root,key) != null ? true : false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public V get(K key) &#123;</div><div class="line">        Node node = getNode(root,key);</div><div class="line">        return node == null ? null : node.value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void set(K key, V newValue) &#123;</div><div class="line">        Node node = getNode(root,key);</div><div class="line">        if(node == null)</div><div class="line">            throw new IllegalArgumentException(key + &quot;doesn&apos;t exist!&quot;);</div><div class="line">        node.value = newValue;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int getSize() &#123;</div><div class="line">        return size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean isEmpty() &#123;</div><div class="line">        return size == 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //向以node为根的二分搜索树中插入元素,采用递归算法</div><div class="line">    //返回插入新节点后二分搜索树的根</div><div class="line">    private Node add(Node node,K key,V value)&#123;</div><div class="line">        if(node == null)&#123;</div><div class="line">            size ++;</div><div class="line">            return new Node(key,value);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if(key.compareTo(node.key) &lt; 0)&#123;</div><div class="line">            node.left = add(node.left,key,value);</div><div class="line">        &#125;</div><div class="line">        if(key.compareTo(node.key) &gt; 0)&#123;</div><div class="line">            node.right = add(node.right,key,value);</div><div class="line">        &#125;</div><div class="line">        else //key.compareTo(node.key)==0</div><div class="line">            node.value = value;</div><div class="line">        return node;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //返回以node为根节点的二分搜索树中,key所在的节点</div><div class="line">    private Node getNode(Node node,K key)&#123;</div><div class="line">        if(node == null)&#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        if(key.compareTo(node.key) == 0)&#123;</div><div class="line">            return node;</div><div class="line">        &#125;</div><div class="line">        if(key.compareTo(node.key) &lt; 0)&#123;</div><div class="line">            return getNode(node.left,key);</div><div class="line">        &#125;</div><div class="line">        else&#123; //key.compareTo(node.key) &gt; 0)</div><div class="line">            return getNode(node.right,key);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //删除掉以node为根的二分搜索树中键为key的节点</div><div class="line">    //返回删除节点后新的二分搜索树的根</div><div class="line">    private Node remove(Node node,K key)&#123;</div><div class="line">        if(node == null)</div><div class="line">            return null;</div><div class="line">        if(key.compareTo(node.key) &lt; 0)&#123;</div><div class="line">            node.left = remove(node.left,key);</div><div class="line">            return node;</div><div class="line">        &#125;</div><div class="line">        else if(key.compareTo(node.key) &gt; 0 )&#123;</div><div class="line">            node.right = remove(node.right,key);</div><div class="line">            return node;</div><div class="line">        &#125;</div><div class="line">        else&#123;//key.compareTo(node.key) == 0</div><div class="line">            //待删除左子树为空</div><div class="line">            if(node.left == null)&#123;</div><div class="line">                Node rightNode = node.right;</div><div class="line">                node.right = null;</div><div class="line">                size --;</div><div class="line">                return rightNode;</div><div class="line">            &#125;</div><div class="line">            //待删除右子树为空</div><div class="line">            if(node.right == null)&#123;</div><div class="line">                Node leftNode = node.left;</div><div class="line">                node.left = null;</div><div class="line">                size --;</div><div class="line">                return leftNode;</div><div class="line">            &#125;</div><div class="line">            //待删除左右子树均不为空</div><div class="line">            //先找到比待删除节点大的最小节点,即待删除节点右子树的最小节点</div><div class="line">            //用这个节点顶替待删除节点的位置</div><div class="line">            Node successor = minmum(node.right);</div><div class="line">            successor.right = removeMin(node.right);</div><div class="line">            successor.left = node.left;</div><div class="line"></div><div class="line">            node.left = node.right = null;</div><div class="line"></div><div class="line">            return successor;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //返回以node为根的二分搜索树的最小值所在的节点</div><div class="line">    private Node minmum(Node node)&#123;</div><div class="line">        if(node.left == null)&#123;</div><div class="line">            return node;</div><div class="line">        &#125;</div><div class="line">        return minmum(node.left);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //删除掉以node为根的二分搜索树中的最小节点</div><div class="line">    //返回删除节点后的最新的二分搜索树的根</div><div class="line">    private Node removeMin(Node node)&#123;</div><div class="line">        if(node.left == null)&#123;</div><div class="line">            Node rightNode = node.right;</div><div class="line">            node.right = null;</div><div class="line">            size --;</div><div class="line">            return rightNode;</div><div class="line">        &#125;</div><div class="line">        node.left = removeMin(node.left);</div><div class="line">        return node;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实明显可以感受到BSTMap的存储速度要快于LinkedListMap</p>
+<h1 id="基于链表的Map和基于二分搜索树的Map的时间复杂度对比"><a href="#基于链表的Map和基于二分搜索树的Map的时间复杂度对比" class="headerlink" title="基于链表的Map和基于二分搜索树的Map的时间复杂度对比"></a>基于链表的Map和基于二分搜索树的Map的时间复杂度对比</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">LinkedListMap</th>
+<th style="text-align:center">BSTMap(平均)</th>
+<th style="text-align:center">BSTMap最差)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">增add</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">O(logn)</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:center">删remove</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">O(logn)</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:center">改set</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">O(logn)</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:center">查get</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">O(logn)</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:center">查contains</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">O(logn)</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"><i class="fa fa-tag"></i> 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/01/实现集合/" rel="next" title="实现集合">
+                <i class="fa fa-chevron-left"></i> 实现集合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="vcomments"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/star.png"
+               alt="Homxu" />
+          <p class="site-author-name" itemprop="name">Homxu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/homxuwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/b341e509ef8d" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-heart"></i>
+                  
+                    
+                      Jianshu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于链表实现Map"><span class="nav-number">1.</span> <span class="nav-text">基于链表实现Map</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于二分搜索树实现Map"><span class="nav-number">2.</span> <span class="nav-text">基于二分搜索树实现Map</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于链表的Map和基于二分搜索树的Map的时间复杂度对比"><span class="nav-number">3.</span> <span class="nav-text">基于链表的Map和基于二分搜索树的Map的时间复杂度对比</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Homxu</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站浏览量:<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  <script type="text/javascript">
+    new Valine({
+        av: AV,
+        el: '#vcomments' ,
+        verify: false,
+        notify: false,
+        app_id: 'iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz',
+        app_key: 'FpJsLvikc9nea305u094EDFf',
+        guest_info:['nick'] ,// 评论只需要提供昵称
+        avatar:'hide',
+        placeholder: 'Comment input placeholder'
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
