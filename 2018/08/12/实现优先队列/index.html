@@ -20,7 +20,7 @@
 <meta property="og:description" content="优先队列一般都是基于堆的，所以先写堆的实现。 堆 堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆) 堆总是一棵完全二叉树  另外要注意：节点值的大小和节点所处的层次是没有关系的 本文以最大堆为例，进行书写。 堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://homxu.com/2018/08/12/实现优先队列/1.png">
-<meta property="og:updated_time" content="2018-08-12T11:20:08.023Z">
+<meta property="og:updated_time" content="2018-08-12T13:20:24.529Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现优先队列">
 <meta name="twitter:description" content="优先队列一般都是基于堆的，所以先写堆的实现。 堆 堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆) 堆总是一棵完全二叉树  另外要注意：节点值的大小和节点所处的层次是没有关系的 本文以最大堆为例，进行书写。 堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%">
@@ -103,13 +103,13 @@
             <div class="navbar-collapse collapse">
               <ul class="hnav navbar-nav">
                 
-                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Categorieën</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                  <li> <a class="main-nav-link" href="/tags">Labels</a> </li>
                 
                   <li> <a class="main-nav-link" href="/about">About</a> </li>
                 
@@ -125,7 +125,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -137,11 +137,11 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
             TAGS: 'Tags',
-            UNTITLED: '(Untitled)',
+            UNTITLED: '(Unbenannt)',
         },
         ROOT_URL: '/',
         CONTENT_URL: '/content.json',
@@ -217,9 +217,9 @@
 </ul>
 <p>上面两个求法可以用数学归纳法进行证明。</p>
 <ul>
-<li><p><code>Sift Up</code>（添加）操作很简单，即新添加的元素先放到数组的末尾位置，这时候满足了完全二叉树的性质。但是它不一定满足总是不大于或者不小于其父亲节点的值。所以这时候的操作是，这个值要与它的父亲节点、爷爷节点……对比，直到放在合适的位置。因为方法中总结了找到一个节点的父亲节点的方法:<code>faterIndex = (index-1) / 2</code>。以一个最大堆为例，让新加入的节点和父亲节点对比，如果它大于其父亲节点，则交换，继续对比其父亲节点，直到它小于等于其父亲节点为止。</p>
+<li><p><code>Sift Up</code>操作很简单，即新添加的元素先放到数组的末尾位置，这时候满足了完全二叉树的性质。但是它不一定满足总是不大于或者不小于其父亲节点的值。所以这时候的操作是，这个值要与它的父亲节点、爷爷节点……对比，直到放在合适的位置。因为方法中总结了找到一个节点的父亲节点的方法:<code>faterIndex = (index-1) / 2</code>。以一个最大堆为例，让新加入的节点和父亲节点对比，如果它大于其父亲节点，则交换，继续对比其父亲节点，直到它小于等于其父亲节点为止。</p>
 </li>
-<li><p><code>Sift Down</code>（取出）操作，即取出最大堆的堆顶的元素（取出操作只能取出这个最大的元素，而不能取出别的元素）。因为最大的元素取出后，其左右的树结构就是两个单独的子树，那么要给这两个子树找一个新的父节点，操作如下：</p>
+<li><p><code>Sift Down</code>操作，即取出最大堆的堆顶的元素（取出操作只能取出这个最大的元素，而不能取出别的元素）。因为最大的元素取出后，其左右的树结构就是两个单独的子树，那么要给这两个子树找一个新的父节点，操作如下：</p>
 </li>
 </ul>
 <ol>
@@ -267,8 +267,8 @@ var a = new Donate({
   title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
   btnText: 'Donate', // 可选参数，打赏按钮文字
   el: document.getElementById('donation_div'),
-  wechatImage: 'https://github.com/homxuwang/blog_source/blob/master/_posts/pay/wechat.png?raw=true',
-  alipayImage: 'https://github.com/homxuwang/blog_source/blob/master/_posts/pay/alipay.png?raw=true'
+  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png'
 });
 </script>
       
@@ -328,7 +328,7 @@ var a = new Donate({
   
   
     <a href="/2018/08/04/用户日志统计分析/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Ouder</strong>
       <div class="article-nav-title">用户日志统计分析</div>
     </a>
   
@@ -341,7 +341,7 @@ var a = new Donate({
 
   <aside id="toc-sidebar">
     <div id="toc" class="toc-article">
-    <strong class="toc-title">Contents</strong>
+    <strong class="toc-title">Inhalt</strong>
     
         <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#堆"><span class="nav-number">1.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆的表示方法——数组"><span class="nav-number">1.1.</span> <span class="nav-text">堆的表示方法——数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heapify-和-replace操作"><span class="nav-number">1.2.</span> <span class="nav-text">Heapify 和 replace操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#replace"><span class="nav-number">1.2.1.</span> <span class="nav-text">replace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heapify"><span class="nav-number">1.2.2.</span> <span class="nav-text">Heapify</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优先队列"><span class="nav-number">2.</span> <span class="nav-text">优先队列</span></a></li></ol>
     
