@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>实现优先队列 | Homxu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="好好生活" />
+  
+  
+  
+  
+  <meta name="description" content="优先队列一般都是基于堆的，所以先写堆的实现。 堆 堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆) 堆总是一棵完全二叉树  另外要注意：节点值的大小和节点所处的层次是没有关系的 本文以最大堆为例，进行书写。 堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现优先队列">
+<meta property="og:url" content="http://homxu.com/2018/08/12/实现优先队列/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="优先队列一般都是基于堆的，所以先写堆的实现。 堆 堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆) 堆总是一棵完全二叉树  另外要注意：节点值的大小和节点所处的层次是没有关系的 本文以最大堆为例，进行书写。 堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/08/12/实现优先队列/1.png">
+<meta property="og:updated_time" content="2018-08-12T11:20:08.023Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实现优先队列">
+<meta name="twitter:description" content="优先队列一般都是基于堆的，所以先写堆的实现。 堆 堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆) 堆总是一棵完全二叉树  另外要注意：节点值的大小和节点所处的层次是没有关系的 本文以最大堆为例，进行书写。 堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%">
+<meta name="twitter:image" content="http://homxu.com/2018/08/12/实现优先队列/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/star.png">
+  <link rel="apple-touch-icon" href="/css/images/star.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-实现优先队列" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      实现优先队列
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/08/12/实现优先队列/" class="article-date">
+	  <time datetime="2018-08-12T03:06:46.000Z" itemprop="datePublished">2018-08-12</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>优先队列一般都是基于堆的，所以先写堆的实现。</p>
+<h1 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h1><ul>
+<li>堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆)</li>
+<li>堆总是一棵完全二叉树</li>
+</ul>
+<p>另外要注意：节点值的大小和节点所处的层次是没有关系的</p>
+<p>本文以最大堆为例，进行书写。</p>
+<h2 id="堆的表示方法——数组"><a href="#堆的表示方法——数组" class="headerlink" title="堆的表示方法——数组"></a>堆的表示方法——数组</h2><p>堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：<a href="https://homxuwang.github.io/2018/07/17/%E6%95%B0%E7%BB%84/" target="_blank" rel="external">https://homxuwang.github.io/2018/07/17/%E6%95%B0%E7%BB%84/</a></p>
+<p><img src="/2018/08/12/实现优先队列/1.png" alt=""></p>
+<p>堆的实现代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div></pre></td><td class="code"><pre><div class="line">public class MaxHeap&lt;E extends Comparable&lt;E&gt;&gt; &#123;</div><div class="line">    private Array&lt;E&gt; data;</div><div class="line"></div><div class="line">    public MaxHeap(int capacity)&#123;</div><div class="line">        data = new Array&lt;&gt;(capacity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public MaxHeap()&#123;</div><div class="line">        data = new Array&lt;&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //返回堆中的元素个数</div><div class="line">    public int size() &#123;</div><div class="line">        return data.getSize();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //判断堆是否为空</div><div class="line">    public boolean isEmpty() &#123;</div><div class="line">        return data.isEmpty();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //返回一个完全二叉树的数组表示中，一个索引所表示的元素的父亲节点的索引</div><div class="line">    private int parent(int index)&#123;</div><div class="line">        if(index == 0)</div><div class="line">            throw new IllegalArgumentException(&quot;index 0 doesn&apos;t have parent;&quot;);</div><div class="line">        return (index-1) / 2;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //返回一个完全二叉树的数组表示中，一个索引所表示的元素的左孩子的索引</div><div class="line">    private int leftChild(int index)&#123;</div><div class="line">        return index * 2 + 1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //返回一个完全二叉树的数组表示中，一个索引所表示的元素的右孩子的索引</div><div class="line">    private int rightChild(int index)&#123;</div><div class="line">        return index * 2 + 2;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //向堆中添加一个元素</div><div class="line">    public void add(E e)&#123;</div><div class="line">        data.addLast(e); //先向末尾添加元素</div><div class="line">        //调用siftUp函数，进行上浮操作,以维护堆的性质</div><div class="line">        siftUp(data.getSize() - 1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //需要上浮的元素的索引</div><div class="line">    private void siftUp(int k)&#123;</div><div class="line">        //如果k满足索引大于零,且其父亲节点的值小于它的值，则进行上浮操作</div><div class="line">        while (k &gt; 0 &amp;&amp; data.get(parent(k)).compareTo(data.get(k)) &lt; 0)&#123;</div><div class="line">            swap(k,parent(k));</div><div class="line">            k = parent(k);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //定义一个交换的函数</div><div class="line">    private void swap(int i , int j)&#123;</div><div class="line">        if(i &lt; 0 || i &gt;= data.getSize() || j &lt; 0 || j&gt;= data.getSize())&#123;</div><div class="line">            throw new IllegalArgumentException(&quot;Index is illegal.&quot;);</div><div class="line">        &#125;</div><div class="line">        E temp = data.get(i);</div><div class="line">        data.set(i,data.get(j));</div><div class="line">        data.set(j,temp);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //查看堆中的最大元素</div><div class="line">    public E findMax()&#123;</div><div class="line">        if(data.getSize() == 0)</div><div class="line">            throw new IllegalArgumentException(&quot;Can not findMac in a empty heap&quot;);</div><div class="line">        return data.get(0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //取出堆中的最大元素</div><div class="line">    public E extractMax()&#123;</div><div class="line">        E ret = findMax();</div><div class="line"></div><div class="line">        swap(0,data.getSize() - 1);</div><div class="line">        data.removeLast();</div><div class="line">        siftDown(0);</div><div class="line"></div><div class="line">        return ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //下沉操作</div><div class="line">    private void siftDown(int k)&#123;</div><div class="line">        while (leftChild(k) &lt; data.getSize())&#123;//如果k没有左右孩子，则循环终止</div><div class="line"></div><div class="line">            int j = leftChild(k);//j为k的左孩子的索引</div><div class="line">            if(j + 1 &lt; data.getSize() &amp;&amp; data.get( j + 1 ).compareTo(data.get(j)) &gt; 0)&#123;//如果k有右孩子,并且右孩子的节点的值大于左孩子的节点的值</div><div class="line">                j = rightChild(k);</div><div class="line">                //此时，data[j]是leftChild和rightChild中的最大值</div><div class="line">            &#125;</div><div class="line">            if(data.get(k).compareTo(data.get(j)) &gt;= 0) // 如果k的值大于其左右孩子的值，则满足了最大堆的另一个性质，可以退出循环体</div><div class="line">                break;</div><div class="line">            //否则交换k和j位置,并且k赋值为j，继续进行下一个循环</div><div class="line">            swap(k,j);</div><div class="line">            k = j;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>在数组中，一个父亲节点其所有节点的索引(假设索引以0开始)为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Index_leftChild  = index_Father * 2 + 1;</div><div class="line">Index_rightChild = index_Father * 2 + 2;</div></pre></td></tr></table></figure>
+</li>
+<li><p>如果知道一个孩子节点的索引(假设索引以0开始)求其父亲节点的索引:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">index_Father = ( index_Child - 1 ) / 2;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面两个求法可以用数学归纳法进行证明。</p>
+<ul>
+<li><p><code>Sift Up</code>（添加）操作很简单，即新添加的元素先放到数组的末尾位置，这时候满足了完全二叉树的性质。但是它不一定满足总是不大于或者不小于其父亲节点的值。所以这时候的操作是，这个值要与它的父亲节点、爷爷节点……对比，直到放在合适的位置。因为方法中总结了找到一个节点的父亲节点的方法:<code>faterIndex = (index-1) / 2</code>。以一个最大堆为例，让新加入的节点和父亲节点对比，如果它大于其父亲节点，则交换，继续对比其父亲节点，直到它小于等于其父亲节点为止。</p>
+</li>
+<li><p><code>Sift Down</code>（取出）操作，即取出最大堆的堆顶的元素（取出操作只能取出这个最大的元素，而不能取出别的元素）。因为最大的元素取出后，其左右的树结构就是两个单独的子树，那么要给这两个子树找一个新的父节点，操作如下：</p>
+</li>
+</ul>
+<ol>
+<li>将堆中的最后一个元素放在堆顶</li>
+<li>删除掉最后一个元素（这时候满足完全二叉树的性质）</li>
+<li>将堆顶元素与左右孩子中<code>大于它</code>且<code>较大</code>的数进行交换</li>
+<li>交换后的新位置继续与孩子节点中<code>大于它</code>且<code>较大</code>的数进行交换</li>
+<li>继续操作直到它大于其左后孩子或者它没有左右孩子</li>
+</ol>
+<p>优点：add操作和extractMax操作的时间复杂度都是O(logn)</p>
+<ul>
+<li>其中<code>swap</code>交换函数我写在了堆这个类中，可以在Array类中定义交换函数，在堆类中直接调用即可。</li>
+</ul>
+<h2 id="Heapify-和-replace操作"><a href="#Heapify-和-replace操作" class="headerlink" title="Heapify 和 replace操作"></a>Heapify 和 replace操作</h2><h3 id="replace"><a href="#replace" class="headerlink" title="replace"></a>replace</h3><p>replace：取出最大元素后放入新元素</p>
+<ul>
+<li>step1: extractMax -&gt; step2: add (2O(logn))</li>
+<li>setp1: 替换堆顶元素 -&gt; step2: Sift Down (O(logn))<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//取出堆中的最大元素，并替换成e</div><div class="line">public E replace(E e)&#123;</div><div class="line">    E ret = findMax();</div><div class="line">    data.set(0,e);</div><div class="line">    siftDown(0);</div><div class="line">    return ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Heapify"><a href="#Heapify" class="headerlink" title="Heapify"></a>Heapify</h3><p>将任意数组整理成堆的形状</p>
+<ul>
+<li>扫描数组，放如堆的新的对象中再返回 (O(nlogn))</li>
+<li>可以先把数组看成一棵完全二叉树,从最后一个非叶子节点开始进行<code>Sift Down</code>操作。(找到最后一个非叶子节点的方法：拿到最后一个节点的索引，然后计算他的父亲节点的索引即可) step1: 找到最后一个非叶子节点，进行<code>Sift Down</code>操作 step2: 倒数第二个非叶子节点进行<code>Sift Down</code>操作 … 以此类推 直到索引为0的非叶子节点完成<code>Sift Down</code>操作  O(n)</li>
+<li>Heapify一般可以在构造函数中进行(用一个数组初始化堆)),所以Array类也要支持一个用数组初始化动态数组的构造函数</li>
+</ul>
+<p>Array类的构造函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public Array(E[] arr)  &#123;</div><div class="line">  data = (E[])new Object[arr.length];</div><div class="line">  for(int i = 0 ; i &lt; arr.length ; i ++)&#123;</div><div class="line">    data[i] = arr[i];</div><div class="line">  &#125;</div><div class="line">  size = arr.length;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>MaxHeap的构造函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public MaxHeap(E[] arr)&#123;</div><div class="line">  data = new Array&lt;&gt;(arr);</div><div class="line">  for(int i = parent(arr.length - 1) ; i &gt;= 0 ; i--)</div><div class="line">  siftDown(i);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="优先队列"><a href="#优先队列" class="headerlink" title="优先队列"></a>优先队列</h1><p>优先队列就是一个队列，要满足队列的所有属性方法，所以要实现队列接口，关于队列的实现见：<a href="https://homxuwang.github.io/2018/07/17/%E5%AE%9E%E7%8E%B0%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" target="_blank" rel="external">https://homxuwang.github.io/2018/07/17/%E5%AE%9E%E7%8E%B0%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</a></p>
+<p>优先队列的底层是使用堆来实现，同样还是以最大堆为例。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class PriorityQueue&lt;E extends Comparable&lt;E&gt;&gt; implements Queue&lt;E&gt; &#123;</div><div class="line">    private MaxHeap&lt;E&gt; maxHeap;</div><div class="line">    public PriorityQueue()&#123;</div><div class="line">        maxHeap = new MaxHeap&lt;&gt;();</div><div class="line">    &#125;</div><div class="line">    @Override</div><div class="line">    public int getSize() &#123;</div><div class="line">        return maxHeap.size();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public boolean isEmpty() &#123;</div><div class="line">        return maxHeap.isEmpty();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void enqueue(E e) &#123;</div><div class="line">        maxHeap.add(e);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public E dequeue() &#123;</div><div class="line">        return maxHeap.extractMax();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public E getFront() &#123;</div><div class="line">        return maxHeap.findMax();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>java.util中的PriorityQueue默认是用的最小堆，具体方法名也有一些区别</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://github.com/homxuwang/blog_source/blob/master/_posts/pay/wechat.png?raw=true',
+  alipayImage: 'https://github.com/homxuwang/blog_source/blob/master/_posts/pay/alipay.png?raw=true'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Homxu</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2018/08/12/实现优先队列/" target="_blank" title="实现优先队列">http://homxu.com/2018/08/12/实现优先队列/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/04/用户日志统计分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">用户日志统计分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#堆"><span class="nav-number">1.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆的表示方法——数组"><span class="nav-number">1.1.</span> <span class="nav-text">堆的表示方法——数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heapify-和-replace操作"><span class="nav-number">1.2.</span> <span class="nav-text">Heapify 和 replace操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#replace"><span class="nav-number">1.2.1.</span> <span class="nav-text">replace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heapify"><span class="nav-number">1.2.2.</span> <span class="nav-text">Heapify</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优先队列"><span class="nav-number">2.</span> <span class="nav-text">优先队列</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Homxu
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Homxu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
