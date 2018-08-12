@@ -118,13 +118,13 @@
             <div class="navbar-collapse collapse">
               <ul class="hnav navbar-nav">
                 
-                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Categorieën</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/tags">Labels</a> </li>
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
                   <li> <a class="main-nav-link" href="/about">About</a> </li>
                 
@@ -140,7 +140,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -152,11 +152,11 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Beiträge',
-            PAGES: 'Seiten',
-            CATEGORIES: 'Kategorien',
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
             TAGS: 'Tags',
-            UNTITLED: '(Unbenannt)',
+            UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
         CONTENT_URL: '/content.json',
@@ -271,7 +271,7 @@ var a = new Donate({
   btnText: 'Donate', // 可选参数，打赏按钮文字
   el: document.getElementById('donation_div'),
   wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
-  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png'
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
 });
 </script>
       
@@ -330,7 +330,7 @@ var a = new Donate({
 <nav id="article-nav">
   
     <a href="/2018/06/05/Vue-cli-目录结构笔记-及-一个简单电商项目的网页架构思路/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           Vue-cli 目录结构笔记 及 一个简单电商项目的网页架构思路
@@ -340,7 +340,7 @@ var a = new Donate({
   
   
     <a href="/2018/05/22/大数据基础学习笔记（九）——流计算/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">大数据基础学习笔记（九）——流计算</div>
     </a>
   
@@ -353,7 +353,7 @@ var a = new Donate({
 
   <aside id="toc-sidebar">
     <div id="toc" class="toc-article">
-    <strong class="toc-title">Inhalt</strong>
+    <strong class="toc-title">Contents</strong>
     
         <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图结构数据"><span class="nav-number">1.</span> <span class="nav-text">图结构数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#传统图计算解决方案的不足之处"><span class="nav-number">2.</span> <span class="nav-text">传统图计算解决方案的不足之处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图计算通用软件"><span class="nav-number">3.</span> <span class="nav-text">图计算通用软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pregel"><span class="nav-number">4.</span> <span class="nav-text">Pregel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pregel图计算模型"><span class="nav-number">5.</span> <span class="nav-text">Pregel图计算模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图和顶点"><span class="nav-number">5.1.</span> <span class="nav-text">有向图和顶点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#顶点之间的消息传递"><span class="nav-number">5.2.</span> <span class="nav-text">顶点之间的消息传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pregel的计算过程"><span class="nav-number">5.3.</span> <span class="nav-text">Pregel的计算过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">5.4.</span> <span class="nav-text">实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pregel的C-API"><span class="nav-number">6.</span> <span class="nav-text">Pregel的C++ API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#消息传递机制"><span class="nav-number">6.1.</span> <span class="nav-text">消息传递机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combiner"><span class="nav-number">6.2.</span> <span class="nav-text">Combiner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Aggregator"><span class="nav-number">6.3.</span> <span class="nav-text">Aggregator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑改变"><span class="nav-number">6.4.</span> <span class="nav-text">拓扑改变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入和输出"><span class="nav-number">6.5.</span> <span class="nav-text">输入和输出</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pregel的体系结构"><span class="nav-number">7.</span> <span class="nav-text">Pregel的体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pregel的执行过程"><span class="nav-number">7.1.</span> <span class="nav-text">Pregel的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容错性"><span class="nav-number">7.2.</span> <span class="nav-text">容错性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Worker"><span class="nav-number">7.3.</span> <span class="nav-text">Worker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Master"><span class="nav-number">7.4.</span> <span class="nav-text">Master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Aggregator-1"><span class="nav-number">7.5.</span> <span class="nav-text">Aggregator</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pregel的应用实例——单源最短路径"><span class="nav-number">8.</span> <span class="nav-text">Pregel的应用实例——单源最短路径</span></a></li></ol>
     
