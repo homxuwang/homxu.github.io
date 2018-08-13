@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Homxu</title>
+  <title>实现线段树 | Homxu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="好好生活" />
@@ -11,17 +11,21 @@
   
   
   
-  <meta name="description" content="yVC3QOXWWb">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Homxu">
-<meta property="og:url" content="http://homxu.com/baidu_verify_yVC3QOXWWb.html">
+  <meta name="description" content="定义当更关心某个区间上的问题时，使用线段树（区间树）会更方便。  线段树是一种二叉搜索树 线段树每个节点存放一个区间内相应的信息 一般用静态数组表示 线段树不一定是一棵完全二叉树 线段树是平衡二叉树（最大深度和最小深度的差最大为1）   例如，如果线段树想表示区间的和，那么每个节点存放的不是对应的数组，而是这个区间的和。 线段树依然可以使用数组表示。那么对于一个区间有n个元素，数组的大小该如何确定">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现线段树">
+<meta property="og:url" content="http://homxu.com/2018/08/13/实现线段树/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="yVC3QOXWWb">
+<meta property="og:description" content="定义当更关心某个区间上的问题时，使用线段树（区间树）会更方便。  线段树是一种二叉搜索树 线段树每个节点存放一个区间内相应的信息 一般用静态数组表示 线段树不一定是一棵完全二叉树 线段树是平衡二叉树（最大深度和最小深度的差最大为1）   例如，如果线段树想表示区间的和，那么每个节点存放的不是对应的数组，而是这个区间的和。 线段树依然可以使用数组表示。那么对于一个区间有n个元素，数组的大小该如何确定">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-06T08:51:02.527Z">
+<meta property="og:image" content="http://homxu.com/2018/08/13/实现线段树/1.png">
+<meta property="og:image" content="http://homxu.com/2018/08/13/实现线段树/2.png">
+<meta property="og:updated_time" content="2018-08-13T12:37:01.595Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Homxu">
-<meta name="twitter:description" content="yVC3QOXWWb">
+<meta name="twitter:title" content="实现线段树">
+<meta name="twitter:description" content="定义当更关心某个区间上的问题时，使用线段树（区间树）会更方便。  线段树是一种二叉搜索树 线段树每个节点存放一个区间内相应的信息 一般用静态数组表示 线段树不一定是一棵完全二叉树 线段树是平衡二叉树（最大深度和最小深度的差最大为1）   例如，如果线段树想表示区间的和，那么每个节点存放的不是对应的数组，而是这个区间的和。 线段树依然可以使用数组表示。那么对于一个区间有n个元素，数组的大小该如何确定">
+<meta name="twitter:image" content="http://homxu.com/2018/08/13/实现线段树/1.png">
   
     <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
   
@@ -60,8 +64,6 @@
   
 
   
-    <link rel="stylesheet" href="/css/archive.css" >
-  
   
   
     <link rel="stylesheet" href="/css/vdonate.css" >
@@ -71,7 +73,7 @@
 
 
 
-  <body>
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
 
 
   
@@ -94,7 +96,7 @@
             
               <a class="brand" style="
                  margin-top: 0px;"  
-                 >
+                href="#" data-toggle="modal" data-target="#myModal" >
                   <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
               </a>
             
@@ -165,22 +167,53 @@
             
       <div id="content" class="outer">
         
-          <section id="main" style="float:none;"><article id="page-"  class="article article-type-page" itemscope itemprop="blogPost" >
+          <section id="main" style="float:none;"><article id="post-实现线段树" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      实现线段树
+    </h1>
+  
+
+      </header>
+    
     <div class="article-meta">
       
-	<a href="/baidu_verify_yVC3QOXWWb.html" class="article-date">
-	  <time datetime="2018-07-16T19:44:09.063Z" itemprop="datePublished">2018-07-17</time>
+	<a href="/2018/08/13/实现线段树/" class="article-date">
+	  <time datetime="2018-08-13T02:55:43.000Z" itemprop="datePublished">2018-08-13</time>
 	</a>
 
       
       
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        yVC3QOXWWb
+        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>当更关心某个区间上的问题时，使用线段树（区间树）会更方便。</p>
+<ul>
+<li>线段树是一种二叉搜索树</li>
+<li>线段树每个节点存放一个区间内相应的信息</li>
+<li>一般用静态数组表示</li>
+<li>线段树不一定是一棵完全二叉树</li>
+<li>线段树是平衡二叉树（最大深度和最小深度的差最大为1）</li>
+</ul>
+<p><img src="/2018/08/13/实现线段树/1.png" alt="线段树"></p>
+<p>例如，如果线段树想表示区间的和，那么每个节点存放的不是对应的数组，而是这个区间的和。</p>
+<p>线段树依然可以使用数组表示。<br>那么对于一个区间有n个元素，数组的大小该如何确定？<br>对于一个满二叉树，如果有h层（从0层到h-1层），那么h层就有<code>2^h-1</code>个节点，差不多是<code>2^h</code>，最后一层(h-1)层，有<code>2^(h-1)</code>个节点，最后一层的节点的数目大约是前面的几点数目之和。</p>
+<p>所以，如果用数组开辟空间，那么如果<code>n=2^k</code>(即恰好为2的整数次幂),需要2n的空间（这是满二叉树的情况），但是如果<code>n=2^k+1</code>（即n&gt;2^k,也就是最坏的情况），则需要4n的空间。</p>
+<p><img src="/2018/08/13/实现线段树/2.png" alt="线段树所需要的数组大小"></p>
+<p>结论：因为线段树不考虑添加元素，也就是区间的大小是固定的，所以使用4n的静态空间就可以满足所有情况。（这里有空间浪费）</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>线段树的根节点的信息，是两个孩子节点的信息的综合。比如求和，根节点的值就是左右孩子节点的值之和，依次类推，那么可以采用递归的方法进行求值。</p>
+
       
     </div>
     <footer class="article-footer">
@@ -206,7 +239,7 @@ var a = new Donate({
           </li>
           <li class="post-copyright-link">
           <strong>Post link:  </strong>
-          <a href="/baidu_verify_yVC3QOXWWb.html" target="_blank" title="">http://homxu.com/baidu_verify_yVC3QOXWWb.html</a>
+          <a href="/2018/08/13/实现线段树/" target="_blank" title="实现线段树">http://homxu.com/2018/08/13/实现线段树/</a>
           </li>
           <li class="post-copyright-license">
             <strong>Copyright Notice:   </strong>
@@ -250,10 +283,29 @@ var a = new Donate({
   </div>
   
     
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/12/实现优先队列/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Viejo</strong>
+      <div class="article-nav-title">实现优先队列</div>
+    </a>
+  
+</nav>
+
   
 </article>
 
 <!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li></ol>
+    
+    </div>
+  </aside>
 
 </section>
         
@@ -353,6 +405,8 @@ var a = new Donate({
 
 
 
+  <script src="/js/dialog.js"></script>
+
 
 
 
@@ -436,6 +490,8 @@ var a = new Donate({
   
   <a id="rocket" href="#top" class=""></a>
   <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
   
 </body>
 </html>
