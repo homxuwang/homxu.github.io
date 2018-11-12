@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>spring学习笔记-二 | Homxu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="好好生活" />
+  
+  
+  
+  
+  <meta name="description" content="使用注解配置Spring导入新的命名空间和依赖包导入方法参见Spring学习笔记-一，与导入beans命名空间类似。先导入spring-context-4.2.xsd，然后进行配置,还要在xml的Dsign视图下进行配置，在Prefix中填写context.同时需要导入依赖包spring-aop-4.2.4.RELEASE.jar. 使用注解代理配置文件12345&amp;lt;?xml version=">
+<meta name="keywords" content="JavaWeb,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习笔记-二">
+<meta property="og:url" content="http://homxu.com/2018/11/10/Spring学习笔记-二/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="使用注解配置Spring导入新的命名空间和依赖包导入方法参见Spring学习笔记-一，与导入beans命名空间类似。先导入spring-context-4.2.xsd，然后进行配置,还要在xml的Dsign视图下进行配置，在Prefix中填写context.同时需要导入依赖包spring-aop-4.2.4.RELEASE.jar. 使用注解代理配置文件12345&amp;lt;?xml version=">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-12T06:57:55.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习笔记-二">
+<meta name="twitter:description" content="使用注解配置Spring导入新的命名空间和依赖包导入方法参见Spring学习笔记-一，与导入beans命名空间类似。先导入spring-context-4.2.xsd，然后进行配置,还要在xml的Dsign视图下进行配置，在Prefix中填写context.同时需要导入依赖包spring-aop-4.2.4.RELEASE.jar. 使用注解代理配置文件12345&amp;lt;?xml version=">
+  
+    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/star.png">
+  <link rel="apple-touch-icon" href="/css/images/star.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Spring学习笔记-二" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Spring学习笔记-二
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/11/10/Spring学习笔记-二/" class="article-date">
+	  <time datetime="2018-11-10T01:13:56.000Z" itemprop="datePublished">2018-11-10</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="使用注解配置Spring"><a href="#使用注解配置Spring" class="headerlink" title="使用注解配置Spring"></a>使用注解配置Spring</h1><h2 id="导入新的命名空间和依赖包"><a href="#导入新的命名空间和依赖包" class="headerlink" title="导入新的命名空间和依赖包"></a>导入新的命名空间和依赖包</h2><p>导入方法参见<code>Spring学习笔记-一</code>，与导入<code>beans</code>命名空间类似。先导入<code>spring-context-4.2.xsd</code>，然后进行配置,还要在<code>xml</code>的<code>Dsign</code>视图下进行配置，在<code>Prefix</code>中填写<code>context</code>.<br>同时需要导入依赖包<code>spring-aop-4.2.4.RELEASE.jar</code>.</p>
+<h2 id="使用注解代理配置文件"><a href="#使用注解代理配置文件" class="headerlink" title="使用注解代理配置文件"></a>使用注解代理配置文件</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span> <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd "</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 扫描指定包名及其子包下的所有注解 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"my.study.bean2"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="在类中使用注解进行配置"><a href="#在类中使用注解进行配置" class="headerlink" title="在类中使用注解进行配置"></a>在类中使用注解进行配置</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.bean2;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"></div><div class="line"><span class="meta">@Component</span>(<span class="string">"user"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;	</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="keyword">private</span> Integer age;</div><div class="line">	<span class="keyword">private</span> Car car;	</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</div><div class="line">  System.out.println(<span class="string">"User 的空参构造方法被调用"</span>);</div><div class="line">  &#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> car;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCar</span><span class="params">(Car car)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.car = car;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> age;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.age = age;</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"User [name="</span> + name + <span class="string">", age="</span> + age + <span class="string">", car="</span> + car + <span class="string">"]"</span>;</div><div class="line">	&#125;	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注解<code>@Component(&quot;user&quot;)</code>相当于在配置文件中添加了<code>&lt;bean name=&quot;user&quot; class=&quot;my.study.bean2.User&quot;&gt;&lt;/bean&gt;</code><br>书写测试类，可以打印出：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">User 的空参构造方法被调用</div></pre></td></tr></table></figure></p>
+<p>除了<code>@Component</code>注解，还有<code>@Serviece</code>,<code>@Controller</code>,<code>@Repository</code>注解，它们和<code>@Component</code>没有什么区别，只是为了区分注解的对象是在哪一层，便于解读。<br><code>@Serviece</code>—Service层<br><code>@Controller</code>—Web层<br><code>@Repository</code>—DAO层</p>
+<h2 id="其他注解关键字"><a href="#其他注解关键字" class="headerlink" title="其他注解关键字"></a>其他注解关键字</h2><p><code>@Scope(scopeName=&quot;singleton|prototype&quot;)</code>—与<code>&lt;bean&gt;</code>中的<code>scope</code>关键字一样，默认为<code>singleton</code>.</p>
+<p><code>@Value()</code>—值类型注入<br> 1.—放在属性前面，里面填写要注入的值，表示要注入的属性的值<br>例如:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span>(<span class="string">"user"</span>)</div><div class="line"><span class="meta">@Scope</span>(scopeName=<span class="string">"prototype"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;	</div><div class="line">	<span class="meta">@Value</span>(<span class="string">"test1"</span>)</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="meta">@Value</span>(<span class="string">"11"</span>)</div><div class="line">	<span class="keyword">private</span> Integer age;</div><div class="line">	<span class="keyword">private</span> Car car;	</div><div class="line">  .....</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>就等于<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean <span class="built_in">name</span>=<span class="string">"User"</span> <span class="built_in">class</span>=<span class="string">"my.study.bean2.User"</span> scope=<span class="string">"prototype"</span>&gt;</div><div class="line">  &lt;<span class="keyword">property</span> <span class="built_in">name</span>=<span class="string">"name"</span> value=<span class="string">"test1"</span>&gt;&lt;/<span class="keyword">property</span>&gt;</div><div class="line">  &lt;<span class="keyword">property</span> <span class="built_in">name</span>=<span class="string">"age"</span> value=<span class="string">"11"</span>&gt;&lt;/<span class="keyword">property</span>&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>可以看打印结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">User 的空参构造方法被调用</div><div class="line">User [name=test1, age=<span class="number">11</span>, car=<span class="keyword">null</span>]</div></pre></td></tr></table></figure></p>
+<p>这种方式是通过反射的Field对属性赋值,破坏了封装性</p>
+<p> 2.—放在<code>set</code>方法前面，里面填写要注入的值，表示要注入的属性的值<br>如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Component</span>(<span class="string">"user"</span>)</div><div class="line"><span class="meta">@Scope</span>(scopeName=<span class="string">"prototype"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;	</div><div class="line">  ...</div><div class="line">  <span class="meta">@Value</span>(<span class="string">"test1"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">      <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line">  ...</div><div class="line">  <span class="meta">@Value</span>(value=<span class="string">"11"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.age = age;</div><div class="line">	&#125;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方式通过set方法赋值,没有破坏封装性.</p>
+<p><code>@Autowired</code>—自动装配引用类型注入</p>
+<p>先将要注入的对象注册到容器中，可以在这个对象中先注入各种类型，然后使用<code>@Autowired</code>注入到当前类。<br>缺点：如果是匹配到多个类型一致的对象，无法选择注入哪一个</p>
+<p><code>@Qualifier()</code>—指定要注入的对象的名称(即<code>name=&quot;&quot;</code>)</p>
+<p><code>@Resource(name=&quot;&quot;)</code>—手动注入，指定注入哪个名称的对象</p>
+<p><code>@PostContruct</code>—在初始化方法前添加此注解,对象被创建后调用,类似于<code>init-method</code></p>
+<p><code>@PreDestory</code>—在销毁前调用,相当于<code>destory-method</code></p>
+<h1 id="Spring中的AOP"><a href="#Spring中的AOP" class="headerlink" title="Spring中的AOP"></a>Spring中的AOP</h1><h2 id="手动实现AOP"><a href="#手动实现AOP" class="headerlink" title="手动实现AOP"></a>手动实现AOP</h2><p>简要概括AOP思想就是<code>面向切面编程,横向重复,纵向抽取</code>.</p>
+<p>首先Spring能够为容器中管理的对象生成动态代理对象。以前要使用<code>Proxy.newProxyInstance(xx,xx,xx)</code>生成代理对象.而现在Spring只需通过配置就可以生成代理对象。通过这个功能，就可以使用AOP思想进行开发。</p>
+<p>Srping实现AOP的原理：<br>1.<code>动态代理</code>—但是，被代理对象必须要实现接口，才能产生代理对象.没有借口不能实现动态代理.如果有接口，优先使用动态代理</p>
+<p>2.<code>cglib代理</code>—cglib代理属于第三方代理技术.可以对任何类生成代理.代理的原理是对目标对象进行继承代理. 如果目标对象被final修饰.那么该类无法被cglib代理.如果没有借口，实现此代理</p>
+<p>手动实现AOP:<br>1.创建一个<code>UserService</code>接口，定义<code>UserServiceImpl</code>类要实现这个接口的方法..创建UserService代理工厂<code>UserServiceProxyFactory</code>,提供一个工厂方法，返回<code>UserService</code>对象.在方法中生成代理并返回UserService对象.</p>
+<p>现在需要在调用<code>UserServiceImpl</code>的每一个方法(<code>save</code>,<code>delete</code>,<code>update</code>,<code>find</code>)之前都进行一个操作(比如打开事务),之后都进行另一个操作(比如提交事务).<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.service;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">()</span></span>;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">()</span></span>;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">find</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.service;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceImpl</span> <span class="keyword">implements</span> <span class="title">UserService</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"保存用户!"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"删除用户!"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"更新用户!"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">find</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"查找用户!"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.proxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> cn.itcast.service.UserService;</div><div class="line"><span class="keyword">import</span> cn.itcast.service.UserServiceImpl;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceProxyFactory</span>  <span class="keyword">implements</span> <span class="title">InvocationHandler</span></span>&#123;</div><div class="line">  <span class="comment">//定义构造方法，必须传入当前代理对象的实例</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">UserServiceProxyFactory</span><span class="params">(UserService us)</span> </span>&#123;</div><div class="line">      <span class="keyword">super</span>();</div><div class="line">      <span class="keyword">this</span>.us = us;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//定义传入当前代理对象的实例</span></div><div class="line">	<span class="keyword">private</span> UserService us;</div><div class="line">  <span class="comment">//返回代理对象</span></div><div class="line">  <span class="comment">// 编写工具方法：生成动态代理</span></div><div class="line">  <span class="function"><span class="keyword">public</span> UserService <span class="title">getUserServiceProxy</span><span class="params">()</span></span>&#123;</div><div class="line">  <span class="comment">//第一个参数传入类加载器,第二个参数传入被代理对象所实现的接口,第三个参数要说明这次代理要怎么增强，即增强的内容，要传入一个InvocationHandler</span></div><div class="line">  UserService usProxy = (UserService) Proxy.newProxyInstance(UserServiceProxyFactory.class.getClassLoader(),</div><div class="line">                UserServiceImpl.class.getInterfaces(), </div><div class="line">                <span class="keyword">this</span>);</div><div class="line">  <span class="comment">//返回</span></div><div class="line">  <span class="keyword">return</span> usProxy;</div><div class="line">	&#125;</div><div class="line">  <span class="comment">//实现接口</span></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="comment">//第一个参数是当前代理对象的实例,第二个参数是当前调用的方法,第三个参数是当前方法执行时的参数</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object arg0, Method method, Object[] arg2)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">    <span class="comment">//业务方法执行前需要进行的操作，这里是打开事务</span></div><div class="line">		System.out.println(<span class="string">"打开事务!"</span>);</div><div class="line">    <span class="comment">//传入当前代理对象的实例us作为运行所在类</span></div><div class="line">    <span class="comment">//业务方法的执行</span></div><div class="line">		Object invoke = method.invoke(us, arg2);</div><div class="line">    <span class="comment">//业务方法执行后要执行的操作，这里是提交事务</span></div><div class="line">		System.out.println(<span class="string">"提交事务!"</span>);</div><div class="line">		<span class="keyword">return</span> invoke;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>书写测试代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="meta">@Test</span></div><div class="line">	<span class="comment">//动态代理</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="comment">//创建被代理对象</span></div><div class="line">		UserService us = <span class="keyword">new</span> UserServiceImpl();</div><div class="line">		<span class="comment">//创建Factory,传入被代理对象</span></div><div class="line">		UserServiceProxyFactory factory = <span class="keyword">new</span> UserServiceProxyFactory(us);</div><div class="line">		<span class="comment">//调用getUserServiceProxy()方法，返回代理对象</span></div><div class="line">		UserService usProxy = factory.getUserServiceProxy();</div><div class="line">		<span class="comment">//调用代理对象的增加方法</span></div><div class="line">		usProxy.save();</div><div class="line">		</div><div class="line">		<span class="comment">//代理对象与被代理对象实现了相同的接口</span></div><div class="line">		<span class="comment">//代理对象 与 被代理对象没有继承关系</span></div><div class="line">		System.out.println(usProxy <span class="keyword">instanceof</span> UserServiceImpl );<span class="comment">//false</span></div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>打印结果:<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="string">打开事务！</span></div><div class="line"><span class="string">保存用户！</span></div><div class="line"><span class="string">提交事务！</span></div><div class="line"><span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<p>2.使用cglib方式实现AOP</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.proxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.lang.reflect.InvocationHandler;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"><span class="keyword">import</span> java.lang.reflect.Proxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.Callback;</div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.Enhancer;</div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.MethodInterceptor;</div><div class="line"><span class="keyword">import</span> org.springframework.cglib.proxy.MethodProxy;</div><div class="line"></div><div class="line"><span class="keyword">import</span> cn.itcast.service.UserService;</div><div class="line"><span class="keyword">import</span> cn.itcast.service.UserServiceImpl;</div><div class="line"></div><div class="line"><span class="comment">//cglib代理</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceProxyFactory2</span> <span class="keyword">implements</span> <span class="title">MethodInterceptor</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> UserService <span class="title">getUserServiceProxy</span><span class="params">()</span></span>&#123;</div><div class="line">		<span class="comment">// 创建 Cglib 的核心类:</span></div><div class="line">		Enhancer en = <span class="keyword">new</span> Enhancer();<span class="comment">//帮我们生成代理对象</span></div><div class="line">		<span class="comment">// 设置父类:</span></div><div class="line">		en.setSuperclass(UserServiceImpl.class);<span class="comment">//设置对谁进行代理</span></div><div class="line">		<span class="comment">// 设置父类:</span></div><div class="line">		en.setCallback(<span class="keyword">this</span>);<span class="comment">//代理要做什么</span></div><div class="line">		<span class="comment">// 生成代理：</span></div><div class="line">		UserService us = (UserService) en.create();<span class="comment">//创建代理对象</span></div><div class="line">		</div><div class="line">		<span class="keyword">return</span> us;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object prxoyobj, Method method, Object[] arg, MethodProxy methodProxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">		<span class="comment">//打开事务</span></div><div class="line">		System.out.println(<span class="string">"打开事务!"</span>);</div><div class="line">		<span class="comment">//调用原有方法</span></div><div class="line">		Object returnValue = methodProxy.invokeSuper(prxoyobj, arg);</div><div class="line">		<span class="comment">//提交事务</span></div><div class="line">		System.out.println(<span class="string">"提交事务!"</span>);</div><div class="line">		</div><div class="line">		<span class="keyword">return</span> returnValue;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>书写测试代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</div><div class="line">  </div><div class="line">  UserServiceProxyFactory2 factory = <span class="keyword">new</span> UserServiceProxyFactory2();</div><div class="line">  </div><div class="line">  UserService usProxy = factory.getUserServiceProxy();</div><div class="line">  </div><div class="line">  usProxy.save();</div><div class="line">  </div><div class="line">  <span class="comment">//判断代理对象是否属于被代理对象类型</span></div><div class="line">  <span class="comment">//代理对象继承了被代理对象=&gt;true</span></div><div class="line">  System.out.println(usProxy <span class="keyword">instanceof</span> UserServiceImpl );<span class="comment">//true</span></div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>打印结果:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">打开事务！</div><div class="line">保存用户！</div><div class="line">提交事务！</div><div class="line"><span class="keyword">true</span></div></pre></td></tr></table></figure></p>
+<h2 id="AOP相关术语"><a href="#AOP相关术语" class="headerlink" title="AOP相关术语"></a>AOP相关术语</h2><p><code>Joinpoint</code>(连接点):所谓连接点是指那些被拦截到的点。在 spring 中,这些点指的是方法,因为 spring 只支持方法类型的连接点.即目标对象中，所有可以增强的方法。</p>
+<p><code>Pointcut</code>(切入点):所谓切入点是指我们要对哪些 Joinpoint 进行拦截的定义.即目标对象，已经增强的方法(已经增强了的连接点)。</p>
+<p><code>Advice</code>(通知/增强):所谓通知是指拦截到 Joinpoint 之后所要做的事情就是通知.通知分为前置通知,后置通知,异常通知,最终通知,环绕通知(切面要完成的功能)。即增强的代码,也就是上面的例子中的<code>System.out.println(&quot;打开事务!&quot;);</code>和<code>System.out.println(&quot;提交事务!&quot;);</code></p>
+<p><code>Introduction</code>(引介):引介是一种特殊的通知在不修改类代码的前提下, ntroduction 可以在运行期为类动态地添加一些方法或 Field.</p>
+<p><code>Target</code>(目标对象):代理的目标对象.即被代理对象</p>
+<p><code>Weaving</code>(织入):是指把增强应用到目标对象来创建新的代理对象的过程.spring 采用动态代理织入，而 AspectJ 采用编译期织入和类装在期织入.指的是将通知应用到连接点，形成切入点的过程(成形代理过程).</p>
+<p><code>Proxy</code>（代理）:一个类被 AOP 织入增强后，就产生一个结果代理类.(将通知织入到目标对象后，形成代理对象)</p>
+<p><code>Aspect</code>(切面): 是切入点和通知（引介）的结合,即切入点+通知</p>
+<h2 id="Spring中AOP的使用-xml配置"><a href="#Spring中AOP的使用-xml配置" class="headerlink" title="Spring中AOP的使用(xml配置)"></a>Spring中AOP的使用(xml配置)</h2><p>Spring中封装了动态代理的代码，所以不需要自己手写动态代理代码来实现AOP了。</p>
+<p>需要第三方依赖包<code>com.springsource.org.aopalliance-1.0.0.jar</code>、<code>com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar</code>(具体版本可自己选择其他的)</p>
+<h3 id="准备目标对象"><a href="#准备目标对象" class="headerlink" title="准备目标对象"></a>准备目标对象</h3><p>使用上一节中的<code>UserServiceImpl</code>类.</p>
+<h3 id="准备通知"><a href="#准备通知" class="headerlink" title="准备通知"></a>准备通知</h3><p>通知类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.e_springaop;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdvice</span> </span>&#123;	</div><div class="line">	<span class="comment">//前置通知  目标方法运行之前调用</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"前置通知"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//后置通知(如果出现异常不调用) 目标方法运行之后调用</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterNoExc</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"后置通知(如果出现异常不调用)"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//环绕通知 目标方法之前和之后都调用</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint pjp)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">		System.out.println(<span class="string">"环绕通知,前置部分"</span>);</div><div class="line">		Object proceed = pjp.proceed();</div><div class="line">		System.out.println(<span class="string">"环绕通知,后置部分"</span>);</div><div class="line">		<span class="keyword">return</span> proceed;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//异常拦截通知  如果出现异常则调用</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exc</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"异常拦截通知"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//后置通知(无论是否出现异常都会调用)</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterWithExc</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"后置通知(无论是否出现异常都会调用)"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="配置进行织入-将通知织入目标对象中"><a href="#配置进行织入-将通知织入目标对象中" class="headerlink" title="配置进行织入,将通知织入目标对象中"></a>配置进行织入,将通知织入目标对象中</h3><p>首先导入aop的xml约束（命名空间），方法和之前的类似。</p>
+<p>在<code>my.study.e_springaop</code>包内书写配置文件:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span> <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd "</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 配置目标对象 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"userServiceTarget"</span> <span class="attr">class</span>=<span class="string">"my.study.service.UserServiceImpl"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 配置通知对象 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"myAdvice"</span> <span class="attr">class</span>=<span class="string">"my.study.e_springaop.MyAdvice"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 配置将通知织入目标对象 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">aop:config</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 配置切入点 --&gt;</span></div><div class="line">		<span class="comment">&lt;!-- id可以自定义</span></div><div class="line"><span class="comment">			 expression="execute()"为固定格式，传参为：</span></div><div class="line"><span class="comment">			 	public void my.study.service.UserServiceImpl.save()</span></div><div class="line"><span class="comment">			 	默认为public:</span></div><div class="line"><span class="comment">			 	void my.study.service.UserServiceImpl.save()</span></div><div class="line"><span class="comment">			 	返回值为任意的函数:</span></div><div class="line"><span class="comment">			 	* my.study.service.UserServiceImpl.save()</span></div><div class="line"><span class="comment">			 	UserServiceImpl类下的所有方法:</span></div><div class="line"><span class="comment">			 	* my.study.service.UserServiceImpl.*()</span></div><div class="line"><span class="comment">			 	</span></div><div class="line"><span class="comment">			 	参数为任意:</span></div><div class="line"><span class="comment">			 	* my.study.service.*ServiceImpl.*(..)</span></div><div class="line"><span class="comment">			 	my.study.service包下及其子包下的所有以ServiceImpl为结尾的类的所有方法:</span></div><div class="line"><span class="comment">			 	* my.study.service..*ServiceImpl.*()</span></div><div class="line"><span class="comment">		 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">aop:pointcut</span> <span class="attr">expression</span>=<span class="string">"execution(* my.study.service.*ServiceImpl.*(..))"</span> <span class="attr">id</span>=<span class="string">"demo"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">aop:aspect</span> <span class="attr">ref</span>=<span class="string">"myAdvice"</span>&gt;</span></div><div class="line">			<span class="comment">&lt;!-- 指定myAdvice中的before方法切入到demo这个切入点中 --&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">aop:before</span> <span class="attr">method</span>=<span class="string">"before"</span> <span class="attr">pointcut-ref</span>=<span class="string">"demo"</span>/&gt;</span></div><div class="line">			<span class="comment">&lt;!-- 其他几个类似 --&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">aop:after-returning</span> <span class="attr">method</span>=<span class="string">"afterNoexc"</span> <span class="attr">pointcut-ref</span>=<span class="string">"demo"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">aop:around</span> <span class="attr">method</span>=<span class="string">"around"</span> <span class="attr">pointcut-ref</span>=<span class="string">"demo"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">aop:after-throwing</span> <span class="attr">method</span>=<span class="string">"exc"</span> <span class="attr">pointcut-ref</span>=<span class="string">"demo"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">aop:after</span> <span class="attr">method</span>=<span class="string">"afterWithExc"</span> <span class="attr">pointcut-ref</span>=<span class="string">"demo"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">aop:aspect</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>书写测试类:<br>使用了spring与junit整合测试:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.e_springaop;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.annotation.Resource;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</div><div class="line"><span class="keyword">import</span> org.springframework.test.context.ContextConfiguration;</div><div class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</div><div class="line"></div><div class="line"><span class="keyword">import</span> my.study.service.UserService;</div><div class="line"><span class="comment">//创建容器</span></div><div class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</div><div class="line"><span class="meta">@ContextConfiguration</span>(<span class="string">"classpath:my/study/e_springaop/applicationContext.xml"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</div><div class="line">	<span class="meta">@Resource</span>(name=<span class="string">"userServiceTarget"</span>)</div><div class="line">	<span class="keyword">private</span> UserService us;</div><div class="line">	</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</div><div class="line">		us.save();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>打印结果:<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">前置通知</div><div class="line">环绕通知,前置部分</div><div class="line">保存用户!</div><div class="line">后置通知<span class="comment">(无论是否出现异常都会调用)</span></div><div class="line">环绕通知,后置部分</div><div class="line">后置通知<span class="comment">(如果出现异常不调用)</span></div></pre></td></tr></table></figure></p>
+<h2 id="Spring中AOP的使用-注解配置"><a href="#Spring中AOP的使用-注解配置" class="headerlink" title="Spring中AOP的使用(注解配置)"></a>Spring中AOP的使用(注解配置)</h2><p>注解配置的步骤和使用xml配置的步骤类似，只是在配置文件中不需要使用<code>&lt;aop:config /&gt;</code>标签进行配置，而是在配置文件中开启注解，继续接下来的配置。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span> <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span> <span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd "</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 配置目标对象 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"userServiceTarget"</span> <span class="attr">class</span>=<span class="string">"my.study.service.UserServiceImpl"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 配置通知对象 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"myAdvice"</span> <span class="attr">class</span>=<span class="string">"my.study.f_springannotionaop.MyAdvice"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 开启使用注解完成织入 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span>&gt;</span><span class="tag">&lt;/<span class="name">aop:aspectj-autoproxy</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在<code>my.study.f_springannotionaop</code>包下的<code>MyAdvice</code>类中，添加注解：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.f_springannotionaop;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.After;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterReturning;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.AfterThrowing;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Around;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</div><div class="line"></div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAdvice</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="meta">@Pointcut</span>(<span class="string">"execution(* my.study.service.*ServiceImpl.*(..))"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cut</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line">	</div><div class="line">	<span class="comment">//前置通知  目标方法运行之前调用</span></div><div class="line">	<span class="meta">@Before</span>(<span class="string">"MyAdvice.cut()"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"前置通知"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//后置通知(如果出现异常不调用) 目标方法运行之后调用</span></div><div class="line">	<span class="meta">@AfterReturning</span>(<span class="string">"execution(* my.study.service.*ServiceImpl.*(..))"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterNoExc</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"后置通知(如果出现异常不调用)"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//环绕通知 目标方法之前和之后都调用</span></div><div class="line">	<span class="meta">@Around</span>(<span class="string">"execution(* my.study.service.*ServiceImpl.*(..))"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">around</span><span class="params">(ProceedingJoinPoint pjp)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">		System.out.println(<span class="string">"环绕通知,前置部分"</span>);</div><div class="line">		Object proceed = pjp.proceed();</div><div class="line">		System.out.println(<span class="string">"环绕通知,后置部分"</span>);</div><div class="line">		<span class="keyword">return</span> proceed;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//异常拦截通知  如果出现异常则调用</span></div><div class="line">	<span class="meta">@AfterThrowing</span>(<span class="string">"execution(* my.study.service.*ServiceImpl.*(..))"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">exc</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"异常拦截通知"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//后置通知(无论是否出现异常都会调用)</span></div><div class="line">	<span class="meta">@After</span>(<span class="string">"execution(* my.study.service.*ServiceImpl.*(..))"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterWithExc</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"后置通知(无论是否出现异常都会调用)"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>@Aspect</code>表示该类是一个通知类<br><code>@Before(&quot;execution(* my.study.service.*ServiceImpl.*(..))&quot;)</code>表示该通知是一个前置通知，参数为<code>execution(* my.study.service.*ServiceImpl.*(..))&quot;)</code>进行指定切入点.<br><code>@AfterReturning(&quot;execution(* my.study.service.*ServiceImpl.*(..))&quot;)</code>表示该通知是一个后置通知.<br><code>@Around(&quot;execution(* my.study.service.*ServiceImpl.*(..))&quot;)</code>表示该通知是一个环绕通知<br><code>@AfterThrowing(&quot;execution(* my.study.service.*ServiceImpl.*(..))&quot;)</code>表示该通知是一个异常拦截通知<br><code>@After(&quot;execution(* my.study.service.*ServiceImpl.*(..))&quot;)</code>表示该通知是一个后置通知<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Pointcut</span>(<span class="string">"execution(* my.study.service.*ServiceImpl.*(..))"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">cut</span><span class="params">()</span> </span>&#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Before</span>(<span class="string">"MyAdvice.cut()"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">before</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"前置通知"</span>);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>其中    <code>@Before(&quot;MyAdvice.cut()&quot;)</code>就等于<code>@Before(&quot;execution(* my.study.service.*ServiceImpl.*(..))&quot;)</code>，这样方便管理切入点</p>
+<p>书写测试类，并打印结果:<br><figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">环绕通知,前置部分</div><div class="line">前置通知</div><div class="line">保存用户!</div><div class="line">环绕通知,后置部分</div><div class="line">后置通知<span class="comment">(无论是否出现异常都会调用)</span></div><div class="line">后置通知<span class="comment">(如果出现异常不调用)</span></div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Homxu</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2018/11/10/Spring学习笔记-二/" target="_blank" title="Spring学习笔记-二">http://homxu.com/2018/11/10/Spring学习笔记-二/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/09/Spring学习笔记-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Spring学习笔记-一</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用注解配置Spring"><span class="nav-number">1.</span> <span class="nav-text">使用注解配置Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#导入新的命名空间和依赖包"><span class="nav-number">1.1.</span> <span class="nav-text">导入新的命名空间和依赖包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用注解代理配置文件"><span class="nav-number">1.2.</span> <span class="nav-text">使用注解代理配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在类中使用注解进行配置"><span class="nav-number">1.3.</span> <span class="nav-text">在类中使用注解进行配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他注解关键字"><span class="nav-number">1.4.</span> <span class="nav-text">其他注解关键字</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring中的AOP"><span class="nav-number">2.</span> <span class="nav-text">Spring中的AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#手动实现AOP"><span class="nav-number">2.1.</span> <span class="nav-text">手动实现AOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOP相关术语"><span class="nav-number">2.2.</span> <span class="nav-text">AOP相关术语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring中AOP的使用-xml配置"><span class="nav-number">2.3.</span> <span class="nav-text">Spring中AOP的使用(xml配置)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备目标对象"><span class="nav-number">2.3.1.</span> <span class="nav-text">准备目标对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备通知"><span class="nav-number">2.3.2.</span> <span class="nav-text">准备通知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置进行织入-将通知织入目标对象中"><span class="nav-number">2.3.3.</span> <span class="nav-text">配置进行织入,将通知织入目标对象中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring中AOP的使用-注解配置"><span class="nav-number">2.4.</span> <span class="nav-text">Spring中AOP的使用(注解配置)</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Homxu
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Homxu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
