@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>mybatis学习笔记-二 | Homxu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="好好生活" />
+  
+  
+  
+  
+  <meta name="description" content="parameterType(输入类型)传递简单类型和传递pojo对象简单类型：使用#{}占位符，或者${}进行sql拼接。 opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}括号中的值为pojo属性名称。 传递pojo包装对象开发中通过可以使用pojo传递查询条件。查询条件可能是综合的查询条件，不仅包括用户查询条件还包括其它的查询条件（比如查询用户信息的时候，将用户购">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis学习笔记-二">
+<meta property="og:url" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="parameterType(输入类型)传递简单类型和传递pojo对象简单类型：使用#{}占位符，或者${}进行sql拼接。 opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}括号中的值为pojo属性名称。 传递pojo包装对象开发中通过可以使用pojo传递查询条件。查询条件可能是综合的查询条件，不仅包括用户查询条件还包括其它的查询条件（比如查询用户信息的时候，将用户购">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/1.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/2.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/3.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/4.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/5.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/6.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/7.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/8.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/9.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/10.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/11.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/12.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/13.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/15.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/14.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/16.png">
+<meta property="og:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/17.png">
+<meta property="og:updated_time" content="2018-11-28T11:51:27.099Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mybatis学习笔记-二">
+<meta name="twitter:description" content="parameterType(输入类型)传递简单类型和传递pojo对象简单类型：使用#{}占位符，或者${}进行sql拼接。 opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}括号中的值为pojo属性名称。 传递pojo包装对象开发中通过可以使用pojo传递查询条件。查询条件可能是综合的查询条件，不仅包括用户查询条件还包括其它的查询条件（比如查询用户信息的时候，将用户购">
+<meta name="twitter:image" content="http://homxu.com/2018/11/21/Mybatis学习笔记-二/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/star.png">
+  <link rel="apple-touch-icon" href="/css/images/star.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Mybatis学习笔记-二" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Mybatis学习笔记-二
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/11/21/Mybatis学习笔记-二/" class="article-date">
+	  <time datetime="2018-11-21T11:56:31.000Z" itemprop="datePublished">2018-11-21</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="parameterType-输入类型"><a href="#parameterType-输入类型" class="headerlink" title="parameterType(输入类型)"></a>parameterType(输入类型)</h1><h2 id="传递简单类型和传递pojo对象"><a href="#传递简单类型和传递pojo对象" class="headerlink" title="传递简单类型和传递pojo对象"></a>传递简单类型和传递pojo对象</h2><p>简单类型：使用#{}占位符，或者${}进行sql拼接。</p>
+<p>opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}括号中的值为pojo属性名称。</p>
+<h2 id="传递pojo包装对象"><a href="#传递pojo包装对象" class="headerlink" title="传递pojo包装对象"></a>传递pojo包装对象</h2><p>开发中通过可以使用pojo传递查询条件。<br>查询条件可能是综合的查询条件，不仅包括用户查询条件还包括其它的查询条件（比如查询用户信息的时候，将用户购买商品信息也作为查询条件），这时可以使用包装对象传递输入参数。</p>
+<p>包装对象：Pojo类中的一个属性是另外一个pojo。</p>
+<p>需求：根据用户名模糊查询用户信息，查询条件放到QueryVo的user属性中。</p>
+<p>在<code>Mybatis学习笔记-一</code>的基础上，继续编写<code>QueryVo</code>类进行开发:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.pojo;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueryVo</span> </span>&#123;</div><div class="line">	<span class="comment">//包含其他的pojo</span></div><div class="line">	<span class="keyword">private</span> User user;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> user;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUser</span><span class="params">(User user)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.user = user;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在<code>my.study.mapper</code>包下的<code>User.xml</code>中书写sql语句:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 使用包装类型查询用户 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserByQueryVo"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.pojo.QueryVo"</span> <span class="attr">resultType</span>=<span class="string">"my.study.pojo.User"</span>&gt;</span></div><div class="line">		select * from user where username like "%"#&#123;user.username&#125;"%"</div><div class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在<code>UserMapper.java</code>接口中添加方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.mapper;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> my.study.pojo.QueryVo;</div><div class="line"><span class="keyword">import</span> my.study.pojo.User;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> User <span class="title">findUserById</span><span class="params">(Integer id)</span></span>;</div><div class="line">	<span class="comment">//添加方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">findUserByQueryVo</span><span class="params">(QueryVo vo)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>书写测试代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testfindUserByQueryVo</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">	<span class="comment">//1.加载核心配置文件</span></div><div class="line">	String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">	InputStream in = Resources.getResourceAsStream(resource);</div><div class="line">	<span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">	SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div><div class="line">	<span class="comment">//3.创建SqlSession</span></div><div class="line">	SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">	<span class="comment">//4.SqlSession根据接口生成一个实现类</span></div><div class="line">	UserMapper mapper = sqlSession.getMapper(UserMapper.class);</div><div class="line">	</div><div class="line">	QueryVo vo =<span class="keyword">new</span> QueryVo();</div><div class="line">	User u = <span class="keyword">new</span> User();</div><div class="line">	u.setUsername(<span class="string">"五"</span>);</div><div class="line">	vo.setUser(u);</div><div class="line">	List&lt;User&gt; us = mapper.findUserByQueryVo(vo);</div><div class="line">	<span class="keyword">for</span>(User user:us) &#123;</div><div class="line">		System.out.println(user);</div><div class="line">	&#125;		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/11/21/Mybatis学习笔记-二/1.png" alt="结果"></p>
+<h1 id="resultType-输出类型"><a href="#resultType-输出类型" class="headerlink" title="resultType(输出类型)"></a>resultType(输出类型)</h1><h2 id="输出简单类型"><a href="#输出简单类型" class="headerlink" title="输出简单类型"></a>输出简单类型</h2><p>需求：查询user的数量</p>
+<p>在<code>UserMapper.java</code>接口中添加方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">  <span class="comment">//查询数据条数</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">findUserCount</span><span class="params">()</span></span>;</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>Mapper.xml中添加查询语句:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 查询用户条数 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"findUserCount"</span> <span class="attr">resultType</span>=<span class="string">"Integer"</span>&gt;</span></div><div class="line">		select count(*) from user</div><div class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>书写测试类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//查询用户条数</span></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testfindUserCount</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">	<span class="comment">//1.加载核心配置文件</span></div><div class="line">	String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">	InputStream in = Resources.getResourceAsStream(resource);</div><div class="line">	<span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">	SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div><div class="line">	<span class="comment">//3.创建SqlSession</span></div><div class="line">	SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">	<span class="comment">//4.SqlSession根据接口生成一个实现类</span></div><div class="line">	UserMapper mapper = sqlSession.getMapper(UserMapper.class);</div><div class="line">	</div><div class="line">	Integer count = mapper.findUserCount();</div><div class="line">	System.out.println(count);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/11/21/Mybatis学习笔记-二/2.png" alt="结果"></p>
+<h2 id="输出pojo对象和对象列表"><a href="#输出pojo对象和对象列表" class="headerlink" title="输出pojo对象和对象列表"></a>输出pojo对象和对象列表</h2><p>见 <a href="https://homxuwang.github.io/2018/11/19/Mybatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/" target="_blank" rel="external">https://homxuwang.github.io/2018/11/19/Mybatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/</a></p>
+<h1 id="resultMap"><a href="#resultMap" class="headerlink" title="resultMap"></a>resultMap</h1><p>resultType可以指定将查询结果映射为pojo，但需要pojo的属性名和sql查询的列名一致方可映射成功。</p>
+<p>如果sql查询字段名和pojo的属性名不一致，可以通过resultMap将字段名和属性名作一个对应关系 ，resultMap实质上还需要将查询结果映射到pojo对象中。</p>
+<p>resultMap可以实现将查询结果映射为复杂类型的pojo，比如在查询结果映射对象中包括pojo和list实现一对一查询和一对多查询。</p>
+<p>需求：查询订单表order的所有数据,订单表创建见:<a href="https://homxuwang.github.io/2018/11/19/Mybatis%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%B8%80/" target="_blank" rel="external">Mybatis学习笔记-一</a><br>sql：SELECT id, user_id, number, createtime, note FROM <code>order</code></p>
+<p>创建POJO类:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.pojo;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.Serializable;</div><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Orders</span>  <span class="keyword">implements</span> <span class="title">Serializable</span></span>&#123;</div><div class="line">   </div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> Integer id;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> Integer userId;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> String number;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> Date createtime;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> String note;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> User user;</div><div class="line"></div><div class="line">  添加 get/set 方法</div><div class="line"></div><div class="line">  <span class="meta">@Override</span></div><div class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Orders [id="</span> + id + <span class="string">", userId="</span> + userId + <span class="string">", number="</span> + number + <span class="string">", createtime="</span> + createtime</div><div class="line">        + <span class="string">", note="</span> + note + <span class="string">"]"</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到类中<code>userId</code>字段和数据库表中的<code>user_id</code>字段名不一致<br><img src="/2018/11/21/Mybatis学习笔记-二/3.png" alt="user_id不同"></p>
+<p>在<code>my.study.mapper</code>包中添加<code>OrderMapper</code>接口:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.mapper;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> my.study.pojo.Orders;</div><div class="line"><span class="keyword">import</span> my.study.pojo.User;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OrderMapper</span> </span>&#123;	</div><div class="line">	<span class="comment">//	查询订单表order的所有数据</span></div><div class="line">	<span class="function"><span class="keyword">public</span> List&lt;Orders&gt; <span class="title">selectOrdersList</span><span class="params">()</span></span>;	</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>定义<code>OrderMapper.xml</code>:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE mapper</span></div><div class="line"><span class="meta">PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"</span></div><div class="line"><span class="meta">"http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"my.study.mapper.OrderMapper"</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 查询所有的订单数据 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectOrdersList"</span> <span class="attr">resultType</span>=<span class="string">"my.study.pojo.Orders"</span>&gt;</span></div><div class="line">		SELECT id, user_id,</div><div class="line">		number,</div><div class="line">		createtime, note FROM orders</div><div class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>记得在核心配置文件中引入<code>OrderMapper.xml</code>：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mappers</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"my/study/mapper/User.xml"</span>/&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">mapper</span> <span class="attr">resource</span>=<span class="string">"my/study/mapper/OrderMapper.xml"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mappers</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>书写测试类:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//查询订单表的所有数据</span></div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testfindUserCount</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">		<span class="comment">//1.加载核心配置文件</span></div><div class="line">		String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">		InputStream in = Resources.getResourceAsStream(resource);</div><div class="line">		<span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">		SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div><div class="line">		<span class="comment">//3.创建SqlSession</span></div><div class="line">		SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">		<span class="comment">//4.SqlSession根据接口生成一个实现类</span></div><div class="line">		OrderMapper mapper =  sqlSession.getMapper(OrderMapper.class);</div><div class="line">		</div><div class="line">		List&lt;Orders&gt; orderlist = mapper.selectOrdersList();</div><div class="line">		<span class="keyword">for</span>(Orders order:orderlist) &#123;</div><div class="line">			System.out.println(order);</div><div class="line">		&#125;		</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/11/21/Mybatis学习笔记-二/4.png" alt="测试结果"><br>可以看到，对于POJO类中和数据库表中字段不一致的，将会查询出null.<br>除了修改为一样的字段值外，可以使用<code>resultMap</code>:<br><img src="/2018/11/21/Mybatis学习笔记-二/5.png" alt="测试结果"><br>其实，与数据库字段不一样的只有<code>user_id</code>和<code>userId</code>，没有必要都写出来，所以可以简写为:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"my.study.pojo.Orders"</span> <span class="attr">id</span>=<span class="string">"orders"</span>&gt;</span>		</div><div class="line">  <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"user_id"</span> <span class="attr">property</span>=<span class="string">"userId"</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><code>column</code>对应数据库表字段;<code>property</code>对应POJO字段;<code>javaType</code>对应java类型(可以省略);<code>jdbcType</code>对应数据库中的类型(可以省略)</p>
+<p>再次执行测试代码:<br><img src="/2018/11/21/Mybatis学习笔记-二/6.png" alt="测试结果"></p>
+<h1 id="动态sql"><a href="#动态sql" class="headerlink" title="动态sql"></a>动态sql</h1><p>通过mybatis提供的各种标签方法实现动态拼接sql</p>
+<h2 id="if标签"><a href="#if标签" class="headerlink" title="if标签"></a>if标签</h2><p>需求：根据性别和名字查询用户<br>查询sql：<br>SELECT id, username, birthday, sex, address FROM <code>user</code> WHERE sex = 1 AND username LIKE ‘%张%’</p>
+<p>在<code>UserMapper.java</code>接口中添加方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="comment">//根据性别和名称查询用户</span></div><div class="line">	<span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">selectUserBySexAndUsername</span><span class="params">(User user)</span></span>;</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>在<code>User.xml</code>中书写sql语句:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 使用if和where标签 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectUserBySexAndUsername"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.pojo.User"</span> <span class="attr">resultType</span>=<span class="string">"my.study.pojo.User"</span>&gt;</span></div><div class="line">		select * from user </div><div class="line">		where</div><div class="line">		<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"sex != null and sex != ''"</span>&gt;</span></div><div class="line">			sex = #&#123;sex&#125;</div><div class="line">		<span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"username != null and username != ''"</span>&gt;</span></div><div class="line">			and username = #&#123;username&#125;</div><div class="line">		<span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>书写测试类:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//查询用户条数</span></div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testselectUserBySexAndUsername</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">		<span class="comment">//1.加载核心配置文件</span></div><div class="line">		String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">		InputStream in = Resources.getResourceAsStream(resource);</div><div class="line">		<span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">		SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div><div class="line">		<span class="comment">//3.创建SqlSession</span></div><div class="line">		SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">		<span class="comment">//4.SqlSession根据接口生成一个实现类</span></div><div class="line">		UserMapper mapper = sqlSession.getMapper(UserMapper.class);</div><div class="line">		User u = <span class="keyword">new</span> User();</div><div class="line">		u.setSex(<span class="string">"1"</span>);</div><div class="line">		u.setUsername(<span class="string">"张小明"</span>);</div><div class="line">		List&lt;User&gt; users = mapper.selectUserBySexAndUsername(u);</div><div class="line">		<span class="keyword">for</span>(User user:users) &#123;</div><div class="line">			System.out.println(user);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>查询结果：<br><img src="/2018/11/21/Mybatis学习笔记-二/7.png" alt="测试结果"></p>
+<p>因为通过user实例查询的sex和username字段都不为空，所以可以看到sql语句是正常的.</p>
+<p>如果注释掉<code>u.setUsername(&quot;张小明&quot;);</code>再进行测试 :<br><img src="/2018/11/21/Mybatis学习笔记-二/8.png" alt="测试结果"><br>可以看到查询出的是sex为1的所有数据，因为username=null，所以在if标签中没有添加后面的<code>and username = #{username}</code></p>
+<p>但是如果注释掉<code>u.setSex(&quot;1&quot;);</code>，将<code>u.setUsername(&quot;张小明&quot;);</code>还原，再次进行测试：<br><img src="/2018/11/21/Mybatis学习笔记-二/9.png" alt="测试结果"><br><img src="/2018/11/21/Mybatis学习笔记-二/10.png" alt="测试结果"><br>可以看到，查询错误，sql语句是拼接错误的.<br>这时候就需要用到<code>where</code>标签</p>
+<h2 id="where标签"><a href="#where标签" class="headerlink" title="where标签"></a>where标签</h2><p>where标签可以自动添加where，同时处理sql语句中第一个<code>前</code>and关键字<br>对上面的查询语句做处理:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectUserBySexAndUsername"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.pojo.User"</span> <span class="attr">resultType</span>=<span class="string">"my.study.pojo.User"</span>&gt;</span></div><div class="line">	select * from user </div><div class="line">	<span class="tag">&lt;<span class="name">where</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"sex != null and sex != ''"</span>&gt;</span></div><div class="line">		sex = #&#123;sex&#125;</div><div class="line">		<span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"username != null and username != ''"</span>&gt;</span></div><div class="line">			and username = #&#123;username&#125;</div><div class="line">		<span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">where</span>&gt;</span>		</div><div class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>再次进行测试：<br><img src="/2018/11/21/Mybatis学习笔记-二/11.png" alt="测试结果"><br>上面提到where标签可以处理sql语句中第一个<code>前</code>and关键字</p>
+<h2 id="SQL片段"><a href="#SQL片段" class="headerlink" title="SQL片段"></a>SQL片段</h2><p>Sql中可将重复的sql提取出来，使用时用include引用即可，最终达到sql重用的目的。<br>先定义一个用于共用的sql片段,然后使用include进行引用:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">"selectFromUser"</span>&gt;</span></div><div class="line">	select * from user</div><div class="line"><span class="tag">&lt;/<span class="name">sql</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--使用sql片段--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectUserBySexAndUsername"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.pojo.User"</span> <span class="attr">resultType</span>=<span class="string">"my.study.pojo.User"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"selectFromUser"</span>&gt;</span><span class="tag">&lt;/<span class="name">include</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">where</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"sex != null and sex != ''"</span>&gt;</span></div><div class="line">		sex = #&#123;sex&#125;</div><div class="line">		<span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"username != null and username != ''"</span>&gt;</span></div><div class="line">			and username = #&#123;username&#125;</div><div class="line">		<span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">where</span>&gt;</span>		</div><div class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="foreach标签"><a href="#foreach标签" class="headerlink" title="foreach标签"></a>foreach标签</h2><p>需求：根据多个id查询用户信息<br>在<code>UserMapper</code>接口中添加方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//根据多个id查询用户信息</span></div><div class="line"><span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">selectUserByIds</span><span class="params">(QueryVo vo)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>在<code>QueryVo</code>中改造：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> List&lt;Integer&gt; idsList;</div><div class="line"><span class="comment">//添加get/set方法</span></div></pre></td></tr></table></figure></p>
+<p>书写sql：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectUserByIds"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.pojo.QueryVo"</span> <span class="attr">resultType</span>=<span class="string">"my.study.pojo.User"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"selectFromUser"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">where</span>&gt;</span></div><div class="line">		id in</div><div class="line">		<span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"idsList"</span> <span class="attr">item</span>=<span class="string">"id"</span> <span class="attr">separator</span>=<span class="string">","</span> <span class="attr">open</span>=<span class="string">"("</span> <span class="attr">close</span>=<span class="string">")"</span>&gt;</span></div><div class="line">			#&#123;id&#125;</div><div class="line">		<span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">where</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>collection：遍历的集合，这里是QueryVo的idsList属性<br>item：遍历的项目，可以随便写，但是和后面的#{}里面要一致<br>open：在前面添加的sql片段<br>close：在结尾处添加的sql片段<br>separator：指定遍历的元素之间使用的分隔符<br><code>注意</code>:如果接口的方法参数处传递的是数组类型的参数，则需要将collection处值设置为<code>array</code>;同理，如果接口的方法参数处传递的是list类型的参数，则需要将collection处值设置为<code>list</code><br>测试:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//多个id</span></div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testselectUserByidsList</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">		<span class="comment">//1.加载核心配置文件</span></div><div class="line">		String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">		InputStream in = Resources.getResourceAsStream(resource);</div><div class="line">		<span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">		SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div><div class="line">		<span class="comment">//3.创建SqlSession</span></div><div class="line">		SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">		<span class="comment">//4.SqlSession根据接口生成一个实现类</span></div><div class="line">		UserMapper mapper = sqlSession.getMapper(UserMapper.class);</div><div class="line">		List&lt;Integer&gt; ids = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">		ids.add(<span class="number">16</span>);</div><div class="line">		ids.add(<span class="number">22</span>);</div><div class="line">		ids.add(<span class="number">24</span>);</div><div class="line">		QueryVo vo = <span class="keyword">new</span> QueryVo();</div><div class="line">		vo.setIdsList(ids);</div><div class="line">		List&lt;User&gt; users = mapper.selectUserByIds(vo);</div><div class="line">		<span class="keyword">for</span>(User user:users) &#123;</div><div class="line">			System.out.println(user);</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>测试结果:<br><img src="/2018/11/21/Mybatis学习笔记-二/12.png" alt="测试结果"></p>
+<h1 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a>关联查询</h1><p><img src="/2018/11/21/Mybatis学习笔记-二/13.png" alt="测试结果"></p>
+<h2 id="一对一关联查询"><a href="#一对一关联查询" class="headerlink" title="一对一关联查询"></a>一对一关联查询</h2><p>改造<code>UserMapper</code>,在接口中添加方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//一对一关联 查询  以订单为中心 关联用户</span></div><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Orders&gt; <span class="title">selectOrders</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure></p>
+<p>在<code>User.xml</code>中书写sql(需要用到嵌套映射):<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"my.study.pojo.Orders"</span> <span class="attr">id</span>=<span class="string">"orderUserResultMap"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">property</span>=<span class="string">"id"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"user_id"</span> <span class="attr">property</span>=<span class="string">"userId"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"number"</span> <span class="attr">property</span>=<span class="string">"number"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"createtime"</span> <span class="attr">property</span>=<span class="string">"createtime"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"note"</span>  <span class="attr">property</span>=<span class="string">"note"</span>/&gt;</span></div><div class="line">		<span class="comment">&lt;!-- association ：配置一对一属性 --&gt;</span></div><div class="line">		<span class="comment">&lt;!-- property:order里面的User属性名 --&gt;</span></div><div class="line">		<span class="comment">&lt;!-- javaType:属性类型 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">association</span> <span class="attr">property</span>=<span class="string">"user"</span> <span class="attr">javaType</span>=<span class="string">"my.study.pojo.User"</span>&gt;</span></div><div class="line">			<span class="comment">&lt;!-- id:声明主键，表示user_id是关联查询对象的唯一标识--&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">"user_id"</span> <span class="attr">property</span>=<span class="string">"id"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"username"</span> <span class="attr">property</span>=<span class="string">"username"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">association</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></div><div class="line">	</div><div class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectOrders"</span> <span class="attr">resultMap</span>=<span class="string">"orderUserResultMap"</span>&gt;</span></div><div class="line">		select </div><div class="line">		o.id,</div><div class="line">		o.user_id,</div><div class="line">		o.number,</div><div class="line">		o.createtime,</div><div class="line">		o.note,</div><div class="line">		u.username </div><div class="line">		from orders o </div><div class="line">		LEFT JOIN user u </div><div class="line">		on o.user_id = u.id</div><div class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>测试:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//一对一</span></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testselectOrders</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">	<span class="comment">//1.加载核心配置文件</span></div><div class="line">	String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">	InputStream in = Resources.getResourceAsStream(resource);</div><div class="line">	<span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">	SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div><div class="line">	<span class="comment">//3.创建SqlSession</span></div><div class="line">	SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">	<span class="comment">//4.SqlSession根据接口生成一个实现类</span></div><div class="line">	UserMapper mapper =  sqlSession.getMapper(UserMapper.class);</div><div class="line">	</div><div class="line">	List&lt;Orders&gt; orderlist = mapper.selectOrders();</div><div class="line">	<span class="keyword">for</span>(Orders order:orderlist) &#123;</div><div class="line">		System.out.println(order);</div><div class="line">		System.out.println(order.getUser());</div><div class="line">	&#125;		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>查询结果:<br><img src="/2018/11/21/Mybatis学习笔记-二/15.png" alt="测试结果"><br><img src="/2018/11/21/Mybatis学习笔记-二/14.png" alt="测试结果"></p>
+<h2 id="一对多关联查询"><a href="#一对多关联查询" class="headerlink" title="一对多关联查询"></a>一对多关联查询</h2><p>一个用户有可能对应多个订单，所以以user表作为左表进行查询，是一对多的关系。</p>
+<p><img src="/2018/11/21/Mybatis学习笔记-二/16.png" alt="查询结果"></p>
+<p>在<code>User</code>类中添加订单列表属性字段,并添加get和set方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line"><span class="keyword">private</span> List&lt;Orders&gt; ordersList;</div><div class="line"><span class="comment">//get/set</span></div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p><code>OrderMapper</code>接口中添加方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//一对多关联</span></div><div class="line"><span class="function"><span class="keyword">public</span> List&lt;User&gt; <span class="title">selectUserList</span><span class="params">()</span></span>;</div></pre></td></tr></table></figure></p>
+<p>在<code>OrderMapper.xml</code>中书写sql代码:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">type</span>=<span class="string">"my.study.pojo.User"</span> <span class="attr">id</span>=<span class="string">"userResultMap"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">"user_id"</span> <span class="attr">property</span>=<span class="string">"id"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"username"</span> <span class="attr">property</span>=<span class="string">"username"</span>/&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 配置一对多属性  </span></div><div class="line"><span class="comment">			ofType是指List中每个元素的类型</span></div><div class="line"><span class="comment">		--&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">"ordersList"</span> <span class="attr">ofType</span>=<span class="string">"my.study.pojo.Orders"</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">property</span>=<span class="string">"id"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"user_id"</span> <span class="attr">property</span>=<span class="string">"userId"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"number"</span> <span class="attr">property</span>=<span class="string">"number"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"createtime"</span> <span class="attr">property</span>=<span class="string">"createtime"</span>/&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"note"</span> <span class="attr">property</span>=<span class="string">"note"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">collection</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></div><div class="line">	</div><div class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectUserList"</span> <span class="attr">resultMap</span>=<span class="string">"userResultMap"</span>&gt;</span></div><div class="line">		select </div><div class="line">		o.id,</div><div class="line">		o.user_id,</div><div class="line">		o.number,</div><div class="line">		o.createtime,</div><div class="line">		o.note,</div><div class="line">		u.username </div><div class="line">		from  user u </div><div class="line">		LEFT JOIN orders o</div><div class="line">		on o.user_id = u.id</div><div class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>测试代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//一对多</span></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testselectUserList</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">	<span class="comment">//1.加载核心配置文件</span></div><div class="line">	String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">	InputStream in = Resources.getResourceAsStream(resource);</div><div class="line">	<span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">	SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div><div class="line">	<span class="comment">//3.创建SqlSession</span></div><div class="line">	SqlSession sqlSession = sqlSessionFactory.openSession();</div><div class="line">	<span class="comment">//4.SqlSession根据接口生成一个实现类</span></div><div class="line">	OrderMapper mapper =  sqlSession.getMapper(OrderMapper.class);</div><div class="line">	</div><div class="line">	List&lt;User&gt; userlist = mapper.selectUserList();</div><div class="line">	<span class="keyword">for</span>(User user:userlist) &#123;</div><div class="line">		System.out.println(user);</div><div class="line">		System.out.println(user.getOrdersList());</div><div class="line">	&#125;		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/11/21/Mybatis学习笔记-二/17.png" alt="测试结果"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Homxu</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2018/11/21/Mybatis学习笔记-二/" target="_blank" title="Mybatis学习笔记-二">http://homxu.com/2018/11/21/Mybatis学习笔记-二/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/19/Mybatis学习笔记-一/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Mybatis学习笔记-一</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#parameterType-输入类型"><span class="nav-number">1.</span> <span class="nav-text">parameterType(输入类型)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#传递简单类型和传递pojo对象"><span class="nav-number">1.1.</span> <span class="nav-text">传递简单类型和传递pojo对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传递pojo包装对象"><span class="nav-number">1.2.</span> <span class="nav-text">传递pojo包装对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#resultType-输出类型"><span class="nav-number">2.</span> <span class="nav-text">resultType(输出类型)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输出简单类型"><span class="nav-number">2.1.</span> <span class="nav-text">输出简单类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出pojo对象和对象列表"><span class="nav-number">2.2.</span> <span class="nav-text">输出pojo对象和对象列表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#resultMap"><span class="nav-number">3.</span> <span class="nav-text">resultMap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态sql"><span class="nav-number">4.</span> <span class="nav-text">动态sql</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#if标签"><span class="nav-number">4.1.</span> <span class="nav-text">if标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#where标签"><span class="nav-number">4.2.</span> <span class="nav-text">where标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL片段"><span class="nav-number">4.3.</span> <span class="nav-text">SQL片段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#foreach标签"><span class="nav-number">4.4.</span> <span class="nav-text">foreach标签</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关联查询"><span class="nav-number">5.</span> <span class="nav-text">关联查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一对一关联查询"><span class="nav-number">5.1.</span> <span class="nav-text">一对一关联查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一对多关联查询"><span class="nav-number">5.2.</span> <span class="nav-text">一对多关联查询</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Homxu
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Homxu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>

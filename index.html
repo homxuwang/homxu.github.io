@@ -167,13 +167,13 @@
   <div class="intro-navigate">
       <p class="navigater-list">
         
-          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
+          <a id="beautifont" class="main-nav-link" href="/">Home</a>
         
-          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
+          <a id="beautifont" class="main-nav-link" href="/archives">Archives</a>
         
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorieën</a>
+          <a id="beautifont" class="main-nav-link" href="/categories">Categories</a>
         
-          <a id="beautifont" class="main-nav-link" href="/tags">Labels</a>
+          <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
         
           <a id="beautifont" class="main-nav-link" href="/about">About</a>
         
@@ -191,6 +191,57 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-Mybatis学习笔记-二"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/11/21/Mybatis学习笔记-二/">Mybatis学习笔记-二</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/11/21/Mybatis学习笔记-二/" class="article-date">
+	  <time datetime="2018-11-21T11:56:31.000Z" itemprop="datePublished">2018-11-21</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          parameterType(输入类型)传递简单类型和传递pojo对象简单类型：使用#{}占位符，或者${}进行sql拼接。
+opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}括号中的值为pojo属性名称。
+传递pojo包装对象开发中通过可以使用pojo传递查询条件。查询条件可能是综合的查询条件，不仅包括用户查询条件还包括其它的查询条件（比如查询用户信息的时候，将用户购买商品信息也作为查询条件），这时可以使用包装对象传递输入参数。
+包装对象：Pojo类中的一个属...
+        </p>
+        <p class="article-more-link">
+          <a href="/2018/11/21/Mybatis学习笔记-二/#more">Read More</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-Mybatis学习笔记-一"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
@@ -222,7 +273,7 @@
 准备测试数据库1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162/*Navicat MySQL Data TransferSource Server         : localhost_3306Source Server Version : 50521Source Host       ...
         </p>
         <p class="article-more-link">
-          <a href="/2018/11/19/Mybatis学习笔记-一/#more">weiter lesen</a>
+          <a href="/2018/11/19/Mybatis学习笔记-一/#more">Read More</a>
         </p>
       
     </div>
@@ -273,7 +324,7 @@
 1&lt;bean name="userA...
         </p>
         <p class="article-more-link">
-          <a href="/2018/11/16/整合Struts2-Spring-Hibernate/#more">weiter lesen</a>
+          <a href="/2018/11/16/整合Struts2-Spring-Hibernate/#more">Read More</a>
         </p>
       
     </div>
@@ -322,7 +373,7 @@
 不使用Spring操作数据库123456789101112131415161718192021222324252627package my.study.g_jdbcTemplate;import java.beans.PropertyVetoException;import org.junit.Test;import ...
         </p>
         <p class="article-more-link">
-          <a href="/2018/11/13/Spring学习笔记-三/#more">weiter lesen</a>
+          <a href="/2018/11/13/Spring学习笔记-三/#more">Read More</a>
         </p>
       
     </div>
@@ -371,7 +422,7 @@
 使用注解代理配置文件12345&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns:xsi=...
         </p>
         <p class="article-more-link">
-          <a href="/2018/11/10/Spring学习笔记-二/#more">weiter lesen</a>
+          <a href="/2018/11/10/Spring学习笔记-二/#more">Read More</a>
         </p>
       
     </div>
@@ -422,7 +473,7 @@ Spring 搭建基本环境首先导入Spring所需依赖包：
 123456789101112131415161718192021package my.study.bean;public class User &#123;		private String name;	private Integer age;	public User()&#123;		System.out.pri...
         </p>
         <p class="article-more-link">
-          <a href="/2018/11/09/Spring学习笔记-一/#more">weiter lesen</a>
+          <a href="/2018/11/09/Spring学习笔记-一/#more">Read More</a>
         </p>
       
     </div>
@@ -480,7 +531,7 @@ Spring 搭建基本环境首先导入Spring所需依赖包：
 线段树依然可以使用数组表示。那么对于一个区间有n个元素，数组的大小该如何确定？对于一个满二叉树，如果有h层（从0层到h-1层），那么h层就有2^h-1个节点，差不多是2^...
         </p>
         <p class="article-more-link">
-          <a href="/2018/08/13/实现线段树/#more">weiter lesen</a>
+          <a href="/2018/08/13/实现线段树/#more">Read More</a>
         </p>
       
     </div>
@@ -537,7 +588,7 @@ Spring 搭建基本环境首先导入Spring所需依赖包：
 堆的实现代码：12345678910111213141516...
         </p>
         <p class="article-more-link">
-          <a href="/2018/08/12/实现优先队列/#more">weiter lesen</a>
+          <a href="/2018/08/12/实现优先队列/#more">Read More</a>
         </p>
       
     </div>
@@ -595,7 +646,7 @@ Spring 搭建基本环境首先导入Spring所需依赖包：
 离线处理的作业...
         </p>
         <p class="article-more-link">
-          <a href="/2018/08/04/用户日志统计分析/#more">weiter lesen</a>
+          <a href="/2018/08/04/用户日志统计分析/#more">Read More</a>
         </p>
       
     </div>
@@ -651,63 +702,7 @@ BST的结构:123456class Node &#123;  K key;  V value;  Node left;  Node right;&
 即本来存储一个数据的节点现在存储两...
         </p>
         <p class="article-more-link">
-          <a href="/2018/08/01/实现映射/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-实现集合"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/08/01/实现集合/">实现集合</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/08/01/实现集合/" class="article-date">
-	  <time datetime="2018-08-01T02:31:00.000Z" itemprop="datePublished">2018-08-01</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          因为集合是不存放重复元素的，所以使用二分搜索树来实现集合很合适。集合的几个简单方法:
-
-void add(E) //添加元素，但不能添加重复元素
-void remove(E) //删除元素E
-boolean contains(E) //是否包含元素E
-int getSize()  //获得集合的size
-boolean isEmpty() //判断集合是否为空
-
-基于二分搜索树的实现首先使用二分搜索树做底层实现集合类。二分搜索树的实现代码：https://homxuwang.github....
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/08/01/实现集合/#more">weiter lesen</a>
+          <a href="/2018/08/01/实现映射/#more">Read More</a>
         </p>
       
     </div>
@@ -730,7 +725,7 @@ boolean isEmpty() //判断集合是否为空
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Volgende &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
