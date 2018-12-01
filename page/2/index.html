@@ -171,7 +171,7 @@
         
           <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
         
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
+          <a id="beautifont" class="main-nav-link" href="/categories">Kategorien</a>
         
           <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
         
@@ -191,6 +191,63 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-实现优先队列"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/08/12/实现优先队列/">实现优先队列</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/08/12/实现优先队列/" class="article-date">
+	  <time datetime="2018-08-12T03:06:46.000Z" itemprop="datePublished">2018-08-12</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          优先队列一般都是基于堆的，所以先写堆的实现。
+堆
+堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆)
+堆总是一棵完全二叉树
+
+另外要注意：节点值的大小和节点所处的层次是没有关系的
+本文以最大堆为例，进行书写。
+堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%95%B0%E7%BB%84/
+
+堆的实现代码：12345678910111213141516...
+        </p>
+        <p class="article-more-link">
+          <a href="/2018/08/12/实现优先队列/#more">weiter lesen</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-用户日志统计分析"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
@@ -696,64 +753,11 @@ git clone https:/...
 
 
   
-    <article id="post-实现栈和队列"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/07/17/实现栈和队列/">实现栈和队列</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/07/17/实现栈和队列/" class="article-date">
-	  <time datetime="2018-07-17T03:11:40.000Z" itemprop="datePublished">2018-07-17</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          栈栈在计算机中有很广泛的应用，比如括号的匹配用到了栈，系统栈，撤销操作。
-栈也是一种线性结构。相比数组，栈对应的操作是数组的子集。只能从一端添加元素，从同一端取出元素，即栈顶。是一种后进先出的数据结构(Last In First Out (LIFO))
-栈的实现栈的实际底层实现有多种方式，如动态数组，链表等。
-这里只实现栈的几个基本操作：入栈，出栈，查看栈顶元素，查看栈元素数量，查看栈是否为空。
-定义Stack接口，基于动态数组实现栈，动态数组的实现见
-https://homxuwang....
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/07/17/实现栈和队列/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Previo</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Siguiente &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -767,7 +771,7 @@ https://homxuwang....
 
   <div class="container">
       	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
 	      
 	      

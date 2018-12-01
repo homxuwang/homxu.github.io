@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://homxu.com/2018/11/30/SpringMVC学习笔记-一/4.png">
 <meta property="og:image" content="http://homxu.com/2018/11/30/SpringMVC学习笔记-一/5.png">
 <meta property="og:image" content="http://homxu.com/2018/11/30/SpringMVC学习笔记-一/6.png">
-<meta property="og:updated_time" content="2018-12-01T02:21:41.750Z">
+<meta property="og:updated_time" content="2018-12-01T09:22:02.422Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC学习笔记-一">
 <meta name="twitter:description" content="Spring web mvc和Struts2都属于表现层的框架,它是Spring框架的一部分,我们可以从Spring的整体结构中看得出来,如下图： SpringMVC简单的处理流程图:前端控制器可以说是SpringMVC的心脏，是核心部分。 创建入门程序创建动态Web工程，导入相关jar包: 配置前端控制器在web.xml中配置前端控制器:123456789101112131415&amp;lt;!--">
@@ -111,7 +111,7 @@
                 
                   <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
                 
                   <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
@@ -230,7 +230,7 @@
 <h2 id="默认加载的组件"><a href="#默认加载的组件" class="headerlink" title="默认加载的组件"></a>默认加载的组件</h2><p>我们没有做任何配置，就可以使用这些组件<br>因为框架已经默认加载这些组件了，配置文件位置如下图：</p>
 <p><img src="/2018/11/30/SpringMVC学习笔记-一/6.png" alt="默认加载的组件"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"># Default implementation classes for DispatcherServlet&apos;s strategy interfaces.</div><div class="line"># Used as fallback when no matching beans are found in the DispatcherServlet context.</div><div class="line"># Not meant to be customized by application developers.</div><div class="line"></div><div class="line">org.springframework.web.servlet.LocaleResolver=org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver</div><div class="line"></div><div class="line">org.springframework.web.servlet.ThemeResolver=org.springframework.web.servlet.theme.FixedThemeResolver</div><div class="line"></div><div class="line">org.springframework.web.servlet.HandlerMapping=org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping,\</div><div class="line">	org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping</div><div class="line"></div><div class="line">org.springframework.web.servlet.HandlerAdapter=org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter,\</div><div class="line">	org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter,\</div><div class="line">	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter</div><div class="line"></div><div class="line">org.springframework.web.servlet.HandlerExceptionResolver=org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver,\</div><div class="line">	org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver,\</div><div class="line">	org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver</div><div class="line"></div><div class="line">org.springframework.web.servlet.RequestToViewNameTranslator=org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator</div><div class="line"></div><div class="line">org.springframework.web.servlet.ViewResolver=org.springframework.web.servlet.view.InternalResourceViewResolver</div><div class="line"></div><div class="line">org.springframework.web.servlet.FlashMapManager=org.springframework.web.servlet.support.SessionFlashMapManager</div></pre></td></tr></table></figure>
-<h2 id="组件扫描器"><a href="#组件扫描器" class="headerlink" title="组件扫描器"></a>组件扫描器</h2><p>使用组件扫描器省去在spring容器配置每个Controller类的繁琐。<br>使用<code>&lt;context:component-scan&gt;</code>自动扫描标记@Controller的控制器类，<br>在springmvc.xml配置文件中配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--  配置controller扫描包，多个包之间用,分隔</span></div><div class="line"><span class="comment">--&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"my.study.springmvc.controller"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<h2 id="组件扫描器"><a href="#组件扫描器" class="headerlink" title="组件扫描器"></a>组件扫描器</h2><p>使用组件扫描器省去在spring容器配置每个Controller类的繁琐。<br>使用<code>&lt;context:component-scan&gt;</code>自动扫描标记@Controller的控制器类，<br>在springmvc.xml配置文件中配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--  配置controller扫描包，多个包之间用,分隔</span></div><div class="line"><span class="comment">	扫描包下有@Controller @Service 注解的代码</span></div><div class="line"><span class="comment">--&gt;</span></div><div class="line">   <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"my.study.springmvc"</span>&gt;</span></div><div class="line">   <span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <h2 id="注解映射器和适配器"><a href="#注解映射器和适配器" class="headerlink" title="注解映射器和适配器"></a>注解映射器和适配器</h2><h3 id="配置处理器映射器"><a href="#配置处理器映射器" class="headerlink" title="配置处理器映射器"></a>配置处理器映射器</h3><p>注解式处理器映射器，对类中标记了@ResquestMapping的方法进行映射。根据@ResquestMapping定义的url匹配@ResquestMapping标记的方法，匹配成功返回HandlerMethod对象给前端控制器。<br>HandlerMethod对象中封装url对应的方法Method。 </p>
 <p>从spring3.1版本开始，废除了DefaultAnnotationHandlerMapping的使用，推荐使用RequestMappingHandlerMapping完成注解式处理器映射。</p>
 <p>在springmvc.xml配置文件中配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 配置处理器映射器 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
@@ -315,9 +315,18 @@ var a = new Donate({
     
 <nav id="article-nav">
   
+    <a href="/2018/12/01/SpringMVC-Mybatis整合/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          SpringMVC+Mybatis整合
+        
+      </div>
+    </a>
+  
   
     <a href="/2018/11/29/Spring与Mybatis整合/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
+      <strong class="article-nav-caption">Älter</strong>
       <div class="article-nav-title">Spring与Mybatis整合</div>
     </a>
   
@@ -346,7 +355,7 @@ var a = new Donate({
 
   <div class="container">
       	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
 	      
 	      

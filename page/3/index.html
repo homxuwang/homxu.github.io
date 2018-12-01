@@ -171,7 +171,7 @@
         
           <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
         
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
+          <a id="beautifont" class="main-nav-link" href="/categories">Kategorien</a>
         
           <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
         
@@ -191,6 +191,59 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-实现栈和队列"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/07/17/实现栈和队列/">实现栈和队列</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/07/17/实现栈和队列/" class="article-date">
+	  <time datetime="2018-07-17T03:11:40.000Z" itemprop="datePublished">2018-07-17</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          栈栈在计算机中有很广泛的应用，比如括号的匹配用到了栈，系统栈，撤销操作。
+栈也是一种线性结构。相比数组，栈对应的操作是数组的子集。只能从一端添加元素，从同一端取出元素，即栈顶。是一种后进先出的数据结构(Last In First Out (LIFO))
+栈的实现栈的实际底层实现有多种方式，如动态数组，链表等。
+这里只实现栈的几个基本操作：入栈，出栈，查看栈顶元素，查看栈元素数量，查看栈是否为空。
+定义Stack接口，基于动态数组实现栈，动态数组的实现见
+https://homxuwang....
+        </p>
+        <p class="article-more-link">
+          <a href="/2018/07/17/实现栈和队列/#more">weiter lesen</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-数组"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
@@ -652,63 +705,11 @@ UMP系统概述•UMP系统是低成本和高性能的MySQL云数据库方案
 
 
   
-    <article id="post-大数据基础学习笔记（四）——HBase相关知识（三）"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/">大数据基础学习笔记（四）——HBase相关知识（三）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/" class="article-date">
-	  <time datetime="2018-04-03T12:10:00.000Z" itemprop="datePublished">2018-04-03</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          HBase应用方案HBase实际应用中的性能优化方法行键（Row Key ）
-行键是按照 字典序存储，因此，设计行键时，要充分利用这个排序特点，将经常一起读取的数据存储到一块，将最近可能会被访问的数据放在一块。
-举个例子：如果最近写入HBase表中的数据是最可能被访问的，可以考虑将时间戳作为行键的一部分，由于是字典序排序，所以可以使用Long.MAX_VALUE -timestamp作为行键，这样能保证新写入的数据在读取时可以被快速命中。
-
-InMemory创建表的时候，可以通过HColu...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Previo</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Siguiente &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -722,7 +723,7 @@ InMemory创建表的时候，可以通过HColu...
 
   <div class="container">
       	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
 	      
 	      
