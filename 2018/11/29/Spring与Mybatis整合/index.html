@@ -11,12 +11,13 @@
   
   
   
-  <meta name="description" content="在不是用Spring的情况下，创建sqlSessionFactory需要两步:12345//1.加载核心配置文件String resource = &quot;sqlMapConfig.xml&quot;;InputStream in = Resources.getResourceAsStream(resource);//2.创建SqlSessionFactorySqlSessionFactory sqlSessio">
+  <meta name="description" content="在不使用Spring的情况下，创建sqlSessionFactory需要两步:12345//1.加载核心配置文件String resource = &quot;sqlMapConfig.xml&quot;;InputStream in = Resources.getResourceAsStream(resource);//2.创建SqlSessionFactorySqlSessionFactory sqlSessio">
+<meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring与Mybatis整合">
 <meta property="og:url" content="http://homxu.com/2018/11/29/Spring与Mybatis整合/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="在不是用Spring的情况下，创建sqlSessionFactory需要两步:12345//1.加载核心配置文件String resource = &quot;sqlMapConfig.xml&quot;;InputStream in = Resources.getResourceAsStream(resource);//2.创建SqlSessionFactorySqlSessionFactory sqlSessio">
+<meta property="og:description" content="在不使用Spring的情况下，创建sqlSessionFactory需要两步:12345//1.加载核心配置文件String resource = &quot;sqlMapConfig.xml&quot;;InputStream in = Resources.getResourceAsStream(resource);//2.创建SqlSessionFactorySqlSessionFactory sqlSessio">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://homxu.com/2018/11/29/Spring与Mybatis整合/1.png">
 <meta property="og:image" content="http://homxu.com/2018/11/29/Spring与Mybatis整合/2.png">
@@ -33,10 +34,10 @@
 <meta property="og:image" content="http://homxu.com/2018/11/29/Spring与Mybatis整合/12.png">
 <meta property="og:image" content="http://homxu.com/2018/11/29/Spring与Mybatis整合/13.png">
 <meta property="og:image" content="http://homxu.com/2018/11/29/Spring与Mybatis整合/14.png">
-<meta property="og:updated_time" content="2018-12-01T09:23:41.813Z">
+<meta property="og:updated_time" content="2018-12-01T13:40:48.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring与Mybatis整合">
-<meta name="twitter:description" content="在不是用Spring的情况下，创建sqlSessionFactory需要两步:12345//1.加载核心配置文件String resource = &quot;sqlMapConfig.xml&quot;;InputStream in = Resources.getResourceAsStream(resource);//2.创建SqlSessionFactorySqlSessionFactory sqlSessio">
+<meta name="twitter:description" content="在不使用Spring的情况下，创建sqlSessionFactory需要两步:12345//1.加载核心配置文件String resource = &quot;sqlMapConfig.xml&quot;;InputStream in = Resources.getResourceAsStream(resource);//2.创建SqlSessionFactorySqlSessionFactory sqlSessio">
 <meta name="twitter:image" content="http://homxu.com/2018/11/29/Spring与Mybatis整合/1.png">
   
     <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
@@ -120,7 +121,7 @@
                 
                   <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
                 
                   <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
@@ -210,7 +211,7 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在不是用Spring的情况下，创建sqlSessionFactory需要两步:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.加载核心配置文件</span></div><div class="line">String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">InputStream in = Resources.getResourceAsStream(resource);</div><div class="line"><span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div></pre></td></tr></table></figure></p>
+        <p>在不使用Spring的情况下，创建sqlSessionFactory需要两步:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.加载核心配置文件</span></div><div class="line">String resource = <span class="string">"sqlMapConfig.xml"</span>;</div><div class="line">InputStream in = Resources.getResourceAsStream(resource);</div><div class="line"><span class="comment">//2.创建SqlSessionFactory</span></div><div class="line">SqlSessionFactory sqlSessionFactory = <span class="keyword">new</span> SqlSessionFactoryBuilder().build(in);</div></pre></td></tr></table></figure></p>
 <p>原始Dao开发时，每一个实现类都要注入一个工厂，然后工厂调用<code>openSession()</code>方法创建SqlSession对象，然后sqlSession再执行sql语句，这一系列存在大量重复代码。</p>
 <h1 id="整合思路"><a href="#整合思路" class="headerlink" title="整合思路"></a>整合思路</h1><p>1、SqlSessionFactory对象应该放到spring容器中作为单例存在。<br>2、传统dao的开发方式中，应该从spring容器中获得sqlsession对象。<br>3、Mapper代理形式中，应该从spring容器中直接获得mapper的代理对象。<br>4、数据库的连接以及数据库连接池事务管理都交给spring容器来完成。</p>
 <h1 id="依赖包"><a href="#依赖包" class="headerlink" title="依赖包"></a>依赖包</h1><p><img src="/2018/11/29/Spring与Mybatis整合/1.png" alt="依赖包"><br><img src="/2018/11/29/Spring与Mybatis整合/2.png" alt="依赖包"></p>
@@ -319,7 +320,7 @@ var a = new Donate({
 <nav id="article-nav">
   
     <a href="/2018/11/30/SpringMVC学习笔记-一/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
+      <strong class="article-nav-caption">Nuevo</strong>
       <div class="article-nav-title">
         
           SpringMVC学习笔记-一
@@ -329,7 +330,7 @@ var a = new Donate({
   
   
     <a href="/2018/11/21/Mybatis学习笔记-二/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Viejo</strong>
       <div class="article-nav-title">Mybatis学习笔记-二</div>
     </a>
   
@@ -358,7 +359,7 @@ var a = new Donate({
 
   <div class="container">
       	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
 	      
 	      
