@@ -171,9 +171,9 @@
         
           <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
         
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
+          <a id="beautifont" class="main-nav-link" href="/categories">Categorieën</a>
         
-          <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
+          <a id="beautifont" class="main-nav-link" href="/tags">Labels</a>
         
           <a id="beautifont" class="main-nav-link" href="/about">About</a>
         
@@ -191,6 +191,64 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-实现线段树"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/08/13/实现线段树/">实现线段树</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/08/13/实现线段树/" class="article-date">
+	  <time datetime="2018-08-13T02:55:43.000Z" itemprop="datePublished">2018-08-13</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          定义当更关心某个区间上的问题时，使用线段树（区间树）会更方便。
+
+线段树是一种二叉搜索树
+线段树每个节点存放一个区间内相应的信息
+一般用静态数组表示
+线段树不一定是一棵完全二叉树
+线段树是平衡二叉树（最大深度和最小深度的差最大为1）
+
+
+例如，如果线段树想表示区间的和，那么每个节点存放的不是对应的数组，而是这个区间的和。
+线段树依然可以使用数组表示。那么对于一个区间有n个元素，数组的大小该如何确定？对于一个满二叉树，如果有h层（从0层到h-1层），那么h层就有2^h-1个节点，差不多是2^...
+        </p>
+        <p class="article-more-link">
+          <a href="/2018/08/13/实现线段树/#more">weiter lesen</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-实现优先队列"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
@@ -692,72 +750,11 @@ WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platfo
 
 
   
-    <article id="post-git笔记"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/07/18/git笔记/">git笔记</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/07/18/git笔记/" class="article-date">
-	  <time datetime="2018-07-18T01:14:03.000Z" itemprop="datePublished">2018-07-18</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          因为hexo博客之前出过一些问题，导致之前做的git笔记被覆盖掉丢失了。所以这次再一次整理一下git的一些常用操作并记录下来。
-创建仓库进入到要创建仓库的文件夹,输入命令
-
-git init这时候会有提示 然后目录下会多一个.git的隐藏文件夹。
-
-另外一种方式
-
-git init demo 初始化到一个叫demo的自定义文件夹
-
-另外可以从远程仓库初始化
-
-git clone https://github.com/xxxxxxxxx.git 克隆项目
-
-git clone https:/...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/07/18/git笔记/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Previo</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Siguiente &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Vorige</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Volgende &raquo;</a>
   </nav>
 
 </section>
@@ -771,7 +768,7 @@ git clone https:/...
 
   <div class="container">
       	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
 	      
 	      

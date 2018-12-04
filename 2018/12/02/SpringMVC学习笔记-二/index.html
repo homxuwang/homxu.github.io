@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>springmvc学习笔记-二 | Homxu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="好好生活" />
+  
+  
+  
+  
+  <meta name="description" content="参数绑定默认支持的参数类型需求：打开商品编辑页面，展示商品信息 在SpringMVC+Mybatis整合的基础上，进行商品编辑的功能开发。 需求分析:编辑商品信息，首先要显示商品详情需要根据商品id查询商品信息，然后展示到页面。请求的url：/itemEdit.action参数：id（商品id）响应结果：商品编辑页面，展示商品详细信息。 在ItemService.java接口中添加方法:12//通">
+<meta name="keywords" content="学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC学习笔记-二">
+<meta property="og:url" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="参数绑定默认支持的参数类型需求：打开商品编辑页面，展示商品信息 在SpringMVC+Mybatis整合的基础上，进行商品编辑的功能开发。 需求分析:编辑商品信息，首先要显示商品详情需要根据商品id查询商品信息，然后展示到页面。请求的url：/itemEdit.action参数：id（商品id）响应结果：商品编辑页面，展示商品详细信息。 在ItemService.java接口中添加方法:12//通">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/1.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/2.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/3.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/4.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/6.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/5.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/7.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/8.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/9.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/10.png">
+<meta property="og:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/11.png">
+<meta property="og:updated_time" content="2018-12-04T11:24:28.881Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringMVC学习笔记-二">
+<meta name="twitter:description" content="参数绑定默认支持的参数类型需求：打开商品编辑页面，展示商品信息 在SpringMVC+Mybatis整合的基础上，进行商品编辑的功能开发。 需求分析:编辑商品信息，首先要显示商品详情需要根据商品id查询商品信息，然后展示到页面。请求的url：/itemEdit.action参数：id（商品id）响应结果：商品编辑页面，展示商品详细信息。 在ItemService.java接口中添加方法:12//通">
+<meta name="twitter:image" content="http://homxu.com/2018/12/02/SpringMVC学习笔记-二/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/star.png">
+  <link rel="apple-touch-icon" href="/css/images/star.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categorieën</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Labels</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-SpringMVC学习笔记-二" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      SpringMVC学习笔记-二
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/12/02/SpringMVC学习笔记-二/" class="article-date">
+	  <time datetime="2018-12-02T04:11:56.000Z" itemprop="datePublished">2018-12-02</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h1><h2 id="默认支持的参数类型"><a href="#默认支持的参数类型" class="headerlink" title="默认支持的参数类型"></a>默认支持的参数类型</h2><p>需求：打开商品编辑页面，展示商品信息</p>
+<p>在<a href="https://homxuwang.github.io/2018/12/01/SpringMVC-Mybatis%E6%95%B4%E5%90%88/" target="_blank" rel="external">SpringMVC+Mybatis整合</a><br>的基础上，进行商品编辑的功能开发。</p>
+<p>需求分析:编辑商品信息，首先要显示商品详情<br>需要根据商品id查询商品信息，然后展示到页面。<br>请求的url：/itemEdit.action<br>参数：id（商品id）<br>响应结果：商品编辑页面，展示商品详细信息。</p>
+<p>在<code>ItemService.java</code>接口中添加方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过id查询某个商品</span></div><div class="line"><span class="function"><span class="keyword">public</span> Items <span class="title">selectItemsById</span><span class="params">(Integer id)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>在<code>ItemServiceImpl.java</code>类中实现方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//查询某个商品</span></div><div class="line"><span class="function"><span class="keyword">public</span> Items <span class="title">selectItemsById</span><span class="params">(Integer id)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> itemsmapper.selectByPrimaryKey(id);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在Controller中书写方法:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过id查询某个商品</span></div><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/itemEdit.action"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> ModelAndView <span class="title">itemEdit</span><span class="params">(HttpServletRequest request,HttpServletResponse response</span></span></div><div class="line"><span class="function"><span class="params">    ,HttpSession session,Model model)</span> </span>&#123;</div><div class="line">  <span class="comment">//获取id</span></div><div class="line">  String id = request.getParameter(<span class="string">"id"</span>);</div><div class="line">  </div><div class="line">  <span class="comment">//查询商品</span></div><div class="line">  Items item = itemservice.selectItemsById(Integer.parseInt(id));</div><div class="line">  </div><div class="line">  ModelAndView mav = <span class="keyword">new</span> ModelAndView();</div><div class="line">  mav.addObject(<span class="string">"item"</span>, item);</div><div class="line">  mav.setViewName(<span class="string">"editItem"</span>);</div><div class="line">  <span class="keyword">return</span> mav;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/12/02/SpringMVC学习笔记-二/1.png" alt=""><br><img src="/2018/12/02/SpringMVC学习笔记-二/2.png" alt=""><br>测试结果:<br><img src="/2018/12/02/SpringMVC学习笔记-二/3.png" alt=""></p>
+<h2 id="绑定简单类型"><a href="#绑定简单类型" class="headerlink" title="绑定简单类型"></a>绑定简单类型</h2><p>当请求的参数名称和处理器形参名称一致时会将请求参数与形参进行绑定。<br>这样，从Request取参数的方法就可以进一步简化。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过id查询某个商品</span></div><div class="line">	<span class="meta">@RequestMapping</span>(value = <span class="string">"/itemEdit.action"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> ModelAndView <span class="title">itemEdit</span><span class="params">(Integer id,HttpServletRequest request,HttpServletResponse response</span></span></div><div class="line"><span class="function"><span class="params">			,HttpSession session,Model model)</span> </span>&#123;		</div><div class="line">		<span class="comment">//查询商品</span></div><div class="line">		Items item = itemservice.selectItemsById(id);</div><div class="line">		</div><div class="line">		ModelAndView mav = <span class="keyword">new</span> ModelAndView();</div><div class="line">		mav.addObject(<span class="string">"item"</span>, item);</div><div class="line">		mav.setViewName(<span class="string">"editItem"</span>);</div><div class="line">		<span class="keyword">return</span> mav;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="RequestParam"><a href="#RequestParam" class="headerlink" title="@RequestParam"></a>@RequestParam</h3><p>当请求的参数名称和处理器形参名称不一致时，使用@RequestParam常用于处理简单类型的绑定。</p>
+<p>value：参数名字，即入参的请求参数名字，如value=“itemId”表示请求的参数区中的名字为itemId的参数的值将传入</p>
+<p>required：是否必须，默认是true，表示请求中一定要有相应的参数，否则将报错<br>TTP Status 400 - Required Integer parameter ‘XXXX’ is not present<br>如果想设置为可以为空，则将requied设置为false</p>
+<p>defaultValue：默认值，表示如果请求中没有同名参数时的默认值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过id查询某个商品</span></div><div class="line">	<span class="meta">@RequestMapping</span>(value = <span class="string">"/itemEdit.action"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> ModelAndView <span class="title">itemEdit</span><span class="params">(@RequestParam(value=<span class="string">"id"</span>,required=<span class="keyword">false</span>,defaultValue=<span class="string">"1"</span>)</span> Integer value,HttpServletRequest request,HttpServletResponse response</span></div><div class="line"><span class="function">			,HttpSession session,Model model) </span>&#123;		</div><div class="line">		<span class="comment">//查询商品</span></div><div class="line">		Items item = itemservice.selectItemsById(value);</div><div class="line">		</div><div class="line">		ModelAndView mav = <span class="keyword">new</span> ModelAndView();</div><div class="line">		mav.addObject(<span class="string">"item"</span>, item);</div><div class="line">		mav.setViewName(<span class="string">"editItem"</span>);</div><div class="line">		<span class="keyword">return</span> mav;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h2 id="参数绑定之POJO"><a href="#参数绑定之POJO" class="headerlink" title="参数绑定之POJO"></a>参数绑定之POJO</h2><p>如果提交的参数很多，或者提交的表单中的内容很多的时候,可以使用简单类型接受数据,也可以使用pojo接收数据。<br>要求：pojo对象中的属性名和表单中input的name属性一致。</p>
+<p>ItemService里编写接口方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过pojo更新商品信息</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateItemsByPojo</span><span class="params">(Items item)</span></span>;</div></pre></td></tr></table></figure></p>
+<p>ItemServiceImpl.java编写方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过pojo更新商品信息</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateItemsByPojo</span><span class="params">(Items items)</span> </span>&#123;</div><div class="line">		items.setCreatetime(<span class="keyword">new</span> Date());</div><div class="line">		itemsmapper.updateByPrimaryKeyWithBLOBs(items);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>在Controller中书写代码:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/updateitem.action"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> ModelAndView <span class="title">itemEdit</span><span class="params">(Items items)</span> </span>&#123;</div><div class="line">		<span class="comment">//更新信息</span></div><div class="line">		itemservice.updateItemsByPojo(items);</div><div class="line">		</div><div class="line">		ModelAndView mav = <span class="keyword">new</span> ModelAndView();</div><div class="line">		mav.addObject(<span class="string">"item"</span>, items);</div><div class="line">		mav.setViewName(<span class="string">"success"</span>);</div><div class="line">		<span class="keyword">return</span> mav;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2018/12/02/SpringMVC学习笔记-二/4.png" alt="测试结果"><br>但是提交的内容会有乱码<br><img src="/2018/12/02/SpringMVC学习笔记-二/6.png" alt="乱码"></p>
+<h2 id="解决提交内容乱码问题"><a href="#解决提交内容乱码问题" class="headerlink" title="解决提交内容乱码问题"></a>解决提交内容乱码问题</h2><h3 id="post"><a href="#post" class="headerlink" title="post"></a>post</h3><p>在web.xml中加入过滤器，解决post提交乱码问题：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 解决post乱码问题 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">filter</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 设置编码参是UTF8 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">init-param</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">param-value</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">filter</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.action<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><img src="/2018/12/02/SpringMVC学习笔记-二/5.png" alt="web.xml配置"><br>再次修改测试：<br><img src="/2018/12/02/SpringMVC学习笔记-二/7.png" alt="测试结果"></p>
+<h2 id="参数绑定之包装的POJO"><a href="#参数绑定之包装的POJO" class="headerlink" title="参数绑定之包装的POJO"></a>参数绑定之包装的POJO</h2><p>使用包装的pojo接收商品信息的查询条件。<br>创建包装对象:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.springmvc.pojo;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueryVo</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Items items;</div><div class="line">  <span class="comment">//get/set...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Controller中的代码:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//使用包装的pojo</span></div><div class="line">	<span class="meta">@RequestMapping</span>(value = <span class="string">"/updateitemQueryVo.action"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> ModelAndView <span class="title">itemEdit</span><span class="params">(QueryVo vo)</span> </span>&#123;</div><div class="line">		<span class="comment">//更新信息</span></div><div class="line">		itemservice.updateItemsByPojo(vo.getItems());</div><div class="line">		</div><div class="line">		ModelAndView mav = <span class="keyword">new</span> ModelAndView();</div><div class="line">		mav.setViewName(<span class="string">"success"</span>);</div><div class="line">		<span class="keyword">return</span> mav;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>这时候前端页面要修改为其<code>成员变量.属性名</code>的格式:<br><img src="/2018/12/02/SpringMVC学习笔记-二/8.png" alt="修改前端页面"><br>修改form的提交地址后测试，可以看到后台正确接收到值，并且修改成功<br><img src="/2018/12/02/SpringMVC学习笔记-二/9.png" alt="后台接受正确"><br><img src="/2018/12/02/SpringMVC学习笔记-二/10.png" alt="修改成功"></p>
+<h2 id="自定义参数绑定"><a href="#自定义参数绑定" class="headerlink" title="自定义参数绑定"></a>自定义参数绑定</h2><p>需求：在商品修改页面可以修改商品的生产日期，并且根据业务需求自定义日期格式。</p>
+<p>由于日期数据有很多种格式，springmvc没办法把字符串转换成日期类型。所以需要自定义参数绑定。<br>负责处理这部分的是springMVC的适配器<br>在jsp页面添加显示和修改日期的部分:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;tr&gt;</div><div class="line">  &lt;td&gt;商品生产日期&lt;/td&gt;</div><div class="line">  &lt;td&gt;&lt;input type=<span class="string">"text"</span> name=<span class="string">"items.createtime"</span></div><div class="line">    value="&lt;fmt:formatDate value="$&#123;item.createtime&#125;" pattern="yyyy-MM-dd HH:mm:ss"/&gt;" /&gt;&lt;/td&gt;</div><div class="line">&lt;/tr&gt;</div></pre></td></tr></table></figure></p>
+<p>吧<code>ItemServiceImpl.java</code>中写入时间的代码删除:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//通过pojo更新商品信息</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateItemsByPojo</span><span class="params">(Items items)</span> </span>&#123;</div><div class="line"><span class="comment">//		items.setCreatetime(new Date());</span></div><div class="line">		itemsmapper.updateByPrimaryKeyWithBLOBs(items);</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<p>自定义Converter,假如传入的日期为<code>2018:12-04 16_:_34-26</code>：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Converter&lt;S, T&gt;</span></div><div class="line"><span class="comment">//S:source,需要转换的源的类型</span></div><div class="line"><span class="comment">//T:target,需要转换的目标类型</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DateConverter</span> <span class="keyword">implements</span> <span class="title">Converter</span>&lt;<span class="title">String</span>, <span class="title">Date</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> Date <span class="title">convert</span><span class="params">(String source)</span> </span>&#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line">			<span class="comment">// 把字符串转换为日期类型</span></div><div class="line">			SimpleDateFormat simpleDateFormat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy:MM-dd HH_mm-ss"</span>);</div><div class="line">			Date date = simpleDateFormat.parse(source);</div><div class="line"></div><div class="line">			<span class="keyword">return</span> date;</div><div class="line">		&#125; <span class="keyword">catch</span> (ParseException e) &#123;</div><div class="line">			<span class="comment">// TODO Auto-generated catch block</span></div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="comment">// 如果转换异常则返回空</span></div><div class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在<code>springmvc.xml</code>中配置Converter:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span> <span class="attr">conversion-service</span>=<span class="string">"ConversionServiceFactory"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 转换器配置 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"ConversionServiceFactory"</span> <span class="attr">class</span>=<span class="string">"org.springframework.format.support.FormattingConversionServiceFactoryBean"</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"converters"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">list</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"my.study.springmvc.conversion.DateConverter"</span>/&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">list</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在修改日期处填写日期<code>2016:12-04 16_43-52</code>进行测试:<br><img src="/2018/12/02/SpringMVC学习笔记-二/11.png" alt="修改成功"></p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h1 id="editItem-jsp"><a href="#editItem-jsp" class="headerlink" title="editItem.jsp"></a>editItem.jsp</h1><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;%@ page language=<span class="string">"java"</span> contentType=<span class="string">"text/html; charset=UTF-8"</span></div><div class="line">    pageEncoding=<span class="string">"UTF-8"</span>%&gt;</div><div class="line">&lt;%@ taglib uri=<span class="string">"http://java.sun.com/jsp/jstl/core"</span> prefix=<span class="string">"c"</span> %&gt;</div><div class="line">&lt;%@ taglib uri=<span class="string">"http://java.sun.com/jsp/jstl/fmt"</span>  prefix=<span class="string">"fmt"</span>%&gt;</div><div class="line">&lt;!DOCTYPE html PUBLIC <span class="string">"-//W3C//DTD HTML 4.01 Transitional//EN"</span> <span class="string">"http://www.w3.org/TR/html4/loose.dtd"</span>&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv=<span class="string">"Content-Type"</span> content=<span class="string">"text/html; charset=UTF-8"</span>&gt;</div><div class="line">&lt;title&gt;修改商品信息&lt;/title&gt;</div><div class="line"></div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt; </div><div class="line">	&lt;!-- 上传图片是需要指定属性 enctype=<span class="string">"multipart/form-data"</span> --&gt;</div><div class="line">	&lt;!-- &lt;form id=<span class="string">"itemForm"</span> action=<span class="string">""</span> method=<span class="string">"post"</span> enctype=<span class="string">"multipart/form-data"</span>&gt; --&gt;</div><div class="line">	&lt;form id=<span class="string">"itemForm"</span>	action=<span class="string">"$&#123;pageContext.request.contextPath &#125;/updateitem.action"</span> method=<span class="string">"post"</span>&gt;</div><div class="line">		&lt;input type=<span class="string">"hidden"</span> name=<span class="string">"id"</span> value=<span class="string">"$&#123;item.id &#125;"</span> /&gt; 修改商品信息：</div><div class="line">		&lt;table width=<span class="string">"100%"</span> border=<span class="number">1</span>&gt;</div><div class="line">			&lt;tr&gt;</div><div class="line">				&lt;td&gt;商品名称&lt;/td&gt;</div><div class="line">				&lt;td&gt;&lt;input type="text" name="name" value="$&#123;item.name &#125;" /&gt;&lt;/td&gt;</div><div class="line">			&lt;/tr&gt;</div><div class="line">			&lt;tr&gt;</div><div class="line">				&lt;td&gt;商品价格&lt;/td&gt;</div><div class="line">				&lt;td&gt;&lt;input type="text" name="price" value="$&#123;item.price &#125;" /&gt;&lt;/td&gt;</div><div class="line">			&lt;/tr&gt;</div><div class="line">			&lt;tr&gt;</div><div class="line">				&lt;td&gt;商品简介&lt;/td&gt;</div><div class="line">				&lt;td&gt;&lt;textarea rows="3" cols="30" name="detail"&gt;$&#123;item.detail &#125;&lt;/textarea&gt;</div><div class="line">				&lt;/td&gt;</div><div class="line">			&lt;/tr&gt;</div><div class="line">			&lt;tr&gt;</div><div class="line">				&lt;td colspan=<span class="string">"2"</span> align=<span class="string">"center"</span>&gt;&lt;input type=<span class="string">"submit"</span> value=<span class="string">"提交"</span> /&gt;</div><div class="line">				&lt;/td&gt;</div><div class="line">			&lt;/tr&gt;</div><div class="line">		&lt;/table&gt;</div><div class="line"></div><div class="line">	&lt;/form&gt;</div><div class="line">&lt;/body&gt;</div><div class="line"></div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Faire un don', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Homxu</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2018/12/02/SpringMVC学习笔记-二/" target="_blank" title="SpringMVC学习笔记-二">http://homxu.com/2018/12/02/SpringMVC学习笔记-二/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/12/01/SpringMVC-Mybatis整合/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title">SpringMVC+Mybatis整合</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参数绑定"><span class="nav-number">1.</span> <span class="nav-text">参数绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#默认支持的参数类型"><span class="nav-number">1.1.</span> <span class="nav-text">默认支持的参数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定简单类型"><span class="nav-number">1.2.</span> <span class="nav-text">绑定简单类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RequestParam"><span class="nav-number">1.2.1.</span> <span class="nav-text">@RequestParam</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数绑定之POJO"><span class="nav-number">1.3.</span> <span class="nav-text">参数绑定之POJO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决提交内容乱码问题"><span class="nav-number">1.4.</span> <span class="nav-text">解决提交内容乱码问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#post"><span class="nav-number">1.4.1.</span> <span class="nav-text">post</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数绑定之包装的POJO"><span class="nav-number">1.5.</span> <span class="nav-text">参数绑定之包装的POJO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义参数绑定"><span class="nav-number">1.6.</span> <span class="nav-text">自定义参数绑定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">2.</span> <span class="nav-text">附录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#editItem-jsp"><span class="nav-number">3.</span> <span class="nav-text">editItem.jsp</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2018 Homxu All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Homxu
+          </div>
+          <div class="panel-body">
+            Copyright © 2018 Homxu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
