@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="Homxu">
 <meta property="og:description" content="映射也就是Map,这里是指一对一的映射。也成为字典。  映射迎来存储键值数据对(Key,Value) 根据Key寻找对应的Value 用链表或者二分搜索树实现比较简单  BST的结构:123456class Node &amp;#123;  K key;  V value;  Node left;  Node right;&amp;#125; 链表的结构:12345class Node &amp;#123;  K key">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-13T14:07:24.720Z">
+<meta property="og:updated_time" content="2018-08-13T14:07:24.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现映射">
 <meta name="twitter:description" content="映射也就是Map,这里是指一对一的映射。也成为字典。  映射迎来存储键值数据对(Key,Value) 根据Key寻找对应的Value 用链表或者二分搜索树实现比较简单  BST的结构:123456class Node &amp;#123;  K key;  V value;  Node left;  Node right;&amp;#125; 链表的结构:12345class Node &amp;#123;  K key">
@@ -101,15 +101,15 @@
             <div class="navbar-collapse collapse">
               <ul class="hnav navbar-nav">
                 
-                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                  <li> <a class="main-nav-link" href="/">Accueil</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
                 
                   <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                  <li> <a class="main-nav-link" href="/about">À propos</a> </li>
                 
                   <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
                 
@@ -123,7 +123,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <input type="text" class="ins-search-input" placeholder="Écrivez ici" />
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -135,11 +135,11 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Beiträge',
-            PAGES: 'Seiten',
-            CATEGORIES: 'Kategorien',
-            TAGS: 'Tags',
-            UNTITLED: '(Unbenannt)',
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Mots-clés',
+            UNTITLED: '(Sans titre)',
         },
         ROOT_URL: '/',
         CONTENT_URL: '/content.json',
@@ -261,7 +261,7 @@
 <script>
 var a = new Donate({
   title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
-  btnText: 'Donate', // 可选参数，打赏按钮文字
+  btnText: 'Faire un don', // 可选参数，打赏按钮文字
   el: document.getElementById('donation_div'),
   wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
   alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
@@ -323,7 +323,7 @@ var a = new Donate({
 <nav id="article-nav">
   
     <a href="/2018/08/04/用户日志统计分析/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
+      <strong class="article-nav-caption">Nuevo</strong>
       <div class="article-nav-title">
         
           用户日志统计分析
@@ -333,7 +333,7 @@ var a = new Donate({
   
   
     <a href="/2018/08/01/实现集合/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Viejo</strong>
       <div class="article-nav-title">实现集合</div>
     </a>
   
@@ -346,7 +346,7 @@ var a = new Donate({
 
   <aside id="toc-sidebar">
     <div id="toc" class="toc-article">
-    <strong class="toc-title">Inhalt</strong>
+    <strong class="toc-title">Contenu</strong>
     
         <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基于链表实现Map"><span class="nav-number">1.</span> <span class="nav-text">基于链表实现Map</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于二分搜索树实现Map"><span class="nav-number">2.</span> <span class="nav-text">基于二分搜索树实现Map</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于链表的Map和基于二分搜索树的Map的时间复杂度对比"><span class="nav-number">3.</span> <span class="nav-text">基于链表的Map和基于二分搜索树的Map的时间复杂度对比</span></a></li></ol>
     
@@ -362,7 +362,7 @@ var a = new Donate({
 
   <div class="container">
       	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
 	      
 	      

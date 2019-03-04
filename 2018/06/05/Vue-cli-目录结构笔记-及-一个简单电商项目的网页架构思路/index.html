@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://homxu.com/2018/06/05/Vue-cli-目录结构笔记-及-一个简单电商项目的网页架构思路/3.png">
 <meta property="og:image" content="http://homxu.com/2018/06/05/Vue-cli-目录结构笔记-及-一个简单电商项目的网页架构思路/5.png">
 <meta property="og:image" content="http://homxu.com/2018/06/05/Vue-cli-目录结构笔记-及-一个简单电商项目的网页架构思路/4.png">
-<meta property="og:updated_time" content="2018-06-05T08:43:26.516Z">
+<meta property="og:updated_time" content="2018-06-05T08:43:26.515Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue-cli 目录结构笔记 及 一个简单电商项目的网页架构思路">
 <meta name="twitter:description" content="学习了vue有一小段时间，期间中断去学习了java并且补了一下数据结构的基础，有点断层。跟着视频用vue2.0做了一个电商的小项目。思路稍微清晰了一些，但是因为中途转学其他的缘故，有一些东西还是忘掉了，这里总结一下使用vue-cli搭建项目的一些经验和教训。 首先是vue-cli的目录结构，这个是基于webpack的脚手架目录： 1234567891011121314151617181920212">
@@ -107,15 +107,15 @@
             <div class="navbar-collapse collapse">
               <ul class="hnav navbar-nav">
                 
-                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                  <li> <a class="main-nav-link" href="/">Accueil</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
                 
                   <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                  <li> <a class="main-nav-link" href="/about">À propos</a> </li>
                 
                   <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
                 
@@ -129,7 +129,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <input type="text" class="ins-search-input" placeholder="Écrivez ici" />
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -141,11 +141,11 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Beiträge',
-            PAGES: 'Seiten',
-            CATEGORIES: 'Kategorien',
-            TAGS: 'Tags',
-            UNTITLED: '(Unbenannt)',
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Mots-clés',
+            UNTITLED: '(Sans titre)',
         },
         ROOT_URL: '/',
         CONTENT_URL: '/content.json',
@@ -237,7 +237,7 @@
 <script>
 var a = new Donate({
   title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
-  btnText: 'Donate', // 可选参数，打赏按钮文字
+  btnText: 'Faire un don', // 可选参数，打赏按钮文字
   el: document.getElementById('donation_div'),
   wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
   alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
@@ -299,7 +299,7 @@ var a = new Donate({
 <nav id="article-nav">
   
     <a href="/2018/06/09/排序算法/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
+      <strong class="article-nav-caption">Nuevo</strong>
       <div class="article-nav-title">
         
           排序算法
@@ -309,7 +309,7 @@ var a = new Donate({
   
   
     <a href="/2018/05/28/大数据基础学习笔记（十）——图计算/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Viejo</strong>
       <div class="article-nav-title">大数据基础学习笔记（十）——图计算</div>
     </a>
   
@@ -322,9 +322,9 @@ var a = new Donate({
 
   <aside id="toc-sidebar">
     <div id="toc" class="toc-article">
-    <strong class="toc-title">Inhalt</strong>
+    <strong class="toc-title">Contenu</strong>
     
-        <ol class="nav">Nichts</ol>
+        <ol class="nav">Aucun</ol>
     
     </div>
   </aside>
@@ -338,7 +338,7 @@ var a = new Donate({
 
   <div class="container">
       	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
 	      
 	      
