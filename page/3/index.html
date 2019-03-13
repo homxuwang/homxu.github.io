@@ -167,7 +167,7 @@
   <div class="intro-navigate">
       <p class="navigater-list">
         
-          <a id="beautifont" class="main-nav-link" href="/">Accueil</a>
+          <a id="beautifont" class="main-nav-link" href="/">Home</a>
         
           <a id="beautifont" class="main-nav-link" href="/archives">Archives</a>
         
@@ -175,7 +175,7 @@
         
           <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
         
-          <a id="beautifont" class="main-nav-link" href="/about">À propos</a>
+          <a id="beautifont" class="main-nav-link" href="/about">About</a>
         
           <a id="beautifont" class="main-nav-link" href="/我的足迹">我的足迹</a>
         
@@ -191,6 +191,67 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-MapReduce的补充和WordCount简单实战2"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/07/29/MapReduce的补充和WordCount简单实战2/">MapReduce的补充和WordCount简单实战(二)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/07/29/MapReduce的补充和WordCount简单实战2/" class="article-date">
+	  <time datetime="2018-07-29T01:17:50.000Z" itemprop="datePublished">2018-07-29</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          MapReduce编程之WordCount基于JAVA开发
+
+Text参数继承了BinaryComparable并实现了WritableComparable接口，可以把它理解为JAVA里面的字符串。
+首先看一些基本的知识：
+
+Mapper类
+
+
+
+Context代表的上下文
+setup代表任务开始的时候执行的操作，且只执行一次。可以在这里进行数据库链接等操作
+map方法，对于输入的input在每个键值对出发的时候就调用
+cleanup方法是表示在任务结束的时候执行一次
+run方法不需要手动...
+        </p>
+        <p class="article-more-link">
+          <a href="/2018/07/29/MapReduce的补充和WordCount简单实战2/#more">Read More</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-MapReduce的补充和WordCount简单实战1"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
@@ -222,7 +283,7 @@
 首先回顾一些MapReduce的基础知识：https://homxuwang.github.io/2018/04/24/%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%A...
         </p>
         <p class="article-more-link">
-          <a href="/2018/07/28/MapReduce的补充和WordCount简单实战1/#more">Lire la suite</a>
+          <a href="/2018/07/28/MapReduce的补充和WordCount简单实战1/#more">Read More</a>
         </p>
       
     </div>
@@ -279,7 +340,7 @@ IDEA环境配置首先打开IDEA,选择Maven项目，选择quickstart接着下�
 这里IDEA有自己集成的Maven版本,在User settings file可以使用系统自带的xml文件，也可以选择自己下载的Maven。可以在网上下载一个Maven压缩包，解压到指定的文件夹，在使用的时候选择这个文件夹下的settings....
         </p>
         <p class="article-more-link">
-          <a href="/2018/07/25/IDEA+JAVA编写HDFS代码/#more">Lire la suite</a>
+          <a href="/2018/07/25/IDEA+JAVA编写HDFS代码/#more">Read More</a>
         </p>
       
     </div>
@@ -328,7 +389,7 @@ IDEA环境配置首先打开IDEA,选择Maven项目，选择quickstart接着下�
 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform…由于好久没有打开ubuntu系统使用hadoop，不知道是什么原因，今天运行hadoop的一些命令的时候有警告： WARN util.NativeCodeLoader: Unable to load native-hadoop library for yo...
         </p>
         <p class="article-more-link">
-          <a href="/2018/07/24/hadoop遇到的一些坑/#more">Lire la suite</a>
+          <a href="/2018/07/24/hadoop遇到的一些坑/#more">Read More</a>
         </p>
       
     </div>
@@ -385,7 +446,7 @@ WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platfo
 基本代码12345678910111213141516171819202122232425262728public class B...
         </p>
         <p class="article-more-link">
-          <a href="/2018/07/18/二分搜索树/#more">Lire la suite</a>
+          <a href="/2018/07/18/二分搜索树/#more">Read More</a>
         </p>
       
     </div>
@@ -446,7 +507,7 @@ git clone https://github.com/xxxxxxxxx.git 克隆项目
 git clone https:/...
         </p>
         <p class="article-more-link">
-          <a href="/2018/07/18/git笔记/#more">Lire la suite</a>
+          <a href="/2018/07/18/git笔记/#more">Read More</a>
         </p>
       
     </div>
@@ -499,7 +560,7 @@ git clone https:/...
 https://homxuwang....
         </p>
         <p class="article-more-link">
-          <a href="/2018/07/17/实现栈和队列/#more">Lire la suite</a>
+          <a href="/2018/07/17/实现栈和队列/#more">Read More</a>
         </p>
       
     </div>
@@ -548,7 +609,7 @@ https://homxuwang....
 Array类1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001011...
         </p>
         <p class="article-more-link">
-          <a href="/2018/07/17/数组/#more">Lire la suite</a>
+          <a href="/2018/07/17/数组/#more">Read More</a>
         </p>
       
     </div>
@@ -597,7 +658,7 @@ Array类123456789101112131415161718192021222324252627282930313233343536373839404
 选择排序 - SelectionSort基本思路:假设有一个数组（如图所示），进行从小到大的排序。首先在整个数组范围里，找出要放在第一个位置的数，也就是最小的数：1，然后将1和现在的第一名的位置8进行换位，经过交换以后，1所处的位置就是最终排序所在的位置，这样就继续在剩下的部分找此时最小的数，也就是2，然后把2和相应的第二个位置所在的元素进行交换，此时1和2两个元素也已经是最终排好序的结果。整个过程以此类推，继续在剩下的部分中找此时最...
         </p>
         <p class="article-more-link">
-          <a href="/2018/06/09/排序算法/#more">Lire la suite</a>
+          <a href="/2018/06/09/排序算法/#more">Read More</a>
         </p>
       
     </div>
@@ -647,57 +708,7 @@ Array类123456789101112131415161718192021222324252627282930313233343536373839404
 12345678910111213141516171819202122232425262728293031.|-- build                  ...
         </p>
         <p class="article-more-link">
-          <a href="/2018/06/05/Vue-cli-目录结构笔记-及-一个简单电商项目的网页架构思路/#more">Lire la suite</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-大数据基础学习笔记（十）——图计算"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/05/28/大数据基础学习笔记（十）——图计算/">大数据基础学习笔记（十）——图计算</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/05/28/大数据基础学习笔记（十）——图计算/" class="article-date">
-	  <time datetime="2018-05-28T12:55:54.000Z" itemprop="datePublished">2018-05-28</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          图结构数据•许多大数据都是以大规模图或网络的形式呈现•许多非图结构的大数据，也常常会被转换为图模型后进行分析•图数据结构很好地表达了数据之间的关联性•关联性计算是大数据计算的核心——通过获得数据的关联性，可以从噪音很多的海量数据中抽取有用的信息
-传统图计算解决方案的不足之处很多传统的图计算算法都存在以下几个典型问题：（1）常常表现出比较差的内存访问局部性（2）针对单个顶点的处理工作过少（3）计算过程中伴随着并行度的改变
-针对大型图（比如社交网络和网络图）的计算问题，可能的解决方案及其不足之...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/05/28/大数据基础学习笔记（十）——图计算/#more">Lire la suite</a>
+          <a href="/2018/06/05/Vue-cli-目录结构笔记-及-一个简单电商项目的网页架构思路/#more">Read More</a>
         </p>
       
     </div>
