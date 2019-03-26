@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>哈希表 | Homxu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="好好生活" />
+  
+  
+  
+  
+  <meta name="description" content="哈希表中，每一个元素都和一个索引对应。 比如在leetcode中，的387号问题; 相关解决方案:1234567891011121314class Solution &amp;#123;    public int firstUniqChar(String s) &amp;#123;        int[] freq = new int[26];        for(int i = 0 ; i &amp;lt; s.">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈希表">
+<meta property="og:url" content="http://homxu.com/2019/03/14/哈希表/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="哈希表中，每一个元素都和一个索引对应。 比如在leetcode中，的387号问题; 相关解决方案:1234567891011121314class Solution &amp;#123;    public int firstUniqChar(String s) &amp;#123;        int[] freq = new int[26];        for(int i = 0 ; i &amp;lt; s.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-26T09:25:01.358Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="哈希表">
+<meta name="twitter:description" content="哈希表中，每一个元素都和一个索引对应。 比如在leetcode中，的387号问题; 相关解决方案:1234567891011121314class Solution &amp;#123;    public int firstUniqChar(String s) &amp;#123;        int[] freq = new int[26];        for(int i = 0 ; i &amp;lt; s.">
+  
+    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/star.png">
+  <link rel="apple-touch-icon" href="/css/images/star.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-哈希表" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      哈希表
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/14/哈希表/" class="article-date">
+	  <time datetime="2019-03-14T07:07:48.000Z" itemprop="datePublished">2019-03-14</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>哈希表中，每一个元素都和一个索引对应。</p>
+<p>比如在leetcode中，的<a href="https://leetcode-cn.com/problems/first-unique-character-in-a-string/" target="_blank" rel="external">387号问题</a>;</p>
+<p>相关解决方案:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">firstUniqChar</span><span class="params">(String s)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] freq = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; s.length() ; i ++)</div><div class="line">            freq[s.charAt(i) - <span class="string">'a'</span>] ++;</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; s.length() ; i ++)</div><div class="line">            <span class="keyword">if</span>(freq[s.charAt(i) - <span class="string">'a'</span>] == <span class="number">1</span>)</div><div class="line">                <span class="keyword">return</span> i;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>其中的每一个字符对应一个索引。每一个类型转化为索引的函数称为哈希函数（上例中就是`ch - ‘a’）。然后在哈希表上进行相应操作。</p>
+<p>在建立哈希表时很难保证每一个“键”通过哈希函数的转换对应不同的“索引”，这样会造成哈希冲突。所以关键在于如何解决哈希冲突。哈希表使用空间换时间，是时间和空间之间的平衡。</p>
+<h1 id="设计哈希函数"><a href="#设计哈希函数" class="headerlink" title="设计哈希函数"></a>设计哈希函数</h1><p>哈希函数设计时，“键”通过哈希函数得到的“索引”分布越均匀越好。对于一些特殊的领域，有特殊的哈希函数设计方式。</p>
+<p>哈希函数的设计遵循三个原则:</p>
+<ul>
+<li>一致性：如果a==b,则hash(a) == hash(b)</li>
+<li>高效性：计算高效简便</li>
+<li>均匀性：哈希值均匀分布</li>
+</ul>
+<h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><ul>
+<li>整型<br>对于整型，小范围正整数可以直接使用</li>
+</ul>
+<p>小范围的负整数进行偏移相应的能够转化为索引的函数称为哈希函数。</p>
+<p>对于大整数，比如身份证号可以采用取模的方法（比如可以取模后四位、后6位）。但是后6位中，有两位是表示日期的，日期最多是1-31，那么就会产生分布不均匀的情况。所以要根据具体问题具体分析，很难有一个通用的解决方法。</p>
+<p>在取模时，模一个素数是一个通常的解决方案。</p>
+<ul>
+<li>浮点型</li>
+</ul>
+<p>基本数据类型在计算机中都是32位或者64位的二进制表示，只不过计算机根据一定的法则给解析成了浮点数。在处理时，可以吧浮点数的32位或者64位空间转化为整型进行处理。</p>
+<ul>
+<li>字符串</li>
+</ul>
+<p>字符串也可以转为整型进行处理。</p>
+<p>比如:<br>166 = 1 <em> 10^2 + 6 </em> 10^1 + 6 <em> 10 ^0<br>code = c </em> 26^3 + o <em> 26^2 + d </em> 26^1 + e <em> 26^0 (看成26进制的整型)<br>code = c </em> B^3 + o <em> B^2 + d </em> B^1 + e <em> B^0  (看成B进制的整型)<br>hash(code) = ( c </em> B^3 + o <em> B^2 + d </em> B^1 + e <em> B^0 ) % M (M为取模时选取的素数)<br>也等价于 hash(code) = ( ( ( ( c </em> B ) + o ) <em> B + d ) </em> B + e ) % M</p>
+<p>为了避免整型的溢出，也可以先取模在继续进行下一步：<br>hash(code) = ( ( ( ( c % M) <em> B + o ) % M </em> B + d ) % M * B + e ) % M</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> hash = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; s.length() ; i ++)</div><div class="line">    hash = (hash * B + s.charAt(i)) % M</div></pre></td></tr></table></figure>
+<ul>
+<li>符合类型</li>
+</ul>
+<p>优先考虑方法也是转化为整型处理。<br>例如 <code>Date: year,month,day</code></p>
+<p>hash(date) = (((date.year % M ) <em> B + date.month) % M </em> B) + date.day) % M</p>
+<h1 id="java中的hashCode"><a href="#java中的hashCode" class="headerlink" title="java中的hashCode"></a>java中的hashCode</h1><p>java中给我们提供了很多现有的hashCode方法。<br>Object对象有<code>hashCode()</code>方法，调用此方法可以返回这个对象的hash值。<br>java中的<code>hashCode()</code>方法返回的hash值都是整型的，如果有需要，用户可以进一步处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> a = <span class="number">2</span>;</div><div class="line">        System.out.println(((Integer)a).hashCode());</div><div class="line"></div><div class="line">        <span class="keyword">int</span> b = -<span class="number">2</span>;</div><div class="line">        System.out.println(((Integer)b).hashCode());</div><div class="line"></div><div class="line">        <span class="keyword">double</span> c = <span class="number">3.1415926</span>;</div><div class="line">        System.out.println(((Double)c).hashCode());</div><div class="line"></div><div class="line">        String d = <span class="string">"hashCode"</span>;</div><div class="line">        System.out.println(d.hashCode());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">2</div><div class="line">-2</div><div class="line">219937201</div><div class="line">147696667</div></pre></td></tr></table></figure>
+<p>如果用户想对于自定义的类也能转换为相对应的哈希函数，则只需在类中覆盖来自于Object父类的hashCode方法。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> grade;</div><div class="line">    <span class="keyword">int</span> cls;</div><div class="line">    String name;</div><div class="line"></div><div class="line">    Student(<span class="keyword">int</span> grade,<span class="keyword">int</span> clas,String name)&#123;</div><div class="line">        <span class="keyword">this</span>.grade = grade;</div><div class="line">        <span class="keyword">this</span>.cls = cls;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> B = <span class="number">31</span>;<span class="comment">//将此类的看成有三个作用域的复合类型，直接把三部分看成三个数字，符合类型看成由这三个部分组成的B进制的数，进制数可以自己定义；</span></div><div class="line"></div><div class="line">        <span class="keyword">int</span> hash = <span class="number">0</span>;</div><div class="line">        hash = hash * B + grade;</div><div class="line">        hash = hash * B + cls;</div><div class="line">        hash = hash * B + name.hashCode();</div><div class="line">        <span class="comment">//如果出现整型溢出，计算机会做处理，这样不满足数学上的规范，不过对于计算机仍然是有效的</span></div><div class="line">        <span class="keyword">return</span> hash;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Student student = <span class="keyword">new</span> Student(<span class="number">100</span>,<span class="number">20</span>,<span class="string">"homxu"</span>);</div><div class="line">System.out.println(student.hashCode());</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">99557671</div></pre></td></tr></table></figure>
+<p>当一个类能够获得其hash值之后，便能够使用java提供的对于hash的操作。如<code>java.util.HashSet</code>和<code>java.util.HashMap</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">HashSet&lt;Student&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</div><div class="line">set.add(student);</div><div class="line"></div><div class="line">HashMap&lt;Student,Integer&gt; scores = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">scores.put(student,<span class="number">100</span>);</div></pre></td></tr></table></figure>
+<p>当然，如果一个类没有自定义其hashCode方法，那么会使用默认的方法，默认方法是将对象的地址映射成一个整型值。所以，当new出来两个数值相同的对象时，他们的hashCode值也是不同的。</p>
+<p>在自定义hashCode方法的时候，如果传过去的值相等，那么可能会产生hash冲突，所以一般还要在重写一个Object的<code>equals()</code>方法。以上面的Student类为例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span></span>&#123; <span class="comment">//注意这里的参数是object类型</span></div><div class="line">    <span class="keyword">if</span>(<span class="keyword">this</span> == o)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>; <span class="comment">//如果是同一个引用，则直接返回true</span></div><div class="line">    <span class="keyword">if</span>(o == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">if</span>(getClass() != o.getClass())</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">//如果类不同，返回false</span></div><div class="line">    Student another = (Student)o;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.grade == another.grade &amp;&amp;</div><div class="line">            <span class="keyword">this</span>.cls == another.cls &amp;&amp;</div><div class="line">            <span class="keyword">this</span>.name.equals(another.name);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，如果产生了hash冲突，即使是一样的hash值，也可以区分两个类对象的不同。</p>
+<h1 id="链地址法-Seperate-Chaining"><a href="#链地址法-Seperate-Chaining" class="headerlink" title="链地址法(Seperate Chaining)"></a>链地址法(Seperate Chaining)</h1><p>链地址法是哈希冲突的一种处理方法。<br>由之前的内容可知道，在处理哈希值的存储的时候，其实就是将对应的整数取模后，这个值就对应它在数组中的索引。对于会产生负号的值，则进行取绝对值或者<code>(hashCode(value) &amp; 0x7fffffff) % M</code>(按位与进行取负号，效果和取绝对值一样)。</p>
+<p>假设产生了哈希冲突，本来索引为1的位置已经存在了元素v1,后来新元素v2也和v1的索引一致，那么这时候扔把v2放在v1的位置，也就是索引处存放的是一个链表，每个索引位置存的都是一个链表，所以<code>Seperate Chaining</code>也由此得名。<br>当然，每一个位置的本质其实是存放的一个查找表，查找表不一定非要用链表，也可以用平衡树结构来实现这个查找表，所以每个位置也可以是一个查找表的结构。在产生哈希冲突时，找到对应的索引位置，然后插入到所以位置对应的TreeMap就可以了。HashMap本质就是一个TreeMap数组。HashSet就是一个TreeSet数组。</p>
+<p>在Java8之前，每一个索引位置对应的就是一个链表。<br>Java8开始，当哈希冲突达到一定的程度时，每个位置从链表转为红黑树(即TreeMap，因为Java8的TreeMap底层实现就是红黑树)。</p>
+<h1 id="实现一个哈希表"><a href="#实现一个哈希表" class="headerlink" title="实现一个哈希表"></a>实现一个哈希表</h1><p>实现一个简单的哈希表，包括增删改查等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.TreeMap;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashTable</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> TreeMap&lt;K,V&gt;[] hashtable;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> M;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashTable</span><span class="params">(<span class="keyword">int</span> M)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.M = M;</div><div class="line">        <span class="keyword">this</span>.size  = <span class="number">0</span>;</div><div class="line">        hashtable = <span class="keyword">new</span> TreeMap[M];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; M ; i ++)</div><div class="line">            hashtable[i] = <span class="keyword">new</span> TreeMap&lt;&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashTable</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>(<span class="number">97</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(K key)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> (key.hashCode() &amp; <span class="number">0x7fffffff</span>) % M;<span class="comment">//将key值转变为当前哈希表中的索引</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的添加操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(K key,V value)</span></span>&#123;</div><div class="line">        TreeMap&lt;K,V&gt; map = hashtable[hash(key)]; <span class="comment">//先用map暂存当前的hashtable索引对应的TreeMap</span></div><div class="line">        <span class="keyword">if</span>(map.containsKey(key))<span class="comment">//如果对应的索引处包含了当前的元素</span></div><div class="line">            map.put(key,value);</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            map.put(key,value);</div><div class="line">            size ++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的删除操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">remove</span><span class="params">(K key)</span></span>&#123;</div><div class="line">        TreeMap&lt;K,V&gt; map = hashtable[hash(key)];</div><div class="line">        V ret = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span>(map.containsKey(key))&#123;</div><div class="line">            ret = map.remove(key);</div><div class="line">            size --;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的修改操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(K key,V value)</span></span>&#123;</div><div class="line">        TreeMap&lt;K,V&gt; map = hashtable[hash(key)];</div><div class="line">        <span class="keyword">if</span>(!map.containsKey(key))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(key + <span class="string">"doesn't exist!"</span>);</div><div class="line">        map.put(key,value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的查询操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">contains</span><span class="params">(K key)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> hashtable[hash(key)].containsKey(key);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(K key)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> hashtable[hash(key)].get(key);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然，对于这个简单实现的哈希表，其M值是开始已经确定好的。选取合适的M值将对哈希表的性能有很大的影响。</p>
+<h1 id="时间复杂度和动态空间处理"><a href="#时间复杂度和动态空间处理" class="headerlink" title="时间复杂度和动态空间处理"></a>时间复杂度和动态空间处理</h1><p>在前面的介绍中，假设哈希表有M个地址，如果向其中放入N个元素，那么每个地址平均有N/M个元素。如果每个地址是链表，那么时间复杂度为O(N/M)。如果每个地址是一个平衡树，那么时间复杂度为O(log(N/M))。</p>
+<p>哈希表的目的是为了让时间复杂度为或者接近O(1).如果N趋于无穷大的话，那么对于一个静态的数组，它总会产生哈希冲突。所以一个解决办法就是使用动态存储，使其进行自适应。所以和静态数组一样，固定的地址空间是不合理的，所以需要resize操作。但是哈希表的动态操作又和静态数组不同，哈希表的每个索引位置存放的是一个链表或者一个树，如果是链表，那么它是不存在这个位置被“填满”的概念的。所以这里需要考虑的是，平均每个地址承载的元素多过一定的程度，即进行扩容，可以将容忍度定义为upperTol,当N/M &gt;= upperTol时，进行扩容。同理，平均每个地址承载的元素少过一定程度就进行缩容：N / M &lt; lowerTol.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.TreeMap;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashTable</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> upperTol = <span class="number">10</span>; <span class="comment">//定义upperTol</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> lowerTol = <span class="number">2</span>;  <span class="comment">//定义lowerTol</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> initCapacity = <span class="number">7</span>;  <span class="comment">//定义初始的大小</span></div><div class="line">    <span class="keyword">private</span> TreeMap&lt;K,V&gt;[] hashtable;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> M;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashTable</span><span class="params">(<span class="keyword">int</span> M)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.M = M;</div><div class="line">        <span class="keyword">this</span>.size  = <span class="number">0</span>;</div><div class="line">        hashtable = <span class="keyword">new</span> TreeMap[M];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; M ; i ++)</div><div class="line">            hashtable[i] = <span class="keyword">new</span> TreeMap&lt;&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashTable</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>(initCapacity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(K key)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> (key.hashCode() &amp; <span class="number">0x7fffffff</span>) % M;<span class="comment">//将key值转变为当前哈希表中的索引</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的添加操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(K key,V value)</span></span>&#123;</div><div class="line">        TreeMap&lt;K,V&gt; map = hashtable[hash(key)]; <span class="comment">//先用map暂存当前的hashtable索引对应的TreeMap</span></div><div class="line">        <span class="keyword">if</span>(map.containsKey(key))<span class="comment">//如果对应的索引处包含了当前的元素</span></div><div class="line">            map.put(key,value);</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            map.put(key,value);</div><div class="line">            size ++;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(size &gt;= upperTol * M) <span class="comment">//平均每个地址承载的元素多过一定的程度,即N / M &gt;= upperTol</span></div><div class="line">                resize(<span class="number">2</span>*M);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的删除操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">remove</span><span class="params">(K key)</span></span>&#123;</div><div class="line">        TreeMap&lt;K,V&gt; map = hashtable[hash(key)];</div><div class="line">        V ret = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span>(map.containsKey(key))&#123;</div><div class="line">            ret = map.remove(key);</div><div class="line">            size --;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(size &lt; lowerTol * M &amp;&amp; M / <span class="number">2</span> &gt;= initCapacity) <span class="comment">//平均每个地址承载的元素少过一定的程度,即N / M &lt;= lowerTol；并且缩容时的空间至少为initCapacity</span></div><div class="line">                resize(M / <span class="number">2</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的修改操作</span></div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的查询操作</span></div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">resize</span><span class="params">(<span class="keyword">int</span> newM)</span></span>&#123;</div><div class="line">        TreeMap&lt;K,V&gt;[] newHashTable = <span class="keyword">new</span> TreeMap[newM];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; newM ; i ++)</div><div class="line">            newHashTable[i] = <span class="keyword">new</span> TreeMap&lt;&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">int</span> oldM = M; <span class="comment">//暂存一下之前的M,在循环时作为循环边界</span></div><div class="line">        <span class="keyword">this</span>.M = newM; <span class="comment">// 注意hash(key)是对之前的M进行取模，这里要让M变为newM，对现在的M进行取模</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; oldM ; i++)&#123;</div><div class="line">            TreeMap&lt;K,V&gt; map = hashtable[i];</div><div class="line">            <span class="keyword">for</span>(K key : map.keySet())</div><div class="line">                newHashTable[hash(key)].put(key,map.get(key));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.hashtable = newHashTable;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="哈希表的复杂度分析"><a href="#哈希表的复杂度分析" class="headerlink" title="哈希表的复杂度分析"></a>哈希表的复杂度分析</h1><p>动态数组的均摊复杂度分析，平均复杂度 O(1)</p>
+<p>对于哈希表，元素数从N增加到upperTol * N ，地址空间翻倍。平均复杂度O(1).每个操作在O(lowerTol) ~ O(upperTol) → O(1)。<br>缩容同理</p>
+<p>在扩容时有一个问题，对于素数M，如果进行扩容，那么扩容后2*M不是素数。其中一个解决方案是，按照素数表中的数字进行扩容，而不是简单的二倍关系。</p>
+<p>当然哈希表的均摊复杂度虽然为O(1)，但是它与平衡树结构相比丢失了数据的顺序性。</p>
+<p>这样回顾集合和映射的底层实现，如果想实现有序集合和有序映射，那么底层可使用平衡树；如果实现无序集合和无序映射，则使用哈希表。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.TreeMap;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashTable</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] capacity= &#123;<span class="number">53</span>, <span class="number">97</span>, <span class="number">193</span>, <span class="number">389</span>, <span class="number">769</span>, <span class="number">1543</span>, <span class="number">3079</span>, <span class="number">6151</span>, <span class="number">12289</span>, <span class="number">24593</span>, <span class="number">49157</span>, <span class="number">98317</span>,<span class="number">196613</span>, <span class="number">393241</span>, <span class="number">786433</span>, <span class="number">1572869</span>, <span class="number">3145739</span>, <span class="number">6291469</span>, <span class="number">12582917</span>, <span class="number">25165843</span>, <span class="number">50331653</span>, <span class="number">100663319</span>, <span class="number">201326611</span>, <span class="number">402653189</span>, <span class="number">805306457</span>, <span class="number">1610612741</span>&#125;;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> upperTol = <span class="number">10</span>; <span class="comment">//定义upperTol</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> lowerTol = <span class="number">2</span>;  <span class="comment">//定义lowerTol</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> capacityIndex = <span class="number">0</span>;  <span class="comment">//定义capacity数组初始的索引</span></div><div class="line">    <span class="keyword">private</span> TreeMap&lt;K,V&gt;[] hashtable;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> M;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HashTable</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.M = capacity[capacityIndex];</div><div class="line">        size  = <span class="number">0</span>;</div><div class="line">        hashtable = <span class="keyword">new</span> TreeMap[M];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; M ; i ++)</div><div class="line">            hashtable[i] = <span class="keyword">new</span> TreeMap&lt;&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(K key)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> (key.hashCode() &amp; <span class="number">0x7fffffff</span>) % M;<span class="comment">//将key值转变为当前哈希表中的索引</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getSize</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的添加操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(K key,V value)</span></span>&#123;</div><div class="line">        TreeMap&lt;K,V&gt; map = hashtable[hash(key)]; <span class="comment">//先用map暂存当前的hashtable索引对应的TreeMap</span></div><div class="line">        <span class="keyword">if</span>(map.containsKey(key))<span class="comment">//如果对应的索引处包含了当前的元素</span></div><div class="line">            map.put(key,value);</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            map.put(key,value);</div><div class="line">            size ++;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(size &gt;= upperTol * M &amp;&amp; capacityIndex + <span class="number">1</span> &lt; capacity.length)&#123; <span class="comment">//平均每个地址承载的元素多过一定的程度,即N / M &gt;= upperTol,并且判断边界不会越界</span></div><div class="line">                capacityIndex ++;</div><div class="line">                resize(capacity[capacityIndex]);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的删除操作</span></div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">remove</span><span class="params">(K key)</span></span>&#123;</div><div class="line">        TreeMap&lt;K,V&gt; map = hashtable[hash(key)];</div><div class="line">        V ret = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span>(map.containsKey(key))&#123;</div><div class="line">            ret = map.remove(key);</div><div class="line">            size --;</div><div class="line"></div><div class="line">            <span class="keyword">if</span>(size &lt; lowerTol * M &amp;&amp; capacityIndex - <span class="number">1</span> &gt;= <span class="number">0</span>) &#123;<span class="comment">//平均每个地址承载的元素少过一定的程度,即N / M &lt;= lowerTol；并且缩容时不会越界</span></div><div class="line">                capacityIndex --;</div><div class="line">                resize(capacity[capacityIndex]);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//哈希表的修改操作</span></div><div class="line">    <span class="comment">//同原来的函数</span></div><div class="line"></div><div class="line">    <span class="comment">//哈希表的查询操作</span></div><div class="line">    <span class="comment">//同原来的函数</span></div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">resize</span><span class="params">(<span class="keyword">int</span> newM)</span></span>&#123;</div><div class="line">       <span class="comment">//同原来的函数</span></div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h1><p>上述的代码实现中，HashTable的K值是不要求可比较的(Comparable)，但是在使用TreeMap定义hashtable数组时，TreeMap的K是要求可比较的，所以这是一个小bug。</p>
+<p>前面提到<br>在Java8之前，每一个索引位置对应的就是一个链表。<br>Java8开始，当哈希冲突达到一定的程度时，每个位置从链表转为红黑树(即TreeMap，因为Java8的TreeMap底层实现就是红黑树)，当然，这种情况要求HashTable的K值是可比较的，不然它的每个索引仍然对应一个链表。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Homxu</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2019/03/14/哈希表/" target="_blank" title="哈希表">http://homxu.com/2019/03/14/哈希表/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/07/红黑树/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">红黑树</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#设计哈希函数"><span class="nav-number">1.</span> <span class="nav-text">设计哈希函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">1.1.</span> <span class="nav-text">基本类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java中的hashCode"><span class="nav-number">2.</span> <span class="nav-text">java中的hashCode</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链地址法-Seperate-Chaining"><span class="nav-number">3.</span> <span class="nav-text">链地址法(Seperate Chaining)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现一个哈希表"><span class="nav-number">4.</span> <span class="nav-text">实现一个哈希表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#时间复杂度和动态空间处理"><span class="nav-number">5.</span> <span class="nav-text">时间复杂度和动态空间处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哈希表的复杂度分析"><span class="nav-number">6.</span> <span class="nav-text">哈希表的复杂度分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#彩蛋"><span class="nav-number">7.</span> <span class="nav-text">彩蛋</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Homxu
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Homxu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
