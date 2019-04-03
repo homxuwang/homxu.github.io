@@ -192,6 +192,57 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-SpringMVC学习笔记-一"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/11/30/SpringMVC学习笔记-一/">SpringMVC学习笔记-一</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/11/30/SpringMVC学习笔记-一/" class="article-date">
+	  <time datetime="2018-11-30T08:29:55.000Z" itemprop="datePublished">2018-11-30</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          Spring web mvc和Struts2都属于表现层的框架,它是Spring框架的一部分,我们可以从Spring的整体结构中看得出来,如下图：
+SpringMVC简单的处理流程图:前端控制器可以说是SpringMVC的心脏，是核心部分。
+创建入门程序创建动态Web工程，导入相关jar包:
+配置前端控制器在web.xml中配置前端控制器:123456789101112131415&lt;!-- 前端控制器 --&gt;&lt;servlet&gt;	&lt;servlet-name&gt...
+        </p>
+        <p class="article-more-link">
+          <a href="/2018/11/30/SpringMVC学习笔记-一/#more">weiter lesen</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-Spring与Mybatis整合"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -637,64 +688,6 @@ Spring 搭建基本环境首先导入Spring所需依赖包：
         </p>
         <p class="article-more-link">
           <a href="/2018/08/12/实现优先队列/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-用户日志统计分析"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/08/04/用户日志统计分析/">用户日志统计分析</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/08/04/用户日志统计分析/" class="article-date">
-	  <time datetime="2018-08-04T11:00:35.000Z" itemprop="datePublished">2018-08-04</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          离线数据处理架构
-
-用户通过APP或者PC访问服务器
-这期间的操作日志信息用nginx记录下来(如记录在/var/log/access.log)，记录在nginx服务器
-借助Flume框架，将日志信息抽取到HDFS中（命名规则根据自己的需要进行修改）
-离线数据处理的第一步就是清理脏数据，清理完脏数据后继续写入HDFS
-继续进行Hive（这里的Hive是一个统称，如Spark Sql）
-处理完的结果写入RDBMS中或者NO SQL中
-进行相应的数据输出(如表格，图形化输出)
-
-离线处理的作业...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/08/04/用户日志统计分析/#more">weiter lesen</a>
         </p>
       
     </div>

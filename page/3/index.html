@@ -192,6 +192,64 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-用户日志统计分析"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/08/04/用户日志统计分析/">用户日志统计分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2018/08/04/用户日志统计分析/" class="article-date">
+	  <time datetime="2018-08-04T11:00:35.000Z" itemprop="datePublished">2018-08-04</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          离线数据处理架构
+
+用户通过APP或者PC访问服务器
+这期间的操作日志信息用nginx记录下来(如记录在/var/log/access.log)，记录在nginx服务器
+借助Flume框架，将日志信息抽取到HDFS中（命名规则根据自己的需要进行修改）
+离线数据处理的第一步就是清理脏数据，清理完脏数据后继续写入HDFS
+继续进行Hive（这里的Hive是一个统称，如Spark Sql）
+处理完的结果写入RDBMS中或者NO SQL中
+进行相应的数据输出(如表格，图形化输出)
+
+离线处理的作业...
+        </p>
+        <p class="article-more-link">
+          <a href="/2018/08/04/用户日志统计分析/#more">weiter lesen</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-实现映射"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -673,55 +731,6 @@ https://homxuwang....
         </p>
         <p class="article-more-link">
           <a href="/2018/07/17/实现栈和队列/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-数组"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/07/17/数组/">实现动态数组</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/07/17/数组/" class="article-date">
-	  <time datetime="2018-07-17T00:40:44.000Z" itemprop="datePublished">2018-07-17</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          因为数组开辟时是静态的。在这里底层使用静态数组二次封装一个属于自己的动态数组类Array
-Array类1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001011...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/07/17/数组/#more">weiter lesen</a>
         </p>
       
     </div>

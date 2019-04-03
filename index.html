@@ -192,6 +192,56 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-图的遍历"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/04/01/图的遍历/">图的遍历</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/01/图的遍历/" class="article-date">
+	  <time datetime="2019-04-01T07:06:56.000Z" itemprop="datePublished">2019-04-01</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          对于图的遍历，和树一样，也有深度优先遍历和广度优先遍历。对于图的深度优先遍历，是从一个点开始，不停的往下试探，知道不能继续为止。但是与树不同的是，图有可能会存在环，所以要记录一下某个点是否已经被遍历过，如果已经被遍历过，则下面的遍历就不需要继续走这个点了。
+以下面的数据为例:
+深度优先遍历假设从0开始遍历，看与0相连的第一个节点1，节点1没有遍历过所以遍历了1，此时为0 1；接着看和节点1相邻的节点，只有节点0，节点0已经被遍历过了，不用管，此时1没有其他相邻节点了，此时这条路就算走完了，...
+        </p>
+        <p class="article-more-link">
+          <a href="/2019/04/01/图的遍历/#more">weiter lesen</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-图论基础"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -635,57 +685,6 @@ isConnected(p,q)
         </p>
         <p class="article-more-link">
           <a href="/2018/12/01/SpringMVC-Mybatis整合/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-SpringMVC学习笔记-一"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/30/SpringMVC学习笔记-一/">SpringMVC学习笔记-一</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/30/SpringMVC学习笔记-一/" class="article-date">
-	  <time datetime="2018-11-30T08:29:55.000Z" itemprop="datePublished">2018-11-30</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          Spring web mvc和Struts2都属于表现层的框架,它是Spring框架的一部分,我们可以从Spring的整体结构中看得出来,如下图：
-SpringMVC简单的处理流程图:前端控制器可以说是SpringMVC的心脏，是核心部分。
-创建入门程序创建动态Web工程，导入相关jar包:
-配置前端控制器在web.xml中配置前端控制器:123456789101112131415&lt;!-- 前端控制器 --&gt;&lt;servlet&gt;	&lt;servlet-name&gt...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/30/SpringMVC学习笔记-一/#more">weiter lesen</a>
         </p>
       
     </div>

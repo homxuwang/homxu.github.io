@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>图的遍历 | Homxu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="好好生活" />
+  
+  
+  
+  
+  <meta name="description" content="对于图的遍历，和树一样，也有深度优先遍历和广度优先遍历。对于图的深度优先遍历，是从一个点开始，不停的往下试探，知道不能继续为止。但是与树不同的是，图有可能会存在环，所以要记录一下某个点是否已经被遍历过，如果已经被遍历过，则下面的遍历就不需要继续走这个点了。 以下面的数据为例: 深度优先遍历假设从0开始遍历，看与0相连的第一个节点1，节点1没有遍历过所以遍历了1，此时为0 1；接着看和节点1相邻的节">
+<meta name="keywords" content="数据结构,图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图的遍历">
+<meta property="og:url" content="http://homxu.com/2019/04/01/图的遍历/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="对于图的遍历，和树一样，也有深度优先遍历和广度优先遍历。对于图的深度优先遍历，是从一个点开始，不停的往下试探，知道不能继续为止。但是与树不同的是，图有可能会存在环，所以要记录一下某个点是否已经被遍历过，如果已经被遍历过，则下面的遍历就不需要继续走这个点了。 以下面的数据为例: 深度优先遍历假设从0开始遍历，看与0相连的第一个节点1，节点1没有遍历过所以遍历了1，此时为0 1；接着看和节点1相邻的节">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2019/04/01/图的遍历/1.png">
+<meta property="og:image" content="http://homxu.com/2019/04/01/图的遍历/2.png">
+<meta property="og:image" content="http://homxu.com/2019/04/01/图的遍历/3.png">
+<meta property="og:image" content="http://homxu.com/2019/04/01/图的遍历/4.png">
+<meta property="og:image" content="http://homxu.com/2019/04/01/图的遍历/1.png">
+<meta property="og:image" content="http://homxu.com/2019/04/01/图的遍历/5.png">
+<meta property="og:image" content="http://homxu.com/2019/04/01/图的遍历/6.png">
+<meta property="og:image" content="http://homxu.com/2019/04/01/图的遍历/7.png">
+<meta property="og:updated_time" content="2019-04-03T07:57:07.625Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图的遍历">
+<meta name="twitter:description" content="对于图的遍历，和树一样，也有深度优先遍历和广度优先遍历。对于图的深度优先遍历，是从一个点开始，不停的往下试探，知道不能继续为止。但是与树不同的是，图有可能会存在环，所以要记录一下某个点是否已经被遍历过，如果已经被遍历过，则下面的遍历就不需要继续走这个点了。 以下面的数据为例: 深度优先遍历假设从0开始遍历，看与0相连的第一个节点1，节点1没有遍历过所以遍历了1，此时为0 1；接着看和节点1相邻的节">
+<meta name="twitter:image" content="http://homxu.com/2019/04/01/图的遍历/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/star.png">
+  <link rel="apple-touch-icon" href="/css/images/star.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-图的遍历" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      图的遍历
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/01/图的遍历/" class="article-date">
+	  <time datetime="2019-04-01T07:06:56.000Z" itemprop="datePublished">2019-04-01</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对于图的遍历，和树一样，也有深度优先遍历和广度优先遍历。<br>对于图的深度优先遍历，是从一个点开始，不停的往下试探，知道不能继续为止。但是与树不同的是，图有可能会存在环，所以要记录一下某个点是否已经被遍历过，如果已经被遍历过，则下面的遍历就不需要继续走这个点了。</p>
+<p>以下面的数据为例:<br><img src="/2019/04/01/图的遍历/1.png" alt="图"></p>
+<h1 id="深度优先遍历"><a href="#深度优先遍历" class="headerlink" title="深度优先遍历"></a>深度优先遍历</h1><p>假设从0开始遍历，看与0相连的第一个节点1，节点1没有遍历过所以遍历了1，此时为<code>0 1</code>；<br>接着看和节点1相邻的节点，只有节点0，节点0已经被遍历过了，不用管，此时1没有其他相邻节点了，此时这条路就算走完了，则退回到节点0；<br>然后看0的下一个没有被遍历的节点为节点2,节点2没有被遍历过，所以将2遍历，此时为<code>0 1 2</code>；<br>接着看和节点2相邻的节点，只有节点0，节点0已经被遍历过，退回到节点0；<br>接着看下一个和0相邻的节点，为节点5，没有被遍历过，所以对节点5进行遍历，此时遍历的元素为<code>0 1 2 5</code>；<br>接着看和节点5相邻的节点，第一个节点为节点0，已经被遍历过；第二个节点为节点3，没有被遍历过，所以进行遍历，此时遍历的元素为<code>0 1 2 5 3</code>；<br>接着看和节点3相邻的节点，第一个为节点4，没有被遍历过，所以进行遍历，此时遍历元素为<code>0 1 2 5 3 4</code>；<br>然后看和节点4相邻的节点，节点3和节点5已经被遍历过了，不进行遍历；节点6没有被遍历过，所以进行遍历，此时遍历的元素为<code>0 1 2 5 3 4 6</code>；<br>然后来到节点6，和节点6相邻的节点0和节点4已经被遍历过了，所以不进行遍历；<br>然后退回到节点4，节点4从节点6退回来之后，没有其他节点，节点4的这条路遍历完了，所以从节点4退回到节点3；对于节点3来说，刚才将节点4遍历了，下一个节点5也已经遍历了，节点3这条路遍历完了；所以又从节点3退回到节点5，对于节点5的下一个节点——节点4也已经遍历过了，所以节点5这条路也遍历完了；退回到节点0，节点0的下一个要遍历的节点6已经被遍历过了，所以节点0这条路也已经便利完了；<br>至此，使用深度优先的方式，将所有节点全部遍历了一遍。</p>
+<p>整个过程需要记录一下某个节点是否已经被遍历过。</p>
+<h2 id="连通分量"><a href="#连通分量" class="headerlink" title="连通分量"></a>连通分量</h2><p>深度优先遍历的一个典型应用就是求连通分量。</p>
+<p>对于一张有三个部分的图，在图论中，这三部分就是连通分量。连通分量之间没有任何边相连。求连通分量只需整体遍历这个图，从某个点开始遍历，先将这个连通分量遍历完；然后再找一个没有被遍历的点，继续遍历，则也可以将第二部分遍历完；最后将剩下的部分进行遍历。</p>
+<p><img src="/2019/04/01/图的遍历/2.png" alt="图"></p>
+<p>以求连通分量为例，实现图的深度优先遍历。<br>创建<code>Component.h</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> COMPONENT_H_INCLUDED</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> COMPONENT_H_INCLUDED</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Component</span>&#123;</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Graph &amp;G;</div><div class="line">    <span class="keyword">bool</span> *visited; <span class="comment">//记录某个节点是否已经被访问过</span></div><div class="line">    <span class="keyword">int</span> ccount; <span class="comment">//连通分量个数</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">( <span class="keyword">int</span> v )</span></span>&#123;</div><div class="line"></div><div class="line">        visited[v] = <span class="literal">true</span>;</div><div class="line"></div><div class="line">        <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G, v)</span></span>; <span class="comment">//加typename指定adjInterator是一个类型而不是一个成员变量</span></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = adj.begin() ; !adj.end() ; i = adj.next() ) &#123;<span class="comment">//从adj的第一个开始，只要不到adj的结尾，就进行循环，每次i变为adj的下一个元素</span></div><div class="line">            <span class="keyword">if</span>( !visited[i] ) <span class="comment">//如果没有被访问过，使用递归方法对它继续进行深度优先遍历，</span></div><div class="line">                dfs(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Component(Graph &amp;graph): G(graph)&#123;</div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">bool</span>[G.V()];</div><div class="line">        ccount = <span class="number">0</span> ;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)</div><div class="line">            visited[i] = <span class="literal">false</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)&#123;</div><div class="line">            <span class="keyword">if</span>( !visited[i] )&#123; <span class="comment">//如果当前的节点没有被访问过的话，就进行深度优先遍历</span></div><div class="line">                dfs(i);     <span class="comment">//遍历之后，所有连通的节点都置为true</span></div><div class="line">                ccount ++;  <span class="comment">//遍历之后，连通分量+1；然后接着找没有被遍历的节点作为起点进行深度遍历</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~Component()&#123;</div><div class="line">        <span class="keyword">delete</span>[] visited;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> ccount;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// COMPONENT_H_INCLUDED</span></span></div></pre></td></tr></table></figure></p>
+<p>新建文件<code>testG3.txt</code>，例子中的图表达为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">7 8</div><div class="line">0 1</div><div class="line">0 2</div><div class="line">0 5</div><div class="line">0 6</div><div class="line">3 4</div><div class="line">3 5</div><div class="line">4 5</div><div class="line">4 6</div></pre></td></tr></table></figure></p>
+<p>在main函数中进行测试:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SparseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"DenseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ReadGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Component.h"</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="built_in">string</span> filename1 = <span class="string">"testG1.txt"</span>;</div><div class="line">    SparseGraph g1 = SparseGraph(<span class="number">13</span>, <span class="literal">false</span>);</div><div class="line">    ReadGraph&lt;SparseGraph&gt; readGraph1(g1, filename1);</div><div class="line">    Component&lt;SparseGraph&gt; component1(g1);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"TestG1.txt, Using Sparse Graph, Component Count: "</span>&lt;&lt;component1.count()&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    DenseGraph g2 = DenseGraph(<span class="number">13</span>, <span class="literal">false</span>);</div><div class="line">    ReadGraph&lt;DenseGraph&gt; readGraph2(g2, filename1);</div><div class="line">    Component&lt;DenseGraph&gt; component2(g2);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"TestG1.txt, Using Dense Graph, Component Count: "</span>&lt;&lt;component2.count()&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="comment">// TestG3.txt - g3 and g4</span></div><div class="line">    <span class="built_in">string</span> filename2 = <span class="string">"testG2.txt"</span>;</div><div class="line">    SparseGraph g3 = SparseGraph(<span class="number">7</span>, <span class="literal">false</span>);</div><div class="line">    ReadGraph&lt;SparseGraph&gt; readGraph3(g3, filename2);</div><div class="line">    Component&lt;SparseGraph&gt; component3(g3);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"TestG3.txt, Using Sparse Graph, Component Count: "</span>&lt;&lt;component3.count()&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    DenseGraph g4 = DenseGraph(<span class="number">7</span>, <span class="literal">false</span>);</div><div class="line">    ReadGraph&lt;DenseGraph&gt; readGraph4(g4, filename2);</div><div class="line">    Component&lt;DenseGraph&gt; component4(g4);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"TestG3.txt, Using Dense Graph, Component Count: "</span>&lt;&lt;component4.count()&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2019/04/01/图的遍历/3.png" alt="测试结果"></p>
+<p>相应的，如果能求出连通分量，也能求出两个结点之间是否是相连的。对<code>Component.h</code>做出修改:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> COMPONENT_H_INCLUDED</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> COMPONENT_H_INCLUDED</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Component</span>&#123;</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Graph &amp;G;</div><div class="line">    <span class="keyword">bool</span> *visited; <span class="comment">//记录某个节点是否已经被访问过</span></div><div class="line">    <span class="keyword">int</span> ccount; <span class="comment">//连通分量个数</span></div><div class="line">    <span class="keyword">int</span> *id;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">( <span class="keyword">int</span> v )</span></span>&#123;</div><div class="line"></div><div class="line">        visited[v] = <span class="literal">true</span>;</div><div class="line">        id[v] = ccount;  <span class="comment">//在进行dfs操作时，将id[v]的值设置为ccount的值，这样不同连通分量部分的顶点其值不同</span></div><div class="line">        <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G, v)</span></span>; <span class="comment">//加typename指定adjInterator是一个类型而不是一个成员变量</span></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = adj.begin() ; !adj.end() ; i = adj.next() ) &#123;<span class="comment">//从adj的第一个开始，只要不到adj的结尾，就进行循环，每次i变为adj的下一个元素</span></div><div class="line">            <span class="keyword">if</span>( !visited[i] ) <span class="comment">//如果没有被访问过，使用递归方法对它继续进行深度优先遍历，</span></div><div class="line">                dfs(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    Component(Graph &amp;graph): G(graph)&#123;</div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">bool</span>[G.V()];</div><div class="line">        id = <span class="keyword">new</span> <span class="keyword">int</span>[G.V()];</div><div class="line">        ccount = <span class="number">0</span> ;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)&#123;</div><div class="line">            visited[i] = <span class="literal">false</span>;</div><div class="line">            id[i] = <span class="number">-1</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)&#123;</div><div class="line">            <span class="keyword">if</span>( !visited[i] )&#123; <span class="comment">//如果当前的节点没有被访问过的话，就进行深度优先遍历</span></div><div class="line">                dfs(i);     <span class="comment">//遍历之后，所有连通的节点都置为true</span></div><div class="line">                ccount ++;  <span class="comment">//遍历之后，连通分量+1；然后接着找没有被遍历的节点作为起点进行深度遍历</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~Component()&#123;</div><div class="line">        <span class="keyword">delete</span>[] visited;</div><div class="line">        <span class="keyword">delete</span>[] id;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> ccount;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isConnected</span><span class="params">( <span class="keyword">int</span> v , <span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        assert( v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n );</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n );</div><div class="line">        <span class="keyword">return</span> id[v] == id[w];</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// COMPONENT_H_INCLUDED</span></span></div></pre></td></tr></table></figure></p>
+<h2 id="获得两点间的一条路径"><a href="#获得两点间的一条路径" class="headerlink" title="获得两点间的一条路径"></a>获得两点间的一条路径</h2><p>使用深度优先的方式，不一定能获得一条最短路径。在<code>Path.h</code>类中新增一个数组<code>from</code>，用来记录每访问一个节点时，该节点是从哪个节点过来的，根据from数组，就可以倒推出两点之间相应的路径。<br><code>Path.h</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> PATH_H_INCLUDED</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> PATH_H_INCLUDED</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stack&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Path</span>&#123;</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Graph &amp;G;</div><div class="line">    <span class="keyword">int</span> s;</div><div class="line">    <span class="keyword">bool</span>* visited;</div><div class="line">    <span class="keyword">int</span>* from; <span class="comment">// 记录路径, from[i]表示查找的路径上i的上一个节点</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">( <span class="keyword">int</span> v )</span></span>&#123;</div><div class="line"></div><div class="line">        visited[v] = <span class="literal">true</span>;</div><div class="line">        <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G, v)</span></span>; <span class="comment">//加typename指定adjInterator是一个类型而不是一个成员变量</span></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = adj.begin() ; !adj.end() ; i = adj.next() ) &#123;<span class="comment">//从adj的第一个开始，只要不到adj的结尾，就进行循环，每次i变为adj的下一个元素</span></div><div class="line">            <span class="keyword">if</span>( !visited[i] ) &#123;</div><div class="line">                <span class="comment">//如果没有被访问过，使用递归方法对它继续进行深度优先遍历，并将该节点放入from[]数组，说明是从v节点过来的</span></div><div class="line">                from[i] = v;</div><div class="line">                dfs(i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// 构造函数, 寻路算法, 寻找图graph从s点到其他点的路径</span></div><div class="line">    Path(Graph &amp;graph, <span class="keyword">int</span> s):G(graph)&#123;</div><div class="line">        <span class="comment">//算法初始化</span></div><div class="line">        assert( s &gt;= <span class="number">0</span> &amp;&amp; s &lt; G.V() );</div><div class="line"></div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">bool</span>[G.V()];</div><div class="line">        from = <span class="keyword">new</span> <span class="keyword">int</span>[G.V()];</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++ )&#123;</div><div class="line">            visited[i] = <span class="literal">false</span>;</div><div class="line">            from[i] = <span class="number">-1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>-&gt;s = s;</div><div class="line"></div><div class="line">        <span class="comment">// 寻路算法</span></div><div class="line">        <span class="comment">// 其实就是进行深度优先遍历的过程中，记录一下</span></div><div class="line">        dfs(s);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~Path()&#123;</div><div class="line">        <span class="keyword">delete</span>[] visited;</div><div class="line">        <span class="keyword">delete</span>[] from;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//从原点s到w是否有路</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V() );</div><div class="line">        <span class="keyword">return</span> visited[w];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//从原点到w的具体路径是什么样的</span></div><div class="line">    <span class="comment">//因为是从w节点倒着走，所以先存放在stack中，然后在依次放在vector中</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">path</span><span class="params">(<span class="keyword">int</span> w, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span>&#123;</div><div class="line">        <span class="comment">// 通过from数组逆向查找到从s到w的路径, 存放到栈中</span></div><div class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> p = w;</div><div class="line">        <span class="keyword">while</span>( p != <span class="number">-1</span> )&#123;</div><div class="line">            s.push(p);</div><div class="line">            p = from[p];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        vec.clear();</div><div class="line">        <span class="keyword">while</span>( !s.empty() )&#123;</div><div class="line">            vec.push_back( s.top() );</div><div class="line">            s.pop();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//打印出从s到w的路径</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec;</div><div class="line"></div><div class="line">        path(w,vec);</div><div class="line"></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span>  i = <span class="number">0</span> ; i &lt; vec.size() ; i ++)&#123;</div><div class="line">            <span class="built_in">cout</span> &lt;&lt; vec[i];</div><div class="line">            <span class="keyword">if</span>( i == vec.size() - <span class="number">1</span>)</div><div class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">" -&gt; "</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// PATH_H_INCLUDED</span></span></div></pre></td></tr></table></figure></p>
+<p>在<code>main.h</code>中进行测试，打印从0到6的路径。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SparseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"DenseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ReadGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Path.h"</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="built_in">string</span> filename = <span class="string">"testG3.txt"</span>;</div><div class="line">    SparseGraph g = SparseGraph(<span class="number">7</span>, <span class="literal">false</span>);</div><div class="line">    ReadGraph&lt;SparseGraph&gt; readGraph1(g, filename);</div><div class="line">    g.show();</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    Path&lt;SparseGraph&gt; dfs(g,<span class="number">0</span>);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"DFS : "</span>;</div><div class="line">    dfs.showPath(<span class="number">6</span>);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/2019/04/01/图的遍历/4.png" alt="测试结果"></p>
+<h2 id="深度优先遍历的复杂度"><a href="#深度优先遍历的复杂度" class="headerlink" title="深度优先遍历的复杂度"></a>深度优先遍历的复杂度</h2><p>稀疏图（邻接表）:O(V+E)<br>稠密图（邻接矩阵）:O(V^2)</p>
+<p>深度优先遍历对有向图依然有效</p>
+<h1 id="广度优先遍历"><a href="#广度优先遍历" class="headerlink" title="广度优先遍历"></a>广度优先遍历</h1><p>广度优先遍历，使用队列进行辅助。<br>还是使用最开始的图进行讲解。<br><img src="/2019/04/01/图的遍历/1.png" alt="图"><br>首先将节点0推入队列中，然后开始遍历过程；（和树的遍历一致，先将根节点推入）(此时队列为<code>0</code>)<br>遍历时，每次遍历都将队列首的元素取出来作为遍历的对象，现在队列首是节点0，将其取出，遍历节点0；(此时队列为空,遍历过的节点有<code>0</code>)<br>然后将所有与节点0相邻的节点，如果还没有加入队列中，就将其加入，所以将节点1，节点2，节点5，节点6加入到队列中，这样就完成了一次操作；(此时队列为<code>1 2 5 6</code>,遍历过的节点有<code>0</code>)<br>接着，将队列首的节点1拿出来作为遍历的对象，节点1就被遍历了，而与节点1相邻的节点只有节点0,0已经遍历过；所以继续将节点2从队列首拿出来，作为遍历的对象，而节点2相邻的节点也只有节点0,不用管；(此时队列为<code>5 6</code>，遍历过的节点有<code>0 1 2</code>)<br>接着将队列首的节点5拿出来，作为遍历的对象，对于节点5，它相邻的节点有节点0，节点3，节点4，节点0已经加入过队列并遍历完，所以将节点3，节点4加入到队列中；(此时队列为<code>6 3 4</code>，遍历过的节点有<code>0 1 2 5</code>)<br>继续将队列首的节点6拿出来，作为遍历的对象，节点6的相邻节点有节点0和节点4，需要注意节点0已经被遍历过不需要管，节点4虽然没有被遍历过，但是它已经被加入到队列中（所以在代码实现时，注意需要对加入到队列中的元素进行标记，因为一旦被加入到队列，那么它一定会被遍历），所以这次遍历就算完成;(此时队列为<code>3 4</code>,遍历过的节点有<code>0 1 2 5 6</code>)<br>接着将队列首的节点3拿出来进行遍历，节点3相邻的节点有节点4和节点5，节点5和节点4都已经被加入过队列，这次遍历结束；(此时队列为<code>4</code>，遍历过的节点有<code>0 1 2 5 6 3</code>)<br>最后将队列首的节点4拿出来进行遍历，对于节点4相邻的节点3，节点5，节点6都已经加入过队列，所以这次遍历结束。<br>至此，队列为空，广度优先遍历结束。</p>
+<p>其实广度优先遍历，是以距起始节点的距离为顺序进行遍历的。<br>首先0节点自己到自己的距离为0，然后与节点0所有相邻的节点1、2、5、6被推进队列，它们距节点0的距离都为1；<br>接着将节点3,4推入到队列，它们距节点0的距离都为2。<br>所以广度优先遍历有时候也成为层序优先遍历，以遍历的起点开始，一层层的往下推，先遍历的节点距离起始节点近（更严谨的说法是先遍历的节点到起始节点的距离是小于等于后遍历的节点的，比如先遍历节点1后遍历节点6，但是它们到节点0 的距离都是1）。<br>利用这种方法，可以在程序中记录这个距离。在无权图中记录到起始节点的距离，不仅如此，如果像深度优先遍历，同时用<code>from[]</code>记录每一个节点是从哪一个节点过来，还可以将最短路径同时求出来。所以，广度优先遍历的一个应用就是求出<code>无权图</code>的最短路径(这里注意是无权图，但是不局限于有向图还是无向图)。</p>
+<p>新建<code>ShortestPath.h</code>类:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> SHORTESTPATH_H_INCLUDED</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> SHORTESTPATH_H_INCLUDED</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ShortestPath</span>&#123;</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    Graph &amp;G;</div><div class="line">    <span class="keyword">int</span> s;</div><div class="line">    <span class="keyword">bool</span> *visited;  <span class="comment">// 记录dfs的过程中节点是否被访问</span></div><div class="line">    <span class="keyword">int</span> *from;  <span class="comment">// 记录路径, from[i]表示查找的路径上i的上一个节点</span></div><div class="line">    <span class="keyword">int</span> *ord; <span class="comment">//记录s到每一个节点的距离是多少，即记录路径中节点的次序。ord[i]表示i节点在路径中的次序。</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    ShortestPath( Graph &amp;graph, <span class="keyword">int</span> s):G(graph)&#123;</div><div class="line">        <span class="comment">//算法初始化</span></div><div class="line">        assert( s &gt;= <span class="number">0</span> &amp;&amp; s &lt; graph.V() );</div><div class="line"></div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">bool</span>[graph.V()];</div><div class="line">        from = <span class="keyword">new</span> <span class="keyword">int</span>[graph.V()];</div><div class="line">        ord = <span class="keyword">new</span> <span class="keyword">int</span>[graph.V()];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>  i = <span class="number">0</span> ; i &lt; graph.V() ; i++)&#123;</div><div class="line">            visited[i] = <span class="literal">false</span>;</div><div class="line">            from[i] = <span class="number">-1</span>;</div><div class="line">            ord[i] = <span class="number">-1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>-&gt;s = s;</div><div class="line"></div><div class="line">         <span class="comment">// 无向图最短路径算法, 从s开始广度优先遍历整张图</span></div><div class="line">        <span class="built_in">queue</span>&lt;<span class="keyword">int</span>&gt; q;</div><div class="line">        q.push(s); <span class="comment">//首先向队列中推入原点s</span></div><div class="line">        visited[s] = <span class="literal">true</span>; <span class="comment">//标记s已经被访问</span></div><div class="line">        ord[s] = <span class="number">0</span>; <span class="comment">//标记原点到自己的距离为0</span></div><div class="line">        <span class="keyword">while</span>( !q.empty() )&#123;</div><div class="line">            <span class="keyword">int</span> v = q.front(); <span class="comment">//将队列首的元素取出</span></div><div class="line">            q.pop(); <span class="comment">//队列首的元素出队</span></div><div class="line"></div><div class="line">            <span class="keyword">typename</span> Graph::<span class="function">adjIterator <span class="title">adj</span><span class="params">(G,v)</span></span>;   <span class="comment">//遍历与队列首元素v所有相邻的元素</span></div><div class="line">            <span class="keyword">for</span>( <span class="keyword">int</span> i = adj.begin() ; !adj.end() ; i = adj.next() )&#123;</div><div class="line">                <span class="keyword">if</span>( !visited[i] )&#123; <span class="comment">//查看i元素是不是已经被访问过，即是否已经被加入过队列，如果没有的话</span></div><div class="line">                    q.push(i); <span class="comment">//把i加入到队列中</span></div><div class="line">                    visited[i] = <span class="literal">true</span>;</div><div class="line">                    from[i] = v; <span class="comment">//是从v节点走到i的</span></div><div class="line">                    ord[i] = ord[v] + <span class="number">1</span>; <span class="comment">//从过来的节点的距离+1</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~ShortestPath()&#123;</div><div class="line">        <span class="keyword">delete</span>[] visited;</div><div class="line">        <span class="keyword">delete</span>[] from;</div><div class="line">        <span class="keyword">delete</span>[] ord;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V());</div><div class="line">        <span class="keyword">return</span> visited[w];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">path</span><span class="params">(<span class="keyword">int</span> w ,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;vec)</span></span>&#123;</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V());</div><div class="line"></div><div class="line">        <span class="built_in">stack</span>&lt;<span class="keyword">int</span>&gt; s;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> p = w;</div><div class="line">        <span class="keyword">while</span>( p != <span class="number">-1</span> )&#123;</div><div class="line">            s.push(p);</div><div class="line">            p = from[p];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        vec.clear();</div><div class="line">        <span class="keyword">while</span>( !s.empty() )&#123;</div><div class="line">            vec.push_back( s.top() );</div><div class="line">            s.pop();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line"></div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V() );</div><div class="line"></div><div class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; vec;</div><div class="line">        path(w,vec);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>  i = <span class="number">0</span> ; i &lt; vec.size() ; i ++ )&#123;</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;vec[i];</div><div class="line">            <span class="keyword">if</span>( i == vec.size() - <span class="number">1</span> )</div><div class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="built_in">cout</span> &lt;&lt; <span class="string">" -&gt; "</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">length</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V() );</div><div class="line">        <span class="keyword">return</span> ord[w];</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// SHORTESTPATH_H_INCLUDED</span></span></div></pre></td></tr></table></figure></p>
+<p>使用main函数测试:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SparseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"DenseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ReadGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Path.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ShortestPath.h"</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="built_in">string</span> filename = <span class="string">"testG3.txt"</span>;</div><div class="line">    SparseGraph g = SparseGraph(<span class="number">7</span>, <span class="literal">false</span>);</div><div class="line">    ReadGraph&lt;SparseGraph&gt; readGraph1(g, filename);</div><div class="line">    g.show();</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    Path&lt;SparseGraph&gt; dfs(g,<span class="number">0</span>);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"DFS : "</span>;</div><div class="line">    dfs.showPath(<span class="number">6</span>);</div><div class="line"></div><div class="line">    ShortestPath&lt;SparseGraph&gt; bfs(g,<span class="number">0</span>);</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"BFS : "</span>;</div><div class="line">    bfs.showPath(<span class="number">6</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="/2019/04/01/图的遍历/5.png" alt="测试结果"></p>
+<p>使用深度优先遍历有可能会找到最短路径，这与图的创建、具体的存储顺序有关；但是使用广度优先遍历，一定能够找到两个连通点的最短路径。此外，在这个图中，如果求0到4的最短路径，有可能取出<code>0-&gt;6-&gt;4</code>或者<code>0-&gt;5-&gt;4</code>，这与在图中遍历的顺序是怎样的有关。</p>
+<h2 id="广度优先遍历的复杂度"><a href="#广度优先遍历的复杂度" class="headerlink" title="广度优先遍历的复杂度"></a>广度优先遍历的复杂度</h2><p>广度优先遍历的复杂度和深度优先遍历的复杂度是一样的:</p>
+<p>稀疏图（邻接表）:O(V+E)<br>稠密图（邻接矩阵）:O(V^2)</p>
+<h1 id="java实现"><a href="#java实现" class="headerlink" title="java实现"></a>java实现</h1><p><img src="/2019/04/01/图的遍历/6.png" alt="程序结构"></p>
+<p>其中几个主要的类实现参考<br><a href="https://homxuwang.github.io/2019/03/29/%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/" target="_blank" rel="external">图论基础</a></p>
+<p><code>Path.java</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Vector;</div><div class="line"><span class="keyword">import</span> java.util.Stack;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Path</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Graph G; <span class="comment">// 图的引用</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> s;  <span class="comment">//起始点</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] visited; <span class="comment">// 记录dfs的过程中节点是否被访问</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] from;  <span class="comment">// 记录路径，from[i]表示查找的路径上i的上一个节点</span></div><div class="line"></div><div class="line">    <span class="comment">//图的深度优先遍历</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">( <span class="keyword">int</span> v )</span></span>&#123;</div><div class="line">        visited[v] = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i : G.adj(v) )&#123; <span class="comment">// 遍历所有v的相邻点</span></div><div class="line">            <span class="keyword">if</span>( !visited[i] )&#123; <span class="comment">// 如果没有被遍历过</span></div><div class="line">                from[i] = v;   <span class="comment">//将v加入到路径数组</span></div><div class="line">                dfs(i);     <span class="comment">//递归进行遍历</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 构造函数, 寻路算法, 寻找图graph从s点到其他点的路径</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Path</span><span class="params">(Graph graph , <span class="keyword">int</span> s)</span></span>&#123;</div><div class="line">        G = graph;</div><div class="line">        <span class="keyword">if</span>(!(s &gt;= <span class="number">0</span> &amp;&amp; s &lt; G.V() ))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"make sure that s &gt;= 0 and s &lt; G.V()"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[G.V()];</div><div class="line">        from = <span class="keyword">new</span> <span class="keyword">int</span>[G.V()];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)&#123;</div><div class="line">            visited[i] = <span class="keyword">false</span>;</div><div class="line">            from[i] = -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.s = s;</div><div class="line"></div><div class="line">        <span class="comment">//寻路算法</span></div><div class="line">        dfs(s);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//查询从s点到w点是否有路径</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V() ))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"make sure that w &gt;= 0 and w &lt; G.V()"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> visited[w];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//查询从s点到w点的路径,存放在vec中</span></div><div class="line">    <span class="function">Vector&lt;Integer&gt; <span class="title">path</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(hasPath(w)))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"no path between s and w"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Stack&lt;Integer&gt; s = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        <span class="comment">//通过from数组逆向查找从s到w的路径，存放到栈中</span></div><div class="line">        <span class="keyword">int</span> p = w;</div><div class="line">        <span class="keyword">while</span> (p != -<span class="number">1</span>)&#123;</div><div class="line">            s.push(p);</div><div class="line">            p = from[p];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//从栈中取出元素，获得顺序的从s到w的路径</span></div><div class="line">        Vector&lt;Integer&gt; res = <span class="keyword">new</span> Vector&lt;&gt;();</div><div class="line">        <span class="keyword">while</span>( !s.empty() )&#123;</div><div class="line">            res.add( s.pop() );</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//打印出从s点到w点的路径</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!hasPath(w))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"no path between s and w"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Vector&lt;Integer&gt; vec = path(w);</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; vec.size() ; i++)&#123;</div><div class="line">            System.out.print(vec.elementAt(i));</div><div class="line">            <span class="keyword">if</span>( i == vec.size() - <span class="number">1</span> )</div><div class="line">                System.out.println();</div><div class="line">            <span class="keyword">else</span></div><div class="line">                System.out.print(<span class="string">" -&gt; "</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>ShortestPath.java</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Vector;</div><div class="line"><span class="keyword">import</span> java.util.Stack;</div><div class="line"><span class="keyword">import</span> java.util.LinkedList;</div><div class="line"><span class="keyword">import</span> java.util.Queue;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShortestPath</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Graph G; <span class="comment">//图的引用</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> s;  <span class="comment">//起始点</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] visited; <span class="comment">// 记录dfs的过程中节点是否被访问</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] from; <span class="comment">//记录路径，from[i]表示查找的路径上i的上一个节点</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] ord;  <span class="comment">//记录路径中节点的次序，ord[i]表示i节点在路径中的次序</span></div><div class="line"></div><div class="line">    <span class="comment">//构造函数，寻路算法，寻找图graph从s点到其他点的路径</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ShortestPath</span><span class="params">(Graph graph, <span class="keyword">int</span> s)</span></span>&#123;</div><div class="line">        G = graph;</div><div class="line">        <span class="keyword">if</span>(!(s &gt;= <span class="number">0</span> &amp;&amp; s &lt; G.V() ))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"make sure that s &gt;= 0 and s &lt; G.V()"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[G.V()];</div><div class="line">        from = <span class="keyword">new</span> <span class="keyword">int</span>[G.V()];</div><div class="line">        ord = <span class="keyword">new</span> <span class="keyword">int</span>[G.V()];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)&#123;</div><div class="line">            visited[i] = <span class="keyword">false</span>;</div><div class="line">            from[i] = -<span class="number">1</span>;</div><div class="line">            ord[i] = -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.s = s;</div><div class="line"></div><div class="line">        <span class="comment">//无向图最短路径算法，s开始广度优先遍历整张图</span></div><div class="line">        Queue&lt;Integer&gt; q = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line"></div><div class="line">        q.add(s);</div><div class="line">        visited[s] = <span class="keyword">true</span>;</div><div class="line">        ord[s] = <span class="number">0</span> ;</div><div class="line">        <span class="keyword">while</span>(!q.isEmpty())&#123;</div><div class="line">            <span class="keyword">int</span> v = q.remove();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i : G.adj(v))</div><div class="line">                <span class="keyword">if</span>(!visited[i])&#123;</div><div class="line">                    q.add(i);</div><div class="line">                    visited[i] = <span class="keyword">true</span>;</div><div class="line">                    from[i] = v;</div><div class="line">                    ord[i] = ord[v] + <span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//查询从s点到w点是否有路径</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V() ))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"make sure that w &gt;= 0 and w &lt; G.V()"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> visited[w];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//查询从s点到w点的路径，存放在vec中</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Vector&lt;Integer&gt; <span class="title">path</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(hasPath(w)))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"no path between s and w"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Stack&lt;Integer&gt; s = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        <span class="comment">//通过from数组逆向查找从s到w的路径,存放在栈中</span></div><div class="line">        <span class="keyword">int</span> p = w;</div><div class="line">        <span class="keyword">while</span>(p != -<span class="number">1</span>)&#123;</div><div class="line">            s.push(p);</div><div class="line">            p = from[p];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//从栈中一次取出元素,获得顺序的从s到w的路径</span></div><div class="line">        Vector&lt;Integer&gt; res = <span class="keyword">new</span> Vector&lt;&gt;();</div><div class="line">        <span class="keyword">while</span> (!s.empty())&#123;</div><div class="line">            res.add(s.pop());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//打印出从s到w的路径</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(hasPath(w)))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"no path between s and w"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Vector&lt;Integer&gt; vec = path(w);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; vec.size() ; i ++)&#123;</div><div class="line">            System.out.print(vec.elementAt(i));</div><div class="line">            <span class="keyword">if</span>(i == vec.size() - <span class="number">1</span>)</div><div class="line">                System.out.println();</div><div class="line">            <span class="keyword">else</span></div><div class="line">                System.out.print(<span class="string">" -&gt; "</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//查看从s点到w点的最短路径长度</span></div><div class="line">    <span class="comment">//若从s到w不可达，则返回-1</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">length</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; G.V() ))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"make sure that w &gt;= 0 and w &lt; G.V()"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> ord[w];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>testG3.txt</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">7 8</div><div class="line">0 1</div><div class="line">0 2</div><div class="line">0 5</div><div class="line">0 6</div><div class="line">3 4</div><div class="line">3 5</div><div class="line">4 5</div><div class="line">4 6</div></pre></td></tr></table></figure></p>
+<p><code>Main.java</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line"></div><div class="line">        String filename = <span class="string">"testG3.txt"</span>;</div><div class="line">        SparseGraph g = <span class="keyword">new</span> SparseGraph(<span class="number">7</span>,<span class="keyword">false</span>);</div><div class="line">        ReadGraph readGraph = <span class="keyword">new</span> ReadGraph(g,filename);</div><div class="line">        g.show();</div><div class="line"></div><div class="line">        <span class="comment">//比较使用深度优先遍历和广度优先遍历获得路径的不同</span></div><div class="line">        <span class="comment">//广度优先遍历获得的是无权图的最短路径</span></div><div class="line">        Path dfs = <span class="keyword">new</span> Path(g,<span class="number">0</span>);</div><div class="line">        System.out.print(<span class="string">"DFS: "</span>);</div><div class="line">        dfs.showPath(<span class="number">6</span>);</div><div class="line"></div><div class="line">        ShortestPath bfs = <span class="keyword">new</span> ShortestPath(g,<span class="number">0</span>);</div><div class="line">        System.out.print(<span class="string">"BFS: "</span>);</div><div class="line">        bfs.showPath(<span class="number">6</span>);</div><div class="line"></div><div class="line">        System.out.println();</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实验结果:</p>
+<p><img src="/2019/04/01/图的遍历/7.png" alt="实验结果"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Homxu</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2019/04/01/图的遍历/" target="_blank" title="图的遍历">http://homxu.com/2019/04/01/图的遍历/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/29/图论基础/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">图论基础</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#深度优先遍历"><span class="nav-number">1.</span> <span class="nav-text">深度优先遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连通分量"><span class="nav-number">1.1.</span> <span class="nav-text">连通分量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获得两点间的一条路径"><span class="nav-number">1.2.</span> <span class="nav-text">获得两点间的一条路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度优先遍历的复杂度"><span class="nav-number">1.3.</span> <span class="nav-text">深度优先遍历的复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#广度优先遍历"><span class="nav-number">2.</span> <span class="nav-text">广度优先遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#广度优先遍历的复杂度"><span class="nav-number">2.1.</span> <span class="nav-text">广度优先遍历的复杂度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java实现"><span class="nav-number">3.</span> <span class="nav-text">java实现</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Homxu
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Homxu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
