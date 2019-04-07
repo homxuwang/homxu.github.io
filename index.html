@@ -167,11 +167,11 @@
   <div class="intro-navigate">
       <p class="navigater-list">
         
-          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
+          <a id="beautifont" class="main-nav-link" href="/">Home</a>
         
-          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
+          <a id="beautifont" class="main-nav-link" href="/archives">Archives</a>
         
-          <a id="beautifont" class="main-nav-link" href="/categories">Kategorien</a>
+          <a id="beautifont" class="main-nav-link" href="/categories">Categories</a>
         
           <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
         
@@ -191,6 +191,59 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-最小生成树"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/04/05/最小生成树/">最小生成树</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/04/05/最小生成树/" class="article-date">
+	  <time datetime="2019-04-05T09:13:24.000Z" itemprop="datePublished">2019-04-05</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。
+有权图的邻接矩阵表达见下图:
+
+有权图的邻接表表达见下图:s
+邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。
+当然要注意一点，邻接矩阵中依然用了传统的二维数组来存储，为了统一图的接口，也可以将a[i][j]位置存储为Edge格式。...
+        </p>
+        <p class="article-more-link">
+          <a href="/2019/04/05/最小生成树/#more">Read More</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-图的遍历"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
@@ -223,7 +276,7 @@
 深度优先遍历假设从0开始遍历，看与0相连的第一个节点1，节点1没有遍历过所以遍历了1，此时为0 1；接着看和节点1相邻的节点，只有节点0，节点0已经被遍历过了，不用管，此时1没有其他相邻节点了，此时这条路就算走完了，...
         </p>
         <p class="article-more-link">
-          <a href="/2019/04/01/图的遍历/#more">weiter lesen</a>
+          <a href="/2019/04/01/图的遍历/#more">Read More</a>
         </p>
       
     </div>
@@ -271,7 +324,7 @@
           图主要是节点和边组成的模型。图可以用来表达真实世界中的很多关系，如交通运输、社交网络、互联网等。图分为有向图（Directed Graph）和无向图（Undirected Graph），有向图由于其不对称性，所有有时候会涉及很多比较难的算法。可以把无向图看成一种特殊的有向图。图也可以分为有权图（Weighted Graph）和无权图（Unweighted Graph），权是指节点与节点之间的边的数值。图不一定都要连接起来，比如一个模型中有三个没有连通起来的图。有的图中有可能会有自环边（se...
         </p>
         <p class="article-more-link">
-          <a href="/2019/03/29/图论基础/#more">weiter lesen</a>
+          <a href="/2019/03/29/图论基础/#more">Read More</a>
         </p>
       
     </div>
@@ -321,7 +374,7 @@
 相关解决方案:1234567891011121314class Solution &#123;    public int firstUniqChar(String s) &#123;        int[] freq = new int[26];        for(int i = 0 ; i &lt; s.length() ; i ++)            freq[s.charAt(i) - ...
         </p>
         <p class="article-more-link">
-          <a href="/2019/03/14/哈希表/#more">weiter lesen</a>
+          <a href="/2019/03/14/哈希表/#more">Read More</a>
         </p>
       
     </div>
@@ -377,7 +430,7 @@
 与AVL树相比，如果添加和删除操作比较频繁，那么用红黑树将有很大的优...
         </p>
         <p class="article-more-link">
-          <a href="/2019/03/07/红黑树/#more">weiter lesen</a>
+          <a href="/2019/03/07/红黑树/#more">Read More</a>
         </p>
       
     </div>
@@ -430,7 +483,7 @@
 计...
         </p>
         <p class="article-more-link">
-          <a href="/2019/02/27/AVL/#more">weiter lesen</a>
+          <a href="/2019/02/27/AVL/#more">Read More</a>
         </p>
       
     </div>
@@ -483,7 +536,7 @@ isConnected(p,q)
 并查集的简单实现定义接口123456public interface UF &#123;    int getSize();    //并查集一共有多少个元素    boolean isConnectted(int p,int q); //id为p何id为q的元素是否相连  ...
         </p>
         <p class="article-more-link">
-          <a href="/2019/01/22/并查集/#more">weiter lesen</a>
+          <a href="/2019/01/22/并查集/#more">Read More</a>
         </p>
       
     </div>
@@ -533,7 +586,7 @@ isConnected(p,q)
 @ResponseBody作用：@ResponseBody注解用于将Controller...
         </p>
         <p class="article-more-link">
-          <a href="/2018/12/11/SpringMVC学习笔记-四/#more">weiter lesen</a>
+          <a href="/2018/12/11/SpringMVC学习笔记-四/#more">Read More</a>
         </p>
       
     </div>
@@ -582,7 +635,7 @@ isConnected(p,q)
 高级参数绑定绑定数组需求:在商品列表页面选中多个商品，然后删除。功能要求商品列表页面中的每个商品前有一个checkbok，选中多个商品后点击删除按钮把商品id传递给Controller，根据商品id删除商品信息。前端页面代码进行修改，修改后的页面见附录。Controller代码:12345678//删除多个商品	@RequestMapping(value = "/item/deleteItems.action" )	public Mod...
         </p>
         <p class="article-more-link">
-          <a href="/2018/12/05/SpringMVC学习笔记-三/#more">weiter lesen</a>
+          <a href="/2018/12/05/SpringMVC学习笔记-三/#more">Read More</a>
         </p>
       
     </div>
@@ -633,58 +686,7 @@ isConnected(p,q)
 在ItemService.java接口中添加方法:12//通过id查询某个商品public Items selectItemsById(Integer i...
         </p>
         <p class="article-more-link">
-          <a href="/2018/12/02/SpringMVC学习笔记-二/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-SpringMVC-Mybatis整合"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/01/SpringMVC-Mybatis整合/">SpringMVC+Mybatis整合</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/01/SpringMVC-Mybatis整合/" class="article-date">
-	  <time datetime="2018-12-01T08:07:37.000Z" itemprop="datePublished">2018-12-01</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          控制层采用springmvc、持久层使用mybatis实现。首先参考Spring与Mybatis整合
-所需依赖包
-配置数据库和逆向工程数据库表:使用逆向工程生成pojo和dao:这里可能和上一篇文章中User类和Items类的代码不同，需要进行修改
-配置文件applicationContext.xml:123456789101112131415161718192021222324252627282930313233343536&lt;?xml version="1.0" encoding=...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/12/01/SpringMVC-Mybatis整合/#more">weiter lesen</a>
+          <a href="/2018/12/02/SpringMVC学习笔记-二/#more">Read More</a>
         </p>
       
     </div>
@@ -707,7 +709,7 @@ isConnected(p,q)
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
