@@ -58,12 +58,13 @@
 <meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/38.png">
 <meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/39.png">
 <meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/40.png">
+<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/45.png">
 <meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/41.png">
 <meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/42.png">
 <meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/24.png">
 <meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/44.png">
 <meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/43.png">
-<meta property="og:updated_time" content="2019-04-07T03:18:56.809Z">
+<meta property="og:updated_time" content="2019-04-07T03:28:10.738Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最小生成树">
 <meta name="twitter:description" content="有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。 有权图的邻接矩阵表达见下图:  有权图的邻接表表达见下图:s 邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。 当然要注意一点，邻接矩阵中">
@@ -146,11 +147,11 @@
             <div class="navbar-collapse collapse">
               <ul class="hnav navbar-nav">
                 
-                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
                 
                   <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
@@ -168,7 +169,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -180,11 +181,11 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
             TAGS: 'Tags',
-            UNTITLED: '(Untitled)',
+            UNTITLED: '(Unbenannt)',
         },
         ROOT_URL: '/',
         CONTENT_URL: '/content.json',
@@ -361,6 +362,7 @@
 <p>第四步：下一条最小的边为<code>0-2:0.26</code>，这里需要注意，虽然节点0和节点2都是红色，但是将这条边加入最小生成树后并没有形成环，所以它可以作为最小生成树的一条边。</p>
 <p><img src="/2019/04/05/最小生成树/40.png" alt="Kruskal第四步"></p>
 <p>第五步：下一条最小的边为<code>5-7:0.28</code>，将其放入最小生成树中，不会生成环，所以它是最小生成树的一条边。</p>
+<p><img src="/2019/04/05/最小生成树/45.png" alt="Kruskal第五步"></p>
 <p>第六步：下一条最小的边为<code>1-3:0.29</code>，将其放入最小生成树中，<font color="red">会生成环</font>，不能作为最小生成树的一条边，所以不再考虑它。</p>
 <p>第七步：下一条最小的边为<code>1-5:0.32</code>，将其放入最小生成树中，<font color="red">会生成环</font>，所以不再考虑它。</p>
 <p>第八步：下一条最小的边为<code>2-7:0.34</code>，将其放入最小生成树中，<font color="red">会生成环</font>，所以不再考虑它。</p>
@@ -464,9 +466,18 @@ var a = new Donate({
     
 <nav id="article-nav">
   
+    <a href="/2019/04/07/堆和堆排序/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nuevo</strong>
+      <div class="article-nav-title">
+        
+          堆和堆排序
+        
+      </div>
+    </a>
+  
   
     <a href="/2019/04/01/图的遍历/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Viejo</strong>
       <div class="article-nav-title">图的遍历</div>
     </a>
   
@@ -479,7 +490,7 @@ var a = new Donate({
 
   <aside id="toc-sidebar">
     <div id="toc" class="toc-article">
-    <strong class="toc-title">Contents</strong>
+    <strong class="toc-title">Inhalt</strong>
     
         <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#有权图"><span class="nav-number">1.</span> <span class="nav-text">有权图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最小生成树问题"><span class="nav-number">2.</span> <span class="nav-text">最小生成树问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些约定"><span class="nav-number">2.1.</span> <span class="nav-text">一些约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切分定理-Cut-Property"><span class="nav-number">2.2.</span> <span class="nav-text">切分定理 - Cut Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lazy-Prim算法"><span class="nav-number">2.3.</span> <span class="nav-text">Lazy Prim算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lazy-Prim算法代码"><span class="nav-number">2.4.</span> <span class="nav-text">Lazy Prim算法代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prim算法的优化"><span class="nav-number">2.5.</span> <span class="nav-text">Prim算法的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prim算法代码"><span class="nav-number">2.6.</span> <span class="nav-text">Prim算法代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kruskal算法"><span class="nav-number">2.7.</span> <span class="nav-text">Kruskal算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kruskal算法代码实现"><span class="nav-number">2.8.</span> <span class="nav-text">Kruskal算法代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录1"><span class="nav-number">4.</span> <span class="nav-text">附录1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录2"><span class="nav-number">5.</span> <span class="nav-text">附录2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录3"><span class="nav-number">6.</span> <span class="nav-text">附录3</span></a></li></ol>
     
@@ -496,7 +507,7 @@ var a = new Donate({
 
   <div class="container">
       	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
 	      
 	      
@@ -604,6 +615,16 @@ var a = new Donate({
 	</script>
 
 
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 

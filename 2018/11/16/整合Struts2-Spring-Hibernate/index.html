@@ -121,11 +121,11 @@
             <div class="navbar-collapse collapse">
               <ul class="hnav navbar-nav">
                 
-                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
                 
                   <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
@@ -143,7 +143,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -155,11 +155,11 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
             TAGS: 'Tags',
-            UNTITLED: '(Untitled)',
+            UNTITLED: '(Unbenannt)',
         },
         ROOT_URL: '/',
         CONTENT_URL: '/content.json',
@@ -372,7 +372,7 @@ var a = new Donate({
 <nav id="article-nav">
   
     <a href="/2018/11/19/Mybatis学习笔记-一/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">Nuevo</strong>
       <div class="article-nav-title">
         
           Mybatis学习笔记-一
@@ -382,7 +382,7 @@ var a = new Donate({
   
   
     <a href="/2018/11/13/Spring学习笔记-三/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Viejo</strong>
       <div class="article-nav-title">Spring学习笔记-三</div>
     </a>
   
@@ -395,7 +395,7 @@ var a = new Donate({
 
   <aside id="toc-sidebar">
     <div id="toc" class="toc-article">
-    <strong class="toc-title">Contents</strong>
+    <strong class="toc-title">Inhalt</strong>
     
         <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单独配置Spring"><span class="nav-number">1.</span> <span class="nav-text">单独配置Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建配置文件-导入xml约束"><span class="nav-number">1.1.</span> <span class="nav-text">创建配置文件 导入xml约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置tomcat的web-xml"><span class="nav-number">1.2.</span> <span class="nav-text">配置tomcat的web.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单独配置Struts2"><span class="nav-number">2.</span> <span class="nav-text">单独配置Struts2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置struts2主配置文件"><span class="nav-number">2.1.</span> <span class="nav-text">配置struts2主配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置struts2核心过滤器到web-xml"><span class="nav-number">2.2.</span> <span class="nav-text">配置struts2核心过滤器到web.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring和Struts2整合"><span class="nav-number">3.</span> <span class="nav-text">Spring和Struts2整合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置常量"><span class="nav-number">3.1.</span> <span class="nav-text">配置常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种方案"><span class="nav-number">3.2.</span> <span class="nav-text">两种方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单独配置Hibernate"><span class="nav-number">4.</span> <span class="nav-text">单独配置Hibernate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#导入实体类和orm元数据"><span class="nav-number">4.1.</span> <span class="nav-text">导入实体类和orm元数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hibernate和spring整合"><span class="nav-number">5.</span> <span class="nav-text">hibernate和spring整合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在spring中配置sessionFactory"><span class="nav-number">5.1.</span> <span class="nav-text">在spring中配置sessionFactory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring整合c3p0连接池"><span class="nav-number">6.</span> <span class="nav-text">spring整合c3p0连接池</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring整合hibernate环境操作数据库"><span class="nav-number">7.</span> <span class="nav-text">spring整合hibernate环境操作数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring中的aop事务"><span class="nav-number">8.</span> <span class="nav-text">Spring中的aop事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">8.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xml配置aop事务"><span class="nav-number">8.2.</span> <span class="nav-text">xml配置aop事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注解配置aop事务"><span class="nav-number">8.3.</span> <span class="nav-text">注解配置aop事务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩大session作用范围"><span class="nav-number">9.</span> <span class="nav-text">扩大session作用范围</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现用户登陆功能"><span class="nav-number">10.</span> <span class="nav-text">实现用户登陆功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web层"><span class="nav-number">10.1.</span> <span class="nav-text">Web层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service层"><span class="nav-number">10.2.</span> <span class="nav-text">Service层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dao层"><span class="nav-number">10.3.</span> <span class="nav-text">dao层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试用的页面"><span class="nav-number">10.4.</span> <span class="nav-text">测试用的页面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目总览"><span class="nav-number">11.</span> <span class="nav-text">项目总览</span></a></li></ol>
     
@@ -412,7 +412,7 @@ var a = new Donate({
 
   <div class="container">
       	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
 	      
 	      
@@ -520,6 +520,16 @@ var a = new Donate({
 	</script>
 
 
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 

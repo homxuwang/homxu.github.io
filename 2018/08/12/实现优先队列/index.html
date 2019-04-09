@@ -11,19 +11,19 @@
   
   
   
-  <meta name="description" content="优先队列一般都是基于堆的，所以先写堆的实现。 堆 堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆) 堆总是一棵完全二叉树  另外要注意：节点值的大小和节点所处的层次是没有关系的 本文以最大堆为例，进行书写。 堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%">
+  <meta name="description" content="优先队列的一个最普遍的应用就是计算机在进行任务调度时，动态选择优先级最高的任务执行。即完成了一个操作后，后面的操作并不一定按照之前的优先级顺序执行，有可能会有其他优先级更高的任务插入，或者出现更加复杂的情况。在其他领域，只要涉及动态选择优先级顺序的情况，都需要用到优先队列。 当然优先队列不只有利于解决动态问题，解决一些静态问题也有优势。比如取出N各元素中的前M个元素。如果使用排序，其时间复杂度为O">
 <meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="实现优先队列">
 <meta property="og:url" content="http://homxu.com/2018/08/12/实现优先队列/index.html">
 <meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="优先队列一般都是基于堆的，所以先写堆的实现。 堆 堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆) 堆总是一棵完全二叉树  另外要注意：节点值的大小和节点所处的层次是没有关系的 本文以最大堆为例，进行书写。 堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%">
+<meta property="og:description" content="优先队列的一个最普遍的应用就是计算机在进行任务调度时，动态选择优先级最高的任务执行。即完成了一个操作后，后面的操作并不一定按照之前的优先级顺序执行，有可能会有其他优先级更高的任务插入，或者出现更加复杂的情况。在其他领域，只要涉及动态选择优先级顺序的情况，都需要用到优先队列。 当然优先队列不只有利于解决动态问题，解决一些静态问题也有优势。比如取出N各元素中的前M个元素。如果使用排序，其时间复杂度为O">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://homxu.com/2018/08/12/实现优先队列/1.png">
-<meta property="og:updated_time" content="2018-08-13T14:04:17.051Z">
+<meta property="og:updated_time" content="2019-04-08T02:42:44.180Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现优先队列">
-<meta name="twitter:description" content="优先队列一般都是基于堆的，所以先写堆的实现。 堆 堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆) 堆总是一棵完全二叉树  另外要注意：节点值的大小和节点所处的层次是没有关系的 本文以最大堆为例，进行书写。 堆的表示方法——数组堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：https://homxuwang.github.io/2018/07/17/%E6%">
+<meta name="twitter:description" content="优先队列的一个最普遍的应用就是计算机在进行任务调度时，动态选择优先级最高的任务执行。即完成了一个操作后，后面的操作并不一定按照之前的优先级顺序执行，有可能会有其他优先级更高的任务插入，或者出现更加复杂的情况。在其他领域，只要涉及动态选择优先级顺序的情况，都需要用到优先队列。 当然优先队列不只有利于解决动态问题，解决一些静态问题也有优势。比如取出N各元素中的前M个元素。如果使用排序，其时间复杂度为O">
 <meta name="twitter:image" content="http://homxu.com/2018/08/12/实现优先队列/1.png">
   
     <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
@@ -103,11 +103,11 @@
             <div class="navbar-collapse collapse">
               <ul class="hnav navbar-nav">
                 
-                  <li> <a class="main-nav-link" href="/">Home</a> </li>
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/archives">Archives</a> </li>
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Categories</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
                 
                   <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
@@ -125,7 +125,7 @@
     <div class="ins-search-mask"></div>
     <div class="ins-search-container">
         <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
             <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="ins-section-wrapper">
@@ -137,11 +137,11 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
-            PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
             TAGS: 'Tags',
-            UNTITLED: '(Untitled)',
+            UNTITLED: '(Unbenannt)',
         },
         ROOT_URL: '/',
         CONTENT_URL: '/content.json',
@@ -197,14 +197,45 @@
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>优先队列一般都是基于堆的，所以先写堆的实现。</p>
-<h1 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h1><ul>
+        <p>优先队列的一个最普遍的应用就是计算机在进行任务调度时，<font color="red">动态</font>选择优先级最高的任务执行。即完成了一个操作后，后面的操作并不一定按照之前的优先级顺序执行，有可能会有其他优先级更高的任务插入，或者出现更加复杂的情况。在其他领域，只要涉及动态选择优先级顺序的情况，都需要用到优先队列。</p>
+<p>当然优先队列不只有利于解决动态问题，解决一些静态问题也有优势。比如取出N各元素中的前M个元素。如果使用排序，其时间复杂度为O(NlogN),但是如果使用优先队列的话，其时间复杂度为O(NlogM).</p>
+<p>优先队列有两个主要操作:<code>入队</code>和<code>出队</code>(取出优先级最高的元素).</p>
+<table>
+<thead>
+<tr>
+<th>数据结构</th>
+<th>插入元素(入队)</th>
+<th>删除最大元素(出队)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>普通数组</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>顺序数组</td>
+<td>O(n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>堆</td>
+<td>O(logn)</td>
+<td>O(logn)</td>
+</tr>
+</tbody>
+</table>
+<p>使用堆实现优先队列时，对于总共N个请求：<br>使用普通数组或者顺序数组，最差的情况:O(n^2)，使用堆:O(nlogn)</p>
+<p>优先队列一般都是基于堆的，所以先写堆的实现。</p>
+<h1 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h1><p>详情可以看 <a href="">堆和堆排序</a> 中<code>堆的算法</code>部分. </p>
+<ul>
 <li>堆中某个节点的值总是不大于或不小于其父节点的值(所以分为最大堆和最小堆)</li>
 <li>堆总是一棵完全二叉树</li>
 </ul>
 <p>另外要注意：节点值的大小和节点所处的层次是没有关系的</p>
 <p>本文以最大堆为例，进行书写。</p>
-<h2 id="堆的表示方法——数组"><a href="#堆的表示方法——数组" class="headerlink" title="堆的表示方法——数组"></a>堆的表示方法——数组</h2><p>堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：<a href="https://homxuwang.github.io/2018/07/17/%E6%95%B0%E7%BB%84/" target="_blank" rel="external">https://homxuwang.github.io/2018/07/17/%E6%95%B0%E7%BB%84/</a></p>
+<h2 id="堆的表示方法——动态数组"><a href="#堆的表示方法——动态数组" class="headerlink" title="堆的表示方法——动态数组"></a>堆的表示方法——动态数组</h2><p>堆的一种底层表示方法是使用动态数组实现，关于动态数组的实现见：<a href="https://homxuwang.github.io/2018/07/17/%E6%95%B0%E7%BB%84/" target="_blank" rel="external">https://homxuwang.github.io/2018/07/17/%E6%95%B0%E7%BB%84/</a></p>
 <p><img src="/2018/08/12/实现优先队列/1.png" alt=""></p>
 <p>堆的实现代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MaxHeap</span>&lt;<span class="title">E</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">E</span>&gt;&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> Array&lt;E&gt; data;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MaxHeap</span><span class="params">(<span class="keyword">int</span> capacity)</span></span>&#123;</div><div class="line">        data = <span class="keyword">new</span> Array&lt;&gt;(capacity);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MaxHeap</span><span class="params">()</span></span>&#123;</div><div class="line">        data = <span class="keyword">new</span> Array&lt;&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回堆中的元素个数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> data.getSize();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//判断堆是否为空</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> data.isEmpty();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回一个完全二叉树的数组表示中，一个索引所表示的元素的父亲节点的索引</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">parent</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(index == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"index 0 doesn't have parent;"</span>);</div><div class="line">        <span class="keyword">return</span> (index-<span class="number">1</span>) / <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回一个完全二叉树的数组表示中，一个索引所表示的元素的左孩子的索引</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">leftChild</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> index * <span class="number">2</span> + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回一个完全二叉树的数组表示中，一个索引所表示的元素的右孩子的索引</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">rightChild</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> index * <span class="number">2</span> + <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//向堆中添加一个元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(E e)</span></span>&#123;</div><div class="line">        data.addLast(e); <span class="comment">//先向末尾添加元素</span></div><div class="line">        <span class="comment">//调用siftUp函数，进行上浮操作,以维护堆的性质</span></div><div class="line">        siftUp(data.getSize() - <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//需要上浮的元素的索引</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">siftUp</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">        <span class="comment">//如果k满足索引大于零,且其父亲节点的值小于它的值，则进行上浮操作</span></div><div class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span> &amp;&amp; data.get(parent(k)).compareTo(data.get(k)) &lt; <span class="number">0</span>)&#123;</div><div class="line">            swap(k,parent(k));</div><div class="line">            k = parent(k);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//定义一个交换的函数</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> i , <span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt;= data.getSize() || j &lt; <span class="number">0</span> || j&gt;= data.getSize())&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Index is illegal."</span>);</div><div class="line">        &#125;</div><div class="line">        E temp = data.get(i);</div><div class="line">        data.set(i,data.get(j));</div><div class="line">        data.set(j,temp);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//查看堆中的最大元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">findMax</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(data.getSize() == <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Can not findMac in a empty heap"</span>);</div><div class="line">        <span class="keyword">return</span> data.get(<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//取出堆中的最大元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> E <span class="title">extractMax</span><span class="params">()</span></span>&#123;</div><div class="line">        E ret = findMax();</div><div class="line"></div><div class="line">        swap(<span class="number">0</span>,data.getSize() - <span class="number">1</span>);</div><div class="line">        data.removeLast();</div><div class="line">        siftDown(<span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//下沉操作</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">siftDown</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">        <span class="keyword">while</span> (leftChild(k) &lt; data.getSize())&#123;<span class="comment">//如果k没有左右孩子，则循环终止</span></div><div class="line"></div><div class="line">            <span class="keyword">int</span> j = leftChild(k);<span class="comment">//j为k的左孩子的索引</span></div><div class="line">            <span class="keyword">if</span>(j + <span class="number">1</span> &lt; data.getSize() &amp;&amp; data.get( j + <span class="number">1</span> ).compareTo(data.get(j)) &gt; <span class="number">0</span>)&#123;<span class="comment">//如果k有右孩子,并且右孩子的节点的值大于左孩子的节点的值</span></div><div class="line">                j = rightChild(k);</div><div class="line">                <span class="comment">//此时，data[j]是leftChild和rightChild中的最大值</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(data.get(k).compareTo(data.get(j)) &gt;= <span class="number">0</span>) <span class="comment">// 如果k的值大于其左右孩子的值，则满足了最大堆的另一个性质，可以退出循环体</span></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="comment">//否则交换k和j位置,并且k赋值为j，继续进行下一个循环</span></div><div class="line">            swap(k,j);</div><div class="line">            k = j;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <ul>
@@ -327,7 +358,7 @@ var a = new Donate({
 <nav id="article-nav">
   
     <a href="/2018/08/13/实现线段树/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">Nuevo</strong>
       <div class="article-nav-title">
         
           实现线段树
@@ -337,7 +368,7 @@ var a = new Donate({
   
   
     <a href="/2018/08/04/用户日志统计分析/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Viejo</strong>
       <div class="article-nav-title">用户日志统计分析</div>
     </a>
   
@@ -350,9 +381,9 @@ var a = new Donate({
 
   <aside id="toc-sidebar">
     <div id="toc" class="toc-article">
-    <strong class="toc-title">Contents</strong>
+    <strong class="toc-title">Inhalt</strong>
     
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#堆"><span class="nav-number">1.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆的表示方法——数组"><span class="nav-number">1.1.</span> <span class="nav-text">堆的表示方法——数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heapify-和-replace操作"><span class="nav-number">1.2.</span> <span class="nav-text">Heapify 和 replace操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#replace"><span class="nav-number">1.2.1.</span> <span class="nav-text">replace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heapify"><span class="nav-number">1.2.2.</span> <span class="nav-text">Heapify</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优先队列"><span class="nav-number">2.</span> <span class="nav-text">优先队列</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#堆"><span class="nav-number">1.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆的表示方法——动态数组"><span class="nav-number">1.1.</span> <span class="nav-text">堆的表示方法——动态数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heapify-和-replace操作"><span class="nav-number">1.2.</span> <span class="nav-text">Heapify 和 replace操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#replace"><span class="nav-number">1.2.1.</span> <span class="nav-text">replace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Heapify"><span class="nav-number">1.2.2.</span> <span class="nav-text">Heapify</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优先队列"><span class="nav-number">2.</span> <span class="nav-text">优先队列</span></a></li></ol>
     
     </div>
   </aside>
@@ -367,7 +398,7 @@ var a = new Donate({
 
   <div class="container">
       	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
 	      
 	      
@@ -475,6 +506,16 @@ var a = new Donate({
 	</script>
 
 
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
