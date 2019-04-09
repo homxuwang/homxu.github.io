@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://homxu.com/2018/06/09/排序算法/归并排序过程_.png">
 <meta property="og:image" content="http://homxu.com/2018/06/09/排序算法/QuickSort_.png">
 <meta property="og:image" content="http://homxu.com/2018/06/09/排序算法/Partition_.png">
-<meta property="og:updated_time" content="2019-04-08T11:26:30.642Z">
+<meta property="og:updated_time" content="2019-04-09T06:58:49.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序算法">
 <meta name="twitter:description" content="最近在学习数据结构和算法，这里总结一下学习的排序算法。 选择排序 - SelectionSort基本思路:假设有一个数组（如图所示），进行从小到大的排序。首先在整个数组范围里，找出要放在第一个位置的数，也就是最小的数：1，然后将1和现在的第一名的位置8进行换位，经过交换以后，1所处的位置就是最终排序所在的位置，这样就继续在剩下的部分找此时最小的数，也就是2，然后把2和相应的第二个位置所在的元素进行">
@@ -113,7 +113,7 @@
                 
                   <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
                 
-                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
+                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
                 
                   <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
                 
@@ -234,7 +234,7 @@
 <p><img src="/2018/06/09/排序算法/QuickSort_.png" alt="快速排序"></p>
 <p>那么关键问题是怎么把4这个元素放在正确的改放的位置，这个过程称为Partition。<br>通常使用数组的第一个元素作为分界的标志点，第一个位置记作l，然后逐渐遍历右边没有被访问的元素，在遍历的过程中，逐步整理让元素一部分是<code>&gt;v</code>一部分是<code>&lt;v</code>的,将大于v和小于v的分界点的索引记为j，当前访问的元素e的索引记作i。<br>下面讨论i位置的e该如何处理，如图。如果<code>e&gt;v</code>则将它放在这个位置不变，i++继续讨论下一个元素。否则如果<code>e&lt;v</code>则将i位置的e与j+1位置的元素交换，j++,i++，继续考察下一个元素。<br>依次继续进行操作，直至遍历完数组的所有元素。<br>这时候要将v放在数组中合适的位置，即将索引l位置的v与索引j位置的元素进行交换。<br>最终完成此次操作。</p>
 <p><img src="/2018/06/09/排序算法/Partition_.png" alt="Partition"><br><strong>代码实现</strong>：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//对arr[l...r]部分进行partition操作</span></div><div class="line"><span class="comment">//返回p,使得arr[l...p-1] &lt; arr[p] ; arr[p+1...r] &gt; arr[p]</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">int</span> __partition(T arr[] , <span class="keyword">int</span> l , <span class="keyword">int</span> r )&#123;</div><div class="line"></div><div class="line">    <span class="comment">//先取第一个元素作为标准</span></div><div class="line">    T v = arr[l];</div><div class="line"></div><div class="line">    <span class="comment">//arr[l+1...j]&lt;v ; arr[j+1...i) &gt; v ，后面是开区间是因为i是当前要考察的元素</span></div><div class="line">    <span class="keyword">int</span> j = l ;</div><div class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = l + <span class="number">1</span> ;i &lt;= r ; i++ )&#123;</div><div class="line">        <span class="keyword">if</span>( arr[i] &lt; v )&#123;</div><div class="line">            swap( arr[j+<span class="number">1</span>] , arr[i] );</div><div class="line">            j++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    swap( arr[l] , arr[j] );</div><div class="line"></div><div class="line">    <span class="keyword">return</span> j;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//对arr[l...r]部分进行快速排序</span></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">void</span> __quickSort(T arr[] , <span class="keyword">int</span> l , <span class="keyword">int</span> r )&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(l &gt;= r)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> p = __partition(arr, l , r );</div><div class="line"></div><div class="line">    __quickSort(arr , l , p<span class="number">-1</span> );</div><div class="line">    __quickSort(arr , p + <span class="number">1</span> , r );</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(T arr[] , <span class="keyword">int</span> n )</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">//调用递归函数</span></div><div class="line">    __quickSort(arr, <span class="number">0</span> , n - <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h1 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h1><p>见</p>
+<h1 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h1><p>见<a href="https://homxuwang.github.io/2019/04/07/%E5%A0%86%E5%92%8C%E5%A0%86%E6%8E%92%E5%BA%8F/" target="_blank" rel="external"><strong>堆和堆排序</strong></a></p>
 <h1 id="排序算法总结"><a href="#排序算法总结" class="headerlink" title="排序算法总结"></a>排序算法总结</h1><table>
 <thead>
 <tr>
@@ -357,7 +357,7 @@ var a = new Donate({
 <nav id="article-nav">
   
     <a href="/2018/07/17/数组/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nuevo</strong>
+      <strong class="article-nav-caption">Neuer</strong>
       <div class="article-nav-title">
         
           实现动态数组
@@ -367,7 +367,7 @@ var a = new Donate({
   
   
     <a href="/2018/06/05/Vue-cli-目录结构笔记-及-一个简单电商项目的网页架构思路/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
+      <strong class="article-nav-caption">Älter</strong>
       <div class="article-nav-title">Vue-cli 目录结构笔记 及 一个简单电商项目的网页架构思路</div>
     </a>
   
@@ -397,7 +397,7 @@ var a = new Donate({
 
   <div class="container">
       	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
 	      
 	      
