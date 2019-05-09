@@ -179,11 +179,11 @@
   <div class="intro-navigate">
       <p class="navigater-list">
         
-          <a id="beautifont" class="main-nav-link" href="/">Home</a>
+          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
         
-          <a id="beautifont" class="main-nav-link" href="/archives">Archives</a>
+          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
         
-          <a id="beautifont" class="main-nav-link" href="/categories">Categories</a>
+          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
         
           <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
         
@@ -203,6 +203,57 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-windows下开启和使用mysql的binlog"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/05/09/windows下开启和使用mysql的binlog/">windows下开启和使用mysql的binlog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/05/09/windows下开启和使用mysql的binlog/" class="article-date">
+	  <time datetime="2019-05-09T08:14:44.000Z" itemprop="datePublished">2019-05-09</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          Mysql Binlog是二进制格式的日志文件。Binlog是用来记录Mysql内部对数据库的改动（只记录对数据的修改操作），主要用于数据库的主从复制以及增量恢复。
+binlog作用MySQL的作用类似于Oracle的归档日志，可以用来查看数据库的变更历史（具体的时间点所有的SQL操作）、数据库增量备份和恢复（增量备份和基于时间点的恢复）、Mysql的复制（主主数据库的复制、主从数据库的复制）。
+开启binlog首先找到my.ini文件.
+在# Binary Logging部分添加以下内容...
+        </p>
+        <p class="article-more-link">
+          <a href="/2019/05/09/windows下开启和使用mysql的binlog/#more">weiter lesen</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-浅谈HTTP协议"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
@@ -236,7 +287,7 @@ HTTP 协议构建于 TCP/IP 协议之上，是一个应用层协议，默认端�
 HTTP 是基于请求与相应模式的无连接无状态的协议.无连接的目的是限制每次连接只处理一个请求,服务器处理完客户请求并受到客户应答后即断开连接,采用这种方式可以节省时间.HTTP1.1起默认使用长连接,即服务器要等待一定时间后才断开连接,以保证连接特性,虽然目前的一些技术(如keepAlive)使用长连接进行优化,但这些是属于HTTP请求之外的.也就是说,在每个独立的...
         </p>
         <p class="article-more-link">
-          <a href="/2019/05/08/浅谈HTTP协议/#more">Read More</a>
+          <a href="/2019/05/08/浅谈HTTP协议/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -288,7 +339,7 @@ OSI开放式互联参考模型(概念化七层协议)
 第一层(物理层)要解决两台物理机之间的通讯需求,机器A向机器B发送比特流,机器B能收到比特流。这是物理层要解决的问题。物理层定义了物理设备的标准,比如网线的类型、光纤接口类型、各种传输介质的传输速率。它的主要作用是传输比特流(0101)数据,将其转化为电流强弱进行传输,到达目的地后再转化为0101的机器码,也就是数模转换和模数转化,这一层的数据是比特。网...
         </p>
         <p class="article-more-link">
-          <a href="/2019/05/06/浅谈TCP协议/#more">Read More</a>
+          <a href="/2019/05/06/浅谈TCP协议/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -337,7 +388,7 @@ OSI开放式互联参考模型(概念化七层协议)
 在图的遍历-广度优先遍历中介绍的广度优先遍历的结果就是求出了一个最短路径。这种方法求的是从一个节点开始，到其他所有节点的最短路径，这样形成的是一个节点连接其他节点的树，即最短路径树(Shortest Path Tree).这棵树也是这个图的生成树，但是不是最小生成树，最小生成树是所有的边权值总和是最小的，而最短路径树是所有的节点距离起始节点的权值是最小的，这个求得最...
         </p>
         <p class="article-more-link">
-          <a href="/2019/04/23/最短路径问题/#more">Read More</a>
+          <a href="/2019/04/23/最短路径问题/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -392,7 +443,7 @@ OSI开放式互联参考模型(概念化七层协议)
 堆总是一棵完全...
         </p>
         <p class="article-more-link">
-          <a href="/2019/04/07/堆和堆排序/#more">Read More</a>
+          <a href="/2019/04/07/堆和堆排序/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -445,7 +496,7 @@ OSI开放式互联参考模型(概念化七层协议)
 当然要注意一点，邻接矩阵中依然用了传统的二维数组来存储，为了统一图的接口，也可以将a[i][j]位置存储为Edge格式。...
         </p>
         <p class="article-more-link">
-          <a href="/2019/04/05/最小生成树/#more">Read More</a>
+          <a href="/2019/04/05/最小生成树/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -495,7 +546,7 @@ OSI开放式互联参考模型(概念化七层协议)
 深度优先遍历假设从0开始遍历，看与0相连的第一个节点1，节点1没有遍历过所以遍历了1，此时为0 1；接着看和节点1相邻的节点，只有节点0，节点0已经被遍历过了，不用管，此时1没有其他相邻节点了，此时这条路就算走完了，...
         </p>
         <p class="article-more-link">
-          <a href="/2019/04/01/图的遍历/#more">Read More</a>
+          <a href="/2019/04/01/图的遍历/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -543,7 +594,7 @@ OSI开放式互联参考模型(概念化七层协议)
           图主要是节点和边组成的模型。图可以用来表达真实世界中的很多关系，如交通运输、社交网络、互联网等。图分为有向图（Directed Graph）和无向图（Undirected Graph），有向图由于其不对称性，所有有时候会涉及很多比较难的算法。可以把无向图看成一种特殊的有向图。图也可以分为有权图（Weighted Graph）和无权图（Unweighted Graph），权是指节点与节点之间的边的数值。图不一定都要连接起来，比如一个模型中有三个没有连通起来的图。有的图中有可能会有自环边（se...
         </p>
         <p class="article-more-link">
-          <a href="/2019/03/29/图论基础/#more">Read More</a>
+          <a href="/2019/03/29/图论基础/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -593,7 +644,7 @@ OSI开放式互联参考模型(概念化七层协议)
 相关解决方案:1234567891011121314class Solution &#123;    public int firstUniqChar(String s) &#123;        int[] freq = new int[26];        for(int i = 0 ; i &lt; s.length() ; i ++)            freq[s.charAt(i) - ...
         </p>
         <p class="article-more-link">
-          <a href="/2019/03/14/哈希表/#more">Read More</a>
+          <a href="/2019/03/14/哈希表/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -649,60 +700,7 @@ OSI开放式互联参考模型(概念化七层协议)
 与AVL树相比，如果添加和删除操作比较频繁，那么用红黑树将有很大的优...
         </p>
         <p class="article-more-link">
-          <a href="/2019/03/07/红黑树/#more">Read More</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-AVL"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/02/27/AVL/">AVL</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/02/27/AVL/" class="article-date">
-	  <time datetime="2019-02-27T01:50:30.000Z" itemprop="datePublished">2019-02-27</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          AVL的定义和平衡因子AVL树即平衡二叉树。AVL树的定义首先要求该树是二叉查找树（满足排序规则），并在此基础上增加了每个节点的平衡因子的定义，一个节点的平衡因子是该节点的左子树树高减去右子树树高的值。特点：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。在AVL树中任何节点的两个子树的高度最大差别为一，所以它也被称为平衡二叉树
-
-平衡因子BF：该节点的左子树的深度减去它的右子树深度。
-
-可见图中的平衡因子有2,那么这棵树不是一个平衡二叉树。
-计...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/02/27/AVL/#more">Read More</a>
+          <a href="/2019/03/07/红黑树/#more">weiter lesen</a>
         </p>
       
     </div>
@@ -725,7 +723,7 @@ OSI开放式互联参考模型(概念化七层协议)
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Siguiente &raquo;</a>
   </nav>
 
 </section>
@@ -740,7 +738,7 @@ OSI开放式互联参考模型(概念化七层协议)
 
   <div class="container">
       	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
 	      
 	      

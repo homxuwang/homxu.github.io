@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>windows下开启和使用mysql的binlog | Homxu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="好好生活" />
+  
+  
+  
+  
+  <meta name="description" content="Mysql Binlog是二进制格式的日志文件。Binlog是用来记录Mysql内部对数据库的改动（只记录对数据的修改操作），主要用于数据库的主从复制以及增量恢复。 binlog作用MySQL的作用类似于Oracle的归档日志，可以用来查看数据库的变更历史（具体的时间点所有的SQL操作）、数据库增量备份和恢复（增量备份和基于时间点的恢复）、Mysql的复制（主主数据库的复制、主从数据库的复制）。">
+<meta name="keywords" content="mysql,系统开发记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows下开启和使用mysql的binlog">
+<meta property="og:url" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="Mysql Binlog是二进制格式的日志文件。Binlog是用来记录Mysql内部对数据库的改动（只记录对数据的修改操作），主要用于数据库的主从复制以及增量恢复。 binlog作用MySQL的作用类似于Oracle的归档日志，可以用来查看数据库的变更历史（具体的时间点所有的SQL操作）、数据库增量备份和恢复（增量备份和基于时间点的恢复）、Mysql的复制（主主数据库的复制、主从数据库的复制）。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/1.png">
+<meta property="og:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/2.png">
+<meta property="og:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/3.png">
+<meta property="og:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/4.png">
+<meta property="og:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/5.png">
+<meta property="og:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/6.png">
+<meta property="og:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/7.png">
+<meta property="og:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/8.png">
+<meta property="og:updated_time" content="2019-05-09T09:27:33.393Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows下开启和使用mysql的binlog">
+<meta name="twitter:description" content="Mysql Binlog是二进制格式的日志文件。Binlog是用来记录Mysql内部对数据库的改动（只记录对数据的修改操作），主要用于数据库的主从复制以及增量恢复。 binlog作用MySQL的作用类似于Oracle的归档日志，可以用来查看数据库的变更历史（具体的时间点所有的SQL操作）、数据库增量备份和恢复（增量备份和基于时间点的恢复）、Mysql的复制（主主数据库的复制、主从数据库的复制）。">
+<meta name="twitter:image" content="http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/star.png">
+  <link rel="apple-touch-icon" href="/css/images/star.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-windows下开启和使用mysql的binlog" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      windows下开启和使用mysql的binlog
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/05/09/windows下开启和使用mysql的binlog/" class="article-date">
+	  <time datetime="2019-05-09T08:14:44.000Z" itemprop="datePublished">2019-05-09</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Mysql Binlog是二进制格式的日志文件。Binlog是用来记录Mysql内部对数据库的改动（只记录对数据的修改操作），主要用于数据库的主从复制以及增量恢复。</p>
+<p>binlog作用<br>MySQL的作用类似于Oracle的归档日志，可以用来查看数据库的变更历史（具体的时间点所有的SQL操作）、数据库增量备份和恢复（增量备份和基于时间点的恢复）、Mysql的复制（主主数据库的复制、主从数据库的复制）。</p>
+<h1 id="开启binlog"><a href="#开启binlog" class="headerlink" title="开启binlog"></a>开启binlog</h1><p>首先找到<code>my.ini</code>文件.<br><img src="/2019/05/09/windows下开启和使用mysql的binlog/1.png" alt="文件目录"></p>
+<p>在<code># Binary Logging</code>部分添加以下内容:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=mysql-bin</div><div class="line">binlog-format=Row</div></pre></td></tr></table></figure></p>
+<p>如下图所示:<br><img src="/2019/05/09/windows下开启和使用mysql的binlog/2.png" alt="修改my.ini"></p>
+<p>修改并保存,然后重启mysql服务:<br><img src="/2019/05/09/windows下开启和使用mysql的binlog/3.png" alt="重启mysql服务"></p>
+<p>查看是否已经开始binlog,分别使用命令:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show variables like &apos;log_bin&apos;; </div><div class="line">show binary logs;</div></pre></td></tr></table></figure></p>
+<p><img src="/2019/05/09/windows下开启和使用mysql的binlog/4.png" alt="查看是否开启binlog"></p>
+<p>binlog文件的默认目录(相对于my.ini)为<code>./Data</code>:<br><img src="/2019/05/09/windows下开启和使用mysql的binlog/5.png" alt="binlog文件的默认目录"></p>
+<p>可以在配置中使用<code>log-bin=路径名</code>改变binlog的位置,如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">log-bin=D:\logbin</div></pre></td></tr></table></figure></p>
+<h1 id="logbin的使用"><a href="#logbin的使用" class="headerlink" title="logbin的使用"></a>logbin的使用</h1><p>首先创建测试数据库:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; create database logbintest;</div><div class="line">Query OK, 1 row affected (0.01 sec)</div></pre></td></tr></table></figure></p>
+<p>切换数据库:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; use logbintest;</div><div class="line">Database changed</div></pre></td></tr></table></figure></p>
+<p>创建表:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; create table t1(id int,name varchar(20));</div><div class="line">Query OK, 0 rows affected (0.03 sec)</div></pre></td></tr></table></figure></p>
+<p>插入数据:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql&gt; insert into t1 values(1,'hm');</div><div class="line">Query OK, 1 row affected (0.02 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into t1 values(2,'xx');</div><div class="line">Query OK, 1 row affected (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>执行<code>flush logs;</code>命令:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; flush logs;</div><div class="line">Query OK, 0 rows affected (0.02 sec)</div></pre></td></tr></table></figure></p>
+<p>这时目录下多了一个log-bin文件:<br><img src="/2019/05/09/windows下开启和使用mysql的binlog/6.png" alt="备份文件"></p>
+<p>可以使用<code>show master status</code>查看当前数据库binary log的位置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show master status;</div><div class="line">+------------------+----------+--------------+------------------+-------------------+</div><div class="line">| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</div><div class="line">+------------------+----------+--------------+------------------+-------------------+</div><div class="line">| mysql-bin.000002 |      154 |              |                  |                   |</div><div class="line">+------------------+----------+--------------+------------------+-------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure></p>
+<p>继续输入sql命令:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysql&gt; insert into t1 values(3,'test');</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; insert into t1 values(4,'hello');</div><div class="line">Query OK, 1 row affected (0.01 sec)</div></pre></td></tr></table></figure></p>
+<p>再次执行<code>flush logs;</code>命令和<code>show master status</code>命令:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql&gt; flush logs;</div><div class="line">Query OK, 0 rows affected (0.02 sec)</div><div class="line"></div><div class="line">mysql&gt; show master status;</div><div class="line">+<span class="comment">------------------+----------+--------------+------------------+-------------------+</span></div><div class="line">| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</div><div class="line">+<span class="comment">------------------+----------+--------------+------------------+-------------------+</span></div><div class="line">| mysql-bin.000003 |      154 |              |                  |                   |</div><div class="line">+<span class="comment">------------------+----------+--------------+------------------+-------------------+</span></div><div class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure></p>
+<p>接着输入sql命令:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mysql&gt; insert into t1 values(5,'hey');</div><div class="line">Query OK, 1 row affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; drop table t1;</div><div class="line">Query OK, 0 rows affected (0.01 sec)</div><div class="line"></div><div class="line">mysql&gt; drop database logbintest;</div><div class="line">Query OK, 0 rows affected (0.01 sec)</div></pre></td></tr></table></figure></p>
+<p>经过以上操作后,文件夹中有了3个binlog文件,<code>*.index</code>是索引文件.</p>
+<p><img src="/2019/05/09/windows下开启和使用mysql的binlog/7.png" alt="备份文件"></p>
+<p>可以用mysqlbinlog 工具来恢复数据。为了下面讲解的方便，我们先将binlog文件解析成txt文件，在mysql-bin文件目录下执行命令,如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">C:\ProgramData\MySQL\MySQL Server 5.7\Data&gt;mysqlbinlog mysql-bin.000001 &gt; D:/1.txt</div><div class="line"></div><div class="line">C:\ProgramData\MySQL\MySQL Server 5.7\Data&gt;mysqlbinlog mysql-bin.000002 &gt; D:/2.txt</div><div class="line"></div><div class="line">C:\ProgramData\MySQL\MySQL Server 5.7\Data&gt;mysqlbinlog mysql-bin.000003 &gt; D:/3.txt</div></pre></td></tr></table></figure></p>
+<p>通过这三个命令，可以在D盘下生成3个文件，里面分别记录了日志文件的内容，也就是用户操作的步骤。<br><img src="/2019/05/09/windows下开启和使用mysql的binlog/8.png" alt="txt文件"></p>
+<p>三个文件内容见附录。</p>
+<p>下面开始恢复binlog日志到Mysql数据库，这里只将第1个日志文件恢复。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\ProgramData\MySQL\MySQL Server 5.7\Data&gt;mysqlbinlog mysql-bin.000001 | mysql -u[数据库用户名] -p[数据库密码]</div><div class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</div></pre></td></tr></table></figure></p>
+<p>然后查看是否恢复成功:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show databases;</div><div class="line">+<span class="comment">--------------------+</span></div><div class="line">| Database           |</div><div class="line">+<span class="comment">--------------------+</span></div><div class="line">| information_schema |</div><div class="line">| logbintest         |</div><div class="line">+<span class="comment">--------------------+</span></div><div class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</div></pre></td></tr></table></figure></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">mysql&gt; use logbintest;</div><div class="line">Database changed</div><div class="line">mysql&gt; show tables;</div><div class="line">+<span class="comment">----------------------+</span></div><div class="line">| Tables_in_logbintest |</div><div class="line">+<span class="comment">----------------------+</span></div><div class="line">| t1                   |</div><div class="line">+<span class="comment">----------------------+</span></div><div class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</div><div class="line"></div><div class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> t1;</div><div class="line">+<span class="comment">------+------+</span></div><div class="line">| id   | name |</div><div class="line">+<span class="comment">------+------+</span></div><div class="line">|    1 | hm   |</div><div class="line">|    2 | xx   |</div><div class="line">+<span class="comment">------+------+</span></div><div class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</div></pre></td></tr></table></figure>
+<p>这时候恢复到相应的备份位置了.</p>
+<p>接着恢复第三个备份:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">C:\ProgramData\MySQL\MySQL Server 5.7\Data&gt;mysqlbinlog mysql-bin.000003 | mysql -u[用户名] -p[密码]</div><div class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</div></pre></td></tr></table></figure></p>
+<p>查看数据:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mysql&gt; select * from t1;</div><div class="line">+<span class="comment">------+-------+</span></div><div class="line">| id   | name  |</div><div class="line">+<span class="comment">------+-------+</span></div><div class="line">|    1 | hm    |</div><div class="line">|    2 | xx    |</div><div class="line">|    3 | test  |</div><div class="line">|    4 | hello |</div><div class="line">+<span class="comment">------+-------+</span></div><div class="line">4 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure></p>
+<p><strong>注意</strong>:<br>直接恢复<code>mysql-bin.000002</code>会提示<code>Table &#39;logbintest.t1&#39; doesn&#39;t exist</code>.我猜想因为<code>mysql-bin.000002</code>文件中不包含创建数据库和表的命令,所以只能在恢复<code>mysql-bin.000001</code>,即恢复了相应数据库和表格的情况下,才能继续恢复数据.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">C:\ProgramData\MySQL\MySQL Server 5.7\Data&gt;mysqlbinlog mysql-bin.000002 | mysql -u[用户名] -p[密码]</div><div class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</div><div class="line">ERROR 1146 (42S02) at line 35: Table &apos;logbintest.t1&apos; doesn&apos;t exist</div></pre></td></tr></table></figure></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://baike.baidu.com/item/Mysql%20Binlog" target="_blank" rel="external">https://baike.baidu.com/item/Mysql%20Binlog</a></p>
+<p><a href="https://www.cnblogs.com/wangwust/p/6433453.html" target="_blank" rel="external">https://www.cnblogs.com/wangwust/p/6433453.html</a></p>
+<p><a href="https://blog.csdn.net/king_kgh/article/details/74890381" target="_blank" rel="external">https://blog.csdn.net/king_kgh/article/details/74890381</a></p>
+<p><a href="https://www.iteblog.com/mysql-binlog_basic_usage/" target="_blank" rel="external">https://www.iteblog.com/mysql-binlog_basic_usage/</a></p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p>1.txt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;</div><div class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</div><div class="line">DELIMITER /*!*/;</div><div class="line">SET @@SESSION.GTID_NEXT= &apos;AUTOMATIC&apos; /* added by mysqlbinlog */ /*!*/;</div><div class="line">DELIMITER ;</div><div class="line"># End of log file</div><div class="line">/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;</div><div class="line">/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;</div></pre></td></tr></table></figure></p>
+<p>2.txt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;</div><div class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</div><div class="line">DELIMITER /*!*/;</div><div class="line"># at 4</div><div class="line">#190509 16:40:28 server id 1  end_log_pos 123 CRC32 0xd5ca9838 	Start: binlog v 4, server v 5.7.17-log created 190509 16:40:28</div><div class="line">BINLOG &apos;</div><div class="line">fOfTXA8BAAAAdwAAAHsAAAAAAAQANS43LjE3LWxvZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div><div class="line">AAAAAAAAAAAAAAAAAAAAAAAAEzgNAAgAEgAEBAQEEgAAXwAEGggAAAAICAgCAAAACgoKKioAEjQA</div><div class="line">ATiYytU=</div><div class="line">&apos;/*!*/;</div><div class="line"># at 123</div><div class="line">#190509 16:40:28 server id 1  end_log_pos 154 CRC32 0xcbc8683a 	Previous-GTIDs</div><div class="line"># [empty]</div><div class="line"># at 154</div><div class="line">#190509 16:48:03 server id 1  end_log_pos 219 CRC32 0x66c5aab9 	Anonymous_GTID	last_committed=0	sequence_number=1</div><div class="line">SET @@SESSION.GTID_NEXT= &apos;ANONYMOUS&apos;/*!*/;</div><div class="line"># at 219</div><div class="line">#190509 16:48:03 server id 1  end_log_pos 297 CRC32 0x7c1a0b04 	Query	thread_id=3	exec_time=0	error_code=0</div><div class="line">SET TIMESTAMP=1557391683/*!*/;</div><div class="line">SET @@session.pseudo_thread_id=3/*!*/;</div><div class="line">SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;</div><div class="line">SET @@session.sql_mode=1344274432/*!*/;</div><div class="line">SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;</div><div class="line">/*!\C gbk *//*!*/;</div><div class="line">SET @@session.character_set_client=28,@@session.collation_connection=28,@@session.collation_server=33/*!*/;</div><div class="line">SET @@session.lc_time_names=0/*!*/;</div><div class="line">SET @@session.collation_database=DEFAULT/*!*/;</div><div class="line">BEGIN</div><div class="line">/*!*/;</div><div class="line"># at 297</div><div class="line">#190509 16:48:03 server id 1  end_log_pos 351 CRC32 0x6c102375 	Table_map: `logbintest`.`t1` mapped to number 328</div><div class="line"># at 351</div><div class="line">#190509 16:48:03 server id 1  end_log_pos 396 CRC32 0xec3029be 	Write_rows: table id 328 flags: STMT_END_F</div><div class="line"></div><div class="line">BINLOG &apos;</div><div class="line">Q+nTXBMBAAAANgAAAF8BAAAAAEgBAAAAAAEACmxvZ2JpbnRlc3QAAnQxAAIDDwI8AAN1IxBs</div><div class="line">Q+nTXB4BAAAALQAAAIwBAAAAAEgBAAAAAAEAAgAC//wDAAAABHRlc3S+KTDs</div><div class="line">&apos;/*!*/;</div><div class="line"># at 396</div><div class="line">#190509 16:48:03 server id 1  end_log_pos 427 CRC32 0x57760240 	Xid = 16</div><div class="line">COMMIT/*!*/;</div><div class="line"># at 427</div><div class="line">#190509 16:48:19 server id 1  end_log_pos 492 CRC32 0x985b3888 	Anonymous_GTID	last_committed=1	sequence_number=2</div><div class="line">SET @@SESSION.GTID_NEXT= &apos;ANONYMOUS&apos;/*!*/;</div><div class="line"># at 492</div><div class="line">#190509 16:48:19 server id 1  end_log_pos 570 CRC32 0x602ea4d9 	Query	thread_id=3	exec_time=0	error_code=0</div><div class="line">SET TIMESTAMP=1557391699/*!*/;</div><div class="line">BEGIN</div><div class="line">/*!*/;</div><div class="line"># at 570</div><div class="line">#190509 16:48:19 server id 1  end_log_pos 624 CRC32 0x0a30970d 	Table_map: `logbintest`.`t1` mapped to number 328</div><div class="line"># at 624</div><div class="line">#190509 16:48:19 server id 1  end_log_pos 670 CRC32 0x30f313bc 	Write_rows: table id 328 flags: STMT_END_F</div><div class="line"></div><div class="line">BINLOG &apos;</div><div class="line">U+nTXBMBAAAANgAAAHACAAAAAEgBAAAAAAEACmxvZ2JpbnRlc3QAAnQxAAIDDwI8AAMNlzAK</div><div class="line">U+nTXB4BAAAALgAAAJ4CAAAAAEgBAAAAAAEAAgAC//wEAAAABWhlbGxvvBPzMA==</div><div class="line">&apos;/*!*/;</div><div class="line"># at 670</div><div class="line">#190509 16:48:19 server id 1  end_log_pos 701 CRC32 0xe612b29f 	Xid = 17</div><div class="line">COMMIT/*!*/;</div><div class="line"># at 701</div><div class="line">#190509 16:49:37 server id 1  end_log_pos 748 CRC32 0x8503b6e4 	Rotate to mysql-bin.000003  pos: 4</div><div class="line">SET @@SESSION.GTID_NEXT= &apos;AUTOMATIC&apos; /* added by mysqlbinlog */ /*!*/;</div><div class="line">DELIMITER ;</div><div class="line"># End of log file</div><div class="line">/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;</div><div class="line">/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;</div></pre></td></tr></table></figure></p>
+<p>3.txt<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div></pre></td><td class="code"><pre><div class="line">/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=1*/;</div><div class="line">/*!50003 SET @OLD_COMPLETION_TYPE=@@COMPLETION_TYPE,COMPLETION_TYPE=0*/;</div><div class="line">DELIMITER /*!*/;</div><div class="line"># at 4</div><div class="line">#190509 16:49:37 server id 1  end_log_pos 123 CRC32 0x67bdb5fc 	Start: binlog v 4, server v 5.7.17-log created 190509 16:49:37</div><div class="line"># Warning: this binlog is either in use or was not closed properly.</div><div class="line">BINLOG &apos;</div><div class="line">oenTXA8BAAAAdwAAAHsAAAABAAQANS43LjE3LWxvZwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</div><div class="line">AAAAAAAAAAAAAAAAAAAAAAAAEzgNAAgAEgAEBAQEEgAAXwAEGggAAAAICAgCAAAACgoKKioAEjQA</div><div class="line">Afy1vWc=</div><div class="line">&apos;/*!*/;</div><div class="line"># at 123</div><div class="line">#190509 16:49:37 server id 1  end_log_pos 154 CRC32 0x0e916e92 	Previous-GTIDs</div><div class="line"># [empty]</div><div class="line"># at 154</div><div class="line">#190509 16:50:51 server id 1  end_log_pos 219 CRC32 0x0fcc180d 	Anonymous_GTID	last_committed=0	sequence_number=1</div><div class="line">SET @@SESSION.GTID_NEXT= &apos;ANONYMOUS&apos;/*!*/;</div><div class="line"># at 219</div><div class="line">#190509 16:50:51 server id 1  end_log_pos 297 CRC32 0xd5da7fee 	Query	thread_id=3	exec_time=0	error_code=0</div><div class="line">SET TIMESTAMP=1557391851/*!*/;</div><div class="line">SET @@session.pseudo_thread_id=3/*!*/;</div><div class="line">SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0, @@session.unique_checks=1, @@session.autocommit=1/*!*/;</div><div class="line">SET @@session.sql_mode=1344274432/*!*/;</div><div class="line">SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;</div><div class="line">/*!\C gbk *//*!*/;</div><div class="line">SET @@session.character_set_client=28,@@session.collation_connection=28,@@session.collation_server=33/*!*/;</div><div class="line">SET @@session.lc_time_names=0/*!*/;</div><div class="line">SET @@session.collation_database=DEFAULT/*!*/;</div><div class="line">BEGIN</div><div class="line">/*!*/;</div><div class="line"># at 297</div><div class="line">#190509 16:50:51 server id 1  end_log_pos 351 CRC32 0x60f30968 	Table_map: `logbintest`.`t1` mapped to number 328</div><div class="line"># at 351</div><div class="line">#190509 16:50:51 server id 1  end_log_pos 395 CRC32 0xace24246 	Write_rows: table id 328 flags: STMT_END_F</div><div class="line"></div><div class="line">BINLOG &apos;</div><div class="line">6+nTXBMBAAAANgAAAF8BAAAAAEgBAAAAAAEACmxvZ2JpbnRlc3QAAnQxAAIDDwI8AANoCfNg</div><div class="line">6+nTXB4BAAAALAAAAIsBAAAAAEgBAAAAAAEAAgAC//wFAAAAA2hleUZC4qw=</div><div class="line">&apos;/*!*/;</div><div class="line"># at 395</div><div class="line">#190509 16:50:51 server id 1  end_log_pos 426 CRC32 0xae6e3d87 	Xid = 20</div><div class="line">COMMIT/*!*/;</div><div class="line"># at 426</div><div class="line">#190509 16:51:36 server id 1  end_log_pos 491 CRC32 0xdb44b864 	Anonymous_GTID	last_committed=1	sequence_number=2</div><div class="line">SET @@SESSION.GTID_NEXT= &apos;ANONYMOUS&apos;/*!*/;</div><div class="line"># at 491</div><div class="line">#190509 16:51:36 server id 1  end_log_pos 618 CRC32 0x6dec15c8 	Query	thread_id=3	exec_time=0	error_code=0</div><div class="line">use `logbintest`/*!*/;</div><div class="line">SET TIMESTAMP=1557391896/*!*/;</div><div class="line">DROP TABLE `t1` /* generated by server */</div><div class="line">/*!*/;</div><div class="line"># at 618</div><div class="line">#190509 16:52:34 server id 1  end_log_pos 683 CRC32 0xe3edccf9 	Anonymous_GTID	last_committed=2	sequence_number=3</div><div class="line">SET @@SESSION.GTID_NEXT= &apos;ANONYMOUS&apos;/*!*/;</div><div class="line"># at 683</div><div class="line">#190509 16:52:34 server id 1  end_log_pos 780 CRC32 0xb8287261 	Query	thread_id=3	exec_time=0	error_code=0</div><div class="line">SET TIMESTAMP=1557391954/*!*/;</div><div class="line">drop database logbintest</div><div class="line">/*!*/;</div><div class="line">SET @@SESSION.GTID_NEXT= &apos;AUTOMATIC&apos; /* added by mysqlbinlog */ /*!*/;</div><div class="line">DELIMITER ;</div><div class="line"># End of log file</div><div class="line">/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;</div><div class="line">/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Homxu</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2019/05/09/windows下开启和使用mysql的binlog/" target="_blank" title="windows下开启和使用mysql的binlog">http://homxu.com/2019/05/09/windows下开启和使用mysql的binlog/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/08/浅谈HTTP协议/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Viejo</strong>
+      <div class="article-nav-title">浅谈HTTP/HTTPS协议</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#开启binlog"><span class="nav-number">1.</span> <span class="nav-text">开启binlog</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#logbin的使用"><span class="nav-number">2.</span> <span class="nav-text">logbin的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Homxu
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Homxu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
