@@ -179,11 +179,11 @@
   <div class="intro-navigate">
       <p class="navigater-list">
         
-          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
+          <a id="beautifont" class="main-nav-link" href="/">Home</a>
         
-          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
+          <a id="beautifont" class="main-nav-link" href="/archives">Archives</a>
         
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
+          <a id="beautifont" class="main-nav-link" href="/categories">Categories</a>
         
           <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
         
@@ -203,6 +203,62 @@
       <div id="content" class="outer">
         
           <section id="main" style="float:none;">
+  
+    <article id="post-红黑树"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/03/07/红黑树/">红黑树</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/03/07/红黑树/" class="article-date">
+	  <time datetime="2019-03-07T07:53:14.000Z" itemprop="datePublished">2019-03-07</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          红黑树的定义红黑树是一棵二分搜索树。
+红黑树的五个性质：
+1、每个结点或者是红的，或者是黑的。
+2、根结点是黑的。
+3、每一个叶结点（nil结点,即最后的空结点）是黑的。
+4、如果一个结点是红的，则其孩子结点都是黑的。
+5、对于任意结点，从该结点到其子孙叶结点（nil结点）的所有路径上包含相同数目的黑结点。
+红黑树是保持“黑平衡”的二叉树。严格意义上并不是平衡二叉树。因为有红色结点，所以红黑树的最大高度为O(logn)。
+与AVL树相比，如果添加和删除操作比较频繁，那么用红黑树将有很大的优...
+        </p>
+        <p class="article-more-link">
+          <a href="/2019/03/07/红黑树/#more">Read More</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
   
     <article id="post-AVL"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
@@ -238,7 +294,7 @@
 计...
         </p>
         <p class="article-more-link">
-          <a href="/2019/02/27/AVL/#more">weiter lesen</a>
+          <a href="/2019/02/27/AVL/#more">Read More</a>
         </p>
       
     </div>
@@ -291,7 +347,7 @@ isConnected(p,q)
 并查集的简单实现定义接口123456public interface UF &#123;    int getSize();    //并查集一共有多少个元素    boolean isConnectted(int p,int q); //id为p何id为q的元素是否相连  ...
         </p>
         <p class="article-more-link">
-          <a href="/2019/01/22/并查集/#more">weiter lesen</a>
+          <a href="/2019/01/22/并查集/#more">Read More</a>
         </p>
       
     </div>
@@ -341,7 +397,7 @@ isConnected(p,q)
 @ResponseBody作用：@ResponseBody注解用于将Controller...
         </p>
         <p class="article-more-link">
-          <a href="/2018/12/11/SpringMVC学习笔记-四/#more">weiter lesen</a>
+          <a href="/2018/12/11/SpringMVC学习笔记-四/#more">Read More</a>
         </p>
       
     </div>
@@ -390,7 +446,7 @@ isConnected(p,q)
 高级参数绑定绑定数组需求:在商品列表页面选中多个商品，然后删除。功能要求商品列表页面中的每个商品前有一个checkbok，选中多个商品后点击删除按钮把商品id传递给Controller，根据商品id删除商品信息。前端页面代码进行修改，修改后的页面见附录。Controller代码:12345678//删除多个商品	@RequestMapping(value = "/item/deleteItems.action" )	public Mod...
         </p>
         <p class="article-more-link">
-          <a href="/2018/12/05/SpringMVC学习笔记-三/#more">weiter lesen</a>
+          <a href="/2018/12/05/SpringMVC学习笔记-三/#more">Read More</a>
         </p>
       
     </div>
@@ -441,7 +497,7 @@ isConnected(p,q)
 在ItemService.java接口中添加方法:12//通过id查询某个商品public Items selectItemsById(Integer i...
         </p>
         <p class="article-more-link">
-          <a href="/2018/12/02/SpringMVC学习笔记-二/#more">weiter lesen</a>
+          <a href="/2018/12/02/SpringMVC学习笔记-二/#more">Read More</a>
         </p>
       
     </div>
@@ -492,7 +548,7 @@ isConnected(p,q)
 配置文件applicationContext.xml:123456789101112131415161718192021222324252627282930313233343536&lt;?xml version="1.0" encoding=...
         </p>
         <p class="article-more-link">
-          <a href="/2018/12/01/SpringMVC-Mybatis整合/#more">weiter lesen</a>
+          <a href="/2018/12/01/SpringMVC-Mybatis整合/#more">Read More</a>
         </p>
       
     </div>
@@ -543,7 +599,7 @@ SpringMVC简单的处理流程图:前端控制器可以说是SpringMVC的心脏�
 配置前端控制器在web.xml中配置前端控制器:123456789101112131415&lt;!-- 前端控制器 --&gt;&lt;servlet&gt;	&lt;servlet-name&gt...
         </p>
         <p class="article-more-link">
-          <a href="/2018/11/30/SpringMVC学习笔记-一/#more">weiter lesen</a>
+          <a href="/2018/11/30/SpringMVC学习笔记-一/#more">Read More</a>
         </p>
       
     </div>
@@ -591,7 +647,7 @@ SpringMVC简单的处理流程图:前端控制器可以说是SpringMVC的心脏�
           在不使用Spring的情况下，创建sqlSessionFactory需要两步:12345//1.加载核心配置文件String resource = "sqlMapConfig.xml";InputStream in = Resources.getResourceAsStream(resource);//2.创建SqlSessionFactorySqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build...
         </p>
         <p class="article-more-link">
-          <a href="/2018/11/29/Spring与Mybatis整合/#more">weiter lesen</a>
+          <a href="/2018/11/29/Spring与Mybatis整合/#more">Read More</a>
         </p>
       
     </div>
@@ -642,56 +698,7 @@ opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}�
 包装对象：Pojo类中的一个属...
         </p>
         <p class="article-more-link">
-          <a href="/2018/11/21/Mybatis学习笔记-二/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-Mybatis学习笔记-一"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/19/Mybatis学习笔记-一/">Mybatis学习笔记-一</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/19/Mybatis学习笔记-一/" class="article-date">
-	  <time datetime="2018-11-19T12:56:22.000Z" itemprop="datePublished">2018-11-19</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          Mybatis架构图
-准备测试数据库1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162/*Navicat MySQL Data TransferSource Server         : localhost_3306Source Server Version : 50521Source Host       ...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/19/Mybatis学习笔记-一/#more">weiter lesen</a>
+          <a href="/2018/11/21/Mybatis学习笔记-二/#more">Read More</a>
         </p>
       
     </div>
@@ -714,7 +721,7 @@ opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}�
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Previo</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Siguiente &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -729,7 +736,7 @@ opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}�
 
   <div class="container">
       	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
 	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
 	      
 	      
