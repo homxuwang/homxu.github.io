@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>浅析socket编程 | Homxu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="好好生活" />
+  
+  
+  
+  
+  <meta name="description" content="在浅谈TCP协议中提到过：在本地两个进程间进行通信时，可以使用唯一标识符PID。但是如果是两台不同计算机之间的进程进行通信时,只用PID是不够的,这时就在传输层中使用协议端口号,简称端口。IP可以唯一标识主机，而TCP协议和端口号可以唯一标识一个主机中的进程。这样可以用三元组(IP地址+协议+端口号)唯一标识一个网络中的进程。 在唯一标识了一个网络中的进程后,便可以用socket进行编程了。 So">
+<meta name="keywords" content="计算机网络,java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅析Socket编程">
+<meta property="og:url" content="http://homxu.com/2019/05/11/浅析Socket编程/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="在浅谈TCP协议中提到过：在本地两个进程间进行通信时，可以使用唯一标识符PID。但是如果是两台不同计算机之间的进程进行通信时,只用PID是不够的,这时就在传输层中使用协议端口号,简称端口。IP可以唯一标识主机，而TCP协议和端口号可以唯一标识一个主机中的进程。这样可以用三元组(IP地址+协议+端口号)唯一标识一个网络中的进程。 在唯一标识了一个网络中的进程后,便可以用socket进行编程了。 So">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2019/05/11/浅析Socket编程/1.png">
+<meta property="og:image" content="http://homxu.com/2019/05/11/浅析Socket编程/2.png">
+<meta property="og:image" content="http://homxu.com/2019/05/11/浅析Socket编程/4.png">
+<meta property="og:image" content="http://homxu.com/2019/05/11/浅析Socket编程/3.png">
+<meta property="og:image" content="http://homxu.com/2019/05/11/浅析Socket编程/5.png">
+<meta property="og:image" content="http://homxu.com/2019/05/11/浅析Socket编程/6.png">
+<meta property="og:image" content="http://homxu.com/2019/05/11/浅析Socket编程/7.png">
+<meta property="og:updated_time" content="2019-05-11T07:26:00.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅析Socket编程">
+<meta name="twitter:description" content="在浅谈TCP协议中提到过：在本地两个进程间进行通信时，可以使用唯一标识符PID。但是如果是两台不同计算机之间的进程进行通信时,只用PID是不够的,这时就在传输层中使用协议端口号,简称端口。IP可以唯一标识主机，而TCP协议和端口号可以唯一标识一个主机中的进程。这样可以用三元组(IP地址+协议+端口号)唯一标识一个网络中的进程。 在唯一标识了一个网络中的进程后,便可以用socket进行编程了。 So">
+<meta name="twitter:image" content="http://homxu.com/2019/05/11/浅析Socket编程/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
+  
+
+  
+
+  <link rel="icon" href="/css/images/star.png">
+  <link rel="apple-touch-icon" href="/css/images/star.png">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+
+  
+    <link rel="stylesheet" href="/css/dialog.css">
+  
+
+  
+
+  
+    <link rel="stylesheet" href="/css/header-post.css" >
+  
+
+  
+  
+  
+    <link rel="stylesheet" href="/css/vdonate.css" >
+  
+
+</head>
+
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  <div id="container">
+    <div id="wrap">
+      
+        <header>
+
+    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-inner">
+          
+          <div class="container"> 
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            
+              <a class="brand" style="
+                 margin-top: 0px;"  
+                href="#" data-toggle="modal" data-target="#myModal" >
+                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
+              </a>
+            
+            
+            <div class="navbar-collapse collapse">
+              <ul class="hnav navbar-nav">
+                
+                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/categories">Kategorien</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/about">About</a> </li>
+                
+                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
+                
+                  <li><div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Beiträge',
+            PAGES: 'Seiten',
+            CATEGORIES: 'Kategorien',
+            TAGS: 'Tags',
+            UNTITLED: '(Unbenannt)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div></li>
+            </div>
+          </div>
+                
+      </div>
+    </div>
+
+</header>
+
+
+
+      
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-浅析Socket编程" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      浅析Socket编程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/05/11/浅析Socket编程/" class="article-date">
+	  <time datetime="2019-05-11T01:50:22.000Z" itemprop="datePublished">2019-05-11</time>
+	</a>
+
+      
+      
+	<a class="article-views">
+	<span id="busuanzi_container_page_pv">
+		PV:<span id="busuanzi_value_page_pv"></span>
+	</span>
+	</a>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在<a href="https://homxuwang.github.io/2019/05/06/%E6%B5%85%E8%B0%88TCP%E5%8D%8F%E8%AE%AE/" target="_blank" rel="external">浅谈TCP协议</a>中提到过：<br>在本地两个进程间进行通信时，可以使用唯一标识符PID。但是如果是两台不同计算机之间的进程进行通信时,只用PID是不够的,这时就在传输层中使用协议端口号,简称端口。IP可以唯一标识主机，而TCP协议和端口号可以唯一标识一个主机中的进程。这样可以用三元组(IP地址+协议+端口号)唯一标识一个网络中的进程。</p>
+<p>在唯一标识了一个网络中的进程后,便可以用socket进行编程了。</p>
+<h1 id="Socket简介"><a href="#Socket简介" class="headerlink" title="Socket简介"></a>Socket简介</h1><p>Socket与TCP/IP协议没有必然的联系,Socket是对TCP/IP协议的封装，Socket本身并不是协议，而是一个调用接口(API)。<br><img src="/2019/05/11/浅析Socket编程/1.png" alt="Socket"></p>
+<p>Socket通常也称作”套接字”，用于描述IP地址和端口，是一个通信链的句柄。网络上的两个程序通过一个双向的通讯连接实现数据的交换，这个双向链路的一端称为一个Socket，一个Socket由一个IP地址和一个端口号唯一确定。应用程序通常通过”套接字”向网络发出请求或者应答网络请求。</p>
+<p>从设计模式的角度看来，Socket其实就是一个门面模式，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。</p>
+<p>Socket 起源于 Unix ，Unix/Linux 基本哲学之一就是“一切皆文件”，都可以用“打开(open) –&gt; 读写(write/read) –&gt; 关闭(close)”模式来进行操作。因此 Socket 也被处理为一种特殊的文件。</p>
+<p>使用TCP协议通信的Socket的通信流程如下图：<br><img src="/2019/05/11/浅析Socket编程/2.png" alt="Socket通信流程"></p>
+<ul>
+<li><p>服务器根据地址类型（ipv4,ipv6）、socket类型、协议创建socket</p>
+</li>
+<li><p>服务器为socket绑定ip地址和端口号</p>
+</li>
+<li><p>服务器socket监听端口号请求，随时准备接收客户端发来的连接，这时候服务器的socket并没有被打开</p>
+</li>
+<li><p>客户端创建socket</p>
+</li>
+<li><p>客户端打开socket，根据服务器ip地址和端口号试图连接服务器socket</p>
+</li>
+<li><p>服务器socket接收到客户端socket请求，被动打开，开始接收客户端请求，直到客户端返回连接信息。这时候socket进入阻塞状态，所谓阻塞即接收方法一直到客户端返回连接信息后才返回，开始接收下一个客户端请求。</p>
+</li>
+<li><p>客户端连接成功，向服务器发送连接状态信息</p>
+</li>
+<li><p>服务器接收方法返回，连接成功</p>
+</li>
+<li><p>客户端向socket写入信息</p>
+</li>
+<li><p>服务器读取信息</p>
+</li>
+<li><p>客户端关闭</p>
+</li>
+<li><p>服务器端关闭</p>
+</li>
+</ul>
+<h1 id="简单的Socket编程"><a href="#简单的Socket编程" class="headerlink" title="简单的Socket编程"></a>简单的Socket编程</h1><p>客户端想服务器发送一个字符串,服务器接收到字符串后打印,然后向客户端返回字符串的长度,最后,客户端输出服务器端返回的该字符串的长度,分别用TCP和UDP两种方式实现.</p>
+<p>结合上一节内容,流程概括为:</p>
+<ul>
+<li>socket() 创建套接字</li>
+<li>bind() 分配套接字地址</li>
+<li>listen() 等待连接请求</li>
+<li>accept() 允许连接请求</li>
+<li>read()/write() 数据交换</li>
+<li>close() 关闭连接</li>
+</ul>
+<p>在项目中创建以下结构:</p>
+<p><img src="/2019/05/11/浅析Socket编程/4.png" alt="Socket编程"></p>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><p>先以TCP为例.<code>TCPClient</code>表示TCP客户端,<code>TCPServer</code>表示TCP服务端,<code>LengthCaculator</code>是一个单独的处理线程,对数据的业务逻辑处理交给它来实现.</p>
+<p><code>TCPServer</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> io.github.homxuwang.socket;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.net.ServerSocket;</div><div class="line"><span class="keyword">import</span> java.net.Socket;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPServer</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//创建Socket,并将socket绑定到5202端口</span></div><div class="line">        ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">5202</span>);</div><div class="line">        <span class="comment">//死循环,使得socket一直等待并处理客户端发送过来的请求</span></div><div class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</div><div class="line">            <span class="comment">//监听5202端口,知道客户端返回信息后才返回</span></div><div class="line">            Socket socket = ss.accept();</div><div class="line">            <span class="comment">//获取客户端的请求信息后,执行相关业务逻辑</span></div><div class="line">            <span class="keyword">new</span> LengthCalculator(socket).start();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>TCPClient</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> io.github.homxuwang.socket;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.OutputStream;</div><div class="line"><span class="keyword">import</span> java.net.Socket;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPClient</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        <span class="comment">//创建socket,并指定连接的是本机的端口号为5202的服务器socket</span></div><div class="line">        Socket socket = <span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">5202</span>);</div><div class="line">        <span class="comment">//获取输出流</span></div><div class="line">        OutputStream os = socket.getOutputStream();</div><div class="line">        <span class="comment">//获取输出流</span></div><div class="line">        InputStream is = socket.getInputStream();</div><div class="line">        <span class="comment">//将要传递给server的字符串参数转换成byte数组,并将数组写入到输出流中</span></div><div class="line">        os.write(<span class="keyword">new</span> String(<span class="string">"Hello Socket"</span>).getBytes());</div><div class="line">        <span class="keyword">int</span> ch = <span class="number">0</span>;</div><div class="line">        <span class="keyword">byte</span>[] buff = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">        <span class="comment">//buff 主要用来读取输入的内容,存成byte数组,ch主要用来获取读取数组的长度</span></div><div class="line">        ch = is.read(buff);</div><div class="line">        <span class="comment">//将接收流的byte数组转换成字符串,这里是从服务端发回来的字符串参数的长度</span></div><div class="line">        String content = <span class="keyword">new</span> String (buff,<span class="number">0</span>,ch);</div><div class="line">        System.out.println(content);</div><div class="line">        <span class="comment">//关闭流和socket</span></div><div class="line">        os.close();</div><div class="line">        is.close();</div><div class="line">        socket.close();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>LengthCaculator</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> io.github.homxuwang.socket;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.io.InputStream;</div><div class="line"><span class="keyword">import</span> java.io.OutputStream;</div><div class="line"><span class="keyword">import</span> java.net.Socket;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LengthCalculator</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">    <span class="comment">//以socket为成员变量</span></div><div class="line">    <span class="keyword">private</span> Socket socket;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LengthCalculator</span><span class="params">(Socket socket)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.socket = socket;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span>&#123;</div><div class="line">            <span class="comment">//获取socket的输出流</span></div><div class="line">            OutputStream os = socket.getOutputStream();</div><div class="line">            <span class="comment">//获取socket的输入流</span></div><div class="line">            InputStream is = socket.getInputStream();</div><div class="line">            <span class="keyword">int</span> ch = <span class="number">0</span>;</div><div class="line">            <span class="keyword">byte</span>[] buff = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">            <span class="comment">//buff主要用来读取输入的内容,存成byte数组,主要用来获取读取数组的长度</span></div><div class="line">            ch = is.read(buff);</div><div class="line">            <span class="comment">//将接收流的byte数组转换成字符串,这里获取的内容是客户端发送来的字符串参数</span></div><div class="line">            String content = <span class="keyword">new</span> String(buff,<span class="number">0</span>,ch);</div><div class="line">            System.out.println(content);</div><div class="line">            <span class="comment">//向输出流里写入获得的字符串长度,回发给客户端</span></div><div class="line">            os.write(String.valueOf(content.length()).getBytes());</div><div class="line">            <span class="comment">//关闭输入输出流和socket</span></div><div class="line">            os.close();</div><div class="line">            is.close();</div><div class="line">            socket.close();</div><div class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>进行测试时,先运行Server,使得其能够进行监听,然后运行Client,打印结果如下:<br><img src="/2019/05/11/浅析Socket编程/3.png" alt="TCPClient打印结果"></p>
+<p><img src="/2019/05/11/浅析Socket编程/5.png" alt="TCPServer打印结果"></p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><p><code>UDPServer.java</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> io.github.homxuwang.socket;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.net.DatagramPacket;</div><div class="line"><span class="keyword">import</span> java.net.DatagramSocket;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UDPServer</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">//服务端接受客户端发送的数据报</span></div><div class="line">        DatagramSocket socket = <span class="keyword">new</span> DatagramSocket(<span class="number">52021</span>); <span class="comment">//监听的端口号</span></div><div class="line">        <span class="keyword">byte</span>[] buff = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">100</span>]; <span class="comment">//存储从客户端接受到的内容</span></div><div class="line">        DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(buff,buff.length);</div><div class="line">        <span class="comment">//接受客户端发送过来的内容,并将内容封装进DatagramPacket对象中</span></div><div class="line">        socket.receive(packet);</div><div class="line"></div><div class="line">        <span class="keyword">byte</span>[] data = packet.getData(); <span class="comment">//从DatagramPacket对象中获取到真正存储的数据</span></div><div class="line">        <span class="comment">//将数据从二进制转换成字符串形式</span></div><div class="line">        String content = <span class="keyword">new</span> String(buff,<span class="number">0</span>,packet.getLength());</div><div class="line">        System.out.println(content);</div><div class="line">        <span class="comment">//将要发送给客户端的数据转换成二进制</span></div><div class="line">        <span class="keyword">byte</span>[] sendedContent = String.valueOf(content.length()).getBytes();</div><div class="line">        <span class="comment">//服务端给客户端发送数据报</span></div><div class="line">        <span class="comment">//从DatagramPacket对象中获取到数据的来源地址与端口号</span></div><div class="line">        DatagramPacket packetToClient = <span class="keyword">new</span> DatagramPacket(sendedContent,</div><div class="line">                sendedContent.length,packet.getAddress(),packet.getPort());</div><div class="line">        socket.send(packetToClient); <span class="comment">//发送数据给客户端</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>UDPServer.java</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> io.github.homxuwang.socket;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.net.DatagramPacket;</div><div class="line"><span class="keyword">import</span> java.net.DatagramSocket;</div><div class="line"><span class="keyword">import</span> java.net.InetAddress;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UDPClient</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</div><div class="line">        <span class="comment">//客户端发送数据报给服务端</span></div><div class="line">        DatagramSocket socket = <span class="keyword">new</span> DatagramSocket();</div><div class="line">        <span class="comment">//要发给服务端的数据</span></div><div class="line">        <span class="keyword">byte</span>[] buf = <span class="string">"Hello Socket"</span>.getBytes();</div><div class="line">        <span class="comment">//将IP封装成InetAddress对象</span></div><div class="line">        InetAddress address = InetAddress.getByName(<span class="string">"127.0.0.1"</span>);</div><div class="line">        <span class="comment">//将要发送给服务端的数据封装成DatagramPacket对象 需要填写上ip地址与端口号</span></div><div class="line">        DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(buf,buf.length,address,<span class="number">52021</span>);</div><div class="line">        <span class="comment">//发送数据给服务端</span></div><div class="line">        socket.send(packet);</div><div class="line"></div><div class="line">        <span class="comment">//客户端接受服务端发送来的数据报文</span></div><div class="line">        <span class="keyword">byte</span>[] data = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">100</span>];</div><div class="line">        <span class="comment">//创建DatagramPacket对象用来存储服务端发送来的数据</span></div><div class="line">        DatagramPacket receivedPacket = <span class="keyword">new</span> DatagramPacket(data,data.length);</div><div class="line">        <span class="comment">//将收到的数据存储到DatagramPacket对象中</span></div><div class="line">        socket.receive(receivedPacket);</div><div class="line">        <span class="comment">//将服务端发送来的数据取出并打印</span></div><div class="line">        String content = <span class="keyword">new</span> String(receivedPacket.getData(),<span class="number">0</span>,receivedPacket.getLength());</div><div class="line">        System.out.println(content);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>进行测试时,先运行Server,使得其能够进行监听,然后运行Client,打印结果如下:<br><img src="/2019/05/11/浅析Socket编程/6.png" alt="UDPClient打印结果"></p>
+<p><img src="/2019/05/11/浅析Socket编程/7.png" alt="UDPServer打印结果"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://hit-alibaba.github.io/interview/basic/network/Socket-Programming-Basic.html" target="_blank" rel="external">https://hit-alibaba.github.io/interview/basic/network/Socket-Programming-Basic.html</a></p>
+<p><a href="https://github.com/halfrost/Halfrost-Field/blob/master/contents/iOS/WebSocket/iOS_WebSocket.md" target="_blank" rel="external">https://github.com/halfrost/Halfrost-Field/blob/master/contents/iOS/WebSocket/iOS_WebSocket.md</a></p>
+<p><a href="https://broqiang.com/posts/waht-is-socket" target="_blank" rel="external">https://broqiang.com/posts/waht-is-socket</a></p>
+<p><a href="https://blog.csdn.net/ns_code/article/details/14105457" target="_blank" rel="external">https://blog.csdn.net/ns_code/article/details/14105457</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      
+        <div id="donation_div"></div>
+
+<script src="/js/vdonate.js"></script>
+<script>
+var a = new Donate({
+  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
+  btnText: 'Donate', // 可选参数，打赏按钮文字
+  el: document.getElementById('donation_div'),
+  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
+  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
+});
+</script>
+      
+      
+      <div>
+        <ul class="post-copyright">
+          <li class="post-copyright-author">
+          <strong>Post author:  </strong>Homxu</a>
+          </li>
+          <li class="post-copyright-link">
+          <strong>Post link:  </strong>
+          <a href="/2019/05/11/浅析Socket编程/" target="_blank" title="浅析Socket编程">http://homxu.com/2019/05/11/浅析Socket编程/</a>
+          </li>
+          <li class="post-copyright-license">
+            <strong>Copyright Notice:   </strong>
+            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
+            unless stating additionally.
+          </li>
+         
+        </ul>
+<div>
+
+      
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+      
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/10/转-JavaScript原型和原型链/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">[转]JavaScript原型和原型链</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="toc-sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Inhalt</strong>
+    
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Socket简介"><span class="nav-number">1.</span> <span class="nav-text">Socket简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单的Socket编程"><span class="nav-number">2.</span> <span class="nav-text">简单的Socket编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP"><span class="nav-number">2.1.</span> <span class="nav-text">TCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UDP"><span class="nav-number">2.2.</span> <span class="nav-text">UDP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol>
+    
+    </div>
+  </aside>
+
+</section>
+        
+      </div>
+      
+      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<footer id="footer">
+  
+
+  <div class="container">
+      	<div class="row">
+	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
+	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
+	      
+	      
+    		<p class="busuanzi_uv">
+				UV : <span id="busuanzi_value_site_uv"></span> |  
+				PV : <span id="busuanzi_value_site_pv"></span>
+		    </p>
+  		   
+		</div>
+
+		
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+    var allheader = document.getElementById("allheader");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
+    if (allheader != null) {
+      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    } else {
+      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    }
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+
+
+
+
+  <script src="/js/dialog.js"></script>
+
+
+
+
+
+
+
+
+	<div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+	<script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  </div>
+
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="myModalLabel">设置</h2>
+      </div>
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+
+
+      <div class="modal-body">
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
+              正文字号大小
+            </a>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            您已调整页面字体大小
+          </div>
+        </div>
+      
+
+
+          <div style="margin:6px;">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
+              夜间护眼模式
+            </a>
+        </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            夜间模式已经开启，再次单击按钮即可关闭 
+          </div>
+        </div>
+
+        <div>
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div>
+         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+          <div class="panel-body">
+            Homxu
+          </div>
+          <div class="panel-body">
+            Copyright © 2019 Homxu All Rights Reserved.
+          </div>
+        </div>
+      </div>
+
+
+      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
+      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
+      <div class="modal-footer">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  
+    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
+  
+</body>
+</html>
