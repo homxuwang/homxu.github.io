@@ -204,6 +204,58 @@
         
           <section id="main" style="float:none;">
   
+    <article id="post-MySQL中使用trigger-触发器"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2019/05/24/MySQL中使用trigger-触发器/">MySQL中使用trigger(触发器)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/05/24/MySQL中使用trigger-触发器/" class="article-date">
+	  <time datetime="2019-05-24T11:51:10.000Z" itemprop="datePublished">2019-05-24</time>
+	</a>
+
+      
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p class="article-excerpt-content">
+          最近有一个项目提出新需求,有一个表由之前的一对一变成一对多,为了不影响使用原表的视图(为了进行统计汇总等),所以打算为这个表拓展子表,在子表上定义触发器,在子表改变的时候对应改变母表.所以这里记录一下定义使用trigger的过程.
+在此之前提醒一下：
+！！尽量少使用触发器,不建议使用。
+
+假设触发器触发每次执行1s,insert table 500条数据,那么就需要触发500次触发器,光是触发器执行的时间就花费了500s,而insert 500条数据一共是1s,那么这个insert的效率就...
+        </p>
+        <p class="article-more-link">
+          <a href="/2019/05/24/MySQL中使用trigger-触发器/#more">weiter lesen</a>
+        </p>
+      
+    </div>
+    <footer class="article-footer">
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+
+  
     <article id="post-事务隔离级别"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="article-inner">
     
@@ -650,61 +702,6 @@ OSI开放式互联参考模型(概念化七层协议)
         </p>
         <p class="article-more-link">
           <a href="/2019/04/23/最短路径问题/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-堆和堆排序"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/07/堆和堆排序/">堆和堆排序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/07/堆和堆排序/" class="article-date">
-	  <time datetime="2019-04-07T10:19:23.000Z" itemprop="datePublished">2019-04-07</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          在优先队列这一文章中，实现优先队列使用了最大堆的数据结构。这一次将详细讲解堆。
-
-数据结构二叉堆能够很好地实现优先队列的基本操作。在二叉堆的数组中，每个元素都要保证大于等于另两个特定位置的元素。相应地，这些位置的元素又至少要大于等于数组中的另两个元素，以此类推。如果我们将所有元素画成一棵二叉树，将每个较大元素和两个较小的元素用边连接就可以很容易看出这种结构。
-定义：当一棵二叉树的每个结点都大于等于它的两个子结点时，它被称为有序堆。
-
-
-堆中某个结点的值总是不大于其父结点的值
-堆总是一棵完全...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/04/07/堆和堆排序/#more">weiter lesen</a>
         </p>
       
     </div>
