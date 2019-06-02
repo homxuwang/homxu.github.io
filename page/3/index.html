@@ -1,913 +1,268 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/asset/guolin.png"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
+        <title>Homxu</title>
+        <meta name="description" content="{{meta_description}}">
 
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-	</script>
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-
-<head>
-  <meta charset="utf-8">
-  
-  <title>Homxu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-    <meta name="keywords" content="好好生活" />
-  
-  
-  
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Homxu">
-<meta property="og:url" content="http://homxu.com/page/3/index.html">
-<meta property="og:site_name" content="Homxu">
-<meta property="og:locale" content="zh-Hans">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Homxu">
-  
-    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
-  
-
-  
-
-  <link rel="icon" href="/css/images/star.png">
-  <link rel="apple-touch-icon" href="/css/images/star.png">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-
-  
-    <link rel="stylesheet" href="/css/home.css" >
-  
-
-  
-
-  
-
-  
-  
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
-
-</head>
-
-
-
-  <body>
-
-
-  
-    <header id="header">
-
-	<!-- 背景图模式 -->
+    </head>
+    
+		<body class="home-template">
 	
 
-    
-      <div id="intrologo" class="intro-logo">
-    
- 
-
-
-    <canvas width="100%" height="100%"></canvas>
-    <script>
-      var c = document.getElementsByTagName('canvas')[0],
-          x = c.getContext('2d'),
-          w = window.innerWidth,
-          h = window.innerHeight,
-          pr = window.devicePixelRatio || 1,
-          f = 90,
-          q,
-          m = Math,
-          r = 0,
-          u = m.PI*2,
-          v = m.cos,
-          z = m.random
-      c.width = w*pr
-      c.height = h*pr
-      x.scale(pr, pr)
-      x.globalAlpha = 0.6
-
-      <!-- 折线Polyline背景 -->
-      
-        function i(){
-            x.clearRect(0,0,w,h)
-            q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-            while(q[1].x<w+f) d(q[0], q[1])
-        }
-        function d(i,j){   
-            x.beginPath()
-            x.moveTo(i.x, i.y)
-            x.lineTo(j.x, j.y)
-            var k = j.x + (z()*2-0.25)*f,
-                n = y(j.y)
-            x.lineTo(k, n)
-            x.closePath()
-            r-=u/-50
-            x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-            x.fill()
-            q[0] = q[1]
-            q[1] = {x:k,y:n}
-        }
-        function y(p){
-            var t = p + (z()*2-1.1)*f
-            return (t>h||t<0) ? y(p) : t
-        }
-        document.getElementById("intrologo").onclick = i
-        document.getElementById("intrologo").ontouchstart = i
-        i()
-
-      <!-- 多边形trianglify背景 -->
-      
-    </script>
-    
-
-    
-      <div id="homelogo" class="homelogo"> 
-    
-
-        
-          <div class="homelogoback" >
-            <h1><a href="#content" id="logo">Homxu</a></h1>
-            <h3></h3>
-            <h5>Homxu</h5>
-            <!-- <p><a href="https://github.com/iTimeTraveler" target="_blank">Github</a></p> -->
-          </div>
-        
-    
-    </div>
+        <header id="header">
+            <a id="logo" href="/"><img src="/asset/guolin.png" alt="Homxu" /></a>
+            <h1><a href="/">Homxu</a></h1>
+            <p>程序员也要好好生活</p>
+            <div id="follow-icons">
+          <a href="http://github.com/https://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
+              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
   </div>
+<h6><a href="/about">About</a></h6>
+        </header>
 
-  <!-- 自适应主页背景大图 -->
-  
-
- <!-- home_logo_image居中 -->
- 
-    <script>
-        var homelogodiv = document.getElementById("homelogo");
-        if (document.all.homelogo.offsetWidth > document.body.clientWidth) {
-          homelogodiv.style.width = document.body.clientWidth + "px";
-          homelogodiv.style.marginLeft = document.body.clientWidth * -0.5 + "px";
-        } else {
-          homelogodiv.style.width = homelogodiv.clientWidth  + "px";
-          homelogodiv.style.marginLeft = (homelogodiv.clientWidth)  * -0.5 + "px";
-        }
-    </script>
-  
-
-  <div class="intro-navigate">
-      <p class="navigater-list">
+        <main id="content">
         
-          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/about">About</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/我的足迹">我的足迹</a>
-        
-      </p>
-  </div>
-
-</header>
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/12/02/SpringMVC学习笔记-二/">SpringMVC学习笔记-二</a>
   
-  <div id="container">
-    <div id="wrap">
-      
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;">
+  <span class="separator"> &middot; </span>
   
-    <article id="post-SpringMVC学习笔记-二"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
+  December 2, 2018
+  
+  
+    <span class="taglist">  &middot; 
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/02/SpringMVC学习笔记-二/">SpringMVC学习笔记-二</a>
-    </h1>
-  
-
-      </header>
+      <a href='/tags/学习笔记/'>学习笔记</a> 
     
-    <div class="article-meta">
-      
-	<a href="/2018/12/02/SpringMVC学习笔记-二/" class="article-date">
-	  <time datetime="2018-12-02T04:11:56.000Z" itemprop="datePublished">2018-12-02</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          参数绑定默认支持的参数类型需求：打开商品编辑页面，展示商品信息
-在SpringMVC+Mybatis整合的基础上，进行商品编辑的功能开发。
-需求分析:编辑商品信息，首先要显示商品详情需要根据商品id查询商品信息，然后展示到页面。请求的url：/itemEdit.action参数：id（商品id）响应结果：商品编辑页面，展示商品详细信息。
-在ItemService.java接口中添加方法:12//通过id查询某个商品public Items selectItemsById(Integer i...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/12/02/SpringMVC学习笔记-二/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
+    </saan>
   
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-SpringMVC-Mybatis整合"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/01/SpringMVC-Mybatis整合/">SpringMVC+Mybatis整合</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/01/SpringMVC-Mybatis整合/" class="article-date">
-	  <time datetime="2018-12-01T08:07:37.000Z" itemprop="datePublished">2018-12-01</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          控制层采用springmvc、持久层使用mybatis实现。首先参考Spring与Mybatis整合
-所需依赖包
-配置数据库和逆向工程数据库表:使用逆向工程生成pojo和dao:这里可能和上一篇文章中User类和Items类的代码不同，需要进行修改
-配置文件applicationContext.xml:123456789101112131415161718192021222324252627282930313233343536&lt;?xml version="1.0" encoding=...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/12/01/SpringMVC-Mybatis整合/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-SpringMVC学习笔记-一"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/30/SpringMVC学习笔记-一/">SpringMVC学习笔记-一</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/30/SpringMVC学习笔记-一/" class="article-date">
-	  <time datetime="2018-11-30T08:29:55.000Z" itemprop="datePublished">2018-11-30</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          Spring web mvc和Struts2都属于表现层的框架,它是Spring框架的一部分,我们可以从Spring的整体结构中看得出来,如下图：
-SpringMVC简单的处理流程图:前端控制器可以说是SpringMVC的心脏，是核心部分。
-创建入门程序创建动态Web工程，导入相关jar包:
-配置前端控制器在web.xml中配置前端控制器:123456789101112131415&lt;!-- 前端控制器 --&gt;&lt;servlet&gt;	&lt;servlet-name&gt...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/30/SpringMVC学习笔记-一/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-Spring与Mybatis整合"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/29/Spring与Mybatis整合/">Spring与Mybatis整合</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/29/Spring与Mybatis整合/" class="article-date">
-	  <time datetime="2018-11-29T01:05:21.000Z" itemprop="datePublished">2018-11-29</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          在不使用Spring的情况下，创建sqlSessionFactory需要两步:12345//1.加载核心配置文件String resource = "sqlMapConfig.xml";InputStream in = Resources.getResourceAsStream(resource);//2.创建SqlSessionFactorySqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/29/Spring与Mybatis整合/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-Mybatis学习笔记-二"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/21/Mybatis学习笔记-二/">Mybatis学习笔记-二</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/21/Mybatis学习笔记-二/" class="article-date">
-	  <time datetime="2018-11-21T11:56:31.000Z" itemprop="datePublished">2018-11-21</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          parameterType(输入类型)传递简单类型和传递pojo对象简单类型：使用#{}占位符，或者${}进行sql拼接。
-opjo对象：Mybatis使用ognl表达式解析对象字段的值，#{}或者${}括号中的值为pojo属性名称。
-传递pojo包装对象开发中通过可以使用pojo传递查询条件。查询条件可能是综合的查询条件，不仅包括用户查询条件还包括其它的查询条件（比如查询用户信息的时候，将用户购买商品信息也作为查询条件），这时可以使用包装对象传递输入参数。
-包装对象：Pojo类中的一个属...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/21/Mybatis学习笔记-二/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-Mybatis学习笔记-一"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/19/Mybatis学习笔记-一/">Mybatis学习笔记-一</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/19/Mybatis学习笔记-一/" class="article-date">
-	  <time datetime="2018-11-19T12:56:22.000Z" itemprop="datePublished">2018-11-19</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          Mybatis架构图
-准备测试数据库1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162/*Navicat MySQL Data TransferSource Server         : localhost_3306Source Server Version : 50521Source Host       ...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/19/Mybatis学习笔记-一/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-整合Struts2-Spring-Hibernate"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/16/整合Struts2-Spring-Hibernate/">整合Struts2+Spring+Hibernate</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/16/整合Struts2-Spring-Hibernate/" class="article-date">
-	  <time datetime="2018-11-16T01:13:41.000Z" itemprop="datePublished">2018-11-16</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          项目所需依赖包：
-单独配置Spring创建配置文件 导入xml约束约束包括beans|context|aop|tx
-创建UserAction,并在Spring配置文件中配置.1234567package my.study.web.action;import com.opensymphony.xwork2.ActionSupport;public class UserAction extends ActionSupport &#123;&#125;
-1&lt;bean name="userA...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/16/整合Struts2-Spring-Hibernate/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-Spring学习笔记-三"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/13/Spring学习笔记-三/">Spring学习笔记-三</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/13/Spring学习笔记-三/" class="article-date">
-	  <time datetime="2018-11-13T07:24:11.000Z" itemprop="datePublished">2018-11-13</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          Spring结合JDBC其实，Spring中提供了一个可以操作数据库的对象，这个对象封装了各种JDBC技术，可以用它来操作数据库.——JDBCtemplate需要的依赖包：
-不使用Spring操作数据库123456789101112131415161718192021222324252627package my.study.g_jdbcTemplate;import java.beans.PropertyVetoException;import org.junit.Test;import ...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/13/Spring学习笔记-三/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-Spring学习笔记-二"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/10/Spring学习笔记-二/">Spring学习笔记-二</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/10/Spring学习笔记-二/" class="article-date">
-	  <time datetime="2018-11-10T01:13:56.000Z" itemprop="datePublished">2018-11-10</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          使用注解配置Spring导入新的命名空间和依赖包导入方法参见Spring学习笔记-一，与导入beans命名空间类似。先导入spring-context-4.2.xsd，然后进行配置,还要在xml的Dsign视图下进行配置，在Prefix中填写context.同时需要导入依赖包spring-aop-4.2.4.RELEASE.jar.
-使用注解代理配置文件12345&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;beans xmlns:xsi=...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/10/Spring学习笔记-二/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-Spring学习笔记-一"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/11/09/Spring学习笔记-一/">Spring学习笔记-一</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/11/09/Spring学习笔记-一/" class="article-date">
-	  <time datetime="2018-11-09T07:04:24.000Z" itemprop="datePublished">2018-11-09</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-           Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理
-Spring 搭建基本环境首先导入Spring所需依赖包：
-创建一个对象用于测试：
-123456789101112131415161718192021package my.study.bean;public class User &#123;		private String name;	private Integer age;	public User()&#123;		System.out.pri...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/11/09/Spring学习笔记-一/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Previo</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Siguiente &raquo;</a>
-  </nav>
-
+  </h3>
 </section>
-        
-      </div>
-      
-        <div align="center" style="margin-top: 30px;"><hr class="hr" style="margin:0px; height:3px;"></div>
-      
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<footer id="footer">
-  
 
-  <div class="container">
-      	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
-
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/12/01/SpringMVC-Mybatis整合/">SpringMVC+Mybatis整合</a>
   
-    <a href="/" class="mobile-nav-link">Home</a>
+  <span class="separator"> &middot; </span>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+  December 1, 2018
   
-    <a href="/categories" class="mobile-nav-link">Categories</a>
   
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
-  
-</nav> -->
+    <span class="taglist">  &middot; 
     
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-
-
-  <script src="/js/home.js"></script>
-
-
-
-
-
-
-
-
-
-
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-	<script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  </div>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Homxu
-          </div>
-          <div class="panel-body">
-            Copyright © 2019 Homxu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+    </saan>
   
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/11/30/SpringMVC学习笔记-一/">SpringMVC学习笔记-一</a>
   
-</body>
+  <span class="separator"> &middot; </span>
+  
+  November 30, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/11/29/Spring与Mybatis整合/">Spring与Mybatis整合</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  November 29, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/11/21/Mybatis学习笔记-二/">Mybatis学习笔记-二</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  November 21, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/11/19/Mybatis学习笔记-一/">Mybatis学习笔记-一</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  November 19, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/11/16/整合Struts2-Spring-Hibernate/">整合Struts2+Spring+Hibernate</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  November 16, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+      <a href='/tags/Spring/'>Spring</a> 
+    
+      <a href='/tags/SSH/'>SSH</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/11/13/Spring学习笔记-三/">Spring学习笔记-三</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  November 13, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+      <a href='/tags/Spring/'>Spring</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/11/10/Spring学习笔记-二/">Spring学习笔记-二</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  November 10, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+      <a href='/tags/Spring/'>Spring</a> 
+    
+      <a href='/tags/JavaWeb/'>JavaWeb</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/11/09/Spring学习笔记-一/">Spring学习笔记-一</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  November 9, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+      <a href='/tags/Spring/'>Spring</a> 
+    
+      <a href='/tags/JavaWeb/'>JavaWeb</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<nav class="pagination" role="pagination">
+  <a class="newer-posts" href="/page/2/">← Newer Posts</a>
+  <span class="page-number">Page 3 of 6</span>
+  <a class="older-posts" href="/page/4/">Older Posts →</a>
+</nav>
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', 'UA-141265597-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
 </html>
+
+

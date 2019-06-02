@@ -1,929 +1,260 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/asset/guolin.png"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
+        <title>Homxu</title>
+        <meta name="description" content="{{meta_description}}">
 
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-	</script>
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-
-<head>
-  <meta charset="utf-8">
-  
-  <title>Homxu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-    <meta name="keywords" content="好好生活" />
-  
-  
-  
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Homxu">
-<meta property="og:url" content="http://homxu.com/page/2/index.html">
-<meta property="og:site_name" content="Homxu">
-<meta property="og:locale" content="zh-Hans">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Homxu">
-  
-    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
-  
-
-  
-
-  <link rel="icon" href="/css/images/star.png">
-  <link rel="apple-touch-icon" href="/css/images/star.png">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-
-  
-    <link rel="stylesheet" href="/css/home.css" >
-  
-
-  
-
-  
-
-  
-  
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
-
-</head>
-
-
-
-  <body>
-
-
-  
-    <header id="header">
-
-	<!-- 背景图模式 -->
+    </head>
+    
+		<body class="home-template">
 	
 
-    
-      <div id="intrologo" class="intro-logo">
-    
- 
-
-
-    <canvas width="100%" height="100%"></canvas>
-    <script>
-      var c = document.getElementsByTagName('canvas')[0],
-          x = c.getContext('2d'),
-          w = window.innerWidth,
-          h = window.innerHeight,
-          pr = window.devicePixelRatio || 1,
-          f = 90,
-          q,
-          m = Math,
-          r = 0,
-          u = m.PI*2,
-          v = m.cos,
-          z = m.random
-      c.width = w*pr
-      c.height = h*pr
-      x.scale(pr, pr)
-      x.globalAlpha = 0.6
-
-      <!-- 折线Polyline背景 -->
-      
-        function i(){
-            x.clearRect(0,0,w,h)
-            q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-            while(q[1].x<w+f) d(q[0], q[1])
-        }
-        function d(i,j){   
-            x.beginPath()
-            x.moveTo(i.x, i.y)
-            x.lineTo(j.x, j.y)
-            var k = j.x + (z()*2-0.25)*f,
-                n = y(j.y)
-            x.lineTo(k, n)
-            x.closePath()
-            r-=u/-50
-            x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-            x.fill()
-            q[0] = q[1]
-            q[1] = {x:k,y:n}
-        }
-        function y(p){
-            var t = p + (z()*2-1.1)*f
-            return (t>h||t<0) ? y(p) : t
-        }
-        document.getElementById("intrologo").onclick = i
-        document.getElementById("intrologo").ontouchstart = i
-        i()
-
-      <!-- 多边形trianglify背景 -->
-      
-    </script>
-    
-
-    
-      <div id="homelogo" class="homelogo"> 
-    
-
-        
-          <div class="homelogoback" >
-            <h1><a href="#content" id="logo">Homxu</a></h1>
-            <h3></h3>
-            <h5>Homxu</h5>
-            <!-- <p><a href="https://github.com/iTimeTraveler" target="_blank">Github</a></p> -->
-          </div>
-        
-    
-    </div>
+        <header id="header">
+            <a id="logo" href="/"><img src="/asset/guolin.png" alt="Homxu" /></a>
+            <h1><a href="/">Homxu</a></h1>
+            <p>程序员也要好好生活</p>
+            <div id="follow-icons">
+          <a href="http://github.com/https://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
+              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
   </div>
+<h6><a href="/about">About</a></h6>
+        </header>
 
-  <!-- 自适应主页背景大图 -->
-  
-
- <!-- home_logo_image居中 -->
- 
-    <script>
-        var homelogodiv = document.getElementById("homelogo");
-        if (document.all.homelogo.offsetWidth > document.body.clientWidth) {
-          homelogodiv.style.width = document.body.clientWidth + "px";
-          homelogodiv.style.marginLeft = document.body.clientWidth * -0.5 + "px";
-        } else {
-          homelogodiv.style.width = homelogodiv.clientWidth  + "px";
-          homelogodiv.style.marginLeft = (homelogodiv.clientWidth)  * -0.5 + "px";
-        }
-    </script>
-  
-
-  <div class="intro-navigate">
-      <p class="navigater-list">
+        <main id="content">
         
-          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/about">About</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/我的足迹">我的足迹</a>
-        
-      </p>
-  </div>
-
-</header>
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/04/07/堆和堆排序/">堆和堆排序</a>
   
-  <div id="container">
-    <div id="wrap">
-      
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;">
+  <span class="separator"> &middot; </span>
   
-    <article id="post-堆和堆排序"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
+  April 7, 2019
+  
+  
+    <span class="taglist">  &middot; 
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/07/堆和堆排序/">堆和堆排序</a>
-    </h1>
-  
-
-      </header>
+      <a href='/tags/数据结构/'>数据结构</a> 
     
-    <div class="article-meta">
-      
-	<a href="/2019/04/07/堆和堆排序/" class="article-date">
-	  <time datetime="2019-04-07T10:19:23.000Z" itemprop="datePublished">2019-04-07</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          在优先队列这一文章中，实现优先队列使用了最大堆的数据结构。这一次将详细讲解堆。
-
-数据结构二叉堆能够很好地实现优先队列的基本操作。在二叉堆的数组中，每个元素都要保证大于等于另两个特定位置的元素。相应地，这些位置的元素又至少要大于等于数组中的另两个元素，以此类推。如果我们将所有元素画成一棵二叉树，将每个较大元素和两个较小的元素用边连接就可以很容易看出这种结构。
-定义：当一棵二叉树的每个结点都大于等于它的两个子结点时，它被称为有序堆。
-
-
-堆中某个结点的值总是不大于其父结点的值
-堆总是一棵完全...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/04/07/堆和堆排序/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
+    </saan>
   
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-最小生成树"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/05/最小生成树/">最小生成树</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/05/最小生成树/" class="article-date">
-	  <time datetime="2019-04-05T09:13:24.000Z" itemprop="datePublished">2019-04-05</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。
-有权图的邻接矩阵表达见下图:
-
-有权图的邻接表表达见下图:s
-邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。
-当然要注意一点，邻接矩阵中依然用了传统的二维数组来存储，为了统一图的接口，也可以将a[i][j]位置存储为Edge格式。...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/04/05/最小生成树/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-图的遍历"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/01/图的遍历/">图的遍历</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/01/图的遍历/" class="article-date">
-	  <time datetime="2019-04-01T07:06:56.000Z" itemprop="datePublished">2019-04-01</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          对于图的遍历，和树一样，也有深度优先遍历和广度优先遍历。对于图的深度优先遍历，是从一个点开始，不停的往下试探，知道不能继续为止。但是与树不同的是，图有可能会存在环，所以要记录一下某个点是否已经被遍历过，如果已经被遍历过，则下面的遍历就不需要继续走这个点了。
-以下面的数据为例:
-深度优先遍历假设从0开始遍历，看与0相连的第一个节点1，节点1没有遍历过所以遍历了1，此时为0 1；接着看和节点1相邻的节点，只有节点0，节点0已经被遍历过了，不用管，此时1没有其他相邻节点了，此时这条路就算走完了，...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/04/01/图的遍历/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-图论基础"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/03/29/图论基础/">图论基础</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/03/29/图论基础/" class="article-date">
-	  <time datetime="2019-03-29T07:23:09.000Z" itemprop="datePublished">2019-03-29</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          图主要是节点和边组成的模型。图可以用来表达真实世界中的很多关系，如交通运输、社交网络、互联网等。图分为有向图（Directed Graph）和无向图（Undirected Graph），有向图由于其不对称性，所有有时候会涉及很多比较难的算法。可以把无向图看成一种特殊的有向图。图也可以分为有权图（Weighted Graph）和无权图（Unweighted Graph），权是指节点与节点之间的边的数值。图不一定都要连接起来，比如一个模型中有三个没有连通起来的图。有的图中有可能会有自环边（se...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/03/29/图论基础/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-哈希表"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/03/14/哈希表/">哈希表</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/03/14/哈希表/" class="article-date">
-	  <time datetime="2019-03-14T07:07:48.000Z" itemprop="datePublished">2019-03-14</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          哈希表中，每一个元素都和一个索引对应。
-比如在leetcode中，的387号问题;
-相关解决方案:1234567891011121314class Solution &#123;    public int firstUniqChar(String s) &#123;        int[] freq = new int[26];        for(int i = 0 ; i &lt; s.length() ; i ++)            freq[s.charAt(i) - ...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/03/14/哈希表/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-红黑树"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/03/07/红黑树/">红黑树</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/03/07/红黑树/" class="article-date">
-	  <time datetime="2019-03-07T07:53:14.000Z" itemprop="datePublished">2019-03-07</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          红黑树的定义红黑树是一棵二分搜索树。
-红黑树的五个性质：
-1、每个结点或者是红的，或者是黑的。
-2、根结点是黑的。
-3、每一个叶结点（nil结点,即最后的空结点）是黑的。
-4、如果一个结点是红的，则其孩子结点都是黑的。
-5、对于任意结点，从该结点到其子孙叶结点（nil结点）的所有路径上包含相同数目的黑结点。
-红黑树是保持“黑平衡”的二叉树。严格意义上并不是平衡二叉树。因为有红色结点，所以红黑树的最大高度为O(logn)。
-与AVL树相比，如果添加和删除操作比较频繁，那么用红黑树将有很大的优...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/03/07/红黑树/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-AVL"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/02/27/AVL/">AVL</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/02/27/AVL/" class="article-date">
-	  <time datetime="2019-02-27T01:50:30.000Z" itemprop="datePublished">2019-02-27</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          AVL的定义和平衡因子AVL树即平衡二叉树。AVL树的定义首先要求该树是二叉查找树（满足排序规则），并在此基础上增加了每个节点的平衡因子的定义，一个节点的平衡因子是该节点的左子树树高减去右子树树高的值。特点：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。在AVL树中任何节点的两个子树的高度最大差别为一，所以它也被称为平衡二叉树
-
-平衡因子BF：该节点的左子树的深度减去它的右子树深度。
-
-可见图中的平衡因子有2,那么这棵树不是一个平衡二叉树。
-计...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/02/27/AVL/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-并查集"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/01/22/并查集/">并查集</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/01/22/并查集/" class="article-date">
-	  <time datetime="2019-01-22T02:17:18.000Z" itemprop="datePublished">2019-01-22</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          并查集(Union Find)的概念并查集是由孩子指向父亲的树结构。可以高效的回答连接问题，判断网络中节点间的连接问题。并查集对于一组数据主要支持两个动作:
-
-union(p,q)
-isConnected(p,q)
-
-并查集的简单实现定义接口123456public interface UF &#123;    int getSize();    //并查集一共有多少个元素    boolean isConnectted(int p,int q); //id为p何id为q的元素是否相连  ...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/01/22/并查集/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-SpringMVC学习笔记-四"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/11/SpringMVC学习笔记-四/">SpringMVC学习笔记-四</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/11/SpringMVC学习笔记-四/" class="article-date">
-	  <time datetime="2018-12-11T08:57:44.000Z" itemprop="datePublished">2018-12-11</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          json数据交互导入处理json的依赖包：
-@RequestBody作用：@RequestBody注解用于读取http请求的内容(字符串)，通过springmvc提供的HttpMessageConverter接口将读到的内容（json数据）转换为java对象并绑定到Controller方法的参数上。@RequestBody注解实现接收http请求的json数据，将json数据转换为java对象进行绑定
-@ResponseBody作用：@ResponseBody注解用于将Controller...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/12/11/SpringMVC学习笔记-四/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-SpringMVC学习笔记-三"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/12/05/SpringMVC学习笔记-三/">SpringMVC学习笔记-三</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/05/SpringMVC学习笔记-三/" class="article-date">
-	  <time datetime="2018-12-05T08:43:57.000Z" itemprop="datePublished">2018-12-05</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          在SpringMVC学习笔记-二的基础上继续进行开发
-高级参数绑定绑定数组需求:在商品列表页面选中多个商品，然后删除。功能要求商品列表页面中的每个商品前有一个checkbok，选中多个商品后点击删除按钮把商品id传递给Controller，根据商品id删除商品信息。前端页面代码进行修改，修改后的页面见附录。Controller代码:12345678//删除多个商品	@RequestMapping(value = "/item/deleteItems.action" )	public Mod...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/12/05/SpringMVC学习笔记-三/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/">&laquo; Previo</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Siguiente &raquo;</a>
-  </nav>
-
+  </h3>
 </section>
-        
-      </div>
-      
-        <div align="center" style="margin-top: 30px;"><hr class="hr" style="margin:0px; height:3px;"></div>
-      
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<footer id="footer">
-  
 
-  <div class="container">
-      	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
-
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/04/05/最小生成树/">最小生成树</a>
   
-    <a href="/" class="mobile-nav-link">Home</a>
+  <span class="separator"> &middot; </span>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+  April 5, 2019
   
-    <a href="/categories" class="mobile-nav-link">Categories</a>
   
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
-  
-</nav> -->
+    <span class="taglist">  &middot; 
     
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-
-
-  <script src="/js/home.js"></script>
-
-
-
-
-
-
-
-
-
-
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-	<script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  </div>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Homxu
-          </div>
-          <div class="panel-body">
-            Copyright © 2019 Homxu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+      <a href='/tags/图/'>图</a> 
+    
+    </saan>
   
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/04/01/图的遍历/">图的遍历</a>
   
-</body>
+  <span class="separator"> &middot; </span>
+  
+  April 1, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+      <a href='/tags/图/'>图</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/03/29/图论基础/">图论基础</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  March 29, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+      <a href='/tags/图/'>图</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/03/14/哈希表/">哈希表</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  March 14, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/03/07/红黑树/">红黑树</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  March 7, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/02/27/AVL/">AVL</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  February 27, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/01/22/并查集/">并查集</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  January 22, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/12/11/SpringMVC学习笔记-四/">SpringMVC学习笔记-四</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  December 11, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/12/05/SpringMVC学习笔记-三/">SpringMVC学习笔记-三</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  December 5, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<nav class="pagination" role="pagination">
+  <a class="newer-posts" href="/">← Newer Posts</a>
+  <span class="page-number">Page 2 of 6</span>
+  <a class="older-posts" href="/page/3/">Older Posts →</a>
+</nav>
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', 'UA-141265597-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
 </html>
+
+

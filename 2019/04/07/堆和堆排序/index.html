@@ -1,226 +1,60 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/asset/guolin.png"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
+        <title>堆和堆排序 | Homxu</title>
+        <meta name="description" content="{{meta_description}}">
 
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-	</script>
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
+    </head>
+    
+		<body class="post-template">
+	
 
-<head>
-  <meta charset="utf-8">
-  
-  <title>堆和堆排序 | Homxu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-    <meta name="keywords" content="好好生活" />
-  
-  
-  
-  
-  <meta name="description" content="在优先队列这一文章中，实现优先队列使用了最大堆的数据结构。这一次将详细讲解堆。  数据结构二叉堆能够很好地实现优先队列的基本操作。在二叉堆的数组中，每个元素都要保证大于等于另两个特定位置的元素。相应地，这些位置的元素又至少要大于等于数组中的另两个元素，以此类推。如果我们将所有元素画成一棵二叉树，将每个较大元素和两个较小的元素用边连接就可以很容易看出这种结构。 定义：当一棵二叉树的每个结点都大于等于">
-<meta name="keywords" content="数据结构">
-<meta property="og:type" content="article">
-<meta property="og:title" content="堆和堆排序">
-<meta property="og:url" content="http://homxu.com/2019/04/07/堆和堆排序/index.html">
-<meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="在优先队列这一文章中，实现优先队列使用了最大堆的数据结构。这一次将详细讲解堆。  数据结构二叉堆能够很好地实现优先队列的基本操作。在二叉堆的数组中，每个元素都要保证大于等于另两个特定位置的元素。相应地，这些位置的元素又至少要大于等于数组中的另两个元素，以此类推。如果我们将所有元素画成一棵二叉树，将每个较大元素和两个较小的元素用边连接就可以很容易看出这种结构。 定义：当一棵二叉树的每个结点都大于等于">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/1.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/2.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/3.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/4.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/5.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/6.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/7.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/8.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/9.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/10.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/11.png">
-<meta property="og:image" content="http://homxu.com/2019/04/07/堆和堆排序/12.png">
-<meta property="og:updated_time" content="2019-04-09T06:48:32.620Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="堆和堆排序">
-<meta name="twitter:description" content="在优先队列这一文章中，实现优先队列使用了最大堆的数据结构。这一次将详细讲解堆。  数据结构二叉堆能够很好地实现优先队列的基本操作。在二叉堆的数组中，每个元素都要保证大于等于另两个特定位置的元素。相应地，这些位置的元素又至少要大于等于数组中的另两个元素，以此类推。如果我们将所有元素画成一棵二叉树，将每个较大元素和两个较小的元素用边连接就可以很容易看出这种结构。 定义：当一棵二叉树的每个结点都大于等于">
-<meta name="twitter:image" content="http://homxu.com/2019/04/07/堆和堆排序/1.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
-  
+        <header id="header">
+            <a id="logo" href="/"><img src="/asset/guolin.png" alt="Homxu" /></a>
+            <h1><a href="/">Homxu</a></h1>
+            <p>程序员也要好好生活</p>
+            <div id="follow-icons">
+          <a href="http://github.com/https://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
+              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+  </div>
+<h6><a href="/about">About</a></h6>
+        </header>
 
-  
-
-  <link rel="icon" href="/css/images/star.png">
-  <link rel="apple-touch-icon" href="/css/images/star.png">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-
-  
-    <link rel="stylesheet" href="/css/dialog.css">
-  
-
-  
-
-  
-    <link rel="stylesheet" href="/css/header-post.css" >
-  
-
-  
-  
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
-
-</head>
-
-
-
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
-
-
-  
-  <div id="container">
-    <div id="wrap">
-      
-        <header>
-
-    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="navbar-inner">
-          
-          <div class="container"> 
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            
-              <a class="brand" style="
-                 margin-top: 0px;"  
-                href="#" data-toggle="modal" data-target="#myModal" >
-                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
-              </a>
-            
-            
-            <div class="navbar-collapse collapse">
-              <ul class="hnav navbar-nav">
-                
-                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/about">About</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
-                
-                  <li><div id="search-form-wrap">
-
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: 'Beiträge',
-            PAGES: 'Seiten',
-            CATEGORIES: 'Kategorien',
-            TAGS: 'Tags',
-            UNTITLED: '(Unbenannt)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
-
-</div></li>
-            </div>
-          </div>
-                
-      </div>
-    </div>
-
-</header>
-
-
-
-      
-            
-      <div id="content" class="outer">
+        <main id="content">
         
-          <section id="main" style="float:none;"><article id="post-堆和堆排序" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
+
+<article class="post">
+  April 7, 2019
   
-    <h1 class="thumb" class="article-title" itemprop="name">
-      堆和堆排序
-    </h1>
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+    </span>
   
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/07/堆和堆排序/" class="article-date">
-	  <time datetime="2019-04-07T10:19:23.000Z" itemprop="datePublished">2019-04-07</time>
-	</a>
-
-      
-      
-	<a class="article-views">
-	<span id="busuanzi_container_page_pv">
-		PV:<span id="busuanzi_value_page_pv"></span>
-	</span>
-	</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在<a href="https://homxuwang.github.io/2018/08/12/%E5%AE%9E%E7%8E%B0%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" target="_blank" rel="external">优先队列</a>这一文章中，实现优先队列使用了最大堆的数据结构。这一次将详细讲解堆。</p>
+  <h1 class="post-title">堆和堆排序</h1>
+  <section class="post-content article-entry">
+    <p>在<a href="https://homxuwang.github.io/2018/08/12/%E5%AE%9E%E7%8E%B0%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97/" target="_blank" rel="external">优先队列</a>这一文章中，实现优先队列使用了最大堆的数据结构。这一次将详细讲解堆。</p>
 <blockquote>
 <p>数据结构二叉堆能够很好地实现优先队列的基本操作。在二叉堆的数组中，每个元素都要保证大于等于另两个特定位置的元素。相应地，这些位置的元素又至少要大于等于数组中的另两个元素，以此类推。如果我们将所有元素画成一棵二叉树，将每个较大元素和两个较小的元素用边连接就可以很容易看出这种结构。</p>
 <p>定义：当一棵二叉树的每个结点都大于等于它的两个子结点时，它被称为有序堆。</p>
@@ -380,304 +214,45 @@ reverse[indexes[i]] = i</code></p>
 <h1 id="附录三"><a href="#附录三" class="headerlink" title="附录三"></a>附录三</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"><span class="keyword">import</span> java.lang.*;</div><div class="line"></div><div class="line"><span class="comment">//最大索引堆</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexMaxHeap</span>&lt;<span class="title">Item</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> Item[] data;   <span class="comment">//存储最大索引堆中的数据</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span>[] indexes;<span class="comment">// 最大索引堆中的索引, indexes[x] = i 表示索引i在x的位置</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span>[] reverse;<span class="comment">// 最大索引堆中的反向索引, reverse[i] = x 表示索引i在x的位置</span></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> count;</div><div class="line">    <span class="keyword">protected</span> <span class="keyword">int</span> capacity;</div><div class="line"></div><div class="line">    <span class="comment">//构造函数,构造一个空堆,可容纳capacity个元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">IndexMaxHeap</span><span class="params">(<span class="keyword">int</span> capacity)</span></span>&#123;</div><div class="line">        data = (Item[])<span class="keyword">new</span> Comparable[capacity +<span class="number">1</span> ];</div><div class="line">        indexes = <span class="keyword">new</span> <span class="keyword">int</span>[capacity + <span class="number">1</span>];</div><div class="line">        reverse = <span class="keyword">new</span> <span class="keyword">int</span>[capacity + <span class="number">1</span>]; <span class="comment">//reverse表示i索引在堆中的位置</span></div><div class="line">        <span class="comment">//取标记值,i不存在时应为0.因为索引是从1开始计数，0没有意义.</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt;= capacity ; i ++)</div><div class="line">            reverse[i] = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">this</span>.capacity = capacity;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回索引堆中的元素个数</span></div><div class="line">    <span class="comment">//...</span></div><div class="line"></div><div class="line">    <span class="comment">//返回一个布尔值,表示索引堆中是否为空</span></div><div class="line">    <span class="comment">//...</span></div><div class="line"></div><div class="line">    <span class="comment">// 获取最大索引堆中索引为i的元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Item <span class="title">getItem</span><span class="params">( <span class="keyword">int</span> i )</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(i + <span class="number">1</span> &gt;= <span class="number">1</span> &amp;&amp; i + <span class="number">1</span> &lt;= capacity))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(!(contain(i)))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"index i is not in the heap!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> data[i+<span class="number">1</span>]; <span class="comment">//对用户来说，索引从0开始，所以这里要+1</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//向最大索引堆中插入一个新的元素,新元素的索引为i,元素为item</span></div><div class="line">    <span class="comment">//传入的i对用户而言,是从0索引的</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> i , Item item)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(count + <span class="number">1</span> &gt; capacity)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!(i + <span class="number">1</span> &gt;= <span class="number">1</span> &amp;&amp; i + <span class="number">1</span> &lt;= capacity))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//在插入一个新元素前，还需要保证索引i所在的位置是没有元素的</span></div><div class="line">        <span class="keyword">if</span>(contain(i))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"index i is not in the heap!"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//对用户而言是从索引0开始，但是内部还是从1开始</span></div><div class="line">        i += <span class="number">1</span>;</div><div class="line">        data[i] = item; <span class="comment">//将item插入到data[i]处</span></div><div class="line">        indexes[count + <span class="number">1</span> ] = i;  <span class="comment">//之前是插入到data堆中，现在则插入到indexes堆底</span></div><div class="line">        reverse[i] = count + <span class="number">1</span>;</div><div class="line"></div><div class="line">        count ++;</div><div class="line"></div><div class="line">       swim(count);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//从最大索引堆中取出堆顶元素,即索引堆中所存储的最大数据</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Item <span class="title">extractMax</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(count &lt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"count should be &gt; 0."</span>);</div><div class="line">        &#125;</div><div class="line">        Item ret = data[indexes[<span class="number">1</span>]];</div><div class="line">        exchIndexes(<span class="number">1</span>,count);</div><div class="line">        reverse[indexes[count]] = <span class="number">0</span>; <span class="comment">//因为交换后，相当于把栈顶元素放到了最后，然后用count--就相当于删除这个元素，删除这个元素那么它的reverse值指向0就可以了.</span></div><div class="line"></div><div class="line">        count --;</div><div class="line">        sink(<span class="number">1</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 从最大索引堆中取出堆顶元素的索引</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">extractMaxIndex</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(count &lt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"count should be &gt; 0."</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> ret = indexes[<span class="number">1</span>] - <span class="number">1</span>;  <span class="comment">//对用户来说，索引从0开始，所以要-1</span></div><div class="line">        exchIndexes( <span class="number">1</span> , count );</div><div class="line">        reverse[indexes[<span class="number">1</span>]] = <span class="number">1</span>;</div><div class="line">        reverse[indexes[count]] = <span class="number">0</span>; <span class="comment">//因为交换后，相当于把栈顶元素放到了最后，然后用count--就相当于删除这个元素，删除这个元素那么它的reverse值指向0就可以了.</span></div><div class="line"></div><div class="line">        count --;</div><div class="line">        sink(<span class="number">1</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> ret;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 获取最大堆中的堆顶元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Item <span class="title">getMax</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(count &gt; <span class="number">0</span>))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"count should be &gt; 0!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> data[indexes[<span class="number">1</span>]];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 获取最大索引堆中的堆顶元素的索引</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMaxIndex</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(count &gt; <span class="number">0</span>))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"count should be &gt; 0!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> indexes[<span class="number">1</span>]-<span class="number">1</span>;  <span class="comment">//对用户来说，索引是从0开始的，所以要减一</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//将最大索引堆中索引为i的元素修改为newItem</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">(<span class="keyword">int</span> i , Item newItem)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(contain(i)))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"index i is not in the heap!"</span>);</div><div class="line">        &#125;</div><div class="line">        i += <span class="number">1</span>;</div><div class="line">        data[i] = newItem;</div><div class="line"></div><div class="line">        <span class="comment">//找到indexes[j] = i ,j表示data[i]在堆中的位置</span></div><div class="line">        <span class="comment">//之后进行sink(j)、swim(j) (前后顺序可变)</span></div><div class="line"></div><div class="line">        <span class="comment">// 有了 reverse 之后可以非常简单的通过reverse直接定位索引i在indexes中的位置</span></div><div class="line">        <span class="keyword">int</span> j = reverse[i];</div><div class="line">        swim(j);</div><div class="line">        sink(j);</div><div class="line"><span class="comment">//        for(int j = 1 ; j &lt; count ; j ++)&#123;</span></div><div class="line"><span class="comment">//            if(indexes[j] == i)&#123;</span></div><div class="line"><span class="comment">//                swim(j);</span></div><div class="line"><span class="comment">//                sink(j);</span></div><div class="line"><span class="comment">//                return;</span></div><div class="line"><span class="comment">//            &#125;</span></div><div class="line"><span class="comment">//        &#125;</span></div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 交换索引堆中的索引i和j</span></div><div class="line">    <span class="comment">// 由于有了反向索引reverse数组，</span></div><div class="line">    <span class="comment">// indexes数组发生改变以后， 相应的就需要维护reverse数组</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">exchIndexes</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> t = indexes[i];</div><div class="line">        indexes[i] = indexes[j];</div><div class="line">        indexes[j] = t;</div><div class="line"></div><div class="line">        reverse[indexes[i]] = i;</div><div class="line">        reverse[indexes[j]] = j;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//在索引堆中，数据之间的比较根据data的大小进行比较，但实际操作的是索引</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="keyword">while</span>(k &gt; <span class="number">1</span> &amp;&amp; data[indexes[k/<span class="number">2</span>]].compareTo(data[indexes[k]])&lt; <span class="number">0</span>)&#123; <span class="comment">//原来直接对于data数组的操作要通过indexes索引堆间接找到data中的元素</span></div><div class="line">            exchIndexes(k,k/<span class="number">2</span>);</div><div class="line">            <span class="comment">//下面两行写在了exchIndexes中</span></div><div class="line">            <span class="comment">// reverse[indexes[k/2]] = k / 2;</span></div><div class="line">            <span class="comment">// reverse[indexes[k]] = k;</span></div><div class="line"></div><div class="line">            k /= <span class="number">2</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 索引堆中, 数据之间的比较根据data的大小进行比较, 但实际操作的是索引</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sink</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">        <span class="keyword">while</span>(<span class="number">2</span> * k &lt;= count)&#123;</div><div class="line">            <span class="keyword">int</span> j = <span class="number">2</span> * k;</div><div class="line">            <span class="keyword">if</span>(j + <span class="number">1</span> &lt;= count &amp;&amp; data[indexes[j+<span class="number">1</span>]].compareTo(data[indexes[j]]) &gt; <span class="number">0</span>)</div><div class="line">                j ++;</div><div class="line">            <span class="keyword">if</span>(data[indexes[k]].compareTo(data[indexes[j]]) &gt;= <span class="number">0</span>)</div><div class="line">                <span class="keyword">break</span>;</div><div class="line"></div><div class="line">            exchIndexes(k,j);</div><div class="line">            <span class="comment">//下面两行写在了exchIndexes中</span></div><div class="line">            <span class="comment">// reverse[indexes[k]] = k;</span></div><div class="line">            <span class="comment">// reverse[indexes[j]] = j;</span></div><div class="line"></div><div class="line">            k = j;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//判断索引是否在堆中</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">contain</span><span class="params">( <span class="keyword">int</span> i )</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(i + <span class="number">1</span> &gt;= <span class="number">1</span> &amp;&amp; i + <span class="number">1</span> &lt;= capacity))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"i out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> reverse[ i + <span class="number">1</span> ] != <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 测试索引堆中的索引数组index和反向数组reverse</span></div><div class="line">    <span class="comment">// 注意:这个测试在向堆中插入元素以后, 不进行extract操作有效</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">testIndexes</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span>[] copyIndexes = <span class="keyword">new</span> <span class="keyword">int</span>[count+<span class="number">1</span>];</div><div class="line">        <span class="keyword">int</span>[] copyReverseIndexes = <span class="keyword">new</span> <span class="keyword">int</span>[count+<span class="number">1</span>];</div><div class="line"></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt;= count ; i ++ ) &#123;</div><div class="line">            copyIndexes[i] = indexes[i];</div><div class="line">            copyReverseIndexes[i] = reverse[i];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        copyIndexes[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">        copyReverseIndexes[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">        Arrays.sort(copyIndexes);</div><div class="line">        Arrays.sort(copyReverseIndexes);</div><div class="line"></div><div class="line">        <span class="comment">// 在对索引堆中的索引和反向索引进行排序后,</span></div><div class="line">        <span class="comment">// 两个数组都应该正好是1...count这count个索引</span></div><div class="line">        <span class="keyword">boolean</span> res = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= count ; i ++ )</div><div class="line">            <span class="keyword">if</span>( copyIndexes[i-<span class="number">1</span>] + <span class="number">1</span> != copyIndexes[i] ||</div><div class="line">                    copyReverseIndexes[i-<span class="number">1</span>] + <span class="number">1</span> != copyReverseIndexes[i] )&#123;</div><div class="line">                res = <span class="keyword">false</span>;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>( !res )&#123;</div><div class="line">            System.out.println(<span class="string">"Error!"</span>);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 测试 IndexMaxHeap</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> N = <span class="number">1000000</span>;</div><div class="line">        IndexMaxHeap&lt;Integer&gt; indexMaxHeap = <span class="keyword">new</span> IndexMaxHeap&lt;Integer&gt;(N);</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; N ; i ++ )</div><div class="line">            indexMaxHeap.insert( i , (<span class="keyword">int</span>)(Math.random()*N) );</div><div class="line">        <span class="keyword">assert</span> indexMaxHeap.testIndexes();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><img src="/2019/04/07/堆和堆排序/12.png" alt="测试结果"></p>
 
-      
-    </div>
-    <footer class="article-footer">
-      
-        <div id="donation_div"></div>
-
-<script src="/js/vdonate.js"></script>
-<script>
-var a = new Donate({
-  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
-  btnText: 'Donate', // 可选参数，打赏按钮文字
-  el: document.getElementById('donation_div'),
-  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
-  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
-});
-</script>
-      
-      
-      <div>
-        <ul class="post-copyright">
-          <li class="post-copyright-author">
-          <strong>Post author:  </strong>Homxu</a>
-          </li>
-          <li class="post-copyright-link">
-          <strong>Post link:  </strong>
-          <a href="/2019/04/07/堆和堆排序/" target="_blank" title="堆和堆排序">http://homxu.com/2019/04/07/堆和堆排序/</a>
-          </li>
-          <li class="post-copyright-license">
-            <strong>Copyright Notice:   </strong>
-            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
-            unless stating additionally.
-          </li>
-         
-        </ul>
-<div>
-
-      
-      
-        
-	<div id="comment">
-		<!-- 来必力City版安装代码 -->
-		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
-		<script type="text/javascript">
-		   (function(d, s) {
-		       var j, e = d.getElementsByTagName(s)[0];
-
-		       if (typeof LivereTower === 'function') { return; }
-
-		       j = d.createElement(s);
-		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-		       j.async = true;
-
-		       e.parentNode.insertBefore(j, e);
-		   })(document, 'script');
-		</script>
-		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-		</div>
-		<!-- City版安装代码已完成 -->
-	</div>
-
-
-
-      
-      
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2019/04/23/最短路径问题/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nuevo</strong>
-      <div class="article-nav-title">
-        
-          最短路径问题
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/04/05/最小生成树/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
-      <div class="article-nav-title">最小生成树</div>
-    </a>
-  
-</nav>
-
-  
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Homxu</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
 </article>
 
-<!-- Table of Contents -->
-
-  <aside id="toc-sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">Inhalt</strong>
+<nav class="pagination" role="pagination">
     
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#堆的基本实现"><span class="nav-number">1.</span> <span class="nav-text">堆的基本实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#堆的算法"><span class="nav-number">2.</span> <span class="nav-text">堆的算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#由下至上的堆有序化-上浮"><span class="nav-number">2.1.</span> <span class="nav-text">由下至上的堆有序化(上浮)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#由上至下的堆有序化-下沉"><span class="nav-number">2.2.</span> <span class="nav-text">由上至下的堆有序化(下沉)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Heapify"><span class="nav-number">2.3.</span> <span class="nav-text">Heapify</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原地堆排序"><span class="nav-number">2.4.</span> <span class="nav-text">原地堆排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引堆-Index-Heap"><span class="nav-number">3.</span> <span class="nav-text">索引堆 - Index Heap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#索引堆的优化"><span class="nav-number">3.1.</span> <span class="nav-text">索引堆的优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录一"><span class="nav-number">5.</span> <span class="nav-text">附录一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录二"><span class="nav-number">6.</span> <span class="nav-text">附录二</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录三"><span class="nav-number">7.</span> <span class="nav-text">附录三</span></a></li></ol>
+    <a class="newer-posts" href="/2019/04/23/最短路径问题/">
+        ← prev <!--最短路径问题-->
+    </a>
     
-    </div>
-  </aside>
-
-</section>
-        
-      </div>
-      
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<footer id="footer">
-  
-
-  <div class="container">
-      	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
-
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
-  
-</nav> -->
+    <span class="page-number">•</span>
     
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+    <a class="older-posts" href="/2019/04/05/最小生成树/">
+        <!--最小生成树--> next →
+    </a>
+    
+</nav>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-
-
-
-
-  <script src="/js/dialog.js"></script>
-
-
-
-
-
-
-
-
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-	<script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  </div>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Homxu
-          </div>
-          <div class="panel-body">
-            Copyright © 2019 Homxu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
-  
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
-  
-    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
-  
-</body>
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', 'UA-141265597-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
 </html>
+
+

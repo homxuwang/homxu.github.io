@@ -1,670 +1,159 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/asset/guolin.png"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
+        <title>Homxu</title>
+        <meta name="description" content="{{meta_description}}">
 
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-	</script>
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-
-<head>
-  <meta charset="utf-8">
-  
-  <title>Homxu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-    <meta name="keywords" content="好好生活" />
-  
-  
-  
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Homxu">
-<meta property="og:url" content="http://homxu.com/page/6/index.html">
-<meta property="og:site_name" content="Homxu">
-<meta property="og:locale" content="zh-Hans">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Homxu">
-  
-    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
-  
-
-  
-
-  <link rel="icon" href="/css/images/star.png">
-  <link rel="apple-touch-icon" href="/css/images/star.png">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-
-  
-    <link rel="stylesheet" href="/css/home.css" >
-  
-
-  
-
-  
-
-  
-  
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
-
-</head>
-
-
-
-  <body>
-
-
-  
-    <header id="header">
-
-	<!-- 背景图模式 -->
+    </head>
+    
+		<body class="home-template">
 	
 
-    
-      <div id="intrologo" class="intro-logo">
-    
- 
-
-
-    <canvas width="100%" height="100%"></canvas>
-    <script>
-      var c = document.getElementsByTagName('canvas')[0],
-          x = c.getContext('2d'),
-          w = window.innerWidth,
-          h = window.innerHeight,
-          pr = window.devicePixelRatio || 1,
-          f = 90,
-          q,
-          m = Math,
-          r = 0,
-          u = m.PI*2,
-          v = m.cos,
-          z = m.random
-      c.width = w*pr
-      c.height = h*pr
-      x.scale(pr, pr)
-      x.globalAlpha = 0.6
-
-      <!-- 折线Polyline背景 -->
-      
-        function i(){
-            x.clearRect(0,0,w,h)
-            q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-            while(q[1].x<w+f) d(q[0], q[1])
-        }
-        function d(i,j){   
-            x.beginPath()
-            x.moveTo(i.x, i.y)
-            x.lineTo(j.x, j.y)
-            var k = j.x + (z()*2-0.25)*f,
-                n = y(j.y)
-            x.lineTo(k, n)
-            x.closePath()
-            r-=u/-50
-            x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-            x.fill()
-            q[0] = q[1]
-            q[1] = {x:k,y:n}
-        }
-        function y(p){
-            var t = p + (z()*2-1.1)*f
-            return (t>h||t<0) ? y(p) : t
-        }
-        document.getElementById("intrologo").onclick = i
-        document.getElementById("intrologo").ontouchstart = i
-        i()
-
-      <!-- 多边形trianglify背景 -->
-      
-    </script>
-    
-
-    
-      <div id="homelogo" class="homelogo"> 
-    
-
-        
-          <div class="homelogoback" >
-            <h1><a href="#content" id="logo">Homxu</a></h1>
-            <h3></h3>
-            <h5>Homxu</h5>
-            <!-- <p><a href="https://github.com/iTimeTraveler" target="_blank">Github</a></p> -->
-          </div>
-        
-    
-    </div>
+        <header id="header">
+            <a id="logo" href="/"><img src="/asset/guolin.png" alt="Homxu" /></a>
+            <h1><a href="/">Homxu</a></h1>
+            <p>程序员也要好好生活</p>
+            <div id="follow-icons">
+          <a href="http://github.com/https://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
+              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
   </div>
+<h6><a href="/about">About</a></h6>
+        </header>
 
-  <!-- 自适应主页背景大图 -->
-  
-
- <!-- home_logo_image居中 -->
- 
-    <script>
-        var homelogodiv = document.getElementById("homelogo");
-        if (document.all.homelogo.offsetWidth > document.body.clientWidth) {
-          homelogodiv.style.width = document.body.clientWidth + "px";
-          homelogodiv.style.marginLeft = document.body.clientWidth * -0.5 + "px";
-        } else {
-          homelogodiv.style.width = homelogodiv.clientWidth  + "px";
-          homelogodiv.style.marginLeft = (homelogodiv.clientWidth)  * -0.5 + "px";
-        }
-    </script>
-  
-
-  <div class="intro-navigate">
-      <p class="navigater-list">
+        <main id="content">
         
-          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/about">About</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/我的足迹">我的足迹</a>
-        
-      </p>
-  </div>
-
-</header>
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/04/17/大数据基础学习笔记（五）——云数据库架构/">大数据基础学习笔记（五）——云数据库架构</a>
   
-  <div id="container">
-    <div id="wrap">
-      
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;">
+  <span class="separator"> &middot; </span>
   
-    <article id="post-大数据基础学习笔记（五）——云数据库架构"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
+  April 17, 2018
+  
+  
+    <span class="taglist">  &middot; 
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/04/17/大数据基础学习笔记（五）——云数据库架构/">大数据基础学习笔记（五）——云数据库架构</a>
-    </h1>
-  
-
-      </header>
+      <a href='/tags/大数据/'>大数据</a> 
     
-    <div class="article-meta">
-      
-	<a href="/2018/04/17/大数据基础学习笔记（五）——云数据库架构/" class="article-date">
-	  <time datetime="2018-04-17T08:29:25.000Z" itemprop="datePublished">2018-04-17</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          不同的云数据库产品采用的系统架构差异很大，这里以阿里巴巴集团核心系统数据库团队开发的UMP(Unified MySQL Platform)系统为例进行介绍。
-UMP系统概述•UMP系统是低成本和高性能的MySQL云数据库方案
-总的来说，UMP系统架构设计遵循了以下原则：
-•保持单一的系统对外入口，并且为系统内部维护单一的资源池（CPU、内存、带宽、磁盘等放在一个统一的资源池，供上部组件调用）
-•消除单点故障，保证服务的高可用性（设置多个管家（Controller））
-•保证系统具有良好的可...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/04/17/大数据基础学习笔记（五）——云数据库架构/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
+    </saan>
   
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-大数据基础学习笔记（四）——HBase相关知识（三）"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/">大数据基础学习笔记（四）——HBase相关知识（三）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/" class="article-date">
-	  <time datetime="2018-04-03T12:10:00.000Z" itemprop="datePublished">2018-04-03</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          HBase应用方案HBase实际应用中的性能优化方法行键（Row Key ）
-行键是按照 字典序存储，因此，设计行键时，要充分利用这个排序特点，将经常一起读取的数据存储到一块，将最近可能会被访问的数据放在一块。
-举个例子：如果最近写入HBase表中的数据是最可能被访问的，可以考虑将时间戳作为行键的一部分，由于是字典序排序，所以可以使用Long.MAX_VALUE -timestamp作为行键，这样能保证新写入的数据在读取时可以被快速命中。
-
-InMemory创建表的时候，可以通过HColu...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-大数据基础学习笔记（三）——HBase相关知识（二）"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/">大数据基础学习笔记（三）——HBase相关知识（二）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/" class="article-date">
-	  <time datetime="2018-04-02T08:28:37.000Z" itemprop="datePublished">2018-04-02</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          HBase功能组件• HBase的实现包括三个主要的功能组件：– （1）库函数：链接到每个客户端– （2）一个Master主服务器（充当管家的作用）– （3）许多个Region服务器
-• 主服务器Master负责管理和维护HBase表的分区信息，维护Region服务器列表，分配Region，负载均衡
-• 一个大的表会被分成很多个Region，Region服务器负责存储和维护分配给自己的Region，处理来自客户端的读写请求
-• 客户端并不是直接从Master主服务器上读取数据，而是在获得R...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-大数据基础学习笔记（二）——Hbase相关知识"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/">大数据基础学习笔记（二）——HBase相关知识（一）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/" class="article-date">
-	  <time datetime="2018-04-02T05:00:25.000Z" itemprop="datePublished">2018-04-02</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          Hbase简介HBase是一个高可靠、高性能、面向列、可伸缩的分布式数据库，是谷歌BigTable的开源实现，主要用来存储非结构化和半结构化的松散数据。HBase的目标是处理非常庞大的表，可以通过水平扩展的方式，利用廉价计算机集群处理由超过10亿行数据和数百万列元素组成的数据表。
-底层的分布式文件系统用来存储完全非结构化的数据。
-Hbase是架构在底层的分布式文件系统HDFS基础之上的同时MR可以对Hbase的数据进行处理。同时Hive和Pig等都可以访问Hbase中的数据。
-
-从上图可以...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-大数据基础学习笔记"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2018/04/01/大数据基础学习笔记/">大数据基础学习笔记（一）——Hadoop相关知识</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/04/01/大数据基础学习笔记/" class="article-date">
-	  <time datetime="2018-04-01T08:24:42.000Z" itemprop="datePublished">2018-04-01</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          HadoopHadoop的应用现状和构成简介下图为Hadoop在企业中的 应用架构
-
-访问层不用多说，满足企业的数据分析、数据挖掘和数据实时查询功能。为了满足访问层的需求，大数据层的各个技术对其进行支撑。（1）离线分析：大量数据拿过来之后进行批量处理。其中MR是MapReduce的简称，Hive数据仓库和Pig也可以进行离线数据分析。（2）实时查询：其中Hbase是一个可以支持几十亿行数据的非常好的分布式数据库。（3）BI分析：Mahout是Hadoop平台上的一款数据挖掘应用。可以把各种...
-        </p>
-        <p class="article-more-link">
-          <a href="/2018/04/01/大数据基础学习笔记/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Previo</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
-  </nav>
-
+  </h3>
 </section>
-        
-      </div>
-      
-        <div align="center" style="margin-top: 30px;"><hr class="hr" style="margin:0px; height:3px;"></div>
-      
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<footer id="footer">
-  
 
-  <div class="container">
-      	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
-
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/04/03/大数据基础学习笔记（四）——HBase相关知识（三）/">大数据基础学习笔记（四）——HBase相关知识（三）</a>
   
-    <a href="/" class="mobile-nav-link">Home</a>
+  <span class="separator"> &middot; </span>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+  April 3, 2018
   
-    <a href="/categories" class="mobile-nav-link">Categories</a>
   
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
-  
-</nav> -->
+    <span class="taglist">  &middot; 
     
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-
-
-  <script src="/js/home.js"></script>
-
-
-
-
-
-
-
-
-
-
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-	<script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  </div>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Homxu
-          </div>
-          <div class="panel-body">
-            Copyright © 2019 Homxu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
+    
+      <a href='/tags/大数据/'>大数据</a> 
+    
+    </saan>
   
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/04/02/大数据基础学习笔记（三）——HBase相关知识（二）/">大数据基础学习笔记（三）——HBase相关知识（二）</a>
   
-</body>
+  <span class="separator"> &middot; </span>
+  
+  April 2, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/大数据/'>大数据</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/04/02/大数据基础学习笔记（二）——Hbase相关知识/">大数据基础学习笔记（二）——HBase相关知识（一）</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  April 2, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/大数据/'>大数据</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2018/04/01/大数据基础学习笔记/">大数据基础学习笔记（一）——Hadoop相关知识</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  April 1, 2018
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/大数据/'>大数据</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<nav class="pagination" role="pagination">
+  <a class="newer-posts" href="/page/5/">← Newer Posts</a>
+  <span class="page-number">Page 6 of 6</span>
+  
+</nav>
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', 'UA-141265597-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
 </html>
+
+

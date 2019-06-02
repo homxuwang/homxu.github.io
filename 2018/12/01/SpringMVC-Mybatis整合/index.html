@@ -1,223 +1,60 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/asset/guolin.png"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
+        <title>SpringMVC+Mybatis整合 | Homxu</title>
+        <meta name="description" content="{{meta_description}}">
 
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-	</script>
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
+    </head>
+    
+		<body class="post-template">
+	
 
-<head>
-  <meta charset="utf-8">
-  
-  <title>springmvc+mybatis整合 | Homxu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-    <meta name="keywords" content="好好生活" />
-  
-  
-  
-  
-  <meta name="description" content="控制层采用springmvc、持久层使用mybatis实现。首先参考Spring与Mybatis整合 所需依赖包 配置数据库和逆向工程数据库表:使用逆向工程生成pojo和dao:这里可能和上一篇文章中User类和Items类的代码不同，需要进行修改 配置文件applicationContext.xml:123456789101112131415161718192021222324252627282">
-<meta name="keywords" content="学习笔记">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SpringMVC+Mybatis整合">
-<meta property="og:url" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/index.html">
-<meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="控制层采用springmvc、持久层使用mybatis实现。首先参考Spring与Mybatis整合 所需依赖包 配置数据库和逆向工程数据库表:使用逆向工程生成pojo和dao:这里可能和上一篇文章中User类和Items类的代码不同，需要进行修改 配置文件applicationContext.xml:123456789101112131415161718192021222324252627282">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/2.png">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/3.png">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/5.png">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/6.png">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/4.png">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/1.png">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/7.png">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/8.png">
-<meta property="og:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/9.png">
-<meta property="og:updated_time" content="2018-12-01T13:41:35.776Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringMVC+Mybatis整合">
-<meta name="twitter:description" content="控制层采用springmvc、持久层使用mybatis实现。首先参考Spring与Mybatis整合 所需依赖包 配置数据库和逆向工程数据库表:使用逆向工程生成pojo和dao:这里可能和上一篇文章中User类和Items类的代码不同，需要进行修改 配置文件applicationContext.xml:123456789101112131415161718192021222324252627282">
-<meta name="twitter:image" content="http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/2.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
-  
+        <header id="header">
+            <a id="logo" href="/"><img src="/asset/guolin.png" alt="Homxu" /></a>
+            <h1><a href="/">Homxu</a></h1>
+            <p>程序员也要好好生活</p>
+            <div id="follow-icons">
+          <a href="http://github.com/https://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
+              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+  </div>
+<h6><a href="/about">About</a></h6>
+        </header>
 
-  
-
-  <link rel="icon" href="/css/images/star.png">
-  <link rel="apple-touch-icon" href="/css/images/star.png">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-
-  
-    <link rel="stylesheet" href="/css/dialog.css">
-  
-
-  
-
-  
-    <link rel="stylesheet" href="/css/header-post.css" >
-  
-
-  
-  
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
-
-</head>
-
-
-
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
-
-
-  
-  <div id="container">
-    <div id="wrap">
-      
-        <header>
-
-    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="navbar-inner">
-          
-          <div class="container"> 
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            
-              <a class="brand" style="
-                 margin-top: 0px;"  
-                href="#" data-toggle="modal" data-target="#myModal" >
-                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
-              </a>
-            
-            
-            <div class="navbar-collapse collapse">
-              <ul class="hnav navbar-nav">
-                
-                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/about">About</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
-                
-                  <li><div id="search-form-wrap">
-
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: 'Beiträge',
-            PAGES: 'Seiten',
-            CATEGORIES: 'Kategorien',
-            TAGS: 'Tags',
-            UNTITLED: '(Unbenannt)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
-
-</div></li>
-            </div>
-          </div>
-                
-      </div>
-    </div>
-
-</header>
-
-
-
-      
-            
-      <div id="content" class="outer">
+        <main id="content">
         
-          <section id="main" style="float:none;"><article id="post-SpringMVC-Mybatis整合" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
+
+<article class="post">
+  December 1, 2018
   
-    <h1 class="thumb" class="article-title" itemprop="name">
-      SpringMVC+Mybatis整合
-    </h1>
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/学习笔记/'>学习笔记</a> 
+    
+    </span>
   
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2018/12/01/SpringMVC-Mybatis整合/" class="article-date">
-	  <time datetime="2018-12-01T08:07:37.000Z" itemprop="datePublished">2018-12-01</time>
-	</a>
-
-      
-      
-	<a class="article-views">
-	<span id="busuanzi_container_page_pv">
-		PV:<span id="busuanzi_value_page_pv"></span>
-	</span>
-	</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>控制层采用springmvc、持久层使用mybatis实现。<br>首先参考<a href="https://homxuwang.github.io/2018/11/29/Spring%E4%B8%8EMybatis%E6%95%B4%E5%90%88/" target="_blank" rel="external">Spring与Mybatis整合</a></p>
+  <h1 class="post-title">SpringMVC+Mybatis整合</h1>
+  <section class="post-content article-entry">
+    <p>控制层采用springmvc、持久层使用mybatis实现。<br>首先参考<a href="https://homxuwang.github.io/2018/11/29/Spring%E4%B8%8EMybatis%E6%95%B4%E5%90%88/" target="_blank" rel="external">Spring与Mybatis整合</a></p>
 <h1 id="所需依赖包"><a href="#所需依赖包" class="headerlink" title="所需依赖包"></a>所需依赖包</h1><p><img src="/2018/12/01/SpringMVC-Mybatis整合/2.png" alt="所需依赖包"><br><img src="/2018/12/01/SpringMVC-Mybatis整合/3.png" alt="所需依赖包"></p>
 <h2 id="配置数据库和逆向工程"><a href="#配置数据库和逆向工程" class="headerlink" title="配置数据库和逆向工程"></a>配置数据库和逆向工程</h2><p>数据库表:<br><img src="/2018/12/01/SpringMVC-Mybatis整合/5.png" alt="items表"><br><img src="/2018/12/01/SpringMVC-Mybatis整合/6.png" alt="user表"><br>使用逆向工程生成pojo和dao:<br><img src="/2018/12/01/SpringMVC-Mybatis整合/4.png" alt="pojo和dao"><br>这里可能和上一篇文章中<code>User</code>类和<code>Items</code>类的代码不同，需要进行修改</p>
 <h1 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h1><p><code>applicationContext.xml</code>:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span> <span class="attr">xmlns:p</span>=<span class="string">"http://www.springframework.org/schema/p"</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns:aop</span>=<span class="string">"http://www.springframework.org/schema/aop"</span> <span class="attr">xmlns:tx</span>=<span class="string">"http://www.springframework.org/schema/tx"</span></span></div><div class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></div><div class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd</span></span></div><div class="line"><span class="tag"><span class="string">	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd</span></span></div><div class="line"><span class="tag"><span class="string">	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd</span></span></div><div class="line"><span class="tag"><span class="string">	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd"</span>&gt;</span></div><div class="line"></div><div class="line">	<span class="comment">&lt;!-- 加载配置文件 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">context:property-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:db.properties"</span>/&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 配置数据库连接池 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.driver&#125;"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.url&#125;"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.username&#125;"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.password&#125;"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxActive"</span> <span class="attr">value</span>=<span class="string">"10"</span> /&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxIdle"</span> <span class="attr">value</span>=<span class="string">"5"</span> /&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 配置SqlSessionFactory --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sqlSessionFactoryBean"</span> <span class="attr">class</span>=<span class="string">"org.mybatis.spring.SqlSessionFactoryBean"</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 配置数据源 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span> /&gt;</span></div><div class="line">		</div><div class="line">		<span class="comment">&lt;!-- 配置mybatis核心配置文件 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"configLocation"</span> <span class="attr">value</span>=<span class="string">"classpath:sqlmapConfig.xml"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line">	</div><div class="line">	<span class="comment">&lt;!-- Mapper动态代理开发 扫描包 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.mybatis.spring.mapper.MapperScannerConfigurer"</span>&gt;</span></div><div class="line">		<span class="comment">&lt;!-- 配置基本包 --&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"basePackage"</span> <span class="attr">value</span>=<span class="string">"my.study.springmvc.mapper"</span>/&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure></p>
@@ -238,304 +75,45 @@
 <p><code>ItemsMapper.xml</code>:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" &gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"my.study.springmvc.dao.ItemsMapper"</span> &gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"BaseResultMap"</span> <span class="attr">type</span>=<span class="string">"my.study.springmvc.pojo.Items"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">jdbcType</span>=<span class="string">"INTEGER"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"name"</span> <span class="attr">property</span>=<span class="string">"name"</span> <span class="attr">jdbcType</span>=<span class="string">"VARCHAR"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"price"</span> <span class="attr">property</span>=<span class="string">"price"</span> <span class="attr">jdbcType</span>=<span class="string">"REAL"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"pic"</span> <span class="attr">property</span>=<span class="string">"pic"</span> <span class="attr">jdbcType</span>=<span class="string">"VARCHAR"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"createtime"</span> <span class="attr">property</span>=<span class="string">"createtime"</span> <span class="attr">jdbcType</span>=<span class="string">"TIMESTAMP"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"ResultMapWithBLOBs"</span> <span class="attr">type</span>=<span class="string">"my.study.springmvc.pojo.Items"</span> <span class="attr">extends</span>=<span class="string">"BaseResultMap"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"detail"</span> <span class="attr">property</span>=<span class="string">"detail"</span> <span class="attr">jdbcType</span>=<span class="string">"LONGVARCHAR"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">"Example_Where_Clause"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">where</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"oredCriteria"</span> <span class="attr">item</span>=<span class="string">"criteria"</span> <span class="attr">separator</span>=<span class="string">"or"</span> &gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"criteria.valid"</span> &gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">"("</span> <span class="attr">suffix</span>=<span class="string">")"</span> <span class="attr">prefixOverrides</span>=<span class="string">"and"</span> &gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"criteria.criteria"</span> <span class="attr">item</span>=<span class="string">"criterion"</span> &gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">choose</span> &gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.noValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.singleValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125; #&#123;criterion.value&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.betweenValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125; #&#123;criterion.value&#125; and #&#123;criterion.secondValue&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.listValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125;</div><div class="line">                  <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"criterion.value"</span> <span class="attr">item</span>=<span class="string">"listItem"</span> <span class="attr">open</span>=<span class="string">"("</span> <span class="attr">close</span>=<span class="string">")"</span> <span class="attr">separator</span>=<span class="string">","</span> &gt;</span></div><div class="line">                    #&#123;listItem&#125;</div><div class="line">                  <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">              <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">"Update_By_Example_Where_Clause"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">where</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"example.oredCriteria"</span> <span class="attr">item</span>=<span class="string">"criteria"</span> <span class="attr">separator</span>=<span class="string">"or"</span> &gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"criteria.valid"</span> &gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">"("</span> <span class="attr">suffix</span>=<span class="string">")"</span> <span class="attr">prefixOverrides</span>=<span class="string">"and"</span> &gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"criteria.criteria"</span> <span class="attr">item</span>=<span class="string">"criterion"</span> &gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">choose</span> &gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.noValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.singleValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125; #&#123;criterion.value&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.betweenValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125; #&#123;criterion.value&#125; and #&#123;criterion.secondValue&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.listValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125;</div><div class="line">                  <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"criterion.value"</span> <span class="attr">item</span>=<span class="string">"listItem"</span> <span class="attr">open</span>=<span class="string">"("</span> <span class="attr">close</span>=<span class="string">")"</span> <span class="attr">separator</span>=<span class="string">","</span> &gt;</span></div><div class="line">                    #&#123;listItem&#125;</div><div class="line">                  <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">              <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">"Base_Column_List"</span> &gt;</span></div><div class="line">    id, name, price, pic, createtime</div><div class="line">  <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">"Blob_Column_List"</span> &gt;</span></div><div class="line">    detail</div><div class="line">  <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectByExampleWithBLOBs"</span> <span class="attr">resultMap</span>=<span class="string">"ResultMapWithBLOBs"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.ItemsExample"</span> &gt;</span></div><div class="line">    select</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"distinct"</span> &gt;</span></div><div class="line">      distinct</div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Base_Column_List"</span> /&gt;</span></div><div class="line">    ,</div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Blob_Column_List"</span> /&gt;</span></div><div class="line">    from items</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"orderByClause != null"</span> &gt;</span></div><div class="line">      order by $&#123;orderByClause&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectByExample"</span> <span class="attr">resultMap</span>=<span class="string">"BaseResultMap"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.ItemsExample"</span> &gt;</span></div><div class="line">    select</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"distinct"</span> &gt;</span></div><div class="line">      distinct</div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Base_Column_List"</span> /&gt;</span></div><div class="line">    from items</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"orderByClause != null"</span> &gt;</span></div><div class="line">      order by $&#123;orderByClause&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectByPrimaryKey"</span> <span class="attr">resultMap</span>=<span class="string">"ResultMapWithBLOBs"</span> <span class="attr">parameterType</span>=<span class="string">"java.lang.Integer"</span> &gt;</span></div><div class="line">    select </div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Base_Column_List"</span> /&gt;</span></div><div class="line">    ,</div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Blob_Column_List"</span> /&gt;</span></div><div class="line">    from items</div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">"deleteByPrimaryKey"</span> <span class="attr">parameterType</span>=<span class="string">"java.lang.Integer"</span> &gt;</span></div><div class="line">    delete from items</div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">"deleteByExample"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.ItemsExample"</span> &gt;</span></div><div class="line">    delete from items</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insert"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.Items"</span> &gt;</span></div><div class="line">    insert into items (id, name, price, </div><div class="line">      pic, createtime, detail</div><div class="line">      )</div><div class="line">    values (#&#123;id,jdbcType=INTEGER&#125;, #&#123;name,jdbcType=VARCHAR&#125;, #&#123;price,jdbcType=REAL&#125;, </div><div class="line">      #&#123;pic,jdbcType=VARCHAR&#125;, #&#123;createtime,jdbcType=TIMESTAMP&#125;, #&#123;detail,jdbcType=LONGVARCHAR&#125;</div><div class="line">      )</div><div class="line">  <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insertSelective"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.Items"</span> &gt;</span></div><div class="line">    insert into items</div><div class="line">    <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">"("</span> <span class="attr">suffix</span>=<span class="string">")"</span> <span class="attr">suffixOverrides</span>=<span class="string">","</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"id != null"</span> &gt;</span></div><div class="line">        id,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"name != null"</span> &gt;</span></div><div class="line">        name,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"price != null"</span> &gt;</span></div><div class="line">        price,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"pic != null"</span> &gt;</span></div><div class="line">        pic,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"createtime != null"</span> &gt;</span></div><div class="line">        createtime,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"detail != null"</span> &gt;</span></div><div class="line">        detail,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">"values ("</span> <span class="attr">suffix</span>=<span class="string">")"</span> <span class="attr">suffixOverrides</span>=<span class="string">","</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"id != null"</span> &gt;</span></div><div class="line">        #&#123;id,jdbcType=INTEGER&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"name != null"</span> &gt;</span></div><div class="line">        #&#123;name,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"price != null"</span> &gt;</span></div><div class="line">        #&#123;price,jdbcType=REAL&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"pic != null"</span> &gt;</span></div><div class="line">        #&#123;pic,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"createtime != null"</span> &gt;</span></div><div class="line">        #&#123;createtime,jdbcType=TIMESTAMP&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"detail != null"</span> &gt;</span></div><div class="line">        #&#123;detail,jdbcType=LONGVARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"countByExample"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.ItemsExample"</span> <span class="attr">resultType</span>=<span class="string">"java.lang.Integer"</span> &gt;</span></div><div class="line">    select count(*) from items</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByExampleSelective"</span> <span class="attr">parameterType</span>=<span class="string">"map"</span> &gt;</span></div><div class="line">    update items</div><div class="line">    <span class="tag">&lt;<span class="name">set</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.id != null"</span> &gt;</span></div><div class="line">        id = #&#123;record.id,jdbcType=INTEGER&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.name != null"</span> &gt;</span></div><div class="line">        name = #&#123;record.name,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.price != null"</span> &gt;</span></div><div class="line">        price = #&#123;record.price,jdbcType=REAL&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.pic != null"</span> &gt;</span></div><div class="line">        pic = #&#123;record.pic,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.createtime != null"</span> &gt;</span></div><div class="line">        createtime = #&#123;record.createtime,jdbcType=TIMESTAMP&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.detail != null"</span> &gt;</span></div><div class="line">        detail = #&#123;record.detail,jdbcType=LONGVARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Update_By_Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByExampleWithBLOBs"</span> <span class="attr">parameterType</span>=<span class="string">"map"</span> &gt;</span></div><div class="line">    update items</div><div class="line">    set id = #&#123;record.id,jdbcType=INTEGER&#125;,</div><div class="line">      name = #&#123;record.name,jdbcType=VARCHAR&#125;,</div><div class="line">      price = #&#123;record.price,jdbcType=REAL&#125;,</div><div class="line">      pic = #&#123;record.pic,jdbcType=VARCHAR&#125;,</div><div class="line">      createtime = #&#123;record.createtime,jdbcType=TIMESTAMP&#125;,</div><div class="line">      detail = #&#123;record.detail,jdbcType=LONGVARCHAR&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Update_By_Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByExample"</span> <span class="attr">parameterType</span>=<span class="string">"map"</span> &gt;</span></div><div class="line">    update items</div><div class="line">    set id = #&#123;record.id,jdbcType=INTEGER&#125;,</div><div class="line">      name = #&#123;record.name,jdbcType=VARCHAR&#125;,</div><div class="line">      price = #&#123;record.price,jdbcType=REAL&#125;,</div><div class="line">      pic = #&#123;record.pic,jdbcType=VARCHAR&#125;,</div><div class="line">      createtime = #&#123;record.createtime,jdbcType=TIMESTAMP&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Update_By_Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByPrimaryKeySelective"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.Items"</span> &gt;</span></div><div class="line">    update items</div><div class="line">    <span class="tag">&lt;<span class="name">set</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"name != null"</span> &gt;</span></div><div class="line">        name = #&#123;name,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"price != null"</span> &gt;</span></div><div class="line">        price = #&#123;price,jdbcType=REAL&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"pic != null"</span> &gt;</span></div><div class="line">        pic = #&#123;pic,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"createtime != null"</span> &gt;</span></div><div class="line">        createtime = #&#123;createtime,jdbcType=TIMESTAMP&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"detail != null"</span> &gt;</span></div><div class="line">        detail = #&#123;detail,jdbcType=LONGVARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByPrimaryKeyWithBLOBs"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.Items"</span> &gt;</span></div><div class="line">    update items</div><div class="line">    set name = #&#123;name,jdbcType=VARCHAR&#125;,</div><div class="line">      price = #&#123;price,jdbcType=REAL&#125;,</div><div class="line">      pic = #&#123;pic,jdbcType=VARCHAR&#125;,</div><div class="line">      createtime = #&#123;createtime,jdbcType=TIMESTAMP&#125;,</div><div class="line">      detail = #&#123;detail,jdbcType=LONGVARCHAR&#125;</div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByPrimaryKey"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.Items"</span> &gt;</span></div><div class="line">    update items</div><div class="line">    set name = #&#123;name,jdbcType=VARCHAR&#125;,</div><div class="line">      price = #&#123;price,jdbcType=REAL&#125;,</div><div class="line">      pic = #&#123;pic,jdbcType=VARCHAR&#125;,</div><div class="line">      createtime = #&#123;createtime,jdbcType=TIMESTAMP&#125;</div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p><code>UserMapper.xml</code>:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" &gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">"my.study.springmvc.dao.UserMapper"</span> &gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"BaseResultMap"</span> <span class="attr">type</span>=<span class="string">"my.study.springmvc.pojo.User"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">"id"</span> <span class="attr">property</span>=<span class="string">"id"</span> <span class="attr">jdbcType</span>=<span class="string">"INTEGER"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"username"</span> <span class="attr">property</span>=<span class="string">"username"</span> <span class="attr">jdbcType</span>=<span class="string">"VARCHAR"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"birthday"</span> <span class="attr">property</span>=<span class="string">"birthday"</span> <span class="attr">jdbcType</span>=<span class="string">"DATE"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"sex"</span> <span class="attr">property</span>=<span class="string">"sex"</span> <span class="attr">jdbcType</span>=<span class="string">"CHAR"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"address"</span> <span class="attr">property</span>=<span class="string">"address"</span> <span class="attr">jdbcType</span>=<span class="string">"VARCHAR"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">"Example_Where_Clause"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">where</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"oredCriteria"</span> <span class="attr">item</span>=<span class="string">"criteria"</span> <span class="attr">separator</span>=<span class="string">"or"</span> &gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"criteria.valid"</span> &gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">"("</span> <span class="attr">suffix</span>=<span class="string">")"</span> <span class="attr">prefixOverrides</span>=<span class="string">"and"</span> &gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"criteria.criteria"</span> <span class="attr">item</span>=<span class="string">"criterion"</span> &gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">choose</span> &gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.noValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.singleValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125; #&#123;criterion.value&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.betweenValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125; #&#123;criterion.value&#125; and #&#123;criterion.secondValue&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.listValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125;</div><div class="line">                  <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"criterion.value"</span> <span class="attr">item</span>=<span class="string">"listItem"</span> <span class="attr">open</span>=<span class="string">"("</span> <span class="attr">close</span>=<span class="string">")"</span> <span class="attr">separator</span>=<span class="string">","</span> &gt;</span></div><div class="line">                    #&#123;listItem&#125;</div><div class="line">                  <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">              <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">"Update_By_Example_Where_Clause"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">where</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"example.oredCriteria"</span> <span class="attr">item</span>=<span class="string">"criteria"</span> <span class="attr">separator</span>=<span class="string">"or"</span> &gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"criteria.valid"</span> &gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">"("</span> <span class="attr">suffix</span>=<span class="string">")"</span> <span class="attr">prefixOverrides</span>=<span class="string">"and"</span> &gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"criteria.criteria"</span> <span class="attr">item</span>=<span class="string">"criterion"</span> &gt;</span></div><div class="line">              <span class="tag">&lt;<span class="name">choose</span> &gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.noValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.singleValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125; #&#123;criterion.value&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.betweenValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125; #&#123;criterion.value&#125; and #&#123;criterion.secondValue&#125;</div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">when</span> <span class="attr">test</span>=<span class="string">"criterion.listValue"</span> &gt;</span></div><div class="line">                  and $&#123;criterion.condition&#125;</div><div class="line">                  <span class="tag">&lt;<span class="name">foreach</span> <span class="attr">collection</span>=<span class="string">"criterion.value"</span> <span class="attr">item</span>=<span class="string">"listItem"</span> <span class="attr">open</span>=<span class="string">"("</span> <span class="attr">close</span>=<span class="string">")"</span> <span class="attr">separator</span>=<span class="string">","</span> &gt;</span></div><div class="line">                    #&#123;listItem&#125;</div><div class="line">                  <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">when</span>&gt;</span></div><div class="line">              <span class="tag">&lt;/<span class="name">choose</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">foreach</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">sql</span> <span class="attr">id</span>=<span class="string">"Base_Column_List"</span> &gt;</span></div><div class="line">    id, username, birthday, sex, address</div><div class="line">  <span class="tag">&lt;/<span class="name">sql</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectByExample"</span> <span class="attr">resultMap</span>=<span class="string">"BaseResultMap"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.UserExample"</span> &gt;</span></div><div class="line">    select</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"distinct"</span> &gt;</span></div><div class="line">      distinct</div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Base_Column_List"</span> /&gt;</span></div><div class="line">    from user</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"orderByClause != null"</span> &gt;</span></div><div class="line">      order by $&#123;orderByClause&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"selectByPrimaryKey"</span> <span class="attr">resultMap</span>=<span class="string">"BaseResultMap"</span> <span class="attr">parameterType</span>=<span class="string">"java.lang.Integer"</span> &gt;</span></div><div class="line">    select </div><div class="line">    <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Base_Column_List"</span> /&gt;</span></div><div class="line">    from user</div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">"deleteByPrimaryKey"</span> <span class="attr">parameterType</span>=<span class="string">"java.lang.Integer"</span> &gt;</span></div><div class="line">    delete from user</div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">delete</span> <span class="attr">id</span>=<span class="string">"deleteByExample"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.UserExample"</span> &gt;</span></div><div class="line">    delete from user</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">delete</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insert"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.User"</span> &gt;</span></div><div class="line">    insert into user (id, username, birthday, </div><div class="line">      sex, address)</div><div class="line">    values (#&#123;id,jdbcType=INTEGER&#125;, #&#123;username,jdbcType=VARCHAR&#125;, #&#123;birthday,jdbcType=DATE&#125;, </div><div class="line">      #&#123;sex,jdbcType=CHAR&#125;, #&#123;address,jdbcType=VARCHAR&#125;)</div><div class="line">  <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">insert</span> <span class="attr">id</span>=<span class="string">"insertSelective"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.User"</span> &gt;</span></div><div class="line">    insert into user</div><div class="line">    <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">"("</span> <span class="attr">suffix</span>=<span class="string">")"</span> <span class="attr">suffixOverrides</span>=<span class="string">","</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"id != null"</span> &gt;</span></div><div class="line">        id,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"username != null"</span> &gt;</span></div><div class="line">        username,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"birthday != null"</span> &gt;</span></div><div class="line">        birthday,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"sex != null"</span> &gt;</span></div><div class="line">        sex,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"address != null"</span> &gt;</span></div><div class="line">        address,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">trim</span> <span class="attr">prefix</span>=<span class="string">"values ("</span> <span class="attr">suffix</span>=<span class="string">")"</span> <span class="attr">suffixOverrides</span>=<span class="string">","</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"id != null"</span> &gt;</span></div><div class="line">        #&#123;id,jdbcType=INTEGER&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"username != null"</span> &gt;</span></div><div class="line">        #&#123;username,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"birthday != null"</span> &gt;</span></div><div class="line">        #&#123;birthday,jdbcType=DATE&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"sex != null"</span> &gt;</span></div><div class="line">        #&#123;sex,jdbcType=CHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"address != null"</span> &gt;</span></div><div class="line">        #&#123;address,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">trim</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">insert</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"countByExample"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.UserExample"</span> <span class="attr">resultType</span>=<span class="string">"java.lang.Integer"</span> &gt;</span></div><div class="line">    select count(*) from user</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByExampleSelective"</span> <span class="attr">parameterType</span>=<span class="string">"map"</span> &gt;</span></div><div class="line">    update user</div><div class="line">    <span class="tag">&lt;<span class="name">set</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.id != null"</span> &gt;</span></div><div class="line">        id = #&#123;record.id,jdbcType=INTEGER&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.username != null"</span> &gt;</span></div><div class="line">        username = #&#123;record.username,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.birthday != null"</span> &gt;</span></div><div class="line">        birthday = #&#123;record.birthday,jdbcType=DATE&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.sex != null"</span> &gt;</span></div><div class="line">        sex = #&#123;record.sex,jdbcType=CHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"record.address != null"</span> &gt;</span></div><div class="line">        address = #&#123;record.address,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Update_By_Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByExample"</span> <span class="attr">parameterType</span>=<span class="string">"map"</span> &gt;</span></div><div class="line">    update user</div><div class="line">    set id = #&#123;record.id,jdbcType=INTEGER&#125;,</div><div class="line">      username = #&#123;record.username,jdbcType=VARCHAR&#125;,</div><div class="line">      birthday = #&#123;record.birthday,jdbcType=DATE&#125;,</div><div class="line">      sex = #&#123;record.sex,jdbcType=CHAR&#125;,</div><div class="line">      address = #&#123;record.address,jdbcType=VARCHAR&#125;</div><div class="line">    <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"_parameter != null"</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">include</span> <span class="attr">refid</span>=<span class="string">"Update_By_Example_Where_Clause"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByPrimaryKeySelective"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.User"</span> &gt;</span></div><div class="line">    update user</div><div class="line">    <span class="tag">&lt;<span class="name">set</span> &gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"username != null"</span> &gt;</span></div><div class="line">        username = #&#123;username,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"birthday != null"</span> &gt;</span></div><div class="line">        birthday = #&#123;birthday,jdbcType=DATE&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"sex != null"</span> &gt;</span></div><div class="line">        sex = #&#123;sex,jdbcType=CHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">"address != null"</span> &gt;</span></div><div class="line">        address = #&#123;address,jdbcType=VARCHAR&#125;,</div><div class="line">      <span class="tag">&lt;/<span class="name">if</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">set</span>&gt;</span></div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">update</span> <span class="attr">id</span>=<span class="string">"updateByPrimaryKey"</span> <span class="attr">parameterType</span>=<span class="string">"my.study.springmvc.pojo.User"</span> &gt;</span></div><div class="line">    update user</div><div class="line">    set username = #&#123;username,jdbcType=VARCHAR&#125;,</div><div class="line">      birthday = #&#123;birthday,jdbcType=DATE&#125;,</div><div class="line">      sex = #&#123;sex,jdbcType=CHAR&#125;,</div><div class="line">      address = #&#123;address,jdbcType=VARCHAR&#125;</div><div class="line">    where id = #&#123;id,jdbcType=INTEGER&#125;</div><div class="line">  <span class="tag">&lt;/<span class="name">update</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></div></pre></td></tr></table></figure></p>
 
-      
-    </div>
-    <footer class="article-footer">
-      
-        <div id="donation_div"></div>
-
-<script src="/js/vdonate.js"></script>
-<script>
-var a = new Donate({
-  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
-  btnText: 'Donate', // 可选参数，打赏按钮文字
-  el: document.getElementById('donation_div'),
-  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
-  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
-});
-</script>
-      
-      
-      <div>
-        <ul class="post-copyright">
-          <li class="post-copyright-author">
-          <strong>Post author:  </strong>Homxu</a>
-          </li>
-          <li class="post-copyright-link">
-          <strong>Post link:  </strong>
-          <a href="/2018/12/01/SpringMVC-Mybatis整合/" target="_blank" title="SpringMVC+Mybatis整合">http://homxu.com/2018/12/01/SpringMVC-Mybatis整合/</a>
-          </li>
-          <li class="post-copyright-license">
-            <strong>Copyright Notice:   </strong>
-            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
-            unless stating additionally.
-          </li>
-         
-        </ul>
-<div>
-
-      
-      
-        
-	<div id="comment">
-		<!-- 来必力City版安装代码 -->
-		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
-		<script type="text/javascript">
-		   (function(d, s) {
-		       var j, e = d.getElementsByTagName(s)[0];
-
-		       if (typeof LivereTower === 'function') { return; }
-
-		       j = d.createElement(s);
-		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-		       j.async = true;
-
-		       e.parentNode.insertBefore(j, e);
-		   })(document, 'script');
-		</script>
-		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-		</div>
-		<!-- City版安装代码已完成 -->
-	</div>
-
-
-
-      
-      
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2018/12/02/SpringMVC学习笔记-二/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nuevo</strong>
-      <div class="article-nav-title">
-        
-          SpringMVC学习笔记-二
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2018/11/30/SpringMVC学习笔记-一/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
-      <div class="article-nav-title">SpringMVC学习笔记-一</div>
-    </a>
-  
-</nav>
-
-  
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Homxu</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
 </article>
 
-<!-- Table of Contents -->
-
-  <aside id="toc-sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">Inhalt</strong>
+<nav class="pagination" role="pagination">
     
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#所需依赖包"><span class="nav-number">1.</span> <span class="nav-text">所需依赖包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置数据库和逆向工程"><span class="nav-number">1.1.</span> <span class="nav-text">配置数据库和逆向工程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件"><span class="nav-number">2.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置事务"><span class="nav-number">2.1.</span> <span class="nav-text">配置事务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从mysql中读取信息并显示"><span class="nav-number">3.</span> <span class="nav-text">从mysql中读取信息并显示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sql"><span class="nav-number">4.1.</span> <span class="nav-text">sql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dao"><span class="nav-number">4.2.</span> <span class="nav-text">dao</span></a></li></ol></li></ol>
+    <a class="newer-posts" href="/2018/12/02/SpringMVC学习笔记-二/">
+        ← prev <!--SpringMVC学习笔记-二-->
+    </a>
     
-    </div>
-  </aside>
-
-</section>
-        
-      </div>
-      
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<footer id="footer">
-  
-
-  <div class="container">
-      	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
-
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
-  
-</nav> -->
+    <span class="page-number">•</span>
     
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+    <a class="older-posts" href="/2018/11/30/SpringMVC学习笔记-一/">
+        <!--SpringMVC学习笔记-一--> next →
+    </a>
+    
+</nav>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-
-
-
-
-  <script src="/js/dialog.js"></script>
-
-
-
-
-
-
-
-
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-	<script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  </div>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Homxu
-          </div>
-          <div class="panel-body">
-            Copyright © 2019 Homxu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
-  
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
-  
-    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
-  
-</body>
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', 'UA-141265597-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
 </html>
+
+

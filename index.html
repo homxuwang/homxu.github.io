@@ -1,928 +1,262 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/asset/guolin.png"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
+        <title>Homxu</title>
+        <meta name="description" content="{{meta_description}}">
 
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-	</script>
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-
-<head>
-  <meta charset="utf-8">
-  
-  <title>Homxu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-    <meta name="keywords" content="好好生活" />
-  
-  
-  
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Homxu">
-<meta property="og:url" content="http://homxu.com/index.html">
-<meta property="og:site_name" content="Homxu">
-<meta property="og:locale" content="zh-Hans">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Homxu">
-  
-    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
-  
-
-  
-
-  <link rel="icon" href="/css/images/star.png">
-  <link rel="apple-touch-icon" href="/css/images/star.png">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-
-  
-    <link rel="stylesheet" href="/css/home.css" >
-  
-
-  
-
-  
-
-  
-  
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
-
-</head>
-
-
-
-  <body>
-
-
-  
-    <header id="header">
-
-	<!-- 背景图模式 -->
+    </head>
+    
+		<body class="home-template">
 	
 
-    
-      <div id="intrologo" class="intro-logo">
-    
- 
-
-
-    <canvas width="100%" height="100%"></canvas>
-    <script>
-      var c = document.getElementsByTagName('canvas')[0],
-          x = c.getContext('2d'),
-          w = window.innerWidth,
-          h = window.innerHeight,
-          pr = window.devicePixelRatio || 1,
-          f = 90,
-          q,
-          m = Math,
-          r = 0,
-          u = m.PI*2,
-          v = m.cos,
-          z = m.random
-      c.width = w*pr
-      c.height = h*pr
-      x.scale(pr, pr)
-      x.globalAlpha = 0.6
-
-      <!-- 折线Polyline背景 -->
-      
-        function i(){
-            x.clearRect(0,0,w,h)
-            q=[{x:0,y:h*.7+f},{x:0,y:h*.7-f}]
-            while(q[1].x<w+f) d(q[0], q[1])
-        }
-        function d(i,j){   
-            x.beginPath()
-            x.moveTo(i.x, i.y)
-            x.lineTo(j.x, j.y)
-            var k = j.x + (z()*2-0.25)*f,
-                n = y(j.y)
-            x.lineTo(k, n)
-            x.closePath()
-            r-=u/-50
-            x.fillStyle = '#'+(v(r)*127+128<<16 | v(r+u/3)*127+128<<8 | v(r+u/3*2)*127+128).toString(16)
-            x.fill()
-            q[0] = q[1]
-            q[1] = {x:k,y:n}
-        }
-        function y(p){
-            var t = p + (z()*2-1.1)*f
-            return (t>h||t<0) ? y(p) : t
-        }
-        document.getElementById("intrologo").onclick = i
-        document.getElementById("intrologo").ontouchstart = i
-        i()
-
-      <!-- 多边形trianglify背景 -->
-      
-    </script>
-    
-
-    
-      <div id="homelogo" class="homelogo"> 
-    
-
-        
-          <div class="homelogoback" >
-            <h1><a href="#content" id="logo">Homxu</a></h1>
-            <h3></h3>
-            <h5>Homxu</h5>
-            <!-- <p><a href="https://github.com/iTimeTraveler" target="_blank">Github</a></p> -->
-          </div>
-        
-    
-    </div>
+        <header id="header">
+            <a id="logo" href="/"><img src="/asset/guolin.png" alt="Homxu" /></a>
+            <h1><a href="/">Homxu</a></h1>
+            <p>程序员也要好好生活</p>
+            <div id="follow-icons">
+          <a href="http://github.com/https://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
+              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
   </div>
+<h6><a href="/about">About</a></h6>
+        </header>
 
-  <!-- 自适应主页背景大图 -->
-  
-
- <!-- home_logo_image居中 -->
- 
-    <script>
-        var homelogodiv = document.getElementById("homelogo");
-        if (document.all.homelogo.offsetWidth > document.body.clientWidth) {
-          homelogodiv.style.width = document.body.clientWidth + "px";
-          homelogodiv.style.marginLeft = document.body.clientWidth * -0.5 + "px";
-        } else {
-          homelogodiv.style.width = homelogodiv.clientWidth  + "px";
-          homelogodiv.style.marginLeft = (homelogodiv.clientWidth)  * -0.5 + "px";
-        }
-    </script>
-  
-
-  <div class="intro-navigate">
-      <p class="navigater-list">
+        <main id="content">
         
-          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/categories">Categorías</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/about">About</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/我的足迹">我的足迹</a>
-        
-      </p>
-  </div>
-
-</header>
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/24/MySQL中使用trigger-触发器/">MySQL中使用trigger(触发器)</a>
   
-  <div id="container">
-    <div id="wrap">
-      
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;">
+  <span class="separator"> &middot; </span>
   
-    <article id="post-MySQL中使用trigger-触发器"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
+  May 24, 2019
+  
+  
+    <span class="taglist">  &middot; 
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/24/MySQL中使用trigger-触发器/">MySQL中使用trigger(触发器)</a>
-    </h1>
-  
-
-      </header>
+      <a href='/tags/mysql/'>mysql</a> 
     
-    <div class="article-meta">
-      
-	<a href="/2019/05/24/MySQL中使用trigger-触发器/" class="article-date">
-	  <time datetime="2019-05-24T11:51:10.000Z" itemprop="datePublished">2019-05-24</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          最近有一个项目提出新需求,有一个表由之前的一对一变成一对多,为了不影响使用原表的视图(为了进行统计汇总等),所以打算为这个表拓展子表,在子表上定义触发器,在子表改变的时候对应改变母表.所以这里记录一下定义使用trigger的过程.
-在此之前提醒一下：
-！！尽量少使用触发器,不建议使用。
-
-假设触发器触发每次执行1s,insert table 500条数据,那么就需要触发500次触发器,光是触发器执行的时间就花费了500s,而insert 500条数据一共是1s,那么这个insert的效率就...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/24/MySQL中使用trigger-触发器/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-事务隔离级别"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
+      <a href='/tags/数据库/'>数据库</a> 
     
-    
-      <header class="article-header">
-        
+    </saan>
   
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/16/事务隔离级别/">事务隔离级别</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/16/事务隔离级别/" class="article-date">
-	  <time datetime="2019-05-16T07:45:22.000Z" itemprop="datePublished">2019-05-16</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          本文大部分转载自事务隔离级别(图文详解).md)
-事务什么是事务事务是逻辑上的一组操作，要么都执行，要么都不执行。
-事务最经典也经常被拿出来说例子就是转账了。假如小明要给小红转账1000元，这个转账会涉及到两个关键操作就是：将小明的余额减少1000元，将小红的余额增加1000元。万一在这两个操作之间突然出现错误比如银行系统崩溃，导致小明余额减少而小红的余额没有增加，这样就不对了。事务就是保证这两个关键操作要么都成功，要么都要失败。
-事务的特性(ACID)
-
-原子性： 事务是最小的执行单位，...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/16/事务隔离级别/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-浅谈Java代理-Proxy"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/15/浅谈Java代理-Proxy/">浅谈Java代理(Proxy)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/15/浅谈Java代理-Proxy/" class="article-date">
-	  <time datetime="2019-05-15T06:49:34.000Z" itemprop="datePublished">2019-05-15</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          代理模式
-利用代理可以在运行时创建一个实现了一组给定接口的新类。这种功能只有在编译时无法确定需要实现那个接口时才有必要使用。
-
-——摘自《JAVA核心技术卷I》
-何时使用代理？
-
-假设有一个表示接口的Class对象(有可能只包含一个接口),它的确切类型在编译时无法知道。这确实有些难度。想要构造一个实现这些接口的类,就需要使用newInstance方法或反射找出这个类的构造器。但是，不能实例化一个接口，需要在程序处于运行状态时定义一个新类。为了解决这个问题,有些程序将会生成代码；将这西代码放...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/15/浅谈Java代理-Proxy/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-初识Maven"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/12/初识Maven/">初识Maven</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/12/初识Maven/" class="article-date">
-	  <time datetime="2019-05-12T03:03:21.000Z" itemprop="datePublished">2019-05-12</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          
-Maven项目对象模型(POM)，可以通过一小段描述信息来管理项目的构建，报告和文档的项目管理工具软件。Maven 除了以程序构建能力为特色之外，还提供高级项目管理工具。由于 Maven 的缺省构建规则有较高的可重用性，所以常常用两三行 Maven 构建脚本就可以构建简单的项目。由于 Maven 的面向项目的方法，许多 Apache Jakarta 项目发文时使用 Maven，而且公司项目采用 Maven 的比例在持续增长。
-
-安装Maven首先去官网下载对应的版本.
-然后设置环境变量
-...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/12/初识Maven/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-浅析Socket编程"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/11/浅析Socket编程/">浅析Socket编程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/11/浅析Socket编程/" class="article-date">
-	  <time datetime="2019-05-11T01:50:22.000Z" itemprop="datePublished">2019-05-11</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          在浅谈TCP协议中提到过：在本地两个进程间进行通信时，可以使用唯一标识符PID。但是如果是两台不同计算机之间的进程进行通信时,只用PID是不够的,这时就在传输层中使用协议端口号,简称端口。IP可以唯一标识主机，而TCP协议和端口号可以唯一标识一个主机中的进程。这样可以用三元组(IP地址+协议+端口号)唯一标识一个网络中的进程。
-在唯一标识了一个网络中的进程后,便可以用socket进行编程了。
-Socket简介Socket与TCP/IP协议没有必然的联系,Socket是对TCP/IP协议的封...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/11/浅析Socket编程/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-转-JavaScript原型和原型链"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/10/转-JavaScript原型和原型链/">[转]JavaScript原型和原型链</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/10/转-JavaScript原型和原型链/" class="article-date">
-	  <time datetime="2019-05-10T00:41:20.000Z" itemprop="datePublished">2019-05-10</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          本文转自: https://github.com/mqyqingfeng/Blog/issues/2
-构造函数创建对象我们先使用构造函数创建一个对象：123456function Person() &#123;&#125;var person = new Person();person.name = 'Kevin';console.log(person.name) // Kevin
-在这个例子中，Person 就是一个构造函数，我们使用 new 创建了一个实例对象 person。
-很简单吧...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/10/转-JavaScript原型和原型链/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-windows下开启和使用mysql的binlog"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/09/windows下开启和使用mysql的binlog/">windows下开启和使用mysql的binlog</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/09/windows下开启和使用mysql的binlog/" class="article-date">
-	  <time datetime="2019-05-09T08:14:44.000Z" itemprop="datePublished">2019-05-09</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          Mysql Binlog是二进制格式的日志文件。Binlog是用来记录Mysql内部对数据库的改动（只记录对数据的修改操作），主要用于数据库的主从复制以及增量恢复。
-binlog作用MySQL的作用类似于Oracle的归档日志，可以用来查看数据库的变更历史（具体的时间点所有的SQL操作）、数据库增量备份和恢复（增量备份和基于时间点的恢复）、Mysql的复制（主主数据库的复制、主从数据库的复制）。
-开启binlog首先找到my.ini文件.
-在# Binary Logging部分添加以下内容...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/09/windows下开启和使用mysql的binlog/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-浅谈HTTP协议"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/08/浅谈HTTP协议/">浅谈HTTP/HTTPS协议</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/08/浅谈HTTP协议/" class="article-date">
-	  <time datetime="2019-05-08T01:26:12.000Z" itemprop="datePublished">2019-05-08</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          HTTP即超文本传输协议
-HTTP的特性
-HTTP 协议构建于 TCP/IP 协议之上，是一个应用层协议，默认端口号是 80
-HTTP 是基于请求与相应模式的无连接无状态的协议.无连接的目的是限制每次连接只处理一个请求,服务器处理完客户请求并受到客户应答后即断开连接,采用这种方式可以节省时间.HTTP1.1起默认使用长连接,即服务器要等待一定时间后才断开连接,以保证连接特性,虽然目前的一些技术(如keepAlive)使用长连接进行优化,但这些是属于HTTP请求之外的.也就是说,在每个独立的...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/08/浅谈HTTP协议/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-浅谈TCP协议"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/05/06/浅谈TCP协议/">浅谈TCP协议</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/05/06/浅谈TCP协议/" class="article-date">
-	  <time datetime="2019-05-06T11:35:46.000Z" itemprop="datePublished">2019-05-06</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          TCP协议比较复杂，这里主要记录学习TCP过程中的一些要点。
-目前有四层、五层、七层协议。
-OSI开放式互联参考模型(概念化七层协议)
-
-第一层(物理层)要解决两台物理机之间的通讯需求,机器A向机器B发送比特流,机器B能收到比特流。这是物理层要解决的问题。物理层定义了物理设备的标准,比如网线的类型、光纤接口类型、各种传输介质的传输速率。它的主要作用是传输比特流(0101)数据,将其转化为电流强弱进行传输,到达目的地后再转化为0101的机器码,也就是数模转换和模数转化,这一层的数据是比特。网...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/05/06/浅谈TCP协议/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-    <article id="post-最短路径问题"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2019/04/23/最短路径问题/">最短路径问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/23/最短路径问题/" class="article-date">
-	  <time datetime="2019-04-23T13:17:20.000Z" itemprop="datePublished">2019-04-23</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p class="article-excerpt-content">
-          最短路径问题(Shortest Path)本文的最短路径问题对于有向图也无线图都是成立的。常见应用:路径规划、工作任务规划。
-在图的遍历-广度优先遍历中介绍的广度优先遍历的结果就是求出了一个最短路径。这种方法求的是从一个节点开始，到其他所有节点的最短路径，这样形成的是一个节点连接其他节点的树，即最短路径树(Shortest Path Tree).这棵树也是这个图的生成树，但是不是最小生成树，最小生成树是所有的边权值总和是最小的，而最短路径树是所有的节点距离起始节点的权值是最小的，这个求得最...
-        </p>
-        <p class="article-more-link">
-          <a href="/2019/04/23/最短路径问题/#more">weiter lesen</a>
-        </p>
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-      
-
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Siguiente &raquo;</a>
-  </nav>
-
+  </h3>
 </section>
-        
-      </div>
-      
-        <div align="center" style="margin-top: 30px;"><hr class="hr" style="margin:0px; height:3px;"></div>
-      
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<footer id="footer">
-  
 
-  <div class="container">
-      	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
-
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/16/事务隔离级别/">事务隔离级别</a>
   
-    <a href="/" class="mobile-nav-link">Home</a>
+  <span class="separator"> &middot; </span>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+  May 16, 2019
   
-    <a href="/categories" class="mobile-nav-link">Categories</a>
   
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
-  
-</nav> -->
+    <span class="taglist">  &middot; 
     
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-
-
-  <script src="/js/home.js"></script>
-
-
-
-
-
-
-
-
-
-
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-	<script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  </div>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Homxu
-          </div>
-          <div class="panel-body">
-            Copyright © 2019 Homxu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
+    
+      <a href='/tags/数据库/'>数据库</a> 
+    
+    </saan>
   
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/15/浅谈Java代理-Proxy/">浅谈Java代理(Proxy)</a>
   
-</body>
+  <span class="separator"> &middot; </span>
+  
+  May 15, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/java基础/'>java基础</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/12/初识Maven/">初识Maven</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 12, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/java基础/'>java基础</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/11/浅析Socket编程/">浅析Socket编程</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 11, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/java基础/'>java基础</a> 
+    
+      <a href='/tags/计算机网络/'>计算机网络</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/10/转-JavaScript原型和原型链/">[转]JavaScript原型和原型链</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 10, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/JavaScript/'>JavaScript</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/09/windows下开启和使用mysql的binlog/">windows下开启和使用mysql的binlog</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 9, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据库/'>数据库</a> 
+    
+      <a href='/tags/系统开发记录/'>系统开发记录</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/08/浅谈HTTP协议/">浅谈HTTP/HTTPS协议</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 8, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/计算机网络/'>计算机网络</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/05/06/浅谈TCP协议/">浅谈TCP协议</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  May 6, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/计算机网络/'>计算机网络</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<section id="{{id}}" class="{{post_class}}">
+  <h3 class="post-title">
+  <a href="/2019/04/23/最短路径问题/">最短路径问题</a>
+  
+  <span class="separator"> &middot; </span>
+  
+  April 23, 2019
+  
+  
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+      <a href='/tags/算法/'>算法</a> 
+    
+    </saan>
+  
+  </h3>
+</section>
+
+<nav class="pagination" role="pagination">
+  
+  <span class="page-number">Page 1 of 6</span>
+  <a class="older-posts" href="/page/2/">Older Posts →</a>
+</nav>
+
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', 'UA-141265597-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
 </html>
+
+

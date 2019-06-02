@@ -1,259 +1,62 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+    <head>
+		
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="/asset/guolin.png"/>
+        <link rel="canonical" href="http://guolinn.com/">
+        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
+        <title>最小生成树 | Homxu</title>
+        <meta name="description" content="{{meta_description}}">
 
-	<script>
-	var _hmt = _hmt || [];
-	(function() {
-	  var hm = document.createElement("script");
-	  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-	  var s = document.getElementsByTagName("script")[0]; 
-	  s.parentNode.insertBefore(hm, s);
-	})();
-	</script>
+        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
+    </head>
+    
+		<body class="post-template">
+	
 
-<head>
-  <meta charset="utf-8">
-  
-  <title>最小生成树 | Homxu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-    <meta name="keywords" content="好好生活" />
-  
-  
-  
-  
-  <meta name="description" content="有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。 有权图的邻接矩阵表达见下图:  有权图的邻接表表达见下图:s 邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。 当然要注意一点，邻接矩阵中">
-<meta name="keywords" content="数据结构,图">
-<meta property="og:type" content="article">
-<meta property="og:title" content="最小生成树">
-<meta property="og:url" content="http://homxu.com/2019/04/05/最小生成树/index.html">
-<meta property="og:site_name" content="Homxu">
-<meta property="og:description" content="有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。 有权图的邻接矩阵表达见下图:  有权图的邻接表表达见下图:s 邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。 当然要注意一点，邻接矩阵中">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/1.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/2.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/3.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/4.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/5.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/6.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/7.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/8.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/9.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/10.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/11.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/12.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/13.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/14.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/15.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/16.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/17.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/18.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/19.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/20.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/21.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/22.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/23.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/25.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/26.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/27.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/28.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/29.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/30.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/31.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/32.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/33.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/34.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/35.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/36.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/37.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/38.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/39.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/40.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/45.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/41.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/42.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/24.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/44.png">
-<meta property="og:image" content="http://homxu.com/2019/04/05/最小生成树/43.png">
-<meta property="og:updated_time" content="2019-04-24T07:48:56.020Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="最小生成树">
-<meta name="twitter:description" content="有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。 有权图的邻接矩阵表达见下图:  有权图的邻接表表达见下图:s 邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。 当然要注意一点，邻接矩阵中">
-<meta name="twitter:image" content="http://homxu.com/2019/04/05/最小生成树/1.png">
-  
-    <link rel="alternate" href="/atom.xml" title="Homxu" type="application/atom+xml">
-  
+        <header id="header">
+            <a id="logo" href="/"><img src="/asset/guolin.png" alt="Homxu" /></a>
+            <h1><a href="/">Homxu</a></h1>
+            <p>程序员也要好好生活</p>
+            <div id="follow-icons">
+          <a href="http://github.com/https://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
+              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+  </div>
+<h6><a href="/about">About</a></h6>
+        </header>
 
-  
-
-  <link rel="icon" href="/css/images/star.png">
-  <link rel="apple-touch-icon" href="/css/images/star.png">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-
-  
-    <link rel="stylesheet" href="/css/dialog.css">
-  
-
-  
-
-  
-    <link rel="stylesheet" href="/css/header-post.css" >
-  
-
-  
-  
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
-
-</head>
-
-
-
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
-
-
-  
-  <div id="container">
-    <div id="wrap">
-      
-        <header>
-
-    <div id="allheader" class="navbar navbar-default navbar-static-top" role="navigation">
-        <div class="navbar-inner">
-          
-          <div class="container"> 
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            
-              <a class="brand" style="
-                 margin-top: 0px;"  
-                href="#" data-toggle="modal" data-target="#myModal" >
-                  <img width="124px" height="124px" alt="Hike News" src="/css/images/star.png">
-              </a>
-            
-            
-            <div class="navbar-collapse collapse">
-              <ul class="hnav navbar-nav">
-                
-                  <li> <a class="main-nav-link" href="/">Startseite</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/archives">Archive</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/categories">Categorías</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/tags">Tags</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/about">About</a> </li>
-                
-                  <li> <a class="main-nav-link" href="/我的足迹">我的足迹</a> </li>
-                
-                  <li><div id="search-form-wrap">
-
-    <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="" />
-        <button type="submit" class="search-form-submit"></button>
-    </form>
-    <div class="ins-search">
-    <div class="ins-search-mask"></div>
-    <div class="ins-search-container">
-        <div class="ins-input-wrapper">
-            <input type="text" class="ins-search-input" placeholder="Schreib etwas..." />
-            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
-        </div>
-        <div class="ins-section-wrapper">
-            <div class="ins-section-container"></div>
-        </div>
-    </div>
-</div>
-<script>
-(function (window) {
-    var INSIGHT_CONFIG = {
-        TRANSLATION: {
-            POSTS: 'Beiträge',
-            PAGES: 'Seiten',
-            CATEGORIES: 'Kategorien',
-            TAGS: 'Tags',
-            UNTITLED: '(Unbenannt)',
-        },
-        ROOT_URL: '/',
-        CONTENT_URL: '/content.json',
-    };
-    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
-})(window);
-</script>
-<script src="/js/insight.js"></script>
-
-</div></li>
-            </div>
-          </div>
-                
-      </div>
-    </div>
-
-</header>
-
-
-
-      
-            
-      <div id="content" class="outer">
+        <main id="content">
         
-          <section id="main" style="float:none;"><article id="post-最小生成树" style="width: 75%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
+
+<article class="post">
+  April 5, 2019
   
-    <h1 class="thumb" class="article-title" itemprop="name">
-      最小生成树
-    </h1>
+    <span class="taglist">  &middot; 
+    
+    
+      <a href='/tags/数据结构/'>数据结构</a> 
+    
+      <a href='/tags/图/'>图</a> 
+    
+    </span>
   
 
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2019/04/05/最小生成树/" class="article-date">
-	  <time datetime="2019-04-05T09:13:24.000Z" itemprop="datePublished">2019-04-05</time>
-	</a>
-
-      
-      
-	<a class="article-views">
-	<span id="busuanzi_container_page_pv">
-		PV:<span id="busuanzi_value_page_pv"></span>
-	</span>
-	</a>
-
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="有权图"><a href="#有权图" class="headerlink" title="有权图"></a>有权图</h1><p>有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。</p>
+  <h1 class="post-title">最小生成树</h1>
+  <section class="post-content article-entry">
+    <h1 id="有权图"><a href="#有权图" class="headerlink" title="有权图"></a>有权图</h1><p>有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。</p>
 <p>有权图的邻接矩阵表达见下图:</p>
 <p><img src="/2019/04/05/最小生成树/1.png" alt="邻接矩阵"></p>
 <p>有权图的邻接表表达见下图:<br>s<br><img src="/2019/04/05/最小生成树/2.png" alt="邻接表"></p>
@@ -407,304 +210,45 @@
 <p><code>KruskalMST.java</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.awt.event.WindowEvent;</div><div class="line"><span class="keyword">import</span> java.util.Vector;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KruskalMST</span>&lt;<span class="title">Weight</span> <span class="keyword">extends</span> <span class="title">Number</span> &amp; <span class="title">Comparable</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Vector&lt;Edge&lt;Weight&gt;&gt; mst;    <span class="comment">//最小生成树所包含的所有边</span></div><div class="line">    <span class="keyword">private</span> Number mstWeight;           <span class="comment">//最小生成树的权值</span></div><div class="line"></div><div class="line">    <span class="comment">//构造函数，使用Kruskal算法计算graph的最小生成树</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">KruskalMST</span><span class="params">(WeightedGraph graph)</span></span>&#123;</div><div class="line"></div><div class="line">        mst  = <span class="keyword">new</span> Vector&lt;Edge&lt;Weight&gt;&gt;();</div><div class="line"></div><div class="line">        <span class="comment">//将所有的边进行排序，使用堆排序，将所有的边放入一个最小堆中</span></div><div class="line">        MinHeap&lt;Edge&lt;Weight&gt;&gt; pq = <span class="keyword">new</span> MinHeap&lt;Edge&lt;Weight&gt;&gt;(graph.E());</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; graph.V(); i ++)&#123;</div><div class="line">            <span class="keyword">for</span>(Object item : graph.adj(i))&#123;</div><div class="line">                Edge&lt;Weight&gt; e = (Edge&lt;Weight&gt;) item;</div><div class="line">                <span class="keyword">if</span>( e.v() &lt;= e.w() )  <span class="comment">//防止存入两次同一条边(比如边1-2和边2-1，只存入边1-2)</span></div><div class="line">                    pq.insert(e);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 创建一个并查集，查看已经访问的节点的联通情况</span></div><div class="line">        UnionFind uf = <span class="keyword">new</span> UnionFind(graph.V());</div><div class="line">        <span class="keyword">while</span> (!pq.isEmpty() &amp;&amp; mst.size() &lt; graph.V() - <span class="number">1</span>)&#123;<span class="comment">//pq不为空且最小生成树的边数小于V-1</span></div><div class="line"></div><div class="line">            <span class="comment">//从最小堆中依次从小到大取出所有的边</span></div><div class="line">            Edge&lt;Weight&gt; e = pq.extractMin();</div><div class="line">            <span class="comment">//如果该边的两个端点是联通的，说明加入这条边将产生环，扔掉这条边</span></div><div class="line">            <span class="keyword">if</span>(uf.isConnected(e.v(),e.w()))</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line"></div><div class="line">            <span class="comment">//否则，将这条边加入最小生成树，同时标记边的两个端点联通</span></div><div class="line">            mst.add(e);</div><div class="line">            uf.unionElements(e.v(),e.w());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//计算最小生成树的权值</span></div><div class="line">        mstWeight = mst.elementAt(<span class="number">0</span>).wt();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; mst.size() ; i ++)&#123;</div><div class="line">            mstWeight = mstWeight.doubleValue() + mst.elementAt(i).wt().doubleValue();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 返回最小生成树的所有边</span></div><div class="line">    Vector&lt;Edge&lt;Weight&gt;&gt; mstEdges()&#123;</div><div class="line">        <span class="keyword">return</span> mst;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 返回最小生成树的权值</span></div><div class="line">    <span class="function">Number <span class="title">result</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> mstWeight;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 测试 Kruskal</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        String filename = <span class="string">"testG1.txt"</span>;</div><div class="line">        <span class="keyword">int</span> V = <span class="number">8</span>;</div><div class="line"></div><div class="line">        SparseWeightedGraph&lt;Double&gt; g = <span class="keyword">new</span> SparseWeightedGraph&lt;Double&gt;(V, <span class="keyword">false</span>);</div><div class="line">        ReadWeightedGraph readGraph = <span class="keyword">new</span> ReadWeightedGraph(g, filename);</div><div class="line"></div><div class="line">        <span class="comment">// Test Kruskal</span></div><div class="line">        System.out.println(<span class="string">"Test Kruskal:"</span>);</div><div class="line">        KruskalMST&lt;Double&gt; kruskalMST = <span class="keyword">new</span> KruskalMST&lt;Double&gt;(g);</div><div class="line">        Vector&lt;Edge&lt;Double&gt;&gt; mst = kruskalMST.mstEdges();</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; mst.size() ; i ++ )</div><div class="line">            System.out.println(mst.elementAt(i));</div><div class="line">        System.out.println(<span class="string">"The MST weight is: "</span> + kruskalMST.result());</div><div class="line"></div><div class="line">        System.out.println();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>测试结果:<br><img src="/2019/04/05/最小生成树/43.png" alt="测试结果"></p>
 
-      
-    </div>
-    <footer class="article-footer">
-      
-        <div id="donation_div"></div>
-
-<script src="/js/vdonate.js"></script>
-<script>
-var a = new Donate({
-  title: '如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作!', // 可选参数，打赏标题
-  btnText: 'Donate', // 可选参数，打赏按钮文字
-  el: document.getElementById('donation_div'),
-  wechatImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/wc.png',
-  alipayImage: 'https://raw.githubusercontent.com/homxuwang/blog_source/master/_posts/pay/alipay.png'
-});
-</script>
-      
-      
-      <div>
-        <ul class="post-copyright">
-          <li class="post-copyright-author">
-          <strong>Post author:  </strong>Homxu</a>
-          </li>
-          <li class="post-copyright-link">
-          <strong>Post link:  </strong>
-          <a href="/2019/04/05/最小生成树/" target="_blank" title="最小生成树">http://homxu.com/2019/04/05/最小生成树/</a>
-          </li>
-          <li class="post-copyright-license">
-            <strong>Copyright Notice:   </strong>
-            All articles in this blog are licensed under <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">CC BY-NC-ND 4.0</a>
-            unless stating additionally.
-          </li>
-         
-        </ul>
-<div>
-
-      
-      
-        
-	<div id="comment">
-		<!-- 来必力City版安装代码 -->
-		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
-		<script type="text/javascript">
-		   (function(d, s) {
-		       var j, e = d.getElementsByTagName(s)[0];
-
-		       if (typeof LivereTower === 'function') { return; }
-
-		       j = d.createElement(s);
-		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-		       j.async = true;
-
-		       e.parentNode.insertBefore(j, e);
-		   })(document, 'script');
-		</script>
-		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-		</div>
-		<!-- City版安装代码已完成 -->
-	</div>
-
-
-
-      
-      
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2019/04/07/堆和堆排序/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nuevo</strong>
-      <div class="article-nav-title">
-        
-          堆和堆排序
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/04/01/图的遍历/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
-      <div class="article-nav-title">图的遍历</div>
-    </a>
-  
-</nav>
-
-  
+  </section>
+  <footer class="post-footer">
+    <!--
+    <section class="author">
+      <h4>Homxu</h4>
+      <p></p>
+    </section>
+    -->
+  </footer>
 </article>
 
-<!-- Table of Contents -->
-
-  <aside id="toc-sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">Inhalt</strong>
+<nav class="pagination" role="pagination">
     
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#有权图"><span class="nav-number">1.</span> <span class="nav-text">有权图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最小生成树问题"><span class="nav-number">2.</span> <span class="nav-text">最小生成树问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些约定"><span class="nav-number">2.1.</span> <span class="nav-text">一些约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切分定理-Cut-Property"><span class="nav-number">2.2.</span> <span class="nav-text">切分定理 - Cut Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lazy-Prim算法"><span class="nav-number">2.3.</span> <span class="nav-text">Lazy Prim算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lazy-Prim算法代码"><span class="nav-number">2.4.</span> <span class="nav-text">Lazy Prim算法代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prim算法的优化"><span class="nav-number">2.5.</span> <span class="nav-text">Prim算法的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prim算法代码"><span class="nav-number">2.6.</span> <span class="nav-text">Prim算法代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kruskal算法"><span class="nav-number">2.7.</span> <span class="nav-text">Kruskal算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kruskal算法代码实现"><span class="nav-number">2.8.</span> <span class="nav-text">Kruskal算法代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录1"><span class="nav-number">4.</span> <span class="nav-text">附录1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录2"><span class="nav-number">5.</span> <span class="nav-text">附录2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录3"><span class="nav-number">6.</span> <span class="nav-text">附录3</span></a></li></ol>
+    <a class="newer-posts" href="/2019/04/07/堆和堆排序/">
+        ← prev <!--堆和堆排序-->
+    </a>
     
-    </div>
-  </aside>
-
-</section>
-        
-      </div>
-      
-      <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<footer id="footer">
-  
-
-  <div class="container">
-      	<div class="row">
-	      <p> Construido por <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2017 - 2019 Homxu All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
-
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-    <a href="/我的足迹" class="mobile-nav-link">我的足迹</a>
-  
-</nav> -->
+    <span class="page-number">•</span>
     
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+    <a class="older-posts" href="/2019/04/01/图的遍历/">
+        <!--图的遍历--> next →
+    </a>
+    
+</nav>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-
-
-
-
-  <script src="/js/dialog.js"></script>
-
-
-
-
-
-
-
-
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-	<script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?{{ theme.baidu_analytics }}";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-
-
-
-  </div>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Homxu
-          </div>
-          <div class="panel-body">
-            Copyright © 2019 Homxu All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
-</div>
-  
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
-  
-    <a id="menu-switch"><i class="fa fa-bars fa-lg"></i></a>
-  
-</body>
+        </main>
+        <footer id="footer">
+            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
+        </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','/js/ga.js','ga');
+            ga('create', 'UA-141265597-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
 </html>
+
+
