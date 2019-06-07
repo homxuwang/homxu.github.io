@@ -1,64 +1,423 @@
-<!doctype html>
-<html lang="en">
-    <head>
-		
-        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="">
-        <link rel="shortcut icon" href="/asset/star.png"/>
-        <link rel="canonical" href="http://guolinn.com/">
-        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
-        <title>整合Struts2+Spring+Hibernate | Homxu</title>
-        <meta name="description" content="{{meta_description}}">
+<!DOCTYPE html>
 
-        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
-        <meta name="HandheldFriendly" content="True" />
-        <meta name="MobileOptimized" content="320" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
 
-    </head>
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
     
-		<body class="post-template">
-	
+    
+  
 
-        <header id="header">
-            <a id="logo" href="/"><img src="/asset/star.png" alt="Homxu" /></a>
-            <h1><a href="/">Homxu</a></h1>
-            <p>程序员也要好好生活</p>
-            <div id="follow-icons">
-          <a href="http://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
-              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="学习笔记,Spring,SSH," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="项目所需依赖包： 单独配置Spring创建配置文件 导入xml约束约束包括beans|context|aop|tx 创建UserAction,并在Spring配置文件中配置.1234567package my.study.web.action;import com.opensymphony.xwork2.ActionSupport;public class UserAction extends A">
+<meta name="keywords" content="学习笔记,Spring,SSH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="整合Struts2+Spring+Hibernate">
+<meta property="og:url" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="项目所需依赖包： 单独配置Spring创建配置文件 导入xml约束约束包括beans|context|aop|tx 创建UserAction,并在Spring配置文件中配置.1234567package my.study.web.action;import com.opensymphony.xwork2.ActionSupport;public class UserAction extends A">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/1.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/2.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/3.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/4.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/6.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/7.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/8.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/9.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/11.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/10.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/12.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/13.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/14.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/15.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/16.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/17.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/18.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/19.png">
+<meta property="og:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/20.png">
+<meta property="og:updated_time" content="2018-12-01T13:41:57.511Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="整合Struts2+Spring+Hibernate">
+<meta name="twitter:description" content="项目所需依赖包： 单独配置Spring创建配置文件 导入xml约束约束包括beans|context|aop|tx 创建UserAction,并在Spring配置文件中配置.1234567package my.study.web.action;import com.opensymphony.xwork2.ActionSupport;public class UserAction extends A">
+<meta name="twitter:image" content="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/"/>
+
+
+
+
+
+  <title>整合Struts2+Spring+Hibernate | Homxu</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea1a8a8ef2efecad905ef14fce61783f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Homxu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序员也要好好生活</p>
+      
   </div>
-<h6><a href="/about">About</a></h6>
-        </header>
 
-        <main id="content">
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-我的足迹">
+          <a href="/我的足迹" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bus"></i> <br />
+            
+            我的足迹
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://homxu.com/2018/11/16/整合Struts2-Spring-Hibernate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Homxu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/star.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Homxu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">整合Struts2+Spring+Hibernate</h1>
         
 
-<article class="post">
-  November 16, 2018
-  
-    <span class="taglist">  &middot; 
-    
-    
-      <a href='/tags/学习笔记/'>学习笔记</a> 
-    
-      <a href='/tags/Spring/'>Spring</a> 
-    
-      <a href='/tags/SSH/'>SSH</a> 
-    
-    </span>
-  
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-16T09:13:41+08:00">
+                2018-11-16
+              </time>
+            
 
-  <h1 class="post-title">整合Struts2+Spring+Hibernate</h1>
-  <section class="post-content article-entry">
-    <p>项目所需依赖包：<br><img src="/2018/11/16/整合Struts2-Spring-Hibernate/1.png" alt="依赖包"><br><img src="/2018/11/16/整合Struts2-Spring-Hibernate/2.png" alt="依赖包"></p>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,962 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  25 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>项目所需依赖包：<br><img src="/2018/11/16/整合Struts2-Spring-Hibernate/1.png" alt="依赖包"><br><img src="/2018/11/16/整合Struts2-Spring-Hibernate/2.png" alt="依赖包"></p>
 <h1 id="单独配置Spring"><a href="#单独配置Spring" class="headerlink" title="单独配置Spring"></a>单独配置Spring</h1><h2 id="创建配置文件-导入xml约束"><a href="#创建配置文件-导入xml约束" class="headerlink" title="创建配置文件 导入xml约束"></a>创建配置文件 导入xml约束</h2><p>约束包括<code>beans</code>|<code>context</code>|<code>aop</code>|<code>tx</code><br><img src="/2018/11/16/整合Struts2-Spring-Hibernate/3.png" alt="命名空间"><br><img src="/2018/11/16/整合Struts2-Spring-Hibernate/4.png" alt="命名空间"></p>
 <p>创建<code>UserAction</code>,并在Spring配置文件中配置.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.web.action;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.opensymphony.xwork2.ActionSupport;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserAction</span> <span class="keyword">extends</span> <span class="title">ActionSupport</span> </span>&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"userAction"</span> <span class="attr">class</span>=<span class="string">"my.study.web.action.UserAction"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
@@ -143,45 +502,429 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Insert title here<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">h1</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 <h1 id="项目总览"><a href="#项目总览" class="headerlink" title="项目总览"></a>项目总览</h1><p><img src="/2018/11/16/整合Struts2-Spring-Hibernate/19.png" alt="项目总览"><br><img src="/2018/11/16/整合Struts2-Spring-Hibernate/20.png" alt="项目总览"></p>
 
-  </section>
-  <footer class="post-footer">
-    <!--
-    <section class="author">
-      <h4>Homxu</h4>
-      <p></p>
-    </section>
-    -->
-  </footer>
-</article>
+      
+    </div>
+    
+    
+    
 
-<nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/2018/11/19/Mybatis学习笔记-一/">
-        ← prev <!--Mybatis学习笔记-一-->
-    </a>
+
     
-    <span class="page-number">•</span>
+
     
-    <a class="older-posts" href="/2018/11/13/Spring学习笔记-三/">
-        <!--Spring学习笔记-三--> next →
-    </a>
-    
-</nav>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+          
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+          
+            <a href="/tags/SSH/" rel="tag"><i class="fa fa-tag"></i> SSH</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/13/Spring学习笔记-三/" rel="next" title="Spring学习笔记-三">
+                <i class="fa fa-chevron-left"></i> Spring学习笔记-三
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/19/Mybatis学习笔记-一/" rel="prev" title="Mybatis学习笔记-一">
+                Mybatis学习笔记-一 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-        </main>
-        <footer id="footer">
-            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
-        </footer>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','/js/ga.js','ga');
-            ga('create', 'UA-141265597-1', 'auto');
-            ga('send', 'pageview');
-        </script>
-    </body>
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="vcomments"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/star.png"
+               alt="Homxu" />
+          <p class="site-author-name" itemprop="name">Homxu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/homxuwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/b341e509ef8d" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-heart"></i>
+                  
+                    
+                      Jianshu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单独配置Spring"><span class="nav-number">1.</span> <span class="nav-text">单独配置Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建配置文件-导入xml约束"><span class="nav-number">1.1.</span> <span class="nav-text">创建配置文件 导入xml约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置tomcat的web-xml"><span class="nav-number">1.2.</span> <span class="nav-text">配置tomcat的web.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单独配置Struts2"><span class="nav-number">2.</span> <span class="nav-text">单独配置Struts2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置struts2主配置文件"><span class="nav-number">2.1.</span> <span class="nav-text">配置struts2主配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置struts2核心过滤器到web-xml"><span class="nav-number">2.2.</span> <span class="nav-text">配置struts2核心过滤器到web.xml</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring和Struts2整合"><span class="nav-number">3.</span> <span class="nav-text">Spring和Struts2整合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置常量"><span class="nav-number">3.1.</span> <span class="nav-text">配置常量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种方案"><span class="nav-number">3.2.</span> <span class="nav-text">两种方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单独配置Hibernate"><span class="nav-number">4.</span> <span class="nav-text">单独配置Hibernate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#导入实体类和orm元数据"><span class="nav-number">4.1.</span> <span class="nav-text">导入实体类和orm元数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hibernate和spring整合"><span class="nav-number">5.</span> <span class="nav-text">hibernate和spring整合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在spring中配置sessionFactory"><span class="nav-number">5.1.</span> <span class="nav-text">在spring中配置sessionFactory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring整合c3p0连接池"><span class="nav-number">6.</span> <span class="nav-text">spring整合c3p0连接池</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring整合hibernate环境操作数据库"><span class="nav-number">7.</span> <span class="nav-text">spring整合hibernate环境操作数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring中的aop事务"><span class="nav-number">8.</span> <span class="nav-text">Spring中的aop事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">8.1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xml配置aop事务"><span class="nav-number">8.2.</span> <span class="nav-text">xml配置aop事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注解配置aop事务"><span class="nav-number">8.3.</span> <span class="nav-text">注解配置aop事务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩大session作用范围"><span class="nav-number">9.</span> <span class="nav-text">扩大session作用范围</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现用户登陆功能"><span class="nav-number">10.</span> <span class="nav-text">实现用户登陆功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web层"><span class="nav-number">10.1.</span> <span class="nav-text">Web层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service层"><span class="nav-number">10.2.</span> <span class="nav-text">Service层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dao层"><span class="nav-number">10.3.</span> <span class="nav-text">dao层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试用的页面"><span class="nav-number">10.4.</span> <span class="nav-text">测试用的页面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目总览"><span class="nav-number">11.</span> <span class="nav-text">项目总览</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Homxu</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站浏览量:<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  <script type="text/javascript">
+    new Valine({
+        av: AV,
+        el: '#vcomments' ,
+        verify: false,
+        notify: false,
+        app_id: 'iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz',
+        app_key: 'FpJsLvikc9nea305u094EDFf',
+        guest_info:['nick'] ,// 评论只需要提供昵称
+        avatar:'hide',
+        placeholder: 'Comment input placeholder'
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>
-
-

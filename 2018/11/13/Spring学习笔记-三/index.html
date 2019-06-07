@@ -1,62 +1,413 @@
-<!doctype html>
-<html lang="en">
-    <head>
-		
-        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="">
-        <link rel="shortcut icon" href="/asset/star.png"/>
-        <link rel="canonical" href="http://guolinn.com/">
-        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
-        <title>Spring学习笔记-三 | Homxu</title>
-        <meta name="description" content="{{meta_description}}">
+<!DOCTYPE html>
 
-        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
-        <meta name="HandheldFriendly" content="True" />
-        <meta name="MobileOptimized" content="320" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
 
-    </head>
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
     
-		<body class="post-template">
-	
+    
+  
 
-        <header id="header">
-            <a id="logo" href="/"><img src="/asset/star.png" alt="Homxu" /></a>
-            <h1><a href="/">Homxu</a></h1>
-            <p>程序员也要好好生活</p>
-            <div id="follow-icons">
-          <a href="http://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
-              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="学习笔记,Spring," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Spring结合JDBC其实，Spring中提供了一个可以操作数据库的对象，这个对象封装了各种JDBC技术，可以用它来操作数据库.——JDBCtemplate需要的依赖包： 不使用Spring操作数据库123456789101112131415161718192021222324252627package my.study.g_jdbcTemplate;import java.beans.Prop">
+<meta name="keywords" content="学习笔记,Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习笔记-三">
+<meta property="og:url" content="http://homxu.com/2018/11/13/Spring学习笔记-三/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="Spring结合JDBC其实，Spring中提供了一个可以操作数据库的对象，这个对象封装了各种JDBC技术，可以用它来操作数据库.——JDBCtemplate需要的依赖包： 不使用Spring操作数据库123456789101112131415161718192021222324252627package my.study.g_jdbcTemplate;import java.beans.Prop">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/1.png">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/2.png">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/3.png">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/4.png">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/5.png">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/6.png">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/7.png">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/8.png">
+<meta property="og:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/9.png">
+<meta property="og:updated_time" content="2018-12-01T13:41:16.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习笔记-三">
+<meta name="twitter:description" content="Spring结合JDBC其实，Spring中提供了一个可以操作数据库的对象，这个对象封装了各种JDBC技术，可以用它来操作数据库.——JDBCtemplate需要的依赖包： 不使用Spring操作数据库123456789101112131415161718192021222324252627package my.study.g_jdbcTemplate;import java.beans.Prop">
+<meta name="twitter:image" content="http://homxu.com/2018/11/13/Spring学习笔记-三/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://homxu.com/2018/11/13/Spring学习笔记-三/"/>
+
+
+
+
+
+  <title>Spring学习笔记-三 | Homxu</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea1a8a8ef2efecad905ef14fce61783f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Homxu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序员也要好好生活</p>
+      
   </div>
-<h6><a href="/about">About</a></h6>
-        </header>
 
-        <main id="content">
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-我的足迹">
+          <a href="/我的足迹" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bus"></i> <br />
+            
+            我的足迹
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://homxu.com/2018/11/13/Spring学习笔记-三/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Homxu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/star.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Homxu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring学习笔记-三</h1>
         
 
-<article class="post">
-  November 13, 2018
-  
-    <span class="taglist">  &middot; 
-    
-    
-      <a href='/tags/学习笔记/'>学习笔记</a> 
-    
-      <a href='/tags/Spring/'>Spring</a> 
-    
-    </span>
-  
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-13T15:24:11+08:00">
+                2018-11-13
+              </time>
+            
 
-  <h1 class="post-title">Spring学习笔记-三</h1>
-  <section class="post-content article-entry">
-    <h1 id="Spring结合JDBC"><a href="#Spring结合JDBC" class="headerlink" title="Spring结合JDBC"></a>Spring结合JDBC</h1><p>其实，Spring中提供了一个可以操作数据库的对象，这个对象封装了各种JDBC技术，可以用它来操作数据库.——<code>JDBCtemplate</code><br>需要的依赖包：<br><img src="/2018/11/13/Spring学习笔记-三/1.png" alt="依赖包"></p>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,915 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  23 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring结合JDBC"><a href="#Spring结合JDBC" class="headerlink" title="Spring结合JDBC"></a>Spring结合JDBC</h1><p>其实，Spring中提供了一个可以操作数据库的对象，这个对象封装了各种JDBC技术，可以用它来操作数据库.——<code>JDBCtemplate</code><br>需要的依赖包：<br><img src="/2018/11/13/Spring学习笔记-三/1.png" alt="依赖包"></p>
 <h2 id="不使用Spring操作数据库"><a href="#不使用Spring操作数据库" class="headerlink" title="不使用Spring操作数据库"></a>不使用Spring操作数据库</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.g_jdbcTemplate;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.beans.PropertyVetoException;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.springframework.jdbc.core.JdbcTemplate;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.mchange.v2.c3p0.ComboPooledDataSource;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">		<span class="comment">//1. 准备连接池</span></div><div class="line">		ComboPooledDataSource dataSource = <span class="keyword">new</span> ComboPooledDataSource();</div><div class="line">		</div><div class="line">		dataSource.setDriverClass(<span class="string">"com.mysql.jdbc.Driver"</span>);</div><div class="line">		dataSource.setJdbcUrl(<span class="string">"jdbc:mysql:///你的数据库名"</span>);</div><div class="line">		dataSource.setUser(<span class="string">"root"</span>);</div><div class="line">		dataSource.setPassword(<span class="string">"12345"</span>);</div><div class="line">		<span class="comment">//2. 创建JDBC模板对象</span></div><div class="line">		JdbcTemplate jt = <span class="keyword">new</span> JdbcTemplate();</div><div class="line">		jt.setDataSource(dataSource);</div><div class="line">		<span class="comment">//3. 书写SQL语句</span></div><div class="line">		String sql = <span class="string">"insert into t_user values(null,'hey')"</span>;</div><div class="line">		jt.update(sql);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>可以去数据库中自己查看是否添加成功</p>
 <h2 id="使用Spring操作数据库"><a href="#使用Spring操作数据库" class="headerlink" title="使用Spring操作数据库"></a>使用Spring操作数据库</h2><p>1.使用JDBC模板完成增删改查<br>定义<code>UserDao</code>接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.g_jdbcTemplate;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserDao</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">save</span><span class="params">(User u)</span></span>;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(Integer id)</span></span>;</div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(User u)</span></span>;</div><div class="line">	<span class="function">User <span class="title">getById</span><span class="params">(Integer id)</span></span>;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getTotalCount</span><span class="params">()</span></span>;</div><div class="line">	<span class="function">List&lt;User&gt; <span class="title">getAll</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -147,45 +498,427 @@
 <p>可以在类之前加上注解配置，那么这个类的所有方法都遵循这个配置。如果有某个方法和类声明的注解配置不一样，则再这个方法前面声明一下注解配置即可。</p>
 <p>可以再书写一个测试类进行测试，注意要读取正确的配置文件（即开启了注解配置的文件）</p>
 
-  </section>
-  <footer class="post-footer">
-    <!--
-    <section class="author">
-      <h4>Homxu</h4>
-      <p></p>
-    </section>
-    -->
-  </footer>
-</article>
+      
+    </div>
+    
+    
+    
 
-<nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/2018/11/16/整合Struts2-Spring-Hibernate/">
-        ← prev <!--整合Struts2+Spring+Hibernate-->
-    </a>
+
     
-    <span class="page-number">•</span>
+
     
-    <a class="older-posts" href="/2018/11/10/Spring学习笔记-二/">
-        <!--Spring学习笔记-二--> next →
-    </a>
-    
-</nav>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+          
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/10/Spring学习笔记-二/" rel="next" title="Spring学习笔记-二">
+                <i class="fa fa-chevron-left"></i> Spring学习笔记-二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/16/整合Struts2-Spring-Hibernate/" rel="prev" title="整合Struts2+Spring+Hibernate">
+                整合Struts2+Spring+Hibernate <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-        </main>
-        <footer id="footer">
-            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
-        </footer>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','/js/ga.js','ga');
-            ga('create', 'UA-141265597-1', 'auto');
-            ga('send', 'pageview');
-        </script>
-    </body>
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="vcomments"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/star.png"
+               alt="Homxu" />
+          <p class="site-author-name" itemprop="name">Homxu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/homxuwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/b341e509ef8d" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-heart"></i>
+                  
+                    
+                      Jianshu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring结合JDBC"><span class="nav-number">1.</span> <span class="nav-text">Spring结合JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不使用Spring操作数据库"><span class="nav-number">1.1.</span> <span class="nav-text">不使用Spring操作数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Spring操作数据库"><span class="nav-number">1.2.</span> <span class="nav-text">使用Spring操作数据库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring中的aop事务"><span class="nav-number">2.</span> <span class="nav-text">Spring中的aop事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事务相关概念"><span class="nav-number">2.1.</span> <span class="nav-text">事务相关概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义场景并书写代码"><span class="nav-number">2.2.</span> <span class="nav-text">定义场景并书写代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不添加事务部分"><span class="nav-number">2.2.1.</span> <span class="nav-text">不添加事务部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加事务"><span class="nav-number">2.2.2.</span> <span class="nav-text">添加事务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编码式"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">编码式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xml配置"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">xml配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置事务通知"><span class="nav-number">2.2.2.2.1.</span> <span class="nav-text">配置事务通知</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置将事务织入目标对象"><span class="nav-number">2.2.2.2.2.</span> <span class="nav-text">配置将事务织入目标对象</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#注解配置"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">注解配置</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Homxu</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站浏览量:<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  <script type="text/javascript">
+    new Valine({
+        av: AV,
+        el: '#vcomments' ,
+        verify: false,
+        notify: false,
+        app_id: 'iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz',
+        app_key: 'FpJsLvikc9nea305u094EDFf',
+        guest_info:['nick'] ,// 评论只需要提供昵称
+        avatar:'hide',
+        placeholder: 'Comment input placeholder'
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>
-
-

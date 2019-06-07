@@ -1,64 +1,415 @@
-<!doctype html>
-<html lang="en">
-    <head>
-		
-        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="">
-        <link rel="shortcut icon" href="/asset/star.png"/>
-        <link rel="canonical" href="http://guolinn.com/">
-        <link rel="alternate" type="application/rss+xml" title="Homxu" href="/atom.xml">
-        <title>Spring学习笔记-一 | Homxu</title>
-        <meta name="description" content="{{meta_description}}">
+<!DOCTYPE html>
 
-        <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="/styles/crisp.css">
-        <meta name="HandheldFriendly" content="True" />
-        <meta name="MobileOptimized" content="320" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
 
-    </head>
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
     
-		<body class="post-template">
-	
+    
+  
 
-        <header id="header">
-            <a id="logo" href="/"><img src="/asset/star.png" alt="Homxu" /></a>
-            <h1><a href="/">Homxu</a></h1>
-            <p>程序员也要好好生活</p>
-            <div id="follow-icons">
-          <a href="http://github.com/homxuwang"><i class="fa fa-github-square fa-2x"></i></a>
-              <a href="/atom.xml"><i class="fa fa-rss-square fa-2x"></i></a>
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="学习笔记,Spring,JavaWeb," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理 Spring 搭建基本环境首先导入Spring所需依赖包： 创建一个对象用于测试： 123456789101112131415161718192021package my.study.bean;public class User &amp;#123;		private String name;	private I">
+<meta name="keywords" content="学习笔记,Spring,JavaWeb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习笔记-一">
+<meta property="og:url" content="http://homxu.com/2018/11/09/Spring学习笔记-一/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理 Spring 搭建基本环境首先导入Spring所需依赖包： 创建一个对象用于测试： 123456789101112131415161718192021package my.study.bean;public class User &amp;#123;		private String name;	private I">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/Spring1.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/1.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/2.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/3.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/4.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/5.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/6.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/7.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/8.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/9.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/10.png">
+<meta property="og:updated_time" content="2019-06-06T06:48:02.032Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习笔记-一">
+<meta name="twitter:description" content="Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理 Spring 搭建基本环境首先导入Spring所需依赖包： 创建一个对象用于测试： 123456789101112131415161718192021package my.study.bean;public class User &amp;#123;		private String name;	private I">
+<meta name="twitter:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/Spring1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://homxu.com/2018/11/09/Spring学习笔记-一/"/>
+
+
+
+
+
+  <title>Spring学习笔记-一 | Homxu</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ea1a8a8ef2efecad905ef14fce61783f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Homxu</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">程序员也要好好生活</p>
+      
   </div>
-<h6><a href="/about">About</a></h6>
-        </header>
 
-        <main id="content">
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-我的足迹">
+          <a href="/我的足迹" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bus"></i> <br />
+            
+            我的足迹
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://homxu.com/2018/11/09/Spring学习笔记-一/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Homxu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/star.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Homxu">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring学习笔记-一</h1>
         
 
-<article class="post">
-  November 9, 2018
-  
-    <span class="taglist">  &middot; 
-    
-    
-      <a href='/tags/学习笔记/'>学习笔记</a> 
-    
-      <a href='/tags/Spring/'>Spring</a> 
-    
-      <a href='/tags/JavaWeb/'>JavaWeb</a> 
-    
-    </span>
-  
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-09T15:04:24+08:00">
+                2018-11-09
+              </time>
+            
 
-  <h1 class="post-title">Spring学习笔记-一</h1>
-  <section class="post-content article-entry">
-    <p> Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理<br><img src="/2018/11/09/Spring学习笔记-一/Spring1.png" alt=""></p>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,154 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理<br><img src="/2018/11/09/Spring学习笔记-一/Spring1.png" alt=""></p>
 <h1 id="Spring-搭建基本环境"><a href="#Spring-搭建基本环境" class="headerlink" title="Spring 搭建基本环境"></a>Spring 搭建基本环境</h1><p>首先导入Spring所需依赖包：<br><img src="/2018/11/09/Spring学习笔记-一/1.png" alt="导入依赖包"></p>
 <p>创建一个对象用于测试：</p>
 <p><img src="/2018/11/09/Spring学习笔记-一/2.png" alt="创建对象"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.bean;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;	</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="keyword">private</span> Integer age;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"User 的空参构造方法被调用"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> age;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.age = age;</div><div class="line">	&#125;		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -91,7 +442,7 @@
 <h2 id="Spring创建对象的方式"><a href="#Spring创建对象的方式" class="headerlink" title="Spring创建对象的方式"></a>Spring创建对象的方式</h2><p>创建新的配置文件和类进行测试</p>
 <p><img src="/2018/11/09/Spring学习笔记-一/9.png" alt="创建对象的方式"><br><img src="/2018/11/09/Spring学习笔记-一/10.png" alt="创建对象的方式"></p>
 <p><code>UserFactory</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.bean;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserFactory</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> User <span class="title">createUser</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"静态工厂方式创建User"</span>);		</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> User();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> User <span class="title">createUser2</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"实例工厂方式创建User"</span>);		</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> User();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><code>applicationContext.xml</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 方式1：空参构造创建 --&gt;</div><div class="line">	&lt;bean name=&quot;User&quot; class=&quot;my.study.bean.User&quot;&gt;&lt;/bean&gt;</div><div class="line">	&lt;!-- 方式2：静态工厂创建</div><div class="line">		调用UserFactory的createUser方法创建名为user2的对象，放入容器</div><div class="line">	 --&gt;</div><div class="line">	&lt;bean name=&quot;User2&quot; class=&quot;my.study.bean.UserFactory&quot; factory-method=&quot;createUser&quot;&gt;&lt;/bean&gt;</div><div class="line">	</div><div class="line">	&lt;!-- 方式3：静态工厂创建</div><div class="line">		调用UserFactory的createUser方法创建名为user2的对象，放入容器</div><div class="line">	 --&gt;</div><div class="line">	&lt;bean name=&quot;User3&quot; factory-bean=&quot;userFactory&quot; factory-method=&quot;createUser2&quot;&gt;&lt;/bean&gt;</div><div class="line">	&lt;bean name=&quot;userFactory&quot; class=&quot;my.study.bean.UserFactory&quot;&gt;&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p><code>applicationContext.xml</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 方式1：空参构造创建 --&gt;</div><div class="line">	&lt;bean name=&quot;User&quot; class=&quot;my.study.bean.User&quot;&gt;&lt;/bean&gt;</div><div class="line">	&lt;!-- 方式2：静态工厂创建</div><div class="line">		调用UserFactory的createUser方法创建名为user2的对象，放入容器</div><div class="line">	 --&gt;</div><div class="line">	&lt;bean name=&quot;User2&quot; class=&quot;my.study.bean.UserFactory&quot; factory-method=&quot;createUser&quot;&gt;&lt;/bean&gt;</div><div class="line">	</div><div class="line">	&lt;!-- 方式3：实例工厂创建</div><div class="line">		调用UserFactory的createUser方法创建名为user3的对象，放入容器</div><div class="line">	 --&gt;</div><div class="line">	&lt;bean name=&quot;User3&quot; factory-bean=&quot;userFactory&quot; factory-method=&quot;createUser2&quot;&gt;&lt;/bean&gt;</div><div class="line">	&lt;bean name=&quot;userFactory&quot; class=&quot;my.study.bean.UserFactory&quot;&gt;&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
 <h3 id="空参构造方式"><a href="#空参构造方式" class="headerlink" title="空参构造方式"></a>空参构造方式</h3><p>空参构造方式就是最开始配置bean时的构造方式，前面已经有结果。当然这里要注意，创建容器对象时，传参时要传入的配置文件需要加上包名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;my/study/b_create/applicationContext.xml&quot;);</div></pre></td></tr></table></figure></p>
 <h3 id="静态工厂方式"><a href="#静态工厂方式" class="headerlink" title="静态工厂方式"></a>静态工厂方式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="comment">//静态工厂方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">//1.创建容器对象</span></div><div class="line">  ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"my/study/b_create/applicationContext.xml"</span>);</div><div class="line">  <span class="comment">//2.向容器请求"user"对象</span></div><div class="line">  User u = (User) ac.getBean(<span class="string">"User2"</span>);</div><div class="line">  <span class="comment">//3打印user对象</span></div><div class="line">  System.out.println(u);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="实例工厂方式"><a href="#实例工厂方式" class="headerlink" title="实例工厂方式"></a>实例工厂方式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="comment">//动态工厂方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">//1.创建容器对象</span></div><div class="line">  ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"my/study/b_create/applicationContext.xml"</span>);</div><div class="line">  <span class="comment">//2.向容器请求"user"对象</span></div><div class="line">  User u = (User) ac.getBean(<span class="string">"User3"</span>);</div><div class="line">  <span class="comment">//3打印user对象</span></div><div class="line">  System.out.println(u);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -130,45 +481,429 @@
 <h3 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h3><p>配置文件中的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;CollectionBean_arr&quot; class=&quot;my.study.c_injection.CollectionBean&quot;&gt;</div><div class="line">&lt;!-- arr注入 --&gt;</div><div class="line">	&lt;!-- 如果数组中只准备注入一个元素，直接使用value|ref --&gt;</div><div class="line">	&lt;!--  </div><div class="line">		&lt;property name=&quot;arr&quot; value=&quot;11&quot;&gt;&lt;/property&gt;</div><div class="line">	--&gt;</div><div class="line">	&lt;!-- 多元素注入 --&gt;</div><div class="line">	&lt;property name=&quot;arr&quot;&gt;</div><div class="line">		&lt;array&gt;</div><div class="line">			&lt;value&gt;1&lt;/value&gt;</div><div class="line">			&lt;value&gt;2&lt;/value&gt;</div><div class="line">			&lt;ref bean=&quot;User4&quot;&gt;&lt;/ref&gt;</div><div class="line">		&lt;/array&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- list注入 --&gt;</div><div class="line">	&lt;!-- 如果List中只准备注入一个元素，直接使用value|ref --&gt;</div><div class="line">	&lt;!-- 多元素注入 --&gt;</div><div class="line">	&lt;property name=&quot;list&quot;&gt;</div><div class="line">		&lt;list&gt;</div><div class="line">			&lt;value&gt;list1&lt;/value&gt;</div><div class="line">			&lt;value&gt;list2&lt;/value&gt;</div><div class="line">			&lt;ref bean=&quot;User3&quot;&gt;&lt;/ref&gt;</div><div class="line">		&lt;/list&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- map注入 --&gt;		</div><div class="line">	&lt;property name=&quot;map&quot;&gt;</div><div class="line">		&lt;map&gt;</div><div class="line">			&lt;entry key=&quot;key1&quot; value=&quot;value1&quot;&gt;&lt;/entry&gt;</div><div class="line">			&lt;entry key=&quot;user&quot; value-ref=&quot;User4&quot;&gt;&lt;/entry&gt;</div><div class="line">			&lt;entry key-ref=&quot;User3&quot; value-ref=&quot;User2&quot;&gt;&lt;/entry&gt;</div><div class="line">		&lt;/map&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- Properties注入 --&gt;</div><div class="line">	&lt;property name=&quot;prop&quot;&gt;</div><div class="line">		&lt;props&gt;</div><div class="line">			&lt;prop key=&quot;propkey1&quot;&gt; propvalue1&lt;/prop&gt;</div><div class="line">			&lt;prop key=&quot;propkey2&quot;&gt; propvalue2&lt;/prop&gt;</div><div class="line">		&lt;/props&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
 <p>打印结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CollectionBean [arr=[<span class="number">1</span>, <span class="number">2</span>, User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], list=[list1, list2, User [name=hey, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], map=&#123;key1=value1, user=User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]], User [name=hey, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]=User [name=<span class="number">123</span>, age=<span class="keyword">null</span>, car=Car [name=Q5, color=black]]&#125;, prop=&#123;propkey2=propvalue2, propkey1=propvalue1&#125;]</div></pre></td></tr></table></figure></p>
 
-  </section>
-  <footer class="post-footer">
-    <!--
-    <section class="author">
-      <h4>Homxu</h4>
-      <p></p>
-    </section>
-    -->
-  </footer>
-</article>
+      
+    </div>
+    
+    
+    
 
-<nav class="pagination" role="pagination">
     
-    <a class="newer-posts" href="/2018/11/10/Spring学习笔记-二/">
-        ← prev <!--Spring学习笔记-二-->
-    </a>
+
     
-    <span class="page-number">•</span>
+
     
-    <a class="older-posts" href="/2018/08/13/实现线段树/">
-        <!--实现线段树--> next →
-    </a>
-    
-</nav>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"><i class="fa fa-tag"></i> 学习笔记</a>
+          
+            <a href="/tags/Spring/" rel="tag"><i class="fa fa-tag"></i> Spring</a>
+          
+            <a href="/tags/JavaWeb/" rel="tag"><i class="fa fa-tag"></i> JavaWeb</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/13/实现线段树/" rel="next" title="实现线段树">
+                <i class="fa fa-chevron-left"></i> 实现线段树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/10/Spring学习笔记-二/" rel="prev" title="Spring学习笔记-二">
+                Spring学习笔记-二 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-        </main>
-        <footer id="footer">
-            <section id="footer-message">&copy; 2019 Homxu. All rights reserved. Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. <a href="https://github.com/guolin/crisp-hexo-theme" target="_blank">crisp</a> theme by <a href="guolin.github.io" target="_blank">Guo Lin</a>.</section>
-        </footer>
-        <script>
-            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','/js/ga.js','ga');
-            ga('create', 'UA-141265597-1', 'auto');
-            ga('send', 'pageview');
-        </script>
-    </body>
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="vcomments"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/star.png"
+               alt="Homxu" />
+          <p class="site-author-name" itemprop="name">Homxu</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/homxuwang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/b341e509ef8d" target="_blank" title="Jianshu">
+                  
+                    <i class="fa fa-fw fa-heart"></i>
+                  
+                    
+                      Jianshu
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-搭建基本环境"><span class="nav-number">1.</span> <span class="nav-text">Spring 搭建基本环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ApplicationContext-amp-BeanFactory"><span class="nav-number">2.</span> <span class="nav-text">ApplicationContext&BeanFactory</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring的配置"><span class="nav-number">3.</span> <span class="nav-text">Spring的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bean-元素"><span class="nav-number">3.1.</span> <span class="nav-text">bean 元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scope属性"><span class="nav-number">3.1.1.</span> <span class="nav-text">Scope属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#singleton-默认值"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">singleton(默认值)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prototype"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">prototype</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#request"><span class="nav-number">3.1.1.3.</span> <span class="nav-text">request</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#session"><span class="nav-number">3.1.1.4.</span> <span class="nav-text">session</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期属性"><span class="nav-number">3.1.2.</span> <span class="nav-text">生命周期属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring的分模块配置"><span class="nav-number">3.2.</span> <span class="nav-text">Spring的分模块配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring创建对象的方式"><span class="nav-number">3.3.</span> <span class="nav-text">Spring创建对象的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空参构造方式"><span class="nav-number">3.3.1.</span> <span class="nav-text">空参构造方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态工厂方式"><span class="nav-number">3.3.2.</span> <span class="nav-text">静态工厂方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例工厂方式"><span class="nav-number">3.3.3.</span> <span class="nav-text">实例工厂方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring属性注入"><span class="nav-number">4.</span> <span class="nav-text">Spring属性注入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注入方式"><span class="nav-number">4.1.</span> <span class="nav-text">注入方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set方法注入"><span class="nav-number">4.1.1.</span> <span class="nav-text">set方法注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数注入"><span class="nav-number">4.1.2.</span> <span class="nav-text">构造函数注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#p名称空间注入"><span class="nav-number">4.1.3.</span> <span class="nav-text">p名称空间注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spel注入"><span class="nav-number">4.1.4.</span> <span class="nav-text">spel注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂类型注入"><span class="nav-number">4.2.</span> <span class="nav-text">复杂类型注入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">4.2.1.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#List"><span class="nav-number">4.2.2.</span> <span class="nav-text">List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">4.2.3.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Properties"><span class="nav-number">4.2.4.</span> <span class="nav-text">Properties</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2017 &mdash; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Homxu</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站浏览量:<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  <script type="text/javascript">
+    new Valine({
+        av: AV,
+        el: '#vcomments' ,
+        verify: false,
+        notify: false,
+        app_id: 'iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz',
+        app_key: 'FpJsLvikc9nea305u094EDFf',
+        guest_info:['nick'] ,// 评论只需要提供昵称
+        avatar:'hide',
+        placeholder: 'Comment input placeholder'
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
 </html>
-
-
