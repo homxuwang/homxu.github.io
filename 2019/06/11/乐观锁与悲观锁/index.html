@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="Homxu">
 <meta property="og:description" content="乐观并发控制(乐观锁)和悲观并发控制（悲观锁）是并发控制主要采用的技术手段。 无论是悲观锁还是乐观锁，都是人们定义出来的概念，可以认为是一种思想。网上最常见的解答是数据库管理系统(DBMS)中锁的机制的介绍。当然不仅仅是在关系型数据库系统中有乐观锁和悲观锁的概念，像memcache(一个分布式内存对象缓存系统)、hibernate、tair(与redis类似,是一个分布式key/value存储系统">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-11T09:00:35.007Z">
+<meta property="og:updated_time" content="2019-06-11T09:11:31.395Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转]乐观锁与悲观锁">
 <meta name="twitter:description" content="乐观并发控制(乐观锁)和悲观并发控制（悲观锁）是并发控制主要采用的技术手段。 无论是悲观锁还是乐观锁，都是人们定义出来的概念，可以认为是一种思想。网上最常见的解答是数据库管理系统(DBMS)中锁的机制的介绍。当然不仅仅是在关系型数据库系统中有乐观锁和悲观锁的概念，像memcache(一个分布式内存对象缓存系统)、hibernate、tair(与redis类似,是一个分布式key/value存储系统">
@@ -392,7 +392,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,215 字
+                  3,213 字
                 </span>
               
 
@@ -456,8 +456,9 @@ var _hmt = _hmt || [];
 <li>更新时，带上这个<code>version</code></li>
 <li>执行更新时， set version = newVersion where version = oldVersion<br>如果version不对，就更新失败</li>
 </ul>
-<p>例如:<br>。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> <span class="keyword">table</span> <span class="keyword">set</span> <span class="keyword">name</span> = <span class="string">'Aron'</span>, <span class="keyword">version</span> = <span class="keyword">version</span> + <span class="number">1</span> <span class="keyword">where</span> <span class="keyword">id</span> = #&#123;<span class="keyword">id</span>&#125; <span class="keyword">and</span> <span class="keyword">version</span> = #&#123;<span class="keyword">version</span>&#125;;</div></pre></td></tr></table></figure></p>
-<h2 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h2><p>乐观锁的另一种技术技术，当多个线程尝试使用CAS同时更新同一个变量时，只有其中一个线程能更新变量的值，而其它线程都失败，失败的线程并不会被挂起，而是被告知这次竞争中失败，并可以再次尝试。</p>
+<p>例如:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> <span class="keyword">table</span> <span class="keyword">set</span> <span class="keyword">name</span> = <span class="string">'Aron'</span>, <span class="keyword">version</span> = <span class="keyword">version</span> + <span class="number">1</span> <span class="keyword">where</span> <span class="keyword">id</span> = #&#123;<span class="keyword">id</span>&#125; <span class="keyword">and</span> <span class="keyword">version</span> = #&#123;<span class="keyword">version</span>&#125;;</div></pre></td></tr></table></figure>
+<h2 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h2><p>乐观锁的另一种技术，当多个线程尝试使用CAS同时更新同一个变量时，只有其中一个线程能更新变量的值，而其它线程都失败，失败的线程并不会被挂起，而是被告知这次竞争中失败，并可以再次尝试。</p>
 <p><code>CAS</code>操作中包含三个操作数 :</p>
 <ul>
 <li>需要读写的内存位置<code>V</code></li>
