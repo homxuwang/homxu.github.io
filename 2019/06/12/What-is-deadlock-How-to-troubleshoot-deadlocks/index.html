@@ -129,7 +129,7 @@
 <meta property="og:image" content="http://homxu.com/2019/06/12/What-is-deadlock-How-to-troubleshoot-deadlocks/7.png">
 <meta property="og:image" content="http://homxu.com/2019/06/12/What-is-deadlock-How-to-troubleshoot-deadlocks/8.png">
 <meta property="og:image" content="http://homxu.com/2019/06/12/What-is-deadlock-How-to-troubleshoot-deadlocks/9.png">
-<meta property="og:updated_time" content="2019-06-13T09:20:05.132Z">
+<meta property="og:updated_time" content="2019-06-13T09:51:10.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="What is deadlock?How to troubleshoot deadlocks?">
 <meta name="twitter:description" content="什么是死锁？当两个(或多个)任务正在等待必须由另一线程释放的某个共享资源，而线程该线程又正在等待必须由前述任务之一释放的另一共享资源时，并发应用程序就出现了死锁。   当系统中同时出现如下四种条件时，就会导致这种情形。我们称其为Coffman条件(产生死锁的4个必要条件) 如果一个系统中如下4种情形同时存在，则产生死锁情形的机会就会上升  互斥条件：进程要求对所分配的资源进行排它性控制，即在一段时">
@@ -392,7 +392,7 @@ var _hmt = _hmt || [];
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,608 字
+                  3,639 字
                 </span>
               
 
@@ -435,7 +435,7 @@ var _hmt = _hmt || [];
 <p>当系统中同时出现如下四种条件时，就会导致这种情形。我们称其为<strong>Coffman条件</strong>(产生死锁的4个必要条件)</p>
 <p>如果一个系统中如下4种情形同时存在，则产生死锁情形的机会就会上升</p>
 <ul>
-<li><strong>互斥条件</strong>：进程要求对所分配的资源进行排它性控制，即在一段时间内某资源仅为一进程所占用</li>
+<li><strong>互斥条件</strong>：进程要求对所分配的资源进行排它性控制，即在一段时间内某资源仅为一进程所占用(死锁中涉及的资源必须是不可共享的。一次只有一个任务可以使用该资源)</li>
 <li><strong>占有并等待条件</strong>：当进程因请求资源而阻塞时，对已获得的资源保持不放(一个任务在占有某一互斥的资源时又请求另一互斥的资源。当它在等待时，不会释放任何资源)</li>
 <li><strong>不可剥夺条件</strong>：进程已获得的资源在未使用完之前，不能剥夺，只能在使用完时由自己释放(资源只能被那些持有它们的任务释放)</li>
 <li><strong>循环等待条件</strong>：在发生死锁时，必然存在一个进程–资源的环形链。例如存在进程集合{P1,P2,P3….Pn}，P1 申请P2获取的资源，P2申请P3资源….而Pn申请P1获取的资源，这样形成了一个闭环，即循环等待。</li>
