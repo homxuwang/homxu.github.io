@@ -126,7 +126,7 @@
 <meta property="og:image" content="http://homxu.com/2019/05/16/事务隔离级别/4.png">
 <meta property="og:image" content="http://homxu.com/2019/05/16/事务隔离级别/5.png">
 <meta property="og:image" content="http://homxu.com/2019/05/16/事务隔离级别/6.png">
-<meta property="og:updated_time" content="2019-06-02T07:20:27.134Z">
+<meta property="og:updated_time" content="2019-06-14T12:15:57.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="事务隔离级别">
 <meta name="twitter:description" content="本文大部分转载自事务隔离级别(图文详解).md) 事务什么是事务事务是逻辑上的一组操作，要么都执行，要么都不执行。 事务最经典也经常被拿出来说例子就是转账了。假如小明要给小红转账1000元，这个转账会涉及到两个关键操作就是：将小明的余额减少1000元，将小红的余额增加1000元。万一在这两个操作之间突然出现错误比如银行系统崩溃，导致小明余额减少而小红的余额没有增加，这样就不对了。事务就是保证这两个">
@@ -462,7 +462,48 @@ var _hmt = _hmt || [];
 <li><strong>REPEATABLE-READ(可重复读)</strong>： 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。——对应解决<strong>不可重复读</strong>、<strong>脏读</strong></li>
 <li><strong>SERIALIZABLE(可串行化)</strong>： 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。——对应解决<strong>脏读</strong>、<strong>不可重复读</strong>、<strong>幻读</strong></li>
 </ul>
-<p>下表为各个隔离级别可以预防的问题:<br>|隔离行为(级别)|丢失修改|脏读|不可重复读|幻读|<br>| – | – | – | – | – |<br>| READ-UNCOMMITTED | √ |  |  |  |<br>| READ-COMMITTED | √ |√ | |  |<br>| REPEATABLE-READ | √ | √ | √ | |<br>| SERIALIZABLE | √ | √ | √ | √ |</p>
+<p>下表为各个隔离级别可以预防的问题:</p>
+<table>
+<thead>
+<tr>
+<th>隔离行为(级别)</th>
+<th>丢失修改</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>READ-UNCOMMITTED</td>
+<td>√</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>READ-COMMITTED</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>REPEATABLE-READ</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>SERIALIZABLE</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+</tbody>
+</table>
 <p>MySQL InnoDB 存储引擎的默认支持的隔离级别是<strong>REPEATABLE-READ（可重读）</strong>。我们可以通过SELECT @@tx_isolation;命令来查看<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; SELECT @@tx_isolation;</div><div class="line">+<span class="comment">-----------------+</span></div><div class="line">| @@tx_isolation  |</div><div class="line">+<span class="comment">-----------------+</span></div><div class="line">| REPEATABLE-READ |</div><div class="line">+<span class="comment">-----------------+</span></div><div class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</div></pre></td></tr></table></figure></p>
 <p>这里需要注意的是：与 SQL 标准不同的地方在于InnoDB 存储引擎在 <strong>REPEATABLE-READ（可重读）</strong> 事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server)是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是 REPEATABLE-READ（可重读） 已经可以完全保证事务的隔离性要求，即达到了SQL标准的SERIALIZABLE(可串行化)隔离级别。</p>
 <p>因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是READ-COMMITTED(读取提交内容):，但是你要知道的是InnoDB 存储引擎默认使用 <strong>REPEATABLE-READ（可重读）</strong>并不会有任何性能损失。</p>

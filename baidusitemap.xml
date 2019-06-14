@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://homxu.com/2019/05/16/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</loc>
+    <lastmod>2019-06-14T12:15:57.976Z</lastmod>
+    <data>
+        <display>
+        <title>事务隔离级别</title>
+        <pubTime>2019-05-16T07:45:22.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://homxu.com/2019/06/12/What-is-deadlock-How-to-troubleshoot-deadlocks/</loc>
     <lastmod>2019-06-13T10:07:44.153Z</lastmod>
     <data>
@@ -90,23 +107,6 @@
         <tag>Spring</tag>
          
         <tag>JavaWeb</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://homxu.com/2019/05/16/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</loc>
-    <lastmod>2019-06-02T07:20:27.134Z</lastmod>
-    <data>
-        <display>
-        <title>事务隔离级别</title>
-        <pubTime>2019-05-16T07:45:22.000Z</pubTime>
-        
-        <tag>数据库</tag>
          
          
            
