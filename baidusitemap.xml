@@ -4,6 +4,25 @@
 
     
   <url>
+    <loc>http://homxu.com/2020/11/05/React-js%E7%AE%80%E4%B9%A6%E9%A1%B9%E7%9B%AE%E6%80%BB%E7%BB%93%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2020-11-05T12:52:47.830Z</lastmod>
+    <data>
+        <display>
+        <title>React.js简书项目总结笔记</title>
+        <pubTime>2020-11-05T06:37:26.000Z</pubTime>
+        
+        <tag>前端</tag>
+         
+        <tag>React</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://homxu.com/2019/12/26/SpringBoot%E6%89%93%E5%8C%85%E4%B8%BAJAR%E5%8C%85%E5%90%8E%E8%AE%BF%E9%97%AE%E4%B8%8D%E5%88%B0Resources%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2019-12-29T09:17:15.259Z</lastmod>
     <data>
@@ -233,9 +252,9 @@
         <title>Spring学习笔记-二</title>
         <pubTime>2018-11-10T01:13:56.000Z</pubTime>
         
-        <tag>学习笔记</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>学习笔记</tag>
          
         <tag>JavaWeb</tag>
          
@@ -272,9 +291,9 @@
         <title>Spring学习笔记-一</title>
         <pubTime>2018-11-09T07:04:24.000Z</pubTime>
         
-        <tag>学习笔记</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>学习笔记</tag>
          
         <tag>JavaWeb</tag>
          
@@ -312,9 +331,9 @@
         <title>windows下开启和使用mysql的binlog</title>
         <pubTime>2019-05-09T08:14:44.000Z</pubTime>
         
-        <tag>数据库</tag>
-         
         <tag>系统开发记录</tag>
+         
+        <tag>数据库</tag>
          
          
            
@@ -632,9 +651,9 @@
         <title>整合Struts2+Spring+Hibernate</title>
         <pubTime>2018-11-16T01:13:41.000Z</pubTime>
         
-        <tag>学习笔记</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>学习笔记</tag>
          
         <tag>SSH</tag>
          
@@ -721,9 +740,9 @@
         <title>Spring学习笔记-三</title>
         <pubTime>2018-11-13T07:24:11.000Z</pubTime>
         
-        <tag>学习笔记</tag>
-         
         <tag>Spring</tag>
+         
+        <tag>学习笔记</tag>
          
          
            
