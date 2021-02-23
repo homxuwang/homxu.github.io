@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>webpack5版本，使用webpack-dev-server报错 | Homxu</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="webpack," />
+  
+
+  <meta name="description" content="在学习Webpack时，需要通过server方式运行，开始使用--save-dev的方式进行安装，无奈报错；搜索相关博客，有的解释使用global方式安装，但是用这种方式安装后，运行依然报错。 package.json123456789101112131415161718&amp;#123;  &quot;name&quot;: &quot;02configuration&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;descri">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack5版本，使用webpack-dev-server报错">
+<meta property="og:url" content="http://homxu.com/2021/01/15/webpack5版本，使用webpack-dev-server报错/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="在学习Webpack时，需要通过server方式运行，开始使用--save-dev的方式进行安装，无奈报错；搜索相关博客，有的解释使用global方式安装，但是用这种方式安装后，运行依然报错。 package.json123456789101112131415161718&amp;#123;  &quot;name&quot;: &quot;02configuration&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;descri">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-02-04T08:58:31.006Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack5版本，使用webpack-dev-server报错">
+<meta name="twitter:description" content="在学习Webpack时，需要通过server方式运行，开始使用--save-dev的方式进行安装，无奈报错；搜索相关博客，有的解释使用global方式安装，但是用这种方式安装后，运行依然报错。 package.json123456789101112131415161718&amp;#123;  &quot;name&quot;: &quot;02configuration&quot;,  &quot;version&quot;: &quot;1.0.0&quot;,  &quot;descri">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#package-json"><span class="toc-text">package.json</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报错信息"><span class="toc-text">报错信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-webpack5版本，使用webpack-dev-server报错" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">webpack5版本，使用webpack-dev-server报错</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.01.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>在学习Webpack时，需要通过server方式运行，开始使用<code>--save-dev</code>的方式进行安装，无奈报错；搜索相关博客，有的解释使用<code>global</code>方式安装，但是用这种方式安装后，运行依然报错。</p>
+<h1 id="package-json"><a href="#package-json" class="headerlink" title="package.json"></a>package.json</h1><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"name"</span>: <span class="string">"02configuration"</span>,</div><div class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</div><div class="line">  <span class="attr">"description"</span>: <span class="string">""</span>,</div><div class="line">  <span class="attr">"main"</span>: <span class="string">"index.js"</span>,</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"test"</span>: <span class="string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span>,</div><div class="line">    <span class="attr">"dev"</span>: <span class="string">"webpack-dev-server --open --hot"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"keywords"</span>: [],</div><div class="line">  <span class="attr">"author"</span>: <span class="string">""</span>,</div><div class="line">  <span class="attr">"license"</span>: <span class="string">"ISC"</span>,</div><div class="line">  <span class="attr">"devDependencies"</span>: &#123;</div><div class="line">    <span class="attr">"webpack"</span>: <span class="string">"^5.14.0"</span>,</div><div class="line">    <span class="attr">"webpack-cli"</span>: <span class="string">"^4.3.1"</span>,</div><div class="line">    <span class="attr">"webpack-dev-server"</span>: <span class="string">"^3.11.2"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><p>使用以下命令报错<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run dev</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">D:\study\Webpack\webpack-lagou\<span class="number">02</span>configuration&gt;npm run dev</div><div class="line"></div><div class="line">&gt; <span class="number">02</span>configuration@<span class="number">1.0</span><span class="number">.0</span> dev D:\study\Webpack\webpack-lagou\<span class="number">02</span>configuration</div><div class="line">&gt; webpack-dev-server --open --hot</div><div class="line"></div><div class="line">internal/modules/cjs/loader.js:<span class="number">968</span></div><div class="line">  <span class="keyword">throw</span> err;</div><div class="line">  ^</div><div class="line"></div><div class="line"><span class="built_in">Error</span>: Cannot find <span class="built_in">module</span> <span class="string">'webpack-cli/bin/config-yargs'</span></div><div class="line">Require stack:</div><div class="line">- D:\study\Webpack\webpack-lagou\<span class="number">02</span>configuration\node_modules\webpack-dev-server\bin\webpack-dev-server.js</div><div class="line">    at <span class="built_in">Function</span>.Module._resolveFilename (internal/modules/cjs/loader.js:<span class="number">965</span>:<span class="number">15</span>)</div><div class="line">    at <span class="built_in">Function</span>.Module._load (internal/modules/cjs/loader.js:<span class="number">841</span>:<span class="number">27</span>)</div><div class="line">    at Module.require (internal/modules/cjs/loader.js:<span class="number">1025</span>:<span class="number">19</span>)</div><div class="line">    at <span class="built_in">require</span> (internal/modules/cjs/helpers.js:<span class="number">72</span>:<span class="number">18</span>)</div><div class="line">    at <span class="built_in">Object</span>.&lt;anonymous&gt; (D:\study\Webpack\webpack-lagou\<span class="number">02</span>configuration\node_modules\webpack-dev-server\bin\webpack-dev-server.js:<span class="number">65</span>:<span class="number">1</span>)</div><div class="line">    at Module._compile (internal/modules/cjs/loader.js:<span class="number">1137</span>:<span class="number">30</span>)</div><div class="line">    at <span class="built_in">Object</span>.Module._extensions..js (internal/modules/cjs/loader.js:<span class="number">1157</span>:<span class="number">10</span>)</div><div class="line">    at Module.load (internal/modules/cjs/loader.js:<span class="number">985</span>:<span class="number">32</span>)</div><div class="line">    at <span class="built_in">Function</span>.Module._load (internal/modules/cjs/loader.js:<span class="number">878</span>:<span class="number">14</span>)</div><div class="line">    at <span class="built_in">Function</span>.executeUserEntryPoint [<span class="keyword">as</span> runMain] (internal/modules/run_main.js:<span class="number">71</span>:<span class="number">12</span>) &#123;</div><div class="line">  code: <span class="string">'MODULE_NOT_FOUND'</span>,</div><div class="line">  requireStack: [</div><div class="line">    <span class="string">'D:\\study\\Webpack\\webpack-lagou\\02configuration\\node_modules\\webpack-dev-server\\bin\\webpack-dev-server.js'</span></div><div class="line">  ]</div><div class="line">&#125;</div><div class="line">npm ERR! code ELIFECYCLE</div><div class="line">npm ERR! errno <span class="number">1</span></div><div class="line">npm ERR! <span class="number">02</span>configuration@<span class="number">1.0</span><span class="number">.0</span> dev: <span class="string">`webpack-dev-server --open --hot`</span></div><div class="line">npm ERR! Exit status <span class="number">1</span></div><div class="line">npm ERR!</div><div class="line">npm ERR! Failed at the <span class="number">02</span>configuration@<span class="number">1.0</span><span class="number">.0</span> dev script.</div><div class="line">npm ERR! This is probably not a problem <span class="keyword">with</span> npm. There is likely additional logging output above.</div><div class="line"></div><div class="line">npm ERR! A complete log <span class="keyword">of</span> <span class="keyword">this</span> run can be found <span class="keyword">in</span>:</div><div class="line">npm ERR!     C:\Users\Administrator\AppData\Roaming\npm-cache\_logs\<span class="number">2021</span><span class="number">-01</span><span class="number">-14</span>T09_42_44_662Z-debug.log</div></pre></td></tr></table></figure>
+<p>主要错误是找不到<code>webpack-dev-server</code>的module.<br>由于安装webpack时使用了默认的<code>npm install webpack</code>,并未指定版本，因此默认安装了新版——webpack5.所以有可能是版本的问题</p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>后来在 <a href="https://blog.csdn.net/peter_hzq/article/details/109683913" target="_blank" rel="external">https://blog.csdn.net/peter_hzq/article/details/109683913</a> 找到了类似的问题</p>
+<p>我采用第二种方式，使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npx webpack serve</div></pre></td></tr></table></figure></p>
+<p>运行，可以顺利启动</p>
+<p>博客中第一种方法：<code>webpack-cli</code>的版本降为<code>3.3.12</code>，该方式未验证是否有效</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2020/11/05/React-js简书项目总结笔记/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2021/02/04/react-transition-group结合多个styled-components组件动画不生效的问题/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '277317290454635afa73',
+  clientSecret: '78223c859304da5e8d71bfce136d436c6ff95c37',
+  repo: 'blog-comment',
+  owner: 'forsigner',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: md5(location.pathname),
+  admin: ['forsigner'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

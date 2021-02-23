@@ -1,118 +1,21 @@
 <!DOCTYPE html>
 
 
+  <html class="light page-post">
 
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
 
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
+  <meta charset="utf-8">
+  
+  <title>最小生成树 | Homxu</title>
 
-<script>
-    (function(){
-        if(''){
-            if (prompt('请输入文章密码') !== ''){
-                alert('密码错误！');
-                history.back();
-            }
-        }
-    })();
-</script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
+    <meta name="keywords" content="数据结构,图," />
   
 
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="数据结构,图," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
-
-
-
-
-
-
-<meta name="description" content="有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。 有权图的邻接矩阵表达见下图:  有权图的邻接表表达见下图:s 邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。 当然要注意一点，邻接矩阵中">
+  <meta name="description" content="有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。 有权图的邻接矩阵表达见下图:  有权图的邻接表表达见下图:s 邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。 当然要注意一点，邻接矩阵中">
 <meta name="keywords" content="数据结构,图">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最小生成树">
@@ -171,290 +74,216 @@
 <meta name="twitter:description" content="有权图有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。 有权图的邻接矩阵表达见下图:  有权图的邻接表表达见下图:s 邻接表每个节点后面存储两个信息:to表示和它相邻的节点的索引，w表示对应的边的权值.所以可以将这两个信息封装为Edge属性，它包含to和w属性。 当然要注意一点，邻接矩阵中">
 <meta name="twitter:image" content="http://homxu.com/2019/04/05/最小生成树/1.png">
 
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.2',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://homxu.com/2019/04/05/最小生成树/"/>
-
-
-
-
-
-  <title>最小生成树 | Homxu</title>
   
 
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
 
 
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
 
 
+  
   <script type="text/javascript">
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
 
 
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
 
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
+
 
   
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
   
-    
-  
-  
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-<div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Homxu</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
       
-        <p class="site-subtitle">程序员也要好好生活</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             标签
           </a>
         </li>
       
-
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
       
     </ul>
-  
-
-  
-</nav>
+  </div>
 
 
+</div>
 
- </div>
-    </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#有权图"><span class="toc-text">有权图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最小生成树问题"><span class="toc-text">最小生成树问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一些约定"><span class="toc-text">一些约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切分定理-Cut-Property"><span class="toc-text">切分定理 - Cut Property</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lazy-Prim算法"><span class="toc-text">Lazy Prim算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lazy-Prim算法代码"><span class="toc-text">Lazy Prim算法代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prim算法的优化"><span class="toc-text">Prim算法的优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prim算法代码"><span class="toc-text">Prim算法代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kruskal算法"><span class="toc-text">Kruskal算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kruskal算法代码实现"><span class="toc-text">Kruskal算法代码实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录1"><span class="toc-text">附录1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录2"><span class="toc-text">附录2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录3"><span class="toc-text">附录3</span></a></li></ol>
+  </div>
 
-  <div id="posts" class="posts-expand">
-    
 
-  
 
-  
-  
-  
+<div class="content content-post CENTER">
+   <article id="post-最小生成树" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">最小生成树</h1>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://homxu.com/2019/04/05/最小生成树/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Homxu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/star.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Homxu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">最小生成树</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-05T17:13:24+08:00">
-                2019-04-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
-            </span>
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  10,202 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  44 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.04.05</span>
+      </span>
 
       
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
       
 
       
-        <h1 id="有权图"><a href="#有权图" class="headerlink" title="有权图"></a>有权图</h1><p>有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。</p>
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="有权图"><a href="#有权图" class="headerlink" title="有权图"></a>有权图</h1><p>有权图是指在无权图的基础上，每一条边都有一个数值，代表两个结点之间有一定的数值关系，比如图用来表示路网时，权值可以表示两点之间的距离，到达彼此所需要的时间等。</p>
 <p>有权图的邻接矩阵表达见下图:</p>
 <p><img src="/2019/04/05/最小生成树/1.png" alt="邻接矩阵"></p>
 <p>有权图的邻接表表达见下图:<br>s<br><img src="/2019/04/05/最小生成树/2.png" alt="邻接表"></p>
@@ -608,426 +437,233 @@ var _hmt = _hmt || [];
 <p><code>KruskalMST.java</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.awt.event.WindowEvent;</div><div class="line"><span class="keyword">import</span> java.util.Vector;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KruskalMST</span>&lt;<span class="title">Weight</span> <span class="keyword">extends</span> <span class="title">Number</span> &amp; <span class="title">Comparable</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Vector&lt;Edge&lt;Weight&gt;&gt; mst;    <span class="comment">//最小生成树所包含的所有边</span></div><div class="line">    <span class="keyword">private</span> Number mstWeight;           <span class="comment">//最小生成树的权值</span></div><div class="line"></div><div class="line">    <span class="comment">//构造函数，使用Kruskal算法计算graph的最小生成树</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">KruskalMST</span><span class="params">(WeightedGraph graph)</span></span>&#123;</div><div class="line"></div><div class="line">        mst  = <span class="keyword">new</span> Vector&lt;Edge&lt;Weight&gt;&gt;();</div><div class="line"></div><div class="line">        <span class="comment">//将所有的边进行排序，使用堆排序，将所有的边放入一个最小堆中</span></div><div class="line">        MinHeap&lt;Edge&lt;Weight&gt;&gt; pq = <span class="keyword">new</span> MinHeap&lt;Edge&lt;Weight&gt;&gt;(graph.E());</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; graph.V(); i ++)&#123;</div><div class="line">            <span class="keyword">for</span>(Object item : graph.adj(i))&#123;</div><div class="line">                Edge&lt;Weight&gt; e = (Edge&lt;Weight&gt;) item;</div><div class="line">                <span class="keyword">if</span>( e.v() &lt;= e.w() )  <span class="comment">//防止存入两次同一条边(比如边1-2和边2-1，只存入边1-2)</span></div><div class="line">                    pq.insert(e);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 创建一个并查集，查看已经访问的节点的联通情况</span></div><div class="line">        UnionFind uf = <span class="keyword">new</span> UnionFind(graph.V());</div><div class="line">        <span class="keyword">while</span> (!pq.isEmpty() &amp;&amp; mst.size() &lt; graph.V() - <span class="number">1</span>)&#123;<span class="comment">//pq不为空且最小生成树的边数小于V-1</span></div><div class="line"></div><div class="line">            <span class="comment">//从最小堆中依次从小到大取出所有的边</span></div><div class="line">            Edge&lt;Weight&gt; e = pq.extractMin();</div><div class="line">            <span class="comment">//如果该边的两个端点是联通的，说明加入这条边将产生环，扔掉这条边</span></div><div class="line">            <span class="keyword">if</span>(uf.isConnected(e.v(),e.w()))</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line"></div><div class="line">            <span class="comment">//否则，将这条边加入最小生成树，同时标记边的两个端点联通</span></div><div class="line">            mst.add(e);</div><div class="line">            uf.unionElements(e.v(),e.w());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//计算最小生成树的权值</span></div><div class="line">        mstWeight = mst.elementAt(<span class="number">0</span>).wt();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; mst.size() ; i ++)&#123;</div><div class="line">            mstWeight = mstWeight.doubleValue() + mst.elementAt(i).wt().doubleValue();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 返回最小生成树的所有边</span></div><div class="line">    Vector&lt;Edge&lt;Weight&gt;&gt; mstEdges()&#123;</div><div class="line">        <span class="keyword">return</span> mst;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 返回最小生成树的权值</span></div><div class="line">    <span class="function">Number <span class="title">result</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> mstWeight;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 测试 Kruskal</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        String filename = <span class="string">"testG1.txt"</span>;</div><div class="line">        <span class="keyword">int</span> V = <span class="number">8</span>;</div><div class="line"></div><div class="line">        SparseWeightedGraph&lt;Double&gt; g = <span class="keyword">new</span> SparseWeightedGraph&lt;Double&gt;(V, <span class="keyword">false</span>);</div><div class="line">        ReadWeightedGraph readGraph = <span class="keyword">new</span> ReadWeightedGraph(g, filename);</div><div class="line"></div><div class="line">        <span class="comment">// Test Kruskal</span></div><div class="line">        System.out.println(<span class="string">"Test Kruskal:"</span>);</div><div class="line">        KruskalMST&lt;Double&gt; kruskalMST = <span class="keyword">new</span> KruskalMST&lt;Double&gt;(g);</div><div class="line">        Vector&lt;Edge&lt;Double&gt;&gt; mst = kruskalMST.mstEdges();</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; mst.size() ; i ++ )</div><div class="line">            System.out.println(mst.elementAt(i));</div><div class="line">        System.out.println(<span class="string">"The MST weight is: "</span> + kruskalMST.result());</div><div class="line"></div><div class="line">        System.out.println();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>测试结果:<br><img src="/2019/04/05/最小生成树/43.png" alt="测试结果"></p>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/数据结构/" rel="tag"><i class="fa fa-tag"></i> 数据结构</a>
-          
-            <a href="/tags/图/" rel="tag"><i class="fa fa-tag"></i> 图</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/04/01/图的遍历/" rel="next" title="图的遍历">
-                <i class="fa fa-chevron-left"></i> 图的遍历
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/07/堆和堆排序/" rel="prev" title="堆和堆排序">
-                堆和堆排序 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-      <div id="vcomments"></div>
     
   </div>
 
+</article>
 
-        </div>
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
           </li>
+        
         </ul>
-      
+      </div>
+    </div>
+  </div>
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/star.png"
-               alt="Homxu" />
-          <p class="site-author-name" itemprop="name">Homxu</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-          
-        </div>
-        <nav class="site-state motion-element">
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">64</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/04/01/图的遍历/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/04/07/堆和堆排序/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
 
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">22</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
 
-        </nav>
 
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
         
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/homxuwang" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                    
-                      GitHub
-                    
-                </a>
-              </span>
-            
-          
-        </div>
-
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
         
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
         
-
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
         
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
         
-
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
         
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#有权图"><span class="nav-number">1.</span> <span class="nav-text">有权图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最小生成树问题"><span class="nav-number">2.</span> <span class="nav-text">最小生成树问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一些约定"><span class="nav-number">2.1.</span> <span class="nav-text">一些约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切分定理-Cut-Property"><span class="nav-number">2.2.</span> <span class="nav-text">切分定理 - Cut Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lazy-Prim算法"><span class="nav-number">2.3.</span> <span class="nav-text">Lazy Prim算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lazy-Prim算法代码"><span class="nav-number">2.4.</span> <span class="nav-text">Lazy Prim算法代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prim算法的优化"><span class="nav-number">2.5.</span> <span class="nav-text">Prim算法的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prim算法代码"><span class="nav-number">2.6.</span> <span class="nav-text">Prim算法代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kruskal算法"><span class="nav-number">2.7.</span> <span class="nav-text">Kruskal算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kruskal算法代码实现"><span class="nav-number">2.8.</span> <span class="nav-text">Kruskal算法代码实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录1"><span class="nav-number">4.</span> <span class="nav-text">附录1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录2"><span class="nav-number">5.</span> <span class="nav-text">附录2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录3"><span class="nav-number">6.</span> <span class="nav-text">附录3</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
 
     </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 &mdash; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Homxu</span>
-
-  
+  </div>
 </div>
 
 
 
-
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
-    <span class="site-uv">
-      <i class="fa fa-user"></i> 访问人数
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
-
-  
-    <span class="site-pv">
-      <i class="fa fa-eye"></i> 访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
+      <div class="fexo-comments comments-post">
+    
 
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
+
     
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '277317290454635afa73',
+  clientSecret: '78223c859304da5e8d71bfce136d436c6ff95c37',
+  repo: 'blog-comment',
+  owner: 'forsigner',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: md5(location.pathname),
+  admin: ['forsigner'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
 
   </div>
 
   
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
   }
 </script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
-  <script src="/js/src/Valine.min.js"></script>
-  <script type="text/javascript">
-    new Valine({
-        av: AV,
-        el: '#vcomments' ,
-        verify: false,
-        notify: false,
-        app_id: 'iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz',
-        app_key: 'FpJsLvikc9nea305u094EDFf',
-        guest_info:['nick'] ,// 评论只需要提供昵称
-        avatar:'hide',
-        placeholder: 'Comment input placeholder'
-    });
-  </script>
-
-
-
-  
-
-
-
-
-
-  
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>

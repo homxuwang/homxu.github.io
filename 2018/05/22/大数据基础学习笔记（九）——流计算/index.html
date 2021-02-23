@@ -1,118 +1,21 @@
 <!DOCTYPE html>
 
 
+  <html class="light page-post">
 
-  
-
-
-<html class="theme-next gemini use-motion" lang="zh-Hans">
 
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
+  <meta charset="utf-8">
+  
+  <title>大数据基础学习笔记（九）——流计算 | Homxu</title>
 
-<script>
-    (function(){
-        if(''){
-            if (prompt('请输入文章密码') !== ''){
-                alert('密码错误！');
-                history.back();
-            }
-        }
-    })();
-</script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
+    <meta name="keywords" content="大数据," />
   
 
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="大数据," />
-
-
-
-
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
-
-
-
-
-
-
-<meta name="description" content="什么是流数据• 近年来，在Web应用、网络监控、传感监测等领域，兴起了一种新的数据密集型应用——流数据，即数据以大量、快速、时变的流形式持续到达• 实例：PM2.5检测、电子商务网站用户点击流• 流数据具有如下特征：– 数据快速持续到达，潜在大小也许是无穷无尽的– 数据来源众多，格式复杂– 数据量大，但是不十分关注存储，一旦经过处理，要么被丢弃，要么被归档存储– 注重数据的整体价值，不过分关注个别">
+  <meta name="description" content="什么是流数据• 近年来，在Web应用、网络监控、传感监测等领域，兴起了一种新的数据密集型应用——流数据，即数据以大量、快速、时变的流形式持续到达• 实例：PM2.5检测、电子商务网站用户点击流• 流数据具有如下特征：– 数据快速持续到达，潜在大小也许是无穷无尽的– 数据来源众多，格式复杂– 数据量大，但是不十分关注存储，一旦经过处理，要么被丢弃，要么被归档存储– 注重数据的整体价值，不过分关注个别">
 <meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大数据基础学习笔记（九）——流计算">
@@ -150,290 +53,216 @@
 <meta name="twitter:description" content="什么是流数据• 近年来，在Web应用、网络监控、传感监测等领域，兴起了一种新的数据密集型应用——流数据，即数据以大量、快速、时变的流形式持续到达• 实例：PM2.5检测、电子商务网站用户点击流• 流数据具有如下特征：– 数据快速持续到达，潜在大小也许是无穷无尽的– 数据来源众多，格式复杂– 数据量大，但是不十分关注存储，一旦经过处理，要么被丢弃，要么被归档存储– 注重数据的整体价值，不过分关注个别">
 <meta name="twitter:image" content="http://homxu.com/2018/05/22/大数据基础学习笔记（九）——流计算/1.png">
 
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.2',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://homxu.com/2018/05/22/大数据基础学习笔记（九）——流计算/"/>
-
-
-
-
-
-  <title>大数据基础学习笔记（九）——流计算 | Homxu</title>
   
 
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
 
 
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-38189205-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
 
 
+  
   <script type="text/javascript">
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
 
 
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
 
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body>
+
 
   
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
   
-    
-  
-  
-  <div class="container sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-<div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Homxu</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
       
-        <p class="site-subtitle">程序员也要好好生活</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
           </a>
         </li>
       
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
             标签
           </a>
         </li>
       
-
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
       
     </ul>
-  
-
-  
-</nav>
+  </div>
 
 
+</div>
 
- </div>
-    </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是流数据"><span class="toc-text">什么是流数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#流计算的概念"><span class="toc-text">流计算的概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#流计算与Hadoop"><span class="toc-text">流计算与Hadoop</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#流计算处理流程"><span class="toc-text">流计算处理流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据实时采集"><span class="toc-text">数据实时采集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据实时计算"><span class="toc-text">数据实时计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实时查询服务"><span class="toc-text">实时查询服务</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#开源流计算框架Storm"><span class="toc-text">开源流计算框架Storm</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Storm的特点"><span class="toc-text">Storm的特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storm设计思想"><span class="toc-text">Storm设计思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Storm框架设计"><span class="toc-text">Storm框架设计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Spark-Streaming"><span class="toc-text">Spark Streaming</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark-Streaming设计"><span class="toc-text">Spark Streaming设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spark-Streaming与Storm的对比"><span class="toc-text">Spark Streaming与Storm的对比</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Samza"><span class="toc-text">Samza</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#系统架构"><span class="toc-text">系统架构</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Storm、Spark-Streaming和Samza的应用场景"><span class="toc-text">Storm、Spark Streaming和Samza的应用场景</span></a></li></ol>
+  </div>
 
-  <div id="posts" class="posts-expand">
-    
 
-  
 
-  
-  
-  
+<div class="content content-post CENTER">
+   <article id="post-大数据基础学习笔记（九）——流计算" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">大数据基础学习笔记（九）——流计算</h1>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://homxu.com/2018/05/22/大数据基础学习笔记（九）——流计算/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Homxu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/star.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Homxu">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">大数据基础学习笔记（九）——流计算</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T09:33:02+08:00">
-                2018-05-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
-            </span>
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  4,230 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  15 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.05.22</span>
+      </span>
 
       
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
       
 
       
-        <h1 id="什么是流数据"><a href="#什么是流数据" class="headerlink" title="什么是流数据"></a>什么是流数据</h1><p>• 近年来，在Web应用、网络监控、传感监测等领域，兴起了一种新的数据密集型应用——流数据，即数据以大量、快速、时变的流形式持续到达<br>• 实例：PM2.5检测、电子商务网站用户点击流<br>• 流数据具有如下特征：<br>– 数据快速持续到达，潜在大小也许是无穷无尽的<br>– 数据来源众多，格式复杂<br>– 数据量大，但是不十分关注存储，一旦经过处理，要么被丢弃，要么被归档存储<br>– 注重数据的整体价值，不过分关注个别数据<br>– 数据顺序颠倒，或者不完整，系统无法控制将要处理的新到达的数据元素的顺序<br>• 对静态数据和流数据的处理，对应着两种截然不同的计算模式：批量计算和实时计算<br>•批量计算：充裕时间处理静态数据，如Hadoop<br>•流数据不适合采用批量计算，因为流数据不适合用传统的关系模型建模<br>•流数据必须采用实时计算，响应时间为秒级<br>•在大数据时代，数据格式复杂、来源众多、数据量巨大，对实时计算提出了很大的挑战。因此，针对流数据的实时计算——流计算，应运而生</p>
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="什么是流数据"><a href="#什么是流数据" class="headerlink" title="什么是流数据"></a>什么是流数据</h1><p>• 近年来，在Web应用、网络监控、传感监测等领域，兴起了一种新的数据密集型应用——流数据，即数据以大量、快速、时变的流形式持续到达<br>• 实例：PM2.5检测、电子商务网站用户点击流<br>• 流数据具有如下特征：<br>– 数据快速持续到达，潜在大小也许是无穷无尽的<br>– 数据来源众多，格式复杂<br>– 数据量大，但是不十分关注存储，一旦经过处理，要么被丢弃，要么被归档存储<br>– 注重数据的整体价值，不过分关注个别数据<br>– 数据顺序颠倒，或者不完整，系统无法控制将要处理的新到达的数据元素的顺序<br>• 对静态数据和流数据的处理，对应着两种截然不同的计算模式：批量计算和实时计算<br>•批量计算：充裕时间处理静态数据，如Hadoop<br>•流数据不适合采用批量计算，因为流数据不适合用传统的关系模型建模<br>•流数据必须采用实时计算，响应时间为秒级<br>•在大数据时代，数据格式复杂、来源众多、数据量巨大，对实时计算提出了很大的挑战。因此，针对流数据的实时计算——流计算，应运而生</p>
 <h1 id="流计算的概念"><a href="#流计算的概念" class="headerlink" title="流计算的概念"></a>流计算的概念</h1><p>• 流计算秉承一个基本理念，即 数据的价值随着时间的流逝而降低，如用户点击流。因此，当事件出现时就应该立即进行处理，而不是缓存起来进行批量处理。为了及时处理流数据，就需要一个低延迟、可扩展、高可靠的处理引擎<br>• 对于一个流计算系统来说，它应达到如下需求：<br>– 高性能<br>– 海量式<br>– 实时性<br>– 分布式<br>– 易用性<br>– 可靠性</p>
 <h1 id="流计算与Hadoop"><a href="#流计算与Hadoop" class="headerlink" title="流计算与Hadoop"></a>流计算与Hadoop</h1><p>• Hadoop设计的初衷是面向大规模数据的批量处理<br>• MapReduce是专门面向静态数据的批量处理的，内部各种实现机制都为批处理做了高度优化，不适合用于处理持续到达的动态数据• 可能会想到一种“变通”的方案来降低批处理的时间延迟——将基于MapReduce的批量处理转为小批量处理，将输入数据切成小的片段，每隔一个周期就启动一次MapReduce作业。但这种方式也无法有效处理流数据<br>– 切分成小片段，可以降低延迟，但是也增加了附加开销，还要处理片段之间依赖关系<br>– 需要改造MapReduce以支持流式处理<br>结论：鱼和熊掌不可兼得，Hadoop擅长批处理，但是不适合流计算<br>• 当前业界诞生了许多专门的流数据实时计算系统来满足各自需求：<br>• 商业级：IBM InfoSphere Streams和IBM StreamBase<br>• 开源流计算框架：<br>– Twitter Storm：免费、开源的分布式实时计算系统，可简单、高效、可靠地处理大量的流数据<br>– Yahoo! S4（Simple Scalable Streaming System）：开源流计算平台，是通用的、分布式的、可扩展的、分区容错的、可插拔的流式系统<br>• 公司为支持自身业务开发的流计算框架：<br>– Facebook Puma<br>– Dstream（百度）<br>– 银河流数据处理平台（淘宝）</p>
 <h1 id="流计算处理流程"><a href="#流计算处理流程" class="headerlink" title="流计算处理流程"></a>流计算处理流程</h1><p>• 传统的数据处理流程，需要先采集数据并存储在关系数据库等数据管理系统中，之后由用户通过查询操作和数据管理系统进行交互<br>• 传统的数据处理流程隐含了两个前提：<br>–  存储的数据是旧的。存储的静态数据是过去某一时刻的快照，这些数据在查询时可能已不具备时效性了<br>–  需要用户主动发出查询</p>
@@ -516,424 +345,233 @@ var _hmt = _hmt || [];
 <p>•当需要在一个集群中把流计算和图计算、机器学习、SQL查询分析等进行结合时，可以选择Spark Streaming，因为，在Spark上可以统一部署Spark SQL，Spark Streaming、MLlib，GraphX等组件，提供便捷的一体化编程模型</p>
 <p>•当有大量的状态需要处理时，比如每个分区都有数十亿个元组，则可以选择Samza。当应用场景需要毫秒级响应时，可以选择Storm和Samza，因为Spark Streaming无法实现毫秒级的流计算</p>
 
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/大数据/" rel="tag"><i class="fa fa-tag"></i> 大数据</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/05/17/大数据基础学习笔记（八）——Spark/" rel="next" title="大数据基础学习笔记（八）——Spark">
-                <i class="fa fa-chevron-left"></i> 大数据基础学习笔记（八）——Spark
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/28/大数据基础学习笔记（十）——图计算/" rel="prev" title="大数据基础学习笔记（十）——图计算">
-                大数据基础学习笔记（十）——图计算 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-      <div id="vcomments"></div>
     
   </div>
 
+</article>
 
-        </div>
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持forsigner</div>
+        <ul>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
           </li>
+        
         </ul>
-      
+      </div>
+    </div>
+  </div>
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/star.png"
-               alt="Homxu" />
-          <p class="site-author-name" itemprop="name">Homxu</p>
-           
-              <p class="site-description motion-element" itemprop="description"></p>
-          
-        </div>
-        <nav class="site-state motion-element">
 
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">64</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/05/17/大数据基础学习笔记（八）——Spark/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/05/28/大数据基础学习笔记（十）——图计算/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
 
-          
 
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">22</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
 
-        </nav>
 
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
         
-
-        <div class="links-of-author motion-element">
-          
-            
-              <span class="links-of-author-item">
-                <a href="https://github.com/homxuwang" target="_blank" title="GitHub">
-                  
-                    <i class="fa fa-fw fa-github"></i>
-                  
-                    
-                      GitHub
-                    
-                </a>
-              </span>
-            
-          
-        </div>
-
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
         
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
         
-
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
         
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
         
-
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
         
-
-
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是流数据"><span class="nav-number">1.</span> <span class="nav-text">什么是流数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流计算的概念"><span class="nav-number">2.</span> <span class="nav-text">流计算的概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流计算与Hadoop"><span class="nav-number">3.</span> <span class="nav-text">流计算与Hadoop</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流计算处理流程"><span class="nav-number">4.</span> <span class="nav-text">流计算处理流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据实时采集"><span class="nav-number">4.1.</span> <span class="nav-text">数据实时采集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据实时计算"><span class="nav-number">4.2.</span> <span class="nav-text">数据实时计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实时查询服务"><span class="nav-number">4.3.</span> <span class="nav-text">实时查询服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开源流计算框架Storm"><span class="nav-number">5.</span> <span class="nav-text">开源流计算框架Storm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Storm的特点"><span class="nav-number">5.1.</span> <span class="nav-text">Storm的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storm设计思想"><span class="nav-number">5.2.</span> <span class="nav-text">Storm设计思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Storm框架设计"><span class="nav-number">5.3.</span> <span class="nav-text">Storm框架设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark-Streaming"><span class="nav-number">6.</span> <span class="nav-text">Spark Streaming</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Streaming设计"><span class="nav-number">6.1.</span> <span class="nav-text">Spark Streaming设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spark-Streaming与Storm的对比"><span class="nav-number">6.2.</span> <span class="nav-text">Spark Streaming与Storm的对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Samza"><span class="nav-number">7.</span> <span class="nav-text">Samza</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统架构"><span class="nav-number">7.1.</span> <span class="nav-text">系统架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Storm、Spark-Streaming和Samza的应用场景"><span class="nav-number">8.</span> <span class="nav-text">Storm、Spark Streaming和Samza的应用场景</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
 
     </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 &mdash; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Homxu</span>
-
-  
+  </div>
 </div>
 
 
 
-
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
   
-    <span class="site-uv">
-      <i class="fa fa-user"></i> 访问人数
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
-
-  
-    <span class="site-pv">
-      <i class="fa fa-eye"></i> 访问量
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
+      <div class="fexo-comments comments-post">
+    
 
     
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
+
     
+    
+
+    
+
+    
+    
+
+    
+
+<!-- Gitalk评论插件通用代码 -->
+<div id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script>
+const gitalk = new Gitalk({
+  clientID: '277317290454635afa73',
+  clientSecret: '78223c859304da5e8d71bfce136d436c6ff95c37',
+  repo: 'blog-comment',
+  owner: 'forsigner',
+  // 在这里设置一下截取前50个字符串, 这是因为 github 对 label 的长度有了要求, 如果超过
+  // 50个字符串则会报错.
+  // id: location.pathname.split('/').pop().substring(0, 49),
+  id: md5(location.pathname),
+  admin: ['forsigner'],
+  // facebook-like distraction free mode
+  distractionFreeMode: false
+})
+gitalk.render('gitalk-container')
+</script>
+<!-- Gitalk代码结束 -->
+
+
 
   </div>
 
   
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
   }
 </script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-  
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/valine@1.1.4/dist/Valine.min.js"></script>
-  <script src="/js/src/Valine.min.js"></script>
-  <script type="text/javascript">
-    new Valine({
-        av: AV,
-        el: '#vcomments' ,
-        verify: false,
-        notify: false,
-        app_id: 'iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz',
-        app_key: 'FpJsLvikc9nea305u094EDFf',
-        guest_info:['nick'] ,// 评论只需要提供昵称
-        avatar:'hide',
-        placeholder: 'Comment input placeholder'
-    });
-  </script>
-
-
-
-  
-
-
-
-
-
-  
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>
