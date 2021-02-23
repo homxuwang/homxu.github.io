@@ -613,13 +613,6 @@
   </url>
   
   <url>
-    <loc>http://homxu.com/tags/%E5%B9%B6%E5%8F%91/</loc>
-    <lastmod>2021-02-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://homxu.com/tags/git/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
@@ -627,7 +620,7 @@
   </url>
   
   <url>
-    <loc>http://homxu.com/tags/webpack/</loc>
+    <loc>http://homxu.com/tags/%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -635,6 +628,13 @@
   
   <url>
     <loc>http://homxu.com/tags/react/</loc>
+    <lastmod>2021-02-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://homxu.com/tags/webpack/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
