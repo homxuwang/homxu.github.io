@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Spring学习笔记-一 | Homxu</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Spring,学习笔记,JavaWeb," />
+  
+
+  <meta name="description" content="Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理 Spring 搭建基本环境首先导入Spring所需依赖包： 创建一个对象用于测试： 123456789101112131415161718192021package my.study.bean;public class User &amp;#123;		private String name;	private I">
+<meta name="keywords" content="Spring,学习笔记,JavaWeb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring学习笔记-一">
+<meta property="og:url" content="http://homxu.com/2018/11/09/Spring学习笔记-一/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理 Spring 搭建基本环境首先导入Spring所需依赖包： 创建一个对象用于测试： 123456789101112131415161718192021package my.study.bean;public class User &amp;#123;		private String name;	private I">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/Spring1.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/1.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/2.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/3.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/4.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/5.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/6.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/7.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/8.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/9.png">
+<meta property="og:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/10.png">
+<meta property="og:updated_time" content="2019-06-06T06:48:02.033Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring学习笔记-一">
+<meta name="twitter:description" content="Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理 Spring 搭建基本环境首先导入Spring所需依赖包： 创建一个对象用于测试： 123456789101112131415161718192021package my.study.bean;public class User &amp;#123;		private String name;	private I">
+<meta name="twitter:image" content="http://homxu.com/2018/11/09/Spring学习笔记-一/Spring1.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring-搭建基本环境"><span class="toc-text">Spring 搭建基本环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ApplicationContext-amp-BeanFactory"><span class="toc-text">ApplicationContext&BeanFactory</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring的配置"><span class="toc-text">Spring的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#bean-元素"><span class="toc-text">bean 元素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Scope属性"><span class="toc-text">Scope属性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#singleton-默认值"><span class="toc-text">singleton(默认值)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#prototype"><span class="toc-text">prototype</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#request"><span class="toc-text">request</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#session"><span class="toc-text">session</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生命周期属性"><span class="toc-text">生命周期属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring的分模块配置"><span class="toc-text">Spring的分模块配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring创建对象的方式"><span class="toc-text">Spring创建对象的方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#空参构造方式"><span class="toc-text">空参构造方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态工厂方式"><span class="toc-text">静态工厂方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实例工厂方式"><span class="toc-text">实例工厂方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Spring属性注入"><span class="toc-text">Spring属性注入</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#注入方式"><span class="toc-text">注入方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#set方法注入"><span class="toc-text">set方法注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#构造函数注入"><span class="toc-text">构造函数注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#p名称空间注入"><span class="toc-text">p名称空间注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spel注入"><span class="toc-text">spel注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复杂类型注入"><span class="toc-text">复杂类型注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数组"><span class="toc-text">数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List"><span class="toc-text">List</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map"><span class="toc-text">Map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Spring学习笔记-一" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Spring学习笔记-一</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.11.09</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p> Spring是一个一站式框架。Spring可以看做是一个容器，所有对象都可以在其中进行管理<br><img src="/2018/11/09/Spring学习笔记-一/Spring1.png" alt=""></p>
+<h1 id="Spring-搭建基本环境"><a href="#Spring-搭建基本环境" class="headerlink" title="Spring 搭建基本环境"></a>Spring 搭建基本环境</h1><p>首先导入Spring所需依赖包：<br><img src="/2018/11/09/Spring学习笔记-一/1.png" alt="导入依赖包"></p>
+<p>创建一个对象用于测试：</p>
+<p><img src="/2018/11/09/Spring学习笔记-一/2.png" alt="创建对象"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.bean;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;	</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="keyword">private</span> Integer age;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"User 的空参构造方法被调用"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> age;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.age = age;</div><div class="line">	&#125;		</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后需要书写配置文件，并将创建好的对象注册到Spring容器中。<br>建议将配置文件放到源码文件夹根目录(/src)下，文件名可以任意取。</p>
+<p>导入配置文件的约束：Preference中搜索<code>XML Catlog</code>，打开后点击<code>Add</code>-&gt;<code>FileSystem...</code><br>选择Spring解压目录下的<code>schema</code>-&gt;<code>beans</code>-&gt;<code>spring-beans-4.2.xsd</code>(选择最新版本(我的是4.2)即可)</p>
+<p>继续选择<code>Kye Type</code>-&gt;<code>Scheme location</code>：<br>把<code>Location</code>中<code>spring-beans-4.2.xsd</code>文件名复制，追加到<code>Key</code>中(注意补一个<code>/</code>).<br><img src="/2018/11/09/Spring学习笔记-一/3.png" alt="导入约束"></p>
+<p>然后在配置文件中，输入<code>&lt;beans&gt;&lt;/beans&gt;</code>后，在Eclipse下切换到设计视图，选中<code>beans</code>-&gt;右键选中<code>Edit Namespaces</code>-&gt;点击<code>Add</code>-&gt;勾选<code>xsi</code>-&gt;点击ok-&gt;继续点击<code>Add</code>-&gt;选择<code>Specify New Namespace</code>-&gt;选择<code>Browse</code>-&gt;选择<code>Select XML Catalog entry</code>-&gt;找到刚才上图的Key-&gt;<code>Namespace Name</code>填写Key中<code>http://www.spri.....beans</code>的内容，<code>Prefix</code>不用写</p>
+<p><img src="/2018/11/09/Spring学习笔记-一/4.png" alt="导入约束"></p>
+<p>导入成功</p>
+<p>最后将对象注册到容器进行测试：<br><img src="/2018/11/09/Spring学习笔记-一/5.png" alt="注册对象"></p>
+<p><img src="/2018/11/09/Spring学习笔记-一/6.png" alt="注册对象"></p>
+<h1 id="ApplicationContext-amp-BeanFactory"><a href="#ApplicationContext-amp-BeanFactory" class="headerlink" title="ApplicationContext&amp;BeanFactory"></a>ApplicationContext&amp;BeanFactory</h1><p><img src="/2018/11/09/Spring学习笔记-一/7.png" alt="注册对象"></p>
+<p><img src="/2018/11/09/Spring学习笔记-一/8.png" alt="注册对象"></p>
+<p>简单介绍：<br>其中BeanFactory作为最顶层的接口，功能较为单一。BeanFactory接口实现类的容器，特点是每次获得对象时才会创建对象。</p>
+<p>ApplicationContext在每次容器启动时，就会创建容器中的所有对象</p>
+<h1 id="Spring的配置"><a href="#Spring的配置" class="headerlink" title="Spring的配置"></a>Spring的配置</h1><h2 id="bean-元素"><a href="#bean-元素" class="headerlink" title="bean 元素"></a>bean 元素</h2><p>以前面配置User对象为例。</p>
+<blockquote>
+<p><code>bean</code>标签：<br>使用该元素描述需要spring容器管理的对象<br>class属性:被管理对象的完整类名.<br>name属性:给被管理的对象起个名字.获得对象时根据该名称获得对象. 特点:可以重复.可以使用特殊字符.<br>id属性: 与name属性一样.特点:名称不可重复.不能使用特殊字符.</p>
+</blockquote>
+<h3 id="Scope属性"><a href="#Scope属性" class="headerlink" title="Scope属性"></a>Scope属性</h3><h4 id="singleton-默认值"><a href="#singleton-默认值" class="headerlink" title="singleton(默认值)"></a>singleton(默认值)</h4><p>单例对象.被标识为单例的对象在spring容器中只会存在一个实例，即默认为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;User&quot; class=&quot;my.study.bean.User&quot; scope=&quot;singleton&quot;&gt;&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>测试：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">//1.创建容器对象</span></div><div class="line">  ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"my/study/b_create/applicationContext.xml"</span>);</div><div class="line">  <span class="comment">//2.在容器中寻找"User"对象</span></div><div class="line">  User u = (User) ac.getBean(<span class="string">"User"</span>);</div><div class="line">  User u1 = (User) ac.getBean(<span class="string">"User"</span>);</div><div class="line">  <span class="comment">//3打印user对象</span></div><div class="line">  System.out.println(u == u1);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">true</div></pre></td></tr></table></figure></p>
+<h4 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h4><p>多例原型.被标识为多例的对象,每次再获得才会创建.每次创建都是新的对象.<br>注意，当整合struts2时,ActionBean必须配置为多例的。因为Action对象是由Spring容器管理的，struts2每次请求都会创建一个Action<br>将配置文件改为:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;User&quot; class=&quot;my.study.bean.User&quot; scope=&quot;prototype&quot;&gt;&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>继续用test1()测试，打印结果为<code>false</code></p>
+<h4 id="request"><a href="#request" class="headerlink" title="request"></a>request</h4><p>在web环境下.对象与request生命周期一致.即每当请求完成，对象就会在Spring中移除</p>
+<h4 id="session"><a href="#session" class="headerlink" title="session"></a>session</h4><p>在web环境下,对象与session生命周期一致.即在一次会话中，会话完成后,对象就会在Spring中被移除</p>
+<h3 id="生命周期属性"><a href="#生命周期属性" class="headerlink" title="生命周期属性"></a>生命周期属性</h3><p>如果希望Bean在创建时有初始化方法，可以指定Bean中的一个方法为其初始化方法，Spring会在对象创建完成后调用。即<code>init-method</code><br>同样可以配置一个销毁方法，Spring容器在关闭前调用此方法。<code>destory-method</code><br>注意<code>scope=&quot;prototype&quot;</code>不能和<code>destory-method</code>标签一起使用</p>
+<h2 id="Spring的分模块配置"><a href="#Spring的分模块配置" class="headerlink" title="Spring的分模块配置"></a>Spring的分模块配置</h2><p>在主配置文件中引入其他配置文件，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;import resource=&quot;&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p>目录写在src目录下的全包名和配置文件名</p>
+<h2 id="Spring创建对象的方式"><a href="#Spring创建对象的方式" class="headerlink" title="Spring创建对象的方式"></a>Spring创建对象的方式</h2><p>创建新的配置文件和类进行测试</p>
+<p><img src="/2018/11/09/Spring学习笔记-一/9.png" alt="创建对象的方式"><br><img src="/2018/11/09/Spring学习笔记-一/10.png" alt="创建对象的方式"></p>
+<p><code>UserFactory</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.bean;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserFactory</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> User <span class="title">createUser</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"静态工厂方式创建User"</span>);		</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> User();</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> User <span class="title">createUser2</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"实例工厂方式创建User"</span>);		</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> User();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>applicationContext.xml</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 方式1：空参构造创建 --&gt;</div><div class="line">	&lt;bean name=&quot;User&quot; class=&quot;my.study.bean.User&quot;&gt;&lt;/bean&gt;</div><div class="line">	&lt;!-- 方式2：静态工厂创建</div><div class="line">		调用UserFactory的createUser方法创建名为user2的对象，放入容器</div><div class="line">	 --&gt;</div><div class="line">	&lt;bean name=&quot;User2&quot; class=&quot;my.study.bean.UserFactory&quot; factory-method=&quot;createUser&quot;&gt;&lt;/bean&gt;</div><div class="line">	</div><div class="line">	&lt;!-- 方式3：实例工厂创建</div><div class="line">		调用UserFactory的createUser方法创建名为user3的对象，放入容器</div><div class="line">	 --&gt;</div><div class="line">	&lt;bean name=&quot;User3&quot; factory-bean=&quot;userFactory&quot; factory-method=&quot;createUser2&quot;&gt;&lt;/bean&gt;</div><div class="line">	&lt;bean name=&quot;userFactory&quot; class=&quot;my.study.bean.UserFactory&quot;&gt;&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="空参构造方式"><a href="#空参构造方式" class="headerlink" title="空参构造方式"></a>空参构造方式</h3><p>空参构造方式就是最开始配置bean时的构造方式，前面已经有结果。当然这里要注意，创建容器对象时，传参时要传入的配置文件需要加上包名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ApplicationContext ac = new ClassPathXmlApplicationContext(&quot;my/study/b_create/applicationContext.xml&quot;);</div></pre></td></tr></table></figure></p>
+<h3 id="静态工厂方式"><a href="#静态工厂方式" class="headerlink" title="静态工厂方式"></a>静态工厂方式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="comment">//静态工厂方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">//1.创建容器对象</span></div><div class="line">  ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"my/study/b_create/applicationContext.xml"</span>);</div><div class="line">  <span class="comment">//2.向容器请求"user"对象</span></div><div class="line">  User u = (User) ac.getBean(<span class="string">"User2"</span>);</div><div class="line">  <span class="comment">//3打印user对象</span></div><div class="line">  System.out.println(u);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="实例工厂方式"><a href="#实例工厂方式" class="headerlink" title="实例工厂方式"></a>实例工厂方式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="comment">//动态工厂方式</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="comment">//1.创建容器对象</span></div><div class="line">  ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"my/study/b_create/applicationContext.xml"</span>);</div><div class="line">  <span class="comment">//2.向容器请求"user"对象</span></div><div class="line">  User u = (User) ac.getBean(<span class="string">"User3"</span>);</div><div class="line">  <span class="comment">//3打印user对象</span></div><div class="line">  System.out.println(u);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Spring属性注入"><a href="#Spring属性注入" class="headerlink" title="Spring属性注入"></a>Spring属性注入</h1><h2 id="注入方式"><a href="#注入方式" class="headerlink" title="注入方式"></a>注入方式</h2><h3 id="set方法注入"><a href="#set方法注入" class="headerlink" title="set方法注入"></a>set方法注入</h3><p>新建一个包，在配置文件<code>&lt;bean&gt;&lt;/bean&gt;</code>中添加<code>property</code>标签，其中<code>name</code>表示要注入的属性名,<code>value</code>表示要注入的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;!-- set方式注入： --&gt;</div><div class="line">&lt;bean name=&quot;User&quot; class=&quot;my.study.bean.User&quot;&gt;</div><div class="line">	&lt;property name=&quot;name&quot; value=&quot;jay&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;property name=&quot;age&quot; value=&quot;17&quot;&gt;&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+<p>书写测试类：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.c_injection;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</div><div class="line"><span class="keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;</div><div class="line"></div><div class="line"><span class="keyword">import</span> my.study.bean.User;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</div><div class="line">	<span class="meta">@Test</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="comment">//1.创建容器对象</span></div><div class="line">		ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"my/study/c_injection/applicationContext.xml"</span>);</div><div class="line">		User u = (User) ac.getBean(<span class="string">"User"</span>);</div><div class="line">		System.out.println(u.getName() + <span class="string">" , "</span> +u.getAge());</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>打印出<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">User [name=jay, age=<span class="number">17</span>]</div></pre></td></tr></table></figure></p>
+<p>这是值类型注入。</p>
+<p>下面是引用类型注入。<br>然后新建一个<code>Car</code>类，<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.bean;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> String name;</div><div class="line">	<span class="keyword">private</span> String color;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.name = name;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getColor</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> color;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setColor</span><span class="params">(String color)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.color = color;</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"Car [name="</span> + name + <span class="string">", color="</span> + color + <span class="string">"]"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在User中添加<code>car</code>属性，并添加<code>get</code>和<code>set</code>方法<br>如果要注入<code>Car</code>类型，需要先把<code>Car</code>配置到容器中。<br>在配置文件中添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;Car&quot; class=&quot;my.study.bean.Car&quot;&gt;  </div><div class="line">	&lt;property name=&quot;name&quot; value=&quot;Q5&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;property name=&quot;color&quot; value=&quot;black&quot;&gt;&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>然后为<code>User</code>的<code>car</code>属性注入刚才配置的<code>Car</code>对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;User&quot; class=&quot;my.study.bean.User&quot;&gt;</div><div class="line">	&lt;property name=&quot;name&quot; value=&quot;jay&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;property name=&quot;age&quot; value=&quot;17&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;property name=&quot;car&quot; ref=&quot;Car&quot;&gt;&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>重新书写<code>User</code>的<code>toString()</code>方法，重新运行<code>test()</code>打印结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">User [name=jay, age=<span class="number">17</span>, car=Car [name=Q5, color=black]]</div></pre></td></tr></table></figure></p>
+<h3 id="构造函数注入"><a href="#构造函数注入" class="headerlink" title="构造函数注入"></a>构造函数注入</h3><p>在<code>User</code>类中添加有参构造函数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, Car car)</span> </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">	<span class="keyword">this</span>.car = car;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后是<code>bean</code>的配置，添加如下配置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;User2&quot; class=&quot;my.study.bean.User&quot;&gt; </div><div class="line">	&lt;constructor-arg name=&quot;name&quot; value=&quot;chou&quot;&gt;&lt;/constructor-arg&gt;</div><div class="line">	&lt;constructor-arg name=&quot;car&quot; ref=&quot;Car&quot;&gt;&lt;/constructor-arg&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>ref依然传入上面定义的<code>Car</code>.然后书写代码测试：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">	ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"my/study/c_injection/applicationContext.xml"</span>);</div><div class="line">	User u = (User) ac.getBean(<span class="string">"User2"</span>);</div><div class="line">	System.out.println(u);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>打印结果为:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">User [name=chou, age=<span class="keyword">null</span>, car=Car [name=Q5, color=black]]</div></pre></td></tr></table></figure></p>
+<p>如果定义一个重载构造函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(Car car,String name)</span> </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">	<span class="keyword">this</span>.car = car;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>想让Spring在使用构造函数注入时，使用<code>User(String name, Car car)</code>来创建对象，可以在<code>&lt;contructor-arg&gt;&lt;/contructor-arg&gt;</code>中使用<code>index</code>.使用<code>index</code>来表示构造函数的参数索引,<code>index</code>越小表示越靠前的位置.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;User2&quot; class=&quot;my.study.bean.User&quot;&gt; </div><div class="line">	&lt;constructor-arg name=&quot;name&quot; value=&quot;chou&quot; index=&quot;0&quot;&gt;&lt;/constructor-arg&gt;</div><div class="line">	&lt;constructor-arg name=&quot;car&quot; ref=&quot;Car&quot; index=&quot;1&quot;&gt;&lt;/constructor-arg&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>如果是构造函数是同样的注入顺序，但是是不同的类型，在<code>index</code>后面继续追加一个<code>type</code>，表示构造函数的参数类型：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(Integer name, Car car)</span> </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name+<span class="string">""</span>;</div><div class="line">	<span class="keyword">this</span>.car = car;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>要注意<code>value</code>中的传参要和<code>type</code>对应<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;User2&quot; class=&quot;my.study.bean.User&quot;&gt; </div><div class="line">	&lt;constructor-arg name=&quot;name&quot; value=&quot;123&quot; index=&quot;0&quot; type=&quot;java.lang.Integer&quot;&gt;&lt;/constructor-arg&gt;</div><div class="line">	&lt;constructor-arg name=&quot;car&quot; ref=&quot;Car&quot; index=&quot;1&quot;&gt;&lt;/constructor-arg&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>打印结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">User [name=<span class="number">123</span>, age=<span class="keyword">null</span>, car=Car [name=Q5, color=black]]</div></pre></td></tr></table></figure></p>
+<h3 id="p名称空间注入"><a href="#p名称空间注入" class="headerlink" title="p名称空间注入"></a>p名称空间注入</h3><p>首先在<code>&lt;beans&gt;&lt;/beans&gt;</code>中导入名称空间,添加<code>xmlns:p=&quot;http://www.springframework.org/schema/p&quot;</code><br>即添加后的<code>beans</code>名称空间为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;beans xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; </div><div class="line">		xmlns:p=&quot;http://www.springframework.org/schema/p&quot; </div><div class="line">		xmlns=&quot;http://www.springframework.org/schema/beans&quot; </div><div class="line">		xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd &quot;&gt;</div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
+<p>注入方法，使用<code>p:</code>属性完成注入，如果是值类型，则用<code>p:属性名=&quot;值&quot;</code>，如果是引用类型，则用<code>p:属性名-ref=&quot;bean名称&quot;</code>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;User3&quot; class=&quot;my.study.bean.User&quot; p:name=&quot;hey&quot; p:age=&quot;22&quot; p:car-ref=&quot;Car&quot;&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>书写代码测试：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">	ApplicationContext ac = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"my/study/c_injection/applicationContext.xml"</span>);</div><div class="line">	User u = (User) ac.getBean(<span class="string">"User3"</span>);</div><div class="line">	System.out.println(u);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>打印结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">User [name=hey, age=22, car=Car [name=Q5, color=black]]</div></pre></td></tr></table></figure></p>
+<h3 id="spel注入"><a href="#spel注入" class="headerlink" title="spel注入"></a>spel注入</h3><p>即Spring Expression Language.有点类似于el和ognl的写法.</p>
+<p>例如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;User4&quot; class=&quot;my.study.bean.User&quot;&gt;</div><div class="line">	&lt;!-- 使用User的name属性值作为value的值 --&gt;</div><div class="line">	&lt;property name=&quot;name&quot; value=&quot;#&#123;User.name&#125;&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;!-- 使用User3的value属性值作为value的值 --&gt;</div><div class="line">	&lt;property name=&quot;age&quot; value=&quot;#&#123;User3.age&#125;&quot;&gt;&lt;/property&gt;</div><div class="line">	&lt;!-- 引用类型不支持spel表达式 --&gt;</div><div class="line">	&lt;property name=&quot;car&quot; ref=&quot;Car&quot;&gt;&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>打印结果为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]</div></pre></td></tr></table></figure></p>
+<h2 id="复杂类型注入"><a href="#复杂类型注入" class="headerlink" title="复杂类型注入"></a>复杂类型注入</h2><p>新建<code>CollectionBean</code>类进行测试：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> my.study.c_injection;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CollectionBean</span> </span>&#123;</div><div class="line">	<span class="keyword">private</span> Object[] arr;</div><div class="line">	<span class="keyword">private</span> List list;</div><div class="line">	<span class="keyword">private</span> Map map;</div><div class="line">	<span class="keyword">private</span> Properties prop;</div><div class="line">	<span class="keyword">public</span> Object[] getArr() &#123;</div><div class="line">		<span class="keyword">return</span> arr;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setArr</span><span class="params">(Object[] arr)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.arr = arr;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> List <span class="title">getList</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> list;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setList</span><span class="params">(List list)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.list = list;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Map <span class="title">getMap</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> map;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMap</span><span class="params">(Map map)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.map = map;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> Properties <span class="title">getProp</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> prop;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setProp</span><span class="params">(Properties prop)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.prop = prop;</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"CollectionBean [arr="</span> + Arrays.toString(arr) + <span class="string">", list="</span> + list + <span class="string">", map="</span> + map + <span class="string">", prop="</span> + prop</div><div class="line">				+ <span class="string">"]"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>在配置文件中书写配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"CollectionBean_arr"</span> <span class="attr">class</span>=<span class="string">"my.study.c_injection.CollectionBean"</span>&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 如果数组中只准备注入一个元素，直接使用value|ref --&gt;</span></div><div class="line">	<span class="comment">&lt;!--  </span></div><div class="line"><span class="comment">		&lt;property name="arr" value="11"&gt;&lt;/property&gt;</span></div><div class="line"><span class="comment">	--&gt;</span></div><div class="line">	<span class="comment">&lt;!-- 多元素注入 --&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"arr"</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">array</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">value</span>&gt;</span>1<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">value</span>&gt;</span>2<span class="tag">&lt;/<span class="name">value</span>&gt;</span></div><div class="line">			<span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"User4"</span>&gt;</span><span class="tag">&lt;/<span class="name">ref</span>&gt;</span></div><div class="line">		<span class="tag">&lt;/<span class="name">array</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>测试并打印结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CollectionBean [arr=[<span class="number">1</span>, <span class="number">2</span>, User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], list=<span class="keyword">null</span>, map=<span class="keyword">null</span>, prop=<span class="keyword">null</span>]</div></pre></td></tr></table></figure></p>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><p>在配置文件中添加配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;CollectionBean_arr&quot; class=&quot;my.study.c_injection.CollectionBean&quot;&gt;</div><div class="line">&lt;!-- arr注入 --&gt;</div><div class="line">	&lt;!-- 如果数组中只准备注入一个元素，直接使用value|ref --&gt;</div><div class="line">	&lt;!--  </div><div class="line">		&lt;property name=&quot;arr&quot; value=&quot;11&quot;&gt;&lt;/property&gt;</div><div class="line">	--&gt;</div><div class="line">	&lt;!-- 多元素注入 --&gt;</div><div class="line">	&lt;property name=&quot;arr&quot;&gt;</div><div class="line">		&lt;array&gt;</div><div class="line">			&lt;value&gt;1&lt;/value&gt;</div><div class="line">			&lt;value&gt;2&lt;/value&gt;</div><div class="line">			&lt;ref bean=&quot;User4&quot;&gt;&lt;/ref&gt;</div><div class="line">		&lt;/array&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- list注入 --&gt;</div><div class="line">	&lt;!-- 如果List中只准备注入一个元素，直接使用value|ref --&gt;</div><div class="line">	&lt;!-- 多元素注入 --&gt;</div><div class="line">	&lt;property name=&quot;list&quot;&gt;</div><div class="line">		&lt;list&gt;</div><div class="line">			&lt;value&gt;list1&lt;/value&gt;</div><div class="line">			&lt;value&gt;list2&lt;/value&gt;</div><div class="line">			&lt;ref bean=&quot;User3&quot;&gt;&lt;/ref&gt;</div><div class="line">		&lt;/list&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>打印结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CollectionBean [arr=[<span class="number">1</span>, <span class="number">2</span>, User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], list=[list1, list2, User [name=hey, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], map=<span class="keyword">null</span>, prop=<span class="keyword">null</span>]</div></pre></td></tr></table></figure></p>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p>在配置文件中添加配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;CollectionBean_arr&quot; class=&quot;my.study.c_injection.CollectionBean&quot;&gt;</div><div class="line">&lt;!-- arr注入 --&gt;</div><div class="line">	&lt;!-- 如果数组中只准备注入一个元素，直接使用value|ref --&gt;</div><div class="line">	&lt;!--  </div><div class="line">		&lt;property name=&quot;arr&quot; value=&quot;11&quot;&gt;&lt;/property&gt;</div><div class="line">	--&gt;</div><div class="line">	&lt;!-- 多元素注入 --&gt;</div><div class="line">	&lt;property name=&quot;arr&quot;&gt;</div><div class="line">		&lt;array&gt;</div><div class="line">			&lt;value&gt;1&lt;/value&gt;</div><div class="line">			&lt;value&gt;2&lt;/value&gt;</div><div class="line">			&lt;ref bean=&quot;User4&quot;&gt;&lt;/ref&gt;</div><div class="line">		&lt;/array&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- list注入 --&gt;</div><div class="line">	&lt;!-- 如果List中只准备注入一个元素，直接使用value|ref --&gt;</div><div class="line">	&lt;!-- 多元素注入 --&gt;</div><div class="line">	&lt;property name=&quot;list&quot;&gt;</div><div class="line">		&lt;list&gt;</div><div class="line">			&lt;value&gt;list1&lt;/value&gt;</div><div class="line">			&lt;value&gt;list2&lt;/value&gt;</div><div class="line">			&lt;ref bean=&quot;User3&quot;&gt;&lt;/ref&gt;</div><div class="line">		&lt;/list&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- map注入 --&gt;		</div><div class="line">	&lt;property name=&quot;map&quot;&gt;</div><div class="line">		&lt;map&gt;</div><div class="line">			&lt;entry key=&quot;key1&quot; value=&quot;value1&quot;&gt;&lt;/entry&gt;</div><div class="line">			&lt;entry key=&quot;user&quot; value-ref=&quot;User4&quot;&gt;&lt;/entry&gt;</div><div class="line">			&lt;entry key-ref=&quot;User3&quot; value-ref=&quot;User2&quot;&gt;&lt;/entry&gt;</div><div class="line">		&lt;/map&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>测试并打印结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CollectionBean [arr=[<span class="number">1</span>, <span class="number">2</span>, User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], list=[list1, list2, User [name=hey, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], map=&#123;key1=value1, user=User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]], User [name=hey, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]=User [name=<span class="number">123</span>, age=<span class="keyword">null</span>, car=Car [name=Q5, color=black]]&#125;, prop=<span class="keyword">null</span>]</div></pre></td></tr></table></figure></p>
+<h3 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h3><p>配置文件中的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">&lt;bean name=&quot;CollectionBean_arr&quot; class=&quot;my.study.c_injection.CollectionBean&quot;&gt;</div><div class="line">&lt;!-- arr注入 --&gt;</div><div class="line">	&lt;!-- 如果数组中只准备注入一个元素，直接使用value|ref --&gt;</div><div class="line">	&lt;!--  </div><div class="line">		&lt;property name=&quot;arr&quot; value=&quot;11&quot;&gt;&lt;/property&gt;</div><div class="line">	--&gt;</div><div class="line">	&lt;!-- 多元素注入 --&gt;</div><div class="line">	&lt;property name=&quot;arr&quot;&gt;</div><div class="line">		&lt;array&gt;</div><div class="line">			&lt;value&gt;1&lt;/value&gt;</div><div class="line">			&lt;value&gt;2&lt;/value&gt;</div><div class="line">			&lt;ref bean=&quot;User4&quot;&gt;&lt;/ref&gt;</div><div class="line">		&lt;/array&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- list注入 --&gt;</div><div class="line">	&lt;!-- 如果List中只准备注入一个元素，直接使用value|ref --&gt;</div><div class="line">	&lt;!-- 多元素注入 --&gt;</div><div class="line">	&lt;property name=&quot;list&quot;&gt;</div><div class="line">		&lt;list&gt;</div><div class="line">			&lt;value&gt;list1&lt;/value&gt;</div><div class="line">			&lt;value&gt;list2&lt;/value&gt;</div><div class="line">			&lt;ref bean=&quot;User3&quot;&gt;&lt;/ref&gt;</div><div class="line">		&lt;/list&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- map注入 --&gt;		</div><div class="line">	&lt;property name=&quot;map&quot;&gt;</div><div class="line">		&lt;map&gt;</div><div class="line">			&lt;entry key=&quot;key1&quot; value=&quot;value1&quot;&gt;&lt;/entry&gt;</div><div class="line">			&lt;entry key=&quot;user&quot; value-ref=&quot;User4&quot;&gt;&lt;/entry&gt;</div><div class="line">			&lt;entry key-ref=&quot;User3&quot; value-ref=&quot;User2&quot;&gt;&lt;/entry&gt;</div><div class="line">		&lt;/map&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;!-- Properties注入 --&gt;</div><div class="line">	&lt;property name=&quot;prop&quot;&gt;</div><div class="line">		&lt;props&gt;</div><div class="line">			&lt;prop key=&quot;propkey1&quot;&gt; propvalue1&lt;/prop&gt;</div><div class="line">			&lt;prop key=&quot;propkey2&quot;&gt; propvalue2&lt;/prop&gt;</div><div class="line">		&lt;/props&gt;</div><div class="line">	&lt;/property&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure></p>
+<p>打印结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CollectionBean [arr=[<span class="number">1</span>, <span class="number">2</span>, User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], list=[list1, list2, User [name=hey, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]], map=&#123;key1=value1, user=User [name=jay, age=<span class="number">22</span>, car=Car [name=Q5, color=black]], User [name=hey, age=<span class="number">22</span>, car=Car [name=Q5, color=black]]=User [name=<span class="number">123</span>, age=<span class="keyword">null</span>, car=Car [name=Q5, color=black]]&#125;, prop=&#123;propkey2=propvalue2, propkey1=propvalue1&#125;]</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/08/13/实现线段树/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/11/10/Spring学习笔记-二/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz",
+            appKey: "FpJsLvikc9nea305u094EDFf",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+  
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

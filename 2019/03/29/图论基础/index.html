@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>图论基础 | Homxu</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="数据结构,图," />
+  
+
+  <meta name="description" content="图主要是节点和边组成的模型。图可以用来表达真实世界中的很多关系，如交通运输、社交网络、互联网等。图分为有向图（Directed Graph）和无向图（Undirected Graph），有向图由于其不对称性，所有有时候会涉及很多比较难的算法。可以把无向图看成一种特殊的有向图。图也可以分为有权图（Weighted Graph）和无权图（Unweighted Graph），权是指节点与节点之间的边的数">
+<meta name="keywords" content="数据结构,图">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图论基础">
+<meta property="og:url" content="http://homxu.com/2019/03/29/图论基础/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="图主要是节点和边组成的模型。图可以用来表达真实世界中的很多关系，如交通运输、社交网络、互联网等。图分为有向图（Directed Graph）和无向图（Undirected Graph），有向图由于其不对称性，所有有时候会涉及很多比较难的算法。可以把无向图看成一种特殊的有向图。图也可以分为有权图（Weighted Graph）和无权图（Unweighted Graph），权是指节点与节点之间的边的数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/1.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/2.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/3.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/4.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/5.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/6.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/7.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/10.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/8.png">
+<meta property="og:image" content="http://homxu.com/2019/03/29/图论基础/9.png">
+<meta property="og:updated_time" content="2019-04-24T07:48:02.402Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图论基础">
+<meta name="twitter:description" content="图主要是节点和边组成的模型。图可以用来表达真实世界中的很多关系，如交通运输、社交网络、互联网等。图分为有向图（Directed Graph）和无向图（Undirected Graph），有向图由于其不对称性，所有有时候会涉及很多比较难的算法。可以把无向图看成一种特殊的有向图。图也可以分为有权图（Weighted Graph）和无权图（Unweighted Graph），权是指节点与节点之间的边的数">
+<meta name="twitter:image" content="http://homxu.com/2019/03/29/图论基础/1.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#图的表示"><span class="toc-text">图的表示</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#邻接矩阵"><span class="toc-text">邻接矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#邻接表"><span class="toc-text">邻接表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码实现"><span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#C"><span class="toc-text">C++</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#遍历临边——相邻点迭代器"><span class="toc-text">遍历临边——相邻点迭代器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图的算法框架"><span class="toc-text">图的算法框架</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#java表达"><span class="toc-text">java表达</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-图论基础" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">图论基础</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.03.29</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>图主要是节点和边组成的模型。图可以用来表达真实世界中的很多关系，如交通运输、社交网络、互联网等。<br>图分为有向图（Directed Graph）和无向图（Undirected Graph），有向图由于其不对称性，所有有时候会涉及很多比较难的算法。可以把无向图看成一种特殊的有向图。<br>图也可以分为有权图（Weighted Graph）和无权图（Unweighted Graph），权是指节点与节点之间的边的数值。<br>图不一定都要连接起来，比如一个模型中有三个没有连通起来的图。<br>有的图中有可能会有自环边（self-loop）和平行边（parallel-edges），简单图（Simple Graph）就是指没有自环边和平行边的图，因为有了自环边和平行边，那么算法可能会更加复杂。</p>
+<h1 id="图的表示"><a href="#图的表示" class="headerlink" title="图的表示"></a>图的表示</h1><h2 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h2><p>一种方法是使用邻接矩阵（Adjacency Matrix）表示一张图。<br>使用邻接矩阵表示这个无向图，a[i,j]代表的值为0或1。0代表不相连，1代表相连。这个矩阵是关于对角线对称的。<br><img src="/2019/03/29/图论基础/1.png" alt="邻接矩阵表示无向图"><br>也可以使用邻接矩阵表示有向图。例如，0-&gt;1存在有向边，那么a[0,1]=1;但是1-&gt;0不存在有向边，所以a[1,0]=0。<br><img src="/2019/03/29/图论基础/2.png" alt="邻接矩阵表示有向图"></p>
+<h2 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h2><p>邻接表（Adjacency Lists）只表达和某个顶点相连接的顶点的信息。对于每一行来说都相当于一个链表，存放了对于该节点相连的所有节点。<br><img src="/2019/03/29/图论基础/3.png" alt="邻接表表示无向图"><br>同样，邻接表也可以表达有向图。<br><img src="/2019/03/29/图论基础/4.png" alt="邻接表表示有向图"></p>
+<p>由此可见，邻接表的占用空间要比邻接矩阵小。<br>邻接表适合表示稀疏图（Sparse Graph）<br>邻接矩阵适合表示稠密图（Dense Graph）</p>
+<blockquote>
+<p>数据结构中对于稀疏图的定义为：有很少条边或弧（边的条数|E|远小于|V|²）的图称为稀疏图（sparse graph），反之边的条数|E|接近|V|²，称为稠密图（dense graph）。——百度百科<br>稠密图的一个极端情况就是完全图，即所有的点之间都互相连接。这种情况使用邻接矩阵进行存储会更好。</p>
+</blockquote>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><h3 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h3><p><code>DenseGraph.h</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GRAPH_DENSEGRAPH_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> GRAPH_DENSEGRAPH_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="comment">//稠密图 - 邻接矩阵</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DenseGraph</span>&#123;</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> n,m;<span class="comment">//点数和边数</span></div><div class="line">    <span class="keyword">bool</span> directed;<span class="comment">//有向还是无向图</span></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; &gt; g; <span class="comment">//true表示有这条边,false表示没有</span></div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    DenseGraph( <span class="keyword">int</span> n , <span class="keyword">bool</span> directed)&#123;</div><div class="line">        <span class="keyword">this</span>-&gt;n = n;<span class="comment">//n个顶点</span></div><div class="line">        <span class="keyword">this</span>-&gt;m = <span class="number">0</span>;<span class="comment">//初始为0条边</span></div><div class="line">        <span class="keyword">this</span>-&gt;directed = directed;</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i ++)</div><div class="line">            g.push_back( <span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;( n, <span class="literal">false</span> ));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~DenseGraph() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">V</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> n;&#125;<span class="comment">//返回顶点数</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">E</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> m;&#125;<span class="comment">//返回边数</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addEdge</span><span class="params">( <span class="keyword">int</span> v , <span class="keyword">int</span> w)</span></span>&#123; <span class="comment">//在顶点v和w间建立一条边</span></div><div class="line">        <span class="comment">//保证v和w不越界</span></div><div class="line">        assert( v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n );</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n );</div><div class="line">        <span class="comment">//先判断v和w之间是否已经有边</span></div><div class="line">        <span class="keyword">if</span>( hasEdge( v, w )) <span class="comment">//这里避免了产生平行边的情况，这也是使用邻接矩阵的优点</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line"></div><div class="line">        g[v][w] = <span class="literal">true</span>; <span class="comment">//如果是有向图，只需运行这一句话</span></div><div class="line">        <span class="keyword">if</span>( !directed ) <span class="comment">//如果是无向图</span></div><div class="line">            g[w][v] = <span class="literal">true</span>;</div><div class="line"></div><div class="line">        m++; <span class="comment">//维护边数</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasEdge</span><span class="params">( <span class="keyword">int</span> v , <span class="keyword">int</span> w )</span></span>&#123; <span class="comment">//判断两个顶点是否已经有边</span></div><div class="line">        <span class="comment">//保证v和w不越界</span></div><div class="line">        assert( v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n );</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n );</div><div class="line"></div><div class="line">        <span class="keyword">return</span> g[v][w];</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// GRAPH_DENSEGRAPH_H</span></span></div></pre></td></tr></table></figure></p>
+<p><code>SparseGraph.h</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GRAPH_SPARSEGRAPH_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> GRAPH_SPARSEGRAPH_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="comment">//稀疏图 - 邻接表</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SparseGraph</span>&#123;</span></div><div class="line"></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="keyword">int</span> n,m;</div><div class="line">    <span class="keyword">bool</span> directed;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; g;  <span class="comment">// 图的具体数据</span></div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    SparseGraph( <span class="keyword">int</span> n , <span class="keyword">bool</span> directed )&#123;</div><div class="line">        <span class="keyword">this</span>-&gt;n = n;</div><div class="line">        <span class="keyword">this</span>-&gt;m = <span class="number">0</span>;</div><div class="line">        <span class="keyword">this</span>-&gt;directed = directed;</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i ++)&#123;</div><div class="line">            g.push_back(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;()); <span class="comment">//初始化时为空，因为初始化时没有顶点相连接，这里也可以用链表实现，使用链表在删除时效率高</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~SparseGraph()&#123;&#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">V</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> n;&#125;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">E</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> m;&#125;</div><div class="line"></div><div class="line">    <span class="comment">//在使用邻接表进行表达的时候，通常允许有平行边</span></div><div class="line">    <span class="comment">//因为addEdge时，每进行一次添加，都要调用hasEdge进行判断，而hasEdge最差的时间复杂度为O(n)</span></div><div class="line">    <span class="comment">//所以addEdge也会退化为O(n)，一般在所有的边添加完成后再进行一次综合检查，去除平行边</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">addEdge</span><span class="params">( <span class="keyword">int</span> v , <span class="keyword">int</span> w )</span></span>&#123;</div><div class="line">         <span class="comment">//保证v和w不越界</span></div><div class="line">        assert( v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n );</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n );</div><div class="line"></div><div class="line">        g[v].push_back(w);<span class="comment">//v和w相连</span></div><div class="line">        <span class="keyword">if</span>( v != w &amp;&amp; !directed ) <span class="comment">//如果v不是自环边且不是有向图</span></div><div class="line">            g[w].push_back(v);</div><div class="line"></div><div class="line">        m ++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">hasEdge</span><span class="params">( <span class="keyword">int</span> v , <span class="keyword">int</span> w )</span></span>&#123;</div><div class="line"></div><div class="line">        assert( v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n );</div><div class="line">        assert( w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n );</div><div class="line"></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; g[v].size() ; i++ )</div><div class="line">            <span class="keyword">if</span>( g[v][i] == w )</div><div class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// GRAPH_SPARSEGRAPH_H</span></span></div></pre></td></tr></table></figure></p>
+<h1 id="遍历临边——相邻点迭代器"><a href="#遍历临边——相邻点迭代器" class="headerlink" title="遍历临边——相邻点迭代器"></a>遍历临边——相邻点迭代器</h1><p>在图的操作中，有一个基础操作——遍历临边。下图是对0节点表达临边时邻接矩阵和邻接表的不同。这个图也反映了遍历0的临边的方法。</p>
+<font size="5" color="red">这个是一个很重要的操作，在后面的很多方法中都用到了它！！！！</font>
+
+<p><img src="/2019/03/29/图论基础/5.png" alt="遍历临边"></p>
+<p>下面制作一个迭代器，用来访问一个顶点的所有临边。</p>
+<p><code>SparseGraph.h</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> GRAPH_SPARSEGRAPH_H</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> GRAPH_SPARSEGRAPH_H</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="comment">//稀疏图 - 邻接表</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SparseGraph</span>&#123;</span></div><div class="line">    <span class="comment">//...........省略代码</span></div><div class="line">     <span class="comment">// 邻边迭代器, 传入一个图和一个顶点,</span></div><div class="line">    <span class="comment">// 迭代在这个图中和这个顶点向连的所有顶点</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">adjIterator</span> &#123;</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">    SparseGraph &amp;G; <span class="comment">// 图G的引用</span></div><div class="line">    <span class="keyword">int</span> v;</div><div class="line">    <span class="keyword">int</span> index;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    <span class="comment">// 构造函数</span></div><div class="line">    adjIterator(SparseGraph &amp;graph, <span class="keyword">int</span> v ): G(graph)&#123;</div><div class="line">        <span class="keyword">this</span>-&gt;v = v;</div><div class="line">        <span class="keyword">this</span>-&gt;index = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~adjIterator()&#123;&#125;</div><div class="line"></div><div class="line">    <span class="comment">// 返回图G中与顶点v相连接的第一个顶点</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">begin</span><span class="params">()</span></span>&#123;</div><div class="line">        index = <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>( G.g[v].size() )</div><div class="line">            <span class="keyword">return</span> G.g[v][index];<span class="comment">//即g[v][0]</span></div><div class="line">        <span class="comment">// 若没有顶点和v相连接, 则返回-1</span></div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span> ;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 返回图G中与顶点v相连接的下一个顶点</span></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">next</span><span class="params">()</span></span>&#123;</div><div class="line">        index ++;</div><div class="line">        <span class="keyword">if</span>( index &lt; G.g[v].size() )</div><div class="line">            <span class="keyword">return</span> G.v[v][index];</div><div class="line">        <span class="comment">// 若没有顶点和v相连接, 则返回-1</span></div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">end</span><span class="params">()</span></span>&#123; <span class="comment">//判断是否迭代完成</span></div><div class="line">        <span class="keyword">return</span> index &gt;= G.g[v].size();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// GRAPH_SPARSEGRAPH_H</span></span></div></pre></td></tr></table></figure></p>
+<p>在<code>main</code>中进行测试：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SparseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"DenseGraph.h"</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> N = <span class="number">20</span>;</div><div class="line">    <span class="keyword">int</span> M = <span class="number">100</span>;</div><div class="line"></div><div class="line">    srand( time(<span class="literal">NULL</span>) );</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">// Sparse Graph</span></div><div class="line">    <span class="function">SparseGraph <span class="title">g1</span><span class="params">(N , <span class="literal">false</span>)</span></span>;</div><div class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; M ; i ++ )&#123;</div><div class="line">        <span class="keyword">int</span> a = rand()%N;</div><div class="line">        <span class="keyword">int</span> b = rand()%N;</div><div class="line">        g1.addEdge( a , b );</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// O(E)</span></div><div class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> v = <span class="number">0</span> ; v &lt; N ; v ++ )&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;v&lt;&lt;<span class="string">" : "</span>;</div><div class="line">        SparseGraph::<span class="function">adjIterator <span class="title">adj</span><span class="params">( g1 , v )</span></span>;</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> w = adj.begin() ; !adj.end() ; w = adj.next() )</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;w&lt;&lt;<span class="string">" "</span>;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="/2019/03/29/图论基础/6.png" alt="测试结果"></p>
+<p>可以看到稀疏图冲存在平行边，但是稠密图中没有平行边。稀疏图的遍历时间复杂度为O(E),稠密图的时间复杂度为O(V^2)。E为边数，V为顶点数。</p>
+<h1 id="图的算法框架"><a href="#图的算法框架" class="headerlink" title="图的算法框架"></a>图的算法框架</h1><p>创建文件<code>testG1.txt</code>，用文件来表示一个图。如下面的数据：第一行表示有13个节点和13条边，第二行<code>0 5</code>则表示节点0 和 5之间有一条边。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">13 13</div><div class="line">0 5</div><div class="line">4 3</div><div class="line">0 1</div><div class="line">9 12</div><div class="line">6 4</div><div class="line">5 4</div><div class="line">0 2</div><div class="line">11 12</div><div class="line">9 10</div><div class="line">0 6</div><div class="line">7 8</div><div class="line">9 11</div><div class="line">5 3</div></pre></td></tr></table></figure></p>
+<p>同样创建第二个文件<code>testG2.txt</code>表示另一个图：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">6 8</div><div class="line">0 1</div><div class="line">0 2</div><div class="line">0 5</div><div class="line">1 2</div><div class="line">1 3</div><div class="line">1 4</div><div class="line">3 4</div><div class="line">3 5</div></pre></td></tr></table></figure></p>
+<p>下面设计一个从文件中读取图的算法（无论是稀疏图还是稠密图都通用）,封装在<code>ReadGraph.h</code>类中。该类是一个模板类，指定一个图的引用和一个用来表示图的文件，将文件中存放的数据存到图中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> READGRAPH_H_INCLUDED</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> READGRAPH_H_INCLUDED</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fstream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cassert&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Graph&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReadGraph</span>&#123;</span></div><div class="line"></div><div class="line"><span class="keyword">public</span>:</div><div class="line">    ReadGraph(Graph &amp;graph,<span class="keyword">const</span> <span class="built_in">string</span> &amp;filename)&#123;</div><div class="line"></div><div class="line">        <span class="function">ifstream <span class="title">file</span><span class="params">(filename)</span></span>;</div><div class="line">        <span class="built_in">string</span> line;</div><div class="line">        <span class="keyword">int</span> V,E;</div><div class="line"></div><div class="line">        assert( file.is_open() );</div><div class="line"></div><div class="line">        <span class="comment">//首先读取顶点数和边数</span></div><div class="line">        assert( getline(file,line) );</div><div class="line">        <span class="function"><span class="built_in">stringstream</span> <span class="title">ss</span><span class="params">(line)</span></span>;</div><div class="line">        ss&gt;&gt;V&gt;&gt;E;</div><div class="line"></div><div class="line">        assert( V == graph.V() );</div><div class="line"></div><div class="line">        <span class="comment">//然后创建图</span></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; E ; i++)&#123;</div><div class="line">            assert( getline(file,line) );</div><div class="line">            <span class="function"><span class="built_in">stringstream</span> <span class="title">ss</span><span class="params">(line)</span></span>;</div><div class="line"></div><div class="line">            <span class="keyword">int</span> a,b;</div><div class="line">            ss&gt;&gt;a&gt;&gt;b;</div><div class="line"></div><div class="line">            assert( a &gt;= <span class="number">0</span> &amp;&amp; a &lt; V );</div><div class="line">            assert( b &gt;= <span class="number">0</span> &amp;&amp; b &lt; V );</div><div class="line">            graph.addEdge( a , b );</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span> <span class="comment">// READGRAPH_H_INCLUDED</span></span></div></pre></td></tr></table></figure>
+<p>在<code>SparseGraph.h</code>和<code>DenseGraph.h</code>中添加一个方法<code>show()</code>用来打印图:<br><code>SparseGraph.h</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="string">"vertex "</span>&lt;&lt;i&lt;&lt;<span class="string">":\t"</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; g[i].size() ; j++ )&#123;</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;g[i][j]&lt;&lt;<span class="string">"\t"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>DenseGraph.h</code><br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j ++)</div><div class="line">            <span class="built_in">cout</span>&lt;&lt;g[i][j]&lt;&lt;<span class="string">"\t"</span>;</div><div class="line">        <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在main函数中进行测试:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"SparseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"DenseGraph.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"ReadGraph.h"</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 使用两种图的存储方式读取testG1.txt文件</span></div><div class="line">    <span class="built_in">string</span> filename = <span class="string">"testG1.txt"</span>;</div><div class="line">    <span class="function">SparseGraph <span class="title">g1</span><span class="params">( <span class="number">13</span> , <span class="literal">false</span> )</span></span>;</div><div class="line">    ReadGraph&lt;SparseGraph&gt; readGraph1( g1 , filename );</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"test G1 in Sparse Graph:"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    g1.show();</div><div class="line"></div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="function">DenseGraph <span class="title">g2</span><span class="params">( <span class="number">13</span> , <span class="literal">false</span> )</span></span>;</div><div class="line">    ReadGraph&lt;DenseGraph&gt; readGraph2( g2 , filename );</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"test G1 in Dense Graph:"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    g2.show();</div><div class="line"></div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="comment">// 使用两种图的存储方式读取testG2.txt文件</span></div><div class="line">    filename = <span class="string">"testG2.txt"</span>;</div><div class="line">    <span class="function">SparseGraph <span class="title">g3</span><span class="params">( <span class="number">6</span> , <span class="literal">false</span> )</span></span>;</div><div class="line">    ReadGraph&lt;SparseGraph&gt; readGraph3( g3 , filename );</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"test G2 in Sparse Graph:"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    g3.show();</div><div class="line"></div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line"></div><div class="line">    <span class="function">DenseGraph <span class="title">g4</span><span class="params">( <span class="number">6</span> , <span class="literal">false</span> )</span></span>;</div><div class="line">    ReadGraph&lt;DenseGraph&gt; readGraph4( g4 , filename );</div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"test G2 in Dense Graph:"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    g4.show();</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可以看到使用邻接矩阵和邻接表创建的图的结果:</p>
+<p><img src="/2019/03/29/图论基础/7.png" alt="测试结果G1"></p>
+<p><img src="/2019/03/29/图论基础/10.png" alt="测试结果G2"></p>
+<h1 id="java表达"><a href="#java表达" class="headerlink" title="java表达"></a>java表达</h1><p>首先定义图的接口<code>Graph.java</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//图的接口</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Graph</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">V</span><span class="params">()</span></span>;  <span class="comment">//获取图的顶点数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">E</span><span class="params">()</span></span>;  <span class="comment">//获取图的边数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addEdge</span><span class="params">( <span class="keyword">int</span> v ,<span class="keyword">int</span> w)</span></span>; <span class="comment">//在v和w两个顶点间添加一条边</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasEdge</span><span class="params">( <span class="keyword">int</span> v , <span class="keyword">int</span> w)</span></span>;<span class="comment">//查看v和w两个顶点间是否有边</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">show</span><span class="params">()</span></span>;<span class="comment">//打印图</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Integer&gt; <span class="title">adj</span><span class="params">(<span class="keyword">int</span> v)</span></span>; <span class="comment">//获取与v顶点连接的所有边</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>定义稠密图<code>DenseGraph.java</code>:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Vector;</div><div class="line"></div><div class="line"><span class="comment">//稠密图 - 邻接矩阵</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DenseGraph</span> <span class="keyword">implements</span> <span class="title">Graph</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> n; <span class="comment">//节点数</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> m; <span class="comment">//边数</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> directed; <span class="comment">// 是否为有向图</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[][] g; <span class="comment">//图的具体数据，用二维数组表达</span></div><div class="line"></div><div class="line">    <span class="comment">//构造函数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">DenseGraph</span><span class="params">( <span class="keyword">int</span> n , <span class="keyword">boolean</span> directed)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(n &lt; <span class="number">0</span>)<span class="comment">//保证n要&gt;=0</span></div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of n should be &gt;= 0."</span>); </div><div class="line">        <span class="keyword">this</span>.n = n;</div><div class="line">        <span class="keyword">this</span>.m = <span class="number">0</span> ;<span class="comment">//初始化时没有任何边</span></div><div class="line">        <span class="keyword">this</span>.directed = directed;</div><div class="line">        <span class="comment">//g初始化时为n*n的布尔型矩阵,每个g[i][j]均为false，因为开始时没有任何边</span></div><div class="line">        <span class="comment">//false为boolean型变量的默认值</span></div><div class="line">        g = <span class="keyword">new</span> <span class="keyword">boolean</span>[n][n];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回节点个数</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">V</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> n;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回边数</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">E</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> m;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//向图中添加一条边</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> w)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n))</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">if</span>(!(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n))</div><div class="line">            <span class="keyword">return</span>;</div><div class="line"></div><div class="line">        <span class="comment">//如果v和w间已存在边，则直接退出</span></div><div class="line">        <span class="keyword">if</span>(hasEdge( v , w ))</div><div class="line">            <span class="keyword">return</span>;</div><div class="line"></div><div class="line">        g[v][w] = <span class="keyword">true</span>;<span class="comment">//v和w间建立边</span></div><div class="line">        <span class="keyword">if</span>( !directed ) <span class="comment">//如果不是有向图,则继续建立w到v的边</span></div><div class="line">            g[w][v] = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">        m ++;<span class="comment">//维护边数，边数加一</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//判断图中是否有v到w的边</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasEdge</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> w)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of v is Illegal!you should type the value of v between 0 and n.(v &gt;=0 &amp;&amp; v &lt; n)."</span>);</div><div class="line">        <span class="keyword">if</span>(!(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of w is Illegal!you should type the value of w between 0 and n.(w &gt;=0 &amp;&amp; w &lt; n)."</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> g[v][w];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//打印显示图的信息</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>  i = <span class="number">0</span> ; i &lt; n ; i ++)&#123;</div><div class="line">            <span class="keyword">for</span>( <span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j ++)</div><div class="line">                System.out.print(g[i][j]+<span class="string">"\t"</span>);</div><div class="line">            System.out.println();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回图中v顶点的所有邻边</span></div><div class="line">    <span class="comment">//由于java使用引用机制，返回一个Vector不会带来额外开销</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Integer&gt; <span class="title">adj</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of v is Illegal!you should type the value of v between 0 and n.(v &gt;=0 &amp;&amp; v &lt; n)."</span>);</div><div class="line">        Vector&lt;Integer&gt; adjV = <span class="keyword">new</span> Vector&lt;Integer&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)</div><div class="line">            <span class="keyword">if</span>(g[v][i])</div><div class="line">                adjV.add(i);</div><div class="line">        <span class="keyword">return</span> adjV;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>稀疏图<code>SparseGraph.java</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Vector;</div><div class="line"></div><div class="line"><span class="comment">//稀疏图 - 邻接表</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SparseGraph</span> <span class="keyword">implements</span> <span class="title">Graph</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> n; <span class="comment">//节点数</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> m; <span class="comment">//边数</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> directed; <span class="comment">//是否为有向图</span></div><div class="line">    <span class="keyword">private</span> Vector&lt;Integer&gt;[] g; <span class="comment">//图的具体数据</span></div><div class="line"></div><div class="line">    <span class="comment">//构造函数</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SparseGraph</span><span class="params">(<span class="keyword">int</span> n , <span class="keyword">boolean</span> directed)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(n &lt; <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of n should be &gt;= 0."</span>);</div><div class="line">        <span class="keyword">this</span>.n = n;</div><div class="line">        <span class="keyword">this</span>.m = <span class="number">0</span>;</div><div class="line">        <span class="keyword">this</span>.directed = directed;</div><div class="line">        <span class="comment">//g初始化为n个空的vector,表示每一个g[i]都为空，即没有任何边</span></div><div class="line">        g = (Vector&lt;Integer&gt;[]) <span class="keyword">new</span> Vector[n];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i ++)</div><div class="line">            g[i] = <span class="keyword">new</span> Vector&lt;Integer&gt;();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回节点个数</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">V</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> n;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回边数</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">E</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> m;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//向图中添加一条边</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addEdge</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> w)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of v is Illegal!you should type the value of v between 0 and n.(v &gt;=0 &amp;&amp; v &lt; n)."</span>);</div><div class="line">        <span class="keyword">if</span>(!(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of w is Illegal!you should type the value of w between 0 and n.(w &gt;=0 &amp;&amp; w &lt; n)."</span>);</div><div class="line"></div><div class="line">        g[v].add(w);</div><div class="line">        <span class="keyword">if</span>(v != w &amp;&amp; !directed) <span class="comment">//如果不是自环边，并且它是无向图，则创建w到v的边</span></div><div class="line">            g[w].add(v);</div><div class="line"></div><div class="line">        m ++;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//验证图中是否有v到w的边</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasEdge</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> w)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of v is Illegal!you should type the value of v between 0 and n.(v &gt;=0 &amp;&amp; v &lt; n)."</span>);</div><div class="line">        <span class="keyword">if</span>(!(w &gt;= <span class="number">0</span> &amp;&amp; w &lt; n))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of w is Illegal!you should type the value of w between 0 and n.(w &gt;=0 &amp;&amp; w &lt; n)."</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; g[v].size() ; i++)</div><div class="line">            <span class="keyword">if</span>( g[v].elementAt(i) == w)</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//显示图的信息</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n ; i ++)&#123;</div><div class="line">            System.out.printf(<span class="string">"vertex %d :\t"</span>,i);</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; g[i].size() ; j++)</div><div class="line">                System.out.print(g[i].elementAt(j) + <span class="string">"\t"</span>);</div><div class="line">            System.out.println();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 返回图中一个顶点的所有邻边</span></div><div class="line">    <span class="comment">// 由于java使用引用机制，返回一个Vector不会带来额外开销,</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;Integer&gt; <span class="title">adj</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(!(v &gt;= <span class="number">0</span> &amp;&amp; v &lt; n))</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"the value of v is Illegal!you should type the value of v between 0 and n.(v &gt;=0 &amp;&amp; v &lt; n)."</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span> g[v];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>读取图文件<code>ReadGraph.java</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.io.BufferedInputStream;</div><div class="line"><span class="keyword">import</span> java.io.File;</div><div class="line"><span class="keyword">import</span> java.io.FileInputStream;</div><div class="line"><span class="keyword">import</span> java.io.IOException;</div><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"><span class="keyword">import</span> java.util.Locale;</div><div class="line"><span class="keyword">import</span> java.util.InputMismatchException;</div><div class="line"><span class="keyword">import</span> java.util.NoSuchElementException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReadGraph</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> Scanner scanner;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ReadGraph</span><span class="params">(Graph graph, String filename)</span></span>&#123;</div><div class="line"></div><div class="line">        readFile(filename);</div><div class="line"></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">int</span> V = scanner.nextInt();</div><div class="line">            <span class="keyword">if</span> (V &lt; <span class="number">0</span>)</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"number of vertices in a Graph must be nonnegative"</span>);</div><div class="line">            <span class="keyword">assert</span> V == graph.V();</div><div class="line"></div><div class="line">            <span class="keyword">int</span> E = scanner.nextInt();</div><div class="line">            <span class="keyword">if</span> (E &lt; <span class="number">0</span>)</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"number of edges in a Graph must be nonnegative"</span>);</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; E; i++) &#123;</div><div class="line">                <span class="keyword">int</span> v = scanner.nextInt();</div><div class="line">                <span class="keyword">int</span> w = scanner.nextInt();</div><div class="line">                <span class="keyword">assert</span> v &gt;= <span class="number">0</span> &amp;&amp; v &lt; V;</div><div class="line">                <span class="keyword">assert</span> w &gt;= <span class="number">0</span> &amp;&amp; w &lt; V;</div><div class="line">                graph.addEdge(v, w);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (InputMismatchException e) &#123;</div><div class="line">            String token = scanner.next();</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InputMismatchException(<span class="string">"attempts to read an 'int' value from input stream, but the next token is \""</span> + token + <span class="string">"\""</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (NoSuchElementException e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException(<span class="string">"attemps to read an 'int' value from input stream, but there are no more tokens available"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">readFile</span><span class="params">(String filename)</span></span>&#123;</div><div class="line">        <span class="keyword">assert</span> filename != <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            File file = <span class="keyword">new</span> File(filename);</div><div class="line">            <span class="keyword">if</span> (file.exists()) &#123;</div><div class="line">                FileInputStream fis = <span class="keyword">new</span> FileInputStream(file);</div><div class="line">                scanner = <span class="keyword">new</span> Scanner(<span class="keyword">new</span> BufferedInputStream(fis), <span class="string">"UTF-8"</span>);</div><div class="line">                scanner.useLocale(Locale.ENGLISH);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(filename + <span class="string">" doesn't exist."</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">catch</span> (IOException ioe) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Could not open "</span> + filename, ioe);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>书写main函数然后测试:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="comment">//使用两种方式读取testG1.txt文件</span></div><div class="line">        String filename = <span class="string">"testG1.txt"</span>;</div><div class="line">        SparseGraph g1 = <span class="keyword">new</span> SparseGraph(<span class="number">13</span>,<span class="keyword">false</span>);</div><div class="line">        ReadGraph readGraph1 = <span class="keyword">new</span> ReadGraph(g1,filename);</div><div class="line">        System.out.println(<span class="string">"test G1 in Sparse Graph:"</span>);</div><div class="line">        g1.show();</div><div class="line"></div><div class="line">        System.out.println();</div><div class="line"></div><div class="line">        DenseGraph g2 = <span class="keyword">new</span> DenseGraph(<span class="number">13</span>,<span class="keyword">false</span>);</div><div class="line">        ReadGraph readGraph2 = <span class="keyword">new</span> ReadGraph(g2,filename);</div><div class="line">        System.out.println(<span class="string">"test G1 in Dense Graph:"</span>);</div><div class="line">        g2.show();</div><div class="line"></div><div class="line">        System.out.println();</div><div class="line"></div><div class="line">        <span class="comment">// 使用两种图的存储方式读取testG2.txt文件</span></div><div class="line">        filename = <span class="string">"testG2.txt"</span>;</div><div class="line">        SparseGraph g3 = <span class="keyword">new</span> SparseGraph(<span class="number">6</span>, <span class="keyword">false</span>);</div><div class="line">        ReadGraph readGraph3 = <span class="keyword">new</span> ReadGraph(g3, filename);</div><div class="line">        System.out.println(<span class="string">"test G2 in Sparse Graph:"</span>);</div><div class="line">        g3.show();</div><div class="line"></div><div class="line">        System.out.println();</div><div class="line"></div><div class="line">        DenseGraph g4 = <span class="keyword">new</span> DenseGraph(<span class="number">6</span>, <span class="keyword">false</span>);</div><div class="line">        ReadGraph readGraph4 = <span class="keyword">new</span> ReadGraph(g4, filename);</div><div class="line">        System.out.println(<span class="string">"test G2 in Dense Graph:"</span>);</div><div class="line">        g4.show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>读取结果:<br><img src="/2019/03/29/图论基础/8.png" alt="测试结果"><br><img src="/2019/03/29/图论基础/9.png" alt="测试结果"></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/03/14/哈希表/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/04/01/图的遍历/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz",
+            appKey: "FpJsLvikc9nea305u094EDFf",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+  
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

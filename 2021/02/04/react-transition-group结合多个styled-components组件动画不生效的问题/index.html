@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>react-transition-group结合多个styled-components组件动画不生效的问题 | Homxu</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="react," />
+  
+
+  <meta name="description" content="问题描述问题相关环境123&amp;quot;react&amp;quot;: &amp;quot;^16.13.1&amp;quot;,&amp;quot;react-transition-group&amp;quot;: &amp;quot;^4.4.1&amp;quot;,&amp;quot;styled-components&amp;quot;: &amp;quot;^5.2.0&amp;quot; 需求描述创建sidebar，点击控制按钮时，显示侧边栏的各个Item。但是没有动画，">
+<meta name="keywords" content="react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-transition-group结合多个styled-components组件动画不生效的问题">
+<meta property="og:url" content="http://homxu.com/2021/02/04/react-transition-group结合多个styled-components组件动画不生效的问题/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="问题描述问题相关环境123&amp;quot;react&amp;quot;: &amp;quot;^16.13.1&amp;quot;,&amp;quot;react-transition-group&amp;quot;: &amp;quot;^4.4.1&amp;quot;,&amp;quot;styled-components&amp;quot;: &amp;quot;^5.2.0&amp;quot; 需求描述创建sidebar，点击控制按钮时，显示侧边栏的各个Item。但是没有动画，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2021/02/04/react-transition-group结合多个styled-components组件动画不生效的问题/1.gif">
+<meta property="og:image" content="http://homxu.com/2021/02/04/react-transition-group结合多个styled-components组件动画不生效的问题/2.gif">
+<meta property="og:updated_time" content="2021-02-04T08:58:31.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react-transition-group结合多个styled-components组件动画不生效的问题">
+<meta name="twitter:description" content="问题描述问题相关环境123&amp;quot;react&amp;quot;: &amp;quot;^16.13.1&amp;quot;,&amp;quot;react-transition-group&amp;quot;: &amp;quot;^4.4.1&amp;quot;,&amp;quot;styled-components&amp;quot;: &amp;quot;^5.2.0&amp;quot; 需求描述创建sidebar，点击控制按钮时，显示侧边栏的各个Item。但是没有动画，">
+<meta name="twitter:image" content="http://homxu.com/2021/02/04/react-transition-group结合多个styled-components组件动画不生效的问题/1.gif">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#问题描述"><span class="toc-text">问题描述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题相关环境"><span class="toc-text">问题相关环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#需求描述"><span class="toc-text">需求描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题复现"><span class="toc-text">问题复现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#index-js"><span class="toc-text">index.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#style-js"><span class="toc-text">style.js</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-react-transition-group结合多个styled-components组件动画不生效的问题" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">react-transition-group结合多个styled-components组件动画不生效的问题</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.02.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><h2 id="问题相关环境"><a href="#问题相关环境" class="headerlink" title="问题相关环境"></a>问题相关环境</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&quot;react&quot;: &quot;^16.13.1&quot;,</div><div class="line">&quot;react-transition-group&quot;: &quot;^4.4.1&quot;,</div><div class="line">&quot;styled-components&quot;: &quot;^5.2.0&quot;</div></pre></td></tr></table></figure>
+<h2 id="需求描述"><a href="#需求描述" class="headerlink" title="需求描述"></a>需求描述</h2><p>创建sidebar，点击控制按钮时，显示侧边栏的各个Item。但是没有动画，组件的显示与关闭都是瞬间完成，这样看起来很突兀，所以想给元素enter和exit的时候加一个过渡动画。</p>
+<h2 id="问题复现"><a href="#问题复现" class="headerlink" title="问题复现"></a>问题复现</h2><h3 id="index-js"><a href="#index-js" class="headerlink" title="index.js"></a>index.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React,&#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123; CSSTransition,TransitionGroup &#125; <span class="keyword">from</span> <span class="string">'react-transition-group'</span></div><div class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></div><div class="line"><span class="keyword">import</span> &#123; actionCreators &#125; <span class="keyword">from</span> <span class="string">'./store'</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> &#123; </div><div class="line">    SideBarLeftWrapper,</div><div class="line">    SideBarLeftBtn,</div><div class="line">    SideBarMenu,</div><div class="line">    SideBarMenuItem</div><div class="line"> &#125; <span class="keyword">from</span> <span class="string">'./style'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> menuItemsJson <span class="keyword">from</span> <span class="string">'../../static/json/sideBar.config.json'</span></div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SideBar</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">constructor</span>(props)&#123;</div><div class="line">      <span class="keyword">super</span>(props)</div><div class="line">      <span class="keyword">this</span>.getMenuItems = <span class="keyword">this</span>.getMenuItems.bind(<span class="keyword">this</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    getMenuItems = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">        <span class="keyword">const</span> &#123;isShowMenu&#125; = <span class="keyword">this</span>.props</div><div class="line">        <span class="keyword">return</span>(</div><div class="line">          &lt;TransitionGroup&gt;</div><div class="line">            &#123;</div><div class="line">              menuItemsJson.map( <span class="function">(<span class="params">item,index</span>) =&gt;</span> (</div><div class="line">                <span class="comment">// isShowmenu控制某些css元素的显示与否</span></div><div class="line">                &lt;CSSTransition</div><div class="line">                  <span class="keyword">in</span>=&#123;isShowMenu&#125;</div><div class="line">                  timeout=&#123;<span class="number">200</span>&#125;</div><div class="line">                  classNames=<span class="string">'slide'</span></div><div class="line">                  unmountOnExit</div><div class="line">                &gt;</div><div class="line">                  &lt;SideBarMenuItem&gt;</div><div class="line">                      &lt;span className=<span class="string">'iconfont'</span> dangerouslySetInnerHTML=&#123;&#123; <span class="attr">__html</span>: item.name&#125;&#125;/&gt;</div><div class="line">                  &lt;<span class="regexp">/SideBarMenuItem&gt;</span></div><div class="line"><span class="regexp">                &lt;/</span>CSSTransition&gt;</div><div class="line">              ) )</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">          &lt;<span class="regexp">/TransitionGroup&gt;</span></div><div class="line"><span class="regexp">        ) </span></div><div class="line"><span class="regexp">    &#125;</span></div><div class="line"><span class="regexp"></span></div><div class="line"><span class="regexp">    </span></div><div class="line"><span class="regexp">    render() &#123;</span></div><div class="line"><span class="regexp">        const &#123;handleMenuBtnClick,isShowMenu&#125; = this.props</span></div><div class="line"><span class="regexp">        return (</span></div><div class="line"><span class="regexp">            &lt;SideBarLeftWrapper isShowMenu=&#123;isShowMenu&#125;&gt;</span></div><div class="line"><span class="regexp">                &lt;SideBarLeftBtn isShowMenu=&#123;isShowMenu&#125; onClick=&#123;() =&gt; &#123;handleMenuBtnClick(isShowMenu)&#125;&#125;&gt;</span></div><div class="line"><span class="regexp">                    &lt;span</span></div><div class="line"><span class="regexp">                        className="iconfont menu-btn"</span></div><div class="line"><span class="regexp">                    &gt;&amp;#xe7f2;&lt;/</span>span&gt;</div><div class="line">                &lt;<span class="regexp">/SideBarLeftBtn&gt;</span></div><div class="line"><span class="regexp">                  &#123; this.getMenuItems() &#125;</span></div><div class="line"><span class="regexp">            &lt;/</span>SideBarLeftWrapper&gt;</div><div class="line">            </div><div class="line">        )</div><div class="line">    &#125;</div><div class="line"></div><div class="line">     </div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">const</span> mapStateToProps = <span class="function">(<span class="params">state</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> (&#123;</div><div class="line">        isShowMenu: state.getIn([<span class="string">'sidebar'</span>,<span class="string">'isShowMenu'</span>])</div><div class="line">    &#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> mapStateToDispatch = <span class="function">(<span class="params">dispatch</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">        handleMenuBtnClick: <span class="function">(<span class="params">isShowMenu</span>) =&gt;</span> &#123;</div><div class="line">            dispatch(actionCreators.menuFocus(isShowMenu))</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> connect(mapStateToProps,mapStateToDispatch)(SideBar);</div></pre></td></tr></table></figure>
+<h3 id="style-js"><a href="#style-js" class="headerlink" title="style.js"></a>style.js</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> styled <span class="keyword">from</span> <span class="string">'styled-components'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> SideBarLeftWrapper = styled.div<span class="string">`</span></div><div class="line"><span class="string">  width: <span class="subst">$&#123;props =&gt; (props.isShowMenu ? <span class="string">'130px'</span> : <span class="string">'0'</span>)&#125;</span>;</span></div><div class="line"><span class="string">  height: 96%;</span></div><div class="line"><span class="string">  margin: 10px 0 0 10px;</span></div><div class="line"><span class="string">  float: left;</span></div><div class="line"><span class="string">  z-index: 100;</span></div><div class="line"><span class="string">  position: absolute;</span></div><div class="line"><span class="string">  transition: all 0.5s;</span></div><div class="line"><span class="string">  -moz-transition: width 0.5;</span></div><div class="line"><span class="string">`</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> SideBarLeftBtn = styled.div<span class="string">`</span></div><div class="line"><span class="string">  width: 20px;</span></div><div class="line"><span class="string">  height: 20px;  </span></div><div class="line"><span class="string">  background: rgba(246,246,246,0.2);</span></div><div class="line"><span class="string">  z-index: 999;</span></div><div class="line"><span class="string">  margin: 5px 10px 10px 10px;</span></div><div class="line"><span class="string">  margin-left: <span class="subst">$&#123;props =&gt; props.isShowMenu ? <span class="string">'100px'</span> : <span class="string">'5px'</span>&#125;</span>;</span></div><div class="line"><span class="string">  transform: <span class="subst">$&#123;props =&gt; props.isShowMenu ? <span class="string">'rotate(450deg)'</span> : <span class="string">'rotate(0deg)'</span>&#125;</span>;</span></div><div class="line"><span class="string">  transition: all 1s;</span></div><div class="line"><span class="string">  cursor: pointer;</span></div><div class="line"><span class="string">  .menu-btn&#123;</span></div><div class="line"><span class="string">    font-size: 25px;</span></div><div class="line"><span class="string">    color: white;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  /* &amp;:hover&#123;</span></div><div class="line"><span class="string">    transform:scale(1.3);</span></div><div class="line"><span class="string">    -ms-transform:scale(1.3); 	</span></div><div class="line"><span class="string">    -moz-transform:scale(1.3); 	</span></div><div class="line"><span class="string">    -webkit-transform:scale(1.3); </span></div><div class="line"><span class="string">    -o-transform:scale(1.3); 	</span></div><div class="line"><span class="string">  &#125; */</span></div><div class="line"><span class="string">`</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> SideBarMenu = styled.div<span class="string">`</span></div><div class="line"><span class="string">  width: 98%;</span></div><div class="line"><span class="string">  height: 90%;</span></div><div class="line"><span class="string">`</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> SideBarMenuItem = styled.button<span class="string">`</span></div><div class="line"><span class="string">	float: left;</span></div><div class="line"><span class="string">	margin: 5px;</span></div><div class="line"><span class="string">	padding: 0;</span></div><div class="line"><span class="string">	border: 3px solid;</span></div><div class="line"><span class="string">	background: none; </span></div><div class="line"><span class="string">	color: #a8d8ea;</span></div><div class="line"><span class="string">	vertical-align: middle;</span></div><div class="line"><span class="string">  overflow: hidden;</span></div><div class="line"><span class="string">	position: relative;</span></div><div class="line"><span class="string">	z-index: 1;</span></div><div class="line"><span class="string">  -webkit-transition: all 1s;</span></div><div class="line"><span class="string">	transition: all 1s;</span></div><div class="line"><span class="string">  border-radius: 15px;</span></div><div class="line"><span class="string">  font-weight: 500;</span></div><div class="line"><span class="string">  min-width: 120px;</span></div><div class="line"><span class="string">  max-width: 200px;</span></div><div class="line"><span class="string">  letter-spacing: 2px;</span></div><div class="line"><span class="string">  font-size: 14px;</span></div><div class="line"><span class="string">  &amp;:focus &#123;</span></div><div class="line"><span class="string">    outline: 0;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">   &gt; span &#123;</span></div><div class="line"><span class="string">    display: block;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string"> </span></div><div class="line"><span class="string">  &amp;:after &#123;</span></div><div class="line"><span class="string">    color: #fff;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  </span></div><div class="line"><span class="string">  :hover &#123;</span></div><div class="line"><span class="string">    border-color: #3f51b5;</span></div><div class="line"><span class="string">    background-color: rgba(63, 81, 181, 0.1);</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  &amp;:hover &#123;</span></div><div class="line"><span class="string">    border-color: #fff;</span></div><div class="line"><span class="string">    background-color: #21333C;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  &amp;::after &#123;</span></div><div class="line"><span class="string">    opacity: 1;</span></div><div class="line"><span class="string">    color: #fff;</span></div><div class="line"><span class="string">    -webkit-transform: translate3d(0, 0, 0);</span></div><div class="line"><span class="string">    transform: translate3d(0, 0, 0);</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  &amp;:hover &gt; span &#123;</span></div><div class="line"><span class="string">    opacity: 1;</span></div><div class="line"><span class="string">    color: #fff;</span></div><div class="line"><span class="string">    border: 3px #ffffff;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  &amp;.slide-enter &#123;</span></div><div class="line"><span class="string">      opacity:0;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  &amp;.slide-enter-active &#123;</span></div><div class="line"><span class="string">      opacity: 1;</span></div><div class="line"><span class="string">      transition: all .5s ease-in;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  &amp;.slide-exit &#123;</span></div><div class="line"><span class="string">      opacity: 1;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">  &amp;.slide-exit-active &#123;</span></div><div class="line"><span class="string">    opacity: 0;</span></div><div class="line"><span class="string">    transition: all .5s ease-in;</span></div><div class="line"><span class="string">  &#125;</span></div><div class="line"><span class="string">`</span></div></pre></td></tr></table></figure>
+<p>最外层<code>SideBarLeftWrapper</code>为侧边栏容器div，<code>SideBarLeftBtn</code>为列表显示/关闭的空值按钮，点击时改变<strong>isShowMenu</strong>的值，<strong>isShowMenu</strong>变量空值列表元素的显示与否。<code>SideBarMenu</code>为侧边栏各元素的父元素，<code>SideBarMenuItem</code>为具体的每个侧边栏按钮元素，也就是要添加动画的对象。</p>
+<p>在实践过程中，<code>SideBarMenuItem</code>元素从json文件中读取，使用map方法循环遍历后返回该元素，如果要为每个元素添加动画，那么要将<code>CSSTransition</code>标签包裹在<strong>每个</strong>元素外面，而且其里面只能有<strong>一个</strong>直接元素，也就是子元素（孙子元素管不着）：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">menuItemsJson.map( <span class="function">(<span class="params">item,index</span>) =&gt;</span> (</div><div class="line">   <span class="comment">// isShowmenu控制某些css元素的显示与否</span></div><div class="line">   &lt;CSSTransition</div><div class="line">     <span class="keyword">in</span>=&#123;isShowMenu&#125;</div><div class="line">     timeout=&#123;<span class="number">200</span>&#125;</div><div class="line">     classNames=<span class="string">'slide'</span></div><div class="line">     unmountOnExit</div><div class="line">   &gt;</div><div class="line">     &lt;SideBarMenuItem&gt;</div><div class="line">         &lt;span className=<span class="string">'iconfont'</span> dangerouslySetInnerHTML=&#123;&#123; <span class="attr">__html</span>: item.name&#125;&#125;/&gt;</div><div class="line">     &lt;<span class="regexp">/SideBarMenuItem&gt;</span></div><div class="line"><span class="regexp">   &lt;/</span>CSSTransition&gt;</div><div class="line"> ) )</div></pre></td></tr></table></figure></p>
+<p>由于之前在学习React的时候，看到当时的代码，多个<code>CSSTransition</code>标签外面要用<code>TransitionGroup</code>标签包裹起来，而我加上它以后有，反而没有动画</p>
+<p><img src="/2021/02/04/react-transition-group结合多个styled-components组件动画不生效的问题/1.gif" alt="image"></p>
+<p>而当去除了<code>TransitionGroup</code>父元素后，动画则生效了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">getMenuItems = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">const</span> &#123;isShowMenu&#125; = <span class="keyword">this</span>.props</div><div class="line">    <span class="keyword">return</span>(</div><div class="line">          menuItemsJson.map( <span class="function">(<span class="params">item,index</span>) =&gt;</span> (</div><div class="line">            <span class="comment">// isShowmenu控制某些css元素的显示与否</span></div><div class="line">            &lt;CSSTransition</div><div class="line">              <span class="keyword">in</span>=&#123;isShowMenu&#125;</div><div class="line">              timeout=&#123;<span class="number">200</span>&#125;</div><div class="line">              classNames=<span class="string">'slide'</span></div><div class="line">              unmountOnExit</div><div class="line">            &gt;</div><div class="line">              &lt;SideBarMenuItem&gt;</div><div class="line">                  &lt;span className=<span class="string">'iconfont'</span> dangerouslySetInnerHTML=&#123;&#123; <span class="attr">__html</span>: item.name&#125;&#125;/&gt;</div><div class="line">              &lt;<span class="regexp">/SideBarMenuItem&gt;</span></div><div class="line"><span class="regexp">            &lt;/</span>CSSTransition&gt;</div><div class="line">          ) )</div><div class="line">    ) </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p><img src="/2021/02/04/react-transition-group结合多个styled-components组件动画不生效的问题/2.gif" alt="image"></p>
+<p>之前在学习完react后，就没有进行实践和练习，这次算是回顾+学习，遇到这个问题也是琢磨了很久，但是至于原因目前还没有摸清楚。</p>
+<p>补充： 官网使用的<transitiongroup>和<csstransition>标签搭配，见：<a href="https://reactcommunity.org/react-transition-group/transition-group" target="_blank" rel="external">https://reactcommunity.org/react-transition-group/transition-group</a></csstransition></transitiongroup></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2021/01/15/webpack5版本，使用webpack-dev-server报错/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz",
+            appKey: "FpJsLvikc9nea305u094EDFf",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+  
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

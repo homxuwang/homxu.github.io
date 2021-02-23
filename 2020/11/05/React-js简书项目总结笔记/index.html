@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>React.js简书项目总结笔记 | Homxu</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端,React," />
+  
+
+  <meta name="description" content="前些日子视频学习了用react.js(16.4版本)简单实现简书前端项目的视频，由于拖延症，一直没有把笔记和总结写下来，导致很多细节都遗忘了，今天算是亡羊补牢，把学习过程中的知识点和感受总结一下。 项目简介项目以ReactJS为主，结合redux做状态管理，用styled-components做样式组件，axios做异步操作等，来实现一个模仿简书前端项目的单页面应用。项目相对来说比较简单，但“麻雀">
+<meta name="keywords" content="前端,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React.js简书项目总结笔记">
+<meta property="og:url" content="http://homxu.com/2020/11/05/React-js简书项目总结笔记/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="前些日子视频学习了用react.js(16.4版本)简单实现简书前端项目的视频，由于拖延症，一直没有把笔记和总结写下来，导致很多细节都遗忘了，今天算是亡羊补牢，把学习过程中的知识点和感受总结一下。 项目简介项目以ReactJS为主，结合redux做状态管理，用styled-components做样式组件，axios做异步操作等，来实现一个模仿简书前端项目的单页面应用。项目相对来说比较简单，但“麻雀">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2020/11/05/React-js简书项目总结笔记/1.png">
+<meta property="og:image" content="http://homxu.com/2020/11/05/React-js简书项目总结笔记/2.png">
+<meta property="og:image" content="http://homxu.com/2020/11/05/React-js简书项目总结笔记/3.png">
+<meta property="og:updated_time" content="2020-11-05T12:52:47.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="React.js简书项目总结笔记">
+<meta name="twitter:description" content="前些日子视频学习了用react.js(16.4版本)简单实现简书前端项目的视频，由于拖延症，一直没有把笔记和总结写下来，导致很多细节都遗忘了，今天算是亡羊补牢，把学习过程中的知识点和感受总结一下。 项目简介项目以ReactJS为主，结合redux做状态管理，用styled-components做样式组件，axios做异步操作等，来实现一个模仿简书前端项目的单页面应用。项目相对来说比较简单，但“麻雀">
+<meta name="twitter:image" content="http://homxu.com/2020/11/05/React-js简书项目总结笔记/1.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#项目简介"><span class="toc-text">项目简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用到的组件"><span class="toc-text">用到的组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#项目过程中遇到的问题和总结"><span class="toc-text">项目过程中遇到的问题和总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用react-js的感受"><span class="toc-text">使用react.js的感受</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-React-js简书项目总结笔记" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">React.js简书项目总结笔记</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2020.11.05</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>前些日子视频学习了用react.js(16.4版本)简单实现简书前端项目的视频，由于拖延症，一直没有把笔记和总结写下来，导致很多细节都遗忘了，今天算是亡羊补牢，把学习过程中的知识点和感受总结一下。</p>
+<h1 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h1><p>项目以ReactJS为主，结合redux做状态管理，用<code>styled-components</code>做样式组件，axios做异步操作等，来实现一个模仿简书前端项目的单页面应用。项目相对来说比较简单，但“麻雀虽小，五脏俱全”，基本涵盖了对ReactJS操作和使用的知识点。<br>在mock后端数据时，使用了charles做为工具。</p>
+<h1 id="用到的组件"><a href="#用到的组件" class="headerlink" title="用到的组件"></a>用到的组件</h1><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">"dependencies": &#123;</div><div class="line">    "@testing-library/jest-dom": "^4.2.4",</div><div class="line">    "@testing-library/react": "^9.5.0",</div><div class="line">    "@testing-library/user-event": "^7.2.1",</div><div class="line">    "axios": "^0.20.0",</div><div class="line">    "immutable": "^4.0.0-rc.12",</div><div class="line">    "react": "^16.13.1",</div><div class="line">    "react-dom": "^16.13.1",</div><div class="line">    "react-redux": "^7.2.1",</div><div class="line">    "react-router-dom": "^5.2.0",</div><div class="line">    "react-scripts": "3.4.3",</div><div class="line">    "react-transition-group": "^4.4.1",</div><div class="line">    "redux": "^4.0.5",</div><div class="line">    "redux-immutable": "^4.0.0",</div><div class="line">    "redux-thunk": "^2.3.0",</div><div class="line">    "styled-components": "^5.2.0"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="项目过程中遇到的问题和总结"><a href="#项目过程中遇到的问题和总结" class="headerlink" title="项目过程中遇到的问题和总结"></a>项目过程中遇到的问题和总结</h1><ol>
+<li>在管理css样式时，引入styled-components模块。不同组件之间的css互不影响。创建style.js。<br>全局样式引入时，在styled-components的v4版本开始，引入createGlobalStyle。之前的injectGlobal 已被弃用:<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> Globalstyle=createGlobalStyle <span class="string">`</span></div><div class="line"><span class="string">    body &#123;</span></div><div class="line"><span class="string">        margin: 0;</span></div><div class="line"><span class="string">        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',</span></div><div class="line"><span class="string">        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',</span></div><div class="line"><span class="string">        sans-serif;</span></div><div class="line"><span class="string">        -webkit-font-smoothing: antialiased;</span></div><div class="line"><span class="string">        -moz-osx-font-smoothing: grayscale;</span></div><div class="line"><span class="string">  &#125;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后在对应的App组件中，作为一个组件引入即可</p>
+<ol>
+<li><p>使用reset.css.不同浏览器的内核，显示内容时，会有略微的差别，例如默认的margin值不同，使用①的全局方案，结合reset.css，设置各种原生html标签的默认值。地址：<a href="https://meyerweb.com/eric/tools/css/reset/" target="_blank" rel="external">https://meyerweb.com/eric/tools/css/reset/</a></p>
+</li>
+<li><p>尽量不要在UI组建中写过多的业务逻辑，例如可以将业务逻辑代码写在组件外，然后在生命周期函数中调用外部代码。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Home</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span>(</div><div class="line">      <span class="comment">//...</span></div><div class="line">  &#125;</div><div class="line">  componentDidMount() &#123;</div><div class="line">    <span class="keyword">this</span>.props.changeHomeData()</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//业务逻辑代码主要写在UI组件外，在钩子函数中调用</span></div><div class="line"><span class="keyword">const</span> mapStateToDispatch = <span class="function">(<span class="params">dispatch</span>) =&gt;</span> (&#123;</div><div class="line">  changeHomeData() &#123;</div><div class="line">    axios.get(<span class="string">'/api/home.json'</span>).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</div><div class="line">      <span class="keyword">const</span> result = res.data.data</div><div class="line">      <span class="keyword">const</span> action = &#123;</div><div class="line">        type: <span class="string">'change_home_data'</span>,</div><div class="line">        topicList: result.topicList,</div><div class="line">        articleList: result.articleList,</div><div class="line">        recommendList: result.recommendList</div><div class="line">      &#125;      </div><div class="line">      dispatch(action)</div><div class="line">    &#125;).catch()</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>有异步请求的代码，尽量将其使用react-thunk进行管理。</p>
+</li>
+<li><p>可以使用PureComponent组件替代Component组件，它自己内置了shouldComponentUpdate方法。需要注意的是，<strong>PureComponent组件和immutable.js组件结合使用，才能保证数据一定没有问题</strong>，如果没有使用immutable管理数据，可能会出现坑(不易发觉的错误)。</p>
+</li>
+<li><p>后台获取参数的方式：</p>
+</li>
+</ol>
+<ul>
+<li><p>动态路由:可通过this.props.match.params获取到对应参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// App.js 设置</span></div><div class="line">&lt;Route path=<span class="string">'/detail/:id'</span>  exact component=&#123;Detail&#125; /&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用参数的形式（url+?id=xxx）<br>可通过this.props.location.search 对参数进行解析<br><img src="/2020/11/05/React-js简书项目总结笔记/1.png" alt="1"></p>
+</li>
+</ul>
+<ol>
+<li><p>使用Redirect from ‘react-router-dom’ ，来实现页面跳转</p>
+</li>
+<li><p>使用react-loadable导出异步组件，做component的异步加载。默认情况下，所有的组件都打包到一个bundle.js文件中，一次加载所有组件，如果组件数量过多，效率会很慢。<br>使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> Loadable <span class="keyword">from</span> <span class="string">'react-loadable'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> LoadableComponent = Loadable(&#123;</div><div class="line">  loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./'</span>), <span class="comment">//代表当前目录下的index.js</span></div><div class="line">  loading()&#123;</div><div class="line">      <span class="keyword">return</span> &lt;div&gt;正在加载&lt;/div&gt;</div><div class="line">  &#125; <span class="comment">//在加载时，默认显示的内容</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; &lt;LoadableComponent/&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// App.js</span></div><div class="line"><span class="keyword">import</span> Detail <span class="keyword">from</span> <span class="string">'./pages/detail/loadable.js'</span></div><div class="line"> ...</div><div class="line"> </div><div class="line"> <span class="comment">// detail/index.js</span></div><div class="line"> <span class="keyword">import</span> &#123; withRouter &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span></div><div class="line"> ...</div><div class="line"> <span class="keyword">export</span> <span class="keyword">default</span> connect(mapStateToProps,mapStateToDispatch)(withRouter(Detail))</div></pre></td></tr></table></figure>
+<p><img src="/2020/11/05/React-js简书项目总结笔记/2.png" alt="2"><br>使用后，切换网页会异步加载x.chunk.js，说明该异步组件是放在该js文件中，只有访问这个组件的时候才会被加载</p>
+<ol>
+<li>在使用redux管理数据时，如果store中的文件过多，可以将其分为多个store，然后在根目录将各个store引入，使用时按照规则寻找和使用对应的store即可：<br><img src="/2020/11/05/React-js简书项目总结笔记/3.png" alt="3"></li>
+</ol>
+<p>这里对sotre文件夹中的各个文件作简要介绍：</p>
+<ul>
+<li>actionCreators.js<br>用于定义action方法，各个方法返回值为一个action对象，这样在使用时直接调用对应方法即可，书写也简洁</li>
+<li><p>constants.js<br>将<code>action</code>中的type定义为<code>常量</code>，在各个文件中使用和书写type时，约定都使用这个文件中定义的常量值，可以避免因拼写错误而难以发现问题：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">const</span> GET_LIST = <span class="string">'header/GET_LIST'</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>index.js<br>仅做导出功能</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> reducer <span class="keyword">from</span> <span class="string">'./reducer'</span></div><div class="line"><span class="keyword">import</span> * <span class="keyword">as</span> actionCreators <span class="keyword">from</span> <span class="string">'./actionCreators'</span></div><div class="line"><span class="keyword">import</span> * <span class="keyword">as</span> constants <span class="keyword">from</span> <span class="string">'./constants'</span></div><div class="line"></div><div class="line"><span class="keyword">export</span> &#123;reducer,actionCreators,constants&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>reducer.js<br>在其中定义和初始化state，并且根据sotre传来的action，判断和返回新的store.</p>
+</li>
+</ul>
+<p>这是组件中各个文件的作用，而全局的store，也只是对各组件的sotre做一个规则，类似于统领各个模块的“统帅”，例如本项目中的reducer.js：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123;combineReducers&#125; <span class="keyword">from</span> <span class="string">'redux-immutable'</span></div><div class="line"><span class="keyword">import</span> &#123;reducer <span class="keyword">as</span> headerReducer&#125; <span class="keyword">from</span> <span class="string">'../common/header/store'</span></div><div class="line"><span class="keyword">import</span> &#123;reducer <span class="keyword">as</span> homeReducer&#125;  <span class="keyword">from</span> <span class="string">'../pages/home/store'</span></div><div class="line"><span class="keyword">import</span> &#123;reducer <span class="keyword">as</span> detailReducer&#125;  <span class="keyword">from</span> <span class="string">'../pages/detail/store'</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> reducer = combineReducers(&#123;</div><div class="line">    header: headerReducer,</div><div class="line">    home: homeReducer,</div><div class="line">    detail: detailReducer</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> reducer;</div></pre></td></tr></table></figure></p>
+<p>本项目中全局sotre中的index.js的作用也是作为默认的引入文件，并对store做一些初始化操作。</p>
+<h1 id="使用react-js的感受"><a href="#使用react-js的感受" class="headerlink" title="使用react.js的感受"></a>使用react.js的感受</h1><p>好久之前就想学习一下react，但是由于各种原因（其实就是懒）也迟迟没能付诸行动。由于这是与react.js的初识，并没有在源码和更深入的层面上去探究react，因此只从使用感受方面做一些总结。</p>
+<p>ReactJS很好的贯彻了“面向对象编程”的思想，特别而是与Vue框架相比，这种感觉更为明显。因视频中项目使用的版本是<code>React.js 16.4</code>，还未引入React-Hooks，所以在视频学习时，我创建模板时，大部分是以class形式继承React.Component来创建。当然这个版本也支持使用无状态函数来创建组件，在项目中也有应用。</p>
+<p>ReactJS与Vue相比，“自由度”很高，但随之带来的也是难度的提升，特别是一些ES6语法和知识点。</p>
+<p>要用好ReactJS写好应用，要熟悉ES6的一些语法，并且对于要做的应用，要合理划分模块。</p>
+<p>ReactJS的整体使用感受还是很好的，只是随着ReactJS的版本不断迭新，也要不断吸取新的知识，特别是现在React-Hooks也火了起来，后续也将学习一下使用React-Hooks。</p>
+<p>本文是使用学习时记下的笔记，并在本文做了整合和整理，仅做自己的学习记录，有不对的地方还往指正~</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/12/26/SpringBoot打包为JAR包后访问不到Resources下的文件问题/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2021/01/15/webpack5版本，使用webpack-dev-server报错/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz",
+            appKey: "FpJsLvikc9nea305u094EDFf",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+  
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

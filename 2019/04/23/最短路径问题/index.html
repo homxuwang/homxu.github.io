@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>最短路径问题 | Homxu</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="数据结构,算法," />
+  
+
+  <meta name="description" content="最短路径问题(Shortest Path)本文的最短路径问题对于有向图也无线图都是成立的。常见应用:路径规划、工作任务规划。 在图的遍历-广度优先遍历中介绍的广度优先遍历的结果就是求出了一个最短路径。这种方法求的是从一个节点开始，到其他所有节点的最短路径，这样形成的是一个节点连接其他节点的树，即最短路径树(Shortest Path Tree).这棵树也是这个图的生成树，但是不是最小生成树，最小生">
+<meta name="keywords" content="数据结构,算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最短路径问题">
+<meta property="og:url" content="http://homxu.com/2019/04/23/最短路径问题/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="最短路径问题(Shortest Path)本文的最短路径问题对于有向图也无线图都是成立的。常见应用:路径规划、工作任务规划。 在图的遍历-广度优先遍历中介绍的广度优先遍历的结果就是求出了一个最短路径。这种方法求的是从一个节点开始，到其他所有节点的最短路径，这样形成的是一个节点连接其他节点的树，即最短路径树(Shortest Path Tree).这棵树也是这个图的生成树，但是不是最小生成树，最小生">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/1.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/2.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/3.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/4.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/5.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/6.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/7.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/8.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/9.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/10.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/11.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/12.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/13.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/14.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/15.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/16.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/17.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/18.png">
+<meta property="og:image" content="http://homxu.com/2019/04/23/最短路径问题/19.png">
+<meta property="og:updated_time" content="2019-04-26T11:58:23.596Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最短路径问题">
+<meta name="twitter:description" content="最短路径问题(Shortest Path)本文的最短路径问题对于有向图也无线图都是成立的。常见应用:路径规划、工作任务规划。 在图的遍历-广度优先遍历中介绍的广度优先遍历的结果就是求出了一个最短路径。这种方法求的是从一个节点开始，到其他所有节点的最短路径，这样形成的是一个节点连接其他节点的树，即最短路径树(Shortest Path Tree).这棵树也是这个图的生成树，但是不是最小生成树，最小生">
+<meta name="twitter:image" content="http://homxu.com/2019/04/23/最短路径问题/1.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#最短路径问题-Shortest-Path"><span class="toc-text">最短路径问题(Shortest Path)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dijkstra-单源最短路径算法"><span class="toc-text">Dijkstra 单源最短路径算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Dijkstra算法实现"><span class="toc-text">Dijkstra算法实现</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#处理负权边"><span class="toc-text">处理负权边</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bellman-Ford-单源最短路径算法"><span class="toc-text">Bellman-Ford 单源最短路径算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bellman-Ford-代码实现"><span class="toc-text">Bellman-Ford 代码实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bellman-Ford代码的优化和其他算法"><span class="toc-text">Bellman-Ford代码的优化和其他算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录1-Dijkstra算法实现"><span class="toc-text">附录1-Dijkstra算法实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录2-Bellman-Ford-代码实现"><span class="toc-text">附录2-Bellman-Ford 代码实现</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-最短路径问题" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">最短路径问题</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.04.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="最短路径问题-Shortest-Path"><a href="#最短路径问题-Shortest-Path" class="headerlink" title="最短路径问题(Shortest Path)"></a>最短路径问题(Shortest Path)</h1><p>本文的最短路径问题对于有向图也无线图都是成立的。常见应用:路径规划、工作任务规划。</p>
+<p>在<a href="https://homxuwang.github.io/2019/04/01/%E5%9B%BE%E7%9A%84%E9%81%8D%E5%8E%86/#%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86" target="_blank" rel="external">图的遍历-广度优先遍历</a>中介绍的广度优先遍历的结果就是求出了一个最短路径。这种方法求的是从一个节点开始，到其他所有节点的最短路径，这样形成的是一个节点连接其他节点的树，即最短路径树(Shortest Path Tree).这棵树也是这个图的生成树，但是不是最小生成树，最小生成树是所有的边权值总和是最小的，而最短路径树是所有的节点距离起始节点的权值是最小的，这个求得最短路径树的过程，称为单源最短路径问题(Single Source Shortest Path).单源即是一个起始点的意思。这里是求出了从一个点到其他所有可以抵达的点的最短路径，不是两点间的最短路径。</p>
+<p>下图中从0-&gt;2-&gt;1的操作称为松弛操作,即想计算到一个点的最短路径，尝试通过其他点”绕一下”,然后比较是否比直接到达要短。松弛操作是最短路径求解的核心。<br><img src="/2019/04/23/最短路径问题/1.png" alt="松弛操作"></p>
+<h1 id="Dijkstra-单源最短路径算法"><a href="#Dijkstra-单源最短路径算法" class="headerlink" title="Dijkstra 单源最短路径算法"></a>Dijkstra 单源最短路径算法</h1><p><code>Dijkstra</code>算法的前提:</p>
+<ul>
+<li>图中不能有值为负的权重边</li>
+</ul>
+<p>其时间复杂度为O(E log(V))</p>
+<p>以下面的有向加权图为例，介绍Dijkstra单源最短路径算法.</p>
+<p><img src="/2019/04/23/最短路径问题/2.png" alt="有向加权图"></p>
+<p>假设从点0开始，寻求0到其他所有点的最短路径。因为起点是0，所以0到0的最短路径是0.<br><code>step1</code>:首先对起点进行标识，然后对它所有的临边进行访问,同时更新数组.此时找到没有访问的节点中，能够以最短的方式抵达的节点(此时为节点2,它只需用权值为2的费用就可以抵达),则可以说,从源点到节点2的最短路径就是权值2.(因为2已经是所有能抵达的相邻的节点中最小的权值了)。</p>
+<p><strong>图中不能有负权边保证了这一前提的成立，因为没有负权边，所以即使通过别的边进行松弛操作，那么它们的权重之和也肯定也会大于该边</strong></p>
+<p><img src="/2019/04/23/最短路径问题/3.png" alt="step1-1 找到所有临边进行访问"></p>
+<p><img src="/2019/04/23/最短路径问题/4.png" alt="step1-2 找到相邻节点中能够以最小权值抵达的节点和其权值"></p>
+<p><code>step2</code>:找到了从源点到节点2的最短路径以后，下面就要进行松弛操作.即验证从源点通过节点2到其他节点的路径是否比源点直接到达其他节点的路径要短。</p>
+<p>开始看节点2的所有临边。</p>
+<p>第一条临边为2-&gt;1的边，从源点到节点2权值为2,从节点2到节点1权值为1,总权重为3<5.所以0->1的最短路径为0-&gt;2-&gt;1 = 3.所以可以在数组中更新对应的最短路径。</5.所以0-></p>
+<p><img src="/2019/04/23/最短路径问题/5.png" alt="step2-1 进行松弛操作"></p>
+<p>接下来看节点2的下一个相邻节点节点4.因为节点4还没被访问过，所以从源点到节点4找到了一条权重为7的路径,在数组中进行记录。</p>
+<p><img src="/2019/04/23/最短路径问题/6.png" alt="step2-2 找到临点4并记录"></p>
+<p>然后接着看2-&gt;3.从2-&gt;3的权值为3,从0-&gt;2-&gt;3的权重为5.小于从0-&gt;3的权重6.这时候完成了Dijkstra算法的一轮循环.</p>
+<p><img src="/2019/04/23/最短路径问题/7.png" alt="step2-3 找到临点3此时的最短路径,并更新"></p>
+<p><code>step3</code>:接着找到此时还没有找到最短路径的节点中,现在存的最短的路径能抵达的节点是谁，此时为节点1(权值为3).则可以说0-&gt;2-&gt;1就是从0到1的最短路径.</p>
+<p><img src="/2019/04/23/最短路径问题/8.png" alt="step3-1 找到源点到节点1的最短路径"></p>
+<p>然后根据节点1的临边，进行松弛操作。此时为1-&gt;4的临边,其权值为1.由于0-&gt;1的最短路径为3,1-&gt;4的路径为1,此时经过1到达4的路径总长度为4.小于7.所以可以将从源点到节点4的路径长度更新为4.之前指向4的边就可以废弃不用了，它一定不是一条最短路径。此时和1相邻的边的松弛操作就做完了。</p>
+<p><img src="/2019/04/23/最短路径问题/9.png" alt="step3-2 经过节点1进行松弛操作"></p>
+<p>下面只有节点3和节点4没有访问到，此时最短的路径是到4,它的权值是4,从1-&gt;4的最短路径就是4.</p>
+<p><img src="/2019/04/23/最短路径问题/10.png" alt="step3-3 得出到4的最短路径"></p>
+<p>然后对针对节点4,对节点4的所有邻边进行松弛操作.但是4无法到其他任何节点,所以此时不需要进行操作.</p>
+<p><code>step4</code>:最后只剩下节点3没有访问过，此时没有其他选择,即现在的0-&gt;2-&gt;3即为0-&gt;3的最短路径.</p>
+<p><img src="/2019/04/23/最短路径问题/11.png" alt="step4 得出到3的最短路径"></p>
+<p>此时就完成了Dijkstra算法.找到了一个以节点0为根的最短路径树.</p>
+<p>算法总结和实现细节:</p>
+<ul>
+<li>对路径的记录都是在右侧的列表操作.第一个操作是找到没有访问过的节点中的最短的路径相应的节点.第二个操作是更新列表.可以借用IndexMinHeap实现该操作.开辟节点个数的空间.每次的插入和更新操作都是O(logV)的时间复杂度.Dijkstra的整个操作对所有的边进行遍历,最终的时间复杂度为O(ElogV).</li>
+</ul>
+<h2 id="Dijkstra算法实现"><a href="#Dijkstra算法实现" class="headerlink" title="Dijkstra算法实现"></a>Dijkstra算法实现</h2><p>程序的目录结构<br><img src="/2019/04/23/最短路径问题/12.png" alt="实现Dijkstra算法目录结构"></p>
+<p>相关参考代码:<br><a href="https://homxuwang.github.io/2019/04/07/堆和堆排序" target="_blank" rel="external">堆和堆排序</a><br><a href="https://homxuwang.github.io/2019/03/29/%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80/#java%E8%A1%A8%E8%BE%BE" target="_blank" rel="external">图的表达</a><br><a href="https://homxuwang.github.io/2019/04/05/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/#%E9%99%84%E5%BD%952" target="_blank" rel="external">最小索引堆</a><br><a href="https://homxuwang.github.io/2019/04/05/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" target="_blank" rel="external">ReadWeightedGraph.java</a>有实现代码</p>
+<p>Dijkstra算法的具体实现代码见附录1</p>
+<h1 id="处理负权边"><a href="#处理负权边" class="headerlink" title="处理负权边"></a>处理负权边</h1><p>如图所示，如果引入了负权边,那么在没有负权边的情况下进行松弛操作之前就能确定一个最短边,现在则是有可能“绕路”的情况要比直接到达的情况效率更高。可以看出,它计算0-&gt;1-&gt;2的操作仍然依赖了松弛操作。</p>
+<p><img src="/2019/04/23/最短路径问题/13.png" alt="负权边的情况"></p>
+<p>当然，负权边会产生一个问题,如图。下图多了一条从2-&gt;0的负权边,这样就形成了一个<code>负权环</code>.如果一个图中出现了负权环,那么寻找一点到另一点的最短路径,只要经过了负权环,那么它就会在环中不断“循环”,因为在环中每转一次,那么最短路径都会减少.所以这样就无法计算出最短路径了(或最短路径为负无穷).</p>
+<p>那么可以得出一个结论：拥有负权环的图没有最短路径.</p>
+<p><img src="/2019/04/23/最短路径问题/14.png" alt="负权环的问题"></p>
+<p>两个结点也可以构成负权环,如下图的节点1和2:</p>
+<p><img src="/2019/04/23/最短路径问题/15.png" alt="两个结点的负权环"></p>
+<h1 id="Bellman-Ford-单源最短路径算法"><a href="#Bellman-Ford-单源最短路径算法" class="headerlink" title="Bellman-Ford 单源最短路径算法"></a>Bellman-Ford 单源最短路径算法</h1><p><strong>该算法的前提是,图中可以有负权边,但是不能有负权环</strong></p>
+<p>Bellman-Ford可以判断图中是否有负权环,不过因此它的时间复杂度为O(EV).</p>
+<p>Bellman-Ford的算法思想,如果一个图没有负权环,那么从一个点(起始点)到另一个点的最短路径,最多经过所有的顶点,有V-1条边.否则,则存在一个顶点经过了两次,说明存在负权环.</p>
+<p>如下图,存在两个负权边.</p>
+<p><img src="/2019/04/23/最短路径问题/16.png" alt="负权边图"></p>
+<p><code>step1</code>:找到所有节点0的临边,那么<code>暂时</code>找到了从0到其相邻顶点的最短路径.从另一个角度来看待节点0的所有临边,相当于对0的相应的所有的节点进行了一次松弛操作,这次操作的结果得到了从原点开始,经过1条边到达其他节点的最短路径.</p>
+<p><img src="/2019/04/23/最短路径问题/17.png" alt="第一次松弛操作"></p>
+<p><code>step2</code>:对所有的点进行第2次松弛操作(这里记住松弛操作的核心思想就是尝试从一个点出发中间经过一个点到达目的点的路径是否会更短.即找一个两条边的路径,看其权值是否会比只有一条边的路径权值更小)。结合本例，第二次松弛操作就找到了从节点0到节点2更短的路径.</p>
+<p><img src="/2019/04/23/最短路径问题/18.png" alt="第一次松弛操作"></p>
+<p>对一个点的一次松弛操作,就是找到经过这个点的另外一条路径,多一条边,权值会更小.</p>
+<p>前面提到过,如果一个图没有负权环,那么从一个点(起始点)到另一个点的最短路径,最多经过所有的顶点,有V-1条边.否则,则存在一个顶点经过了两次,说明存在负权环.</p>
+<p>如果对所有的点都进行V-1次松弛操作,理论上就找到了从源点到其他所有点的最短路径.也即Bellman-Ford的主体思想就是对所有的点进行V-1次松弛操作.</p>
+<p>如果还可以进行松弛操作(也就是进行第V轮松弛操作),那么说明原图中有负权环.</p>
+<p>对所有点进行松弛操作,每个边都要遍历一遍,时间复杂度为O(E).这样的操作要进行V轮,所以其时间复杂度为O(EV).</p>
+<h1 id="Bellman-Ford-代码实现"><a href="#Bellman-Ford-代码实现" class="headerlink" title="Bellman-Ford 代码实现"></a>Bellman-Ford 代码实现</h1><p><img src="/2019/04/23/最短路径问题/19.png" alt="代码目录结构"></p>
+<p>BellmanFord的实现代码和两个图的表达见附录2</p>
+<h1 id="Bellman-Ford代码的优化和其他算法"><a href="#Bellman-Ford代码的优化和其他算法" class="headerlink" title="Bellman-Ford代码的优化和其他算法"></a>Bellman-Ford代码的优化和其他算法</h1><p>可以使用队列进行相应优化,比如<code>queue-based bellman-ford</code>算法.</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th style="text-align:center">要求</th>
+<th style="text-align:center">要求</th>
+<th>复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dijkstra</td>
+<td style="text-align:center">无负权边</td>
+<td style="text-align:center">有向无向图均可</td>
+<td>O(ElogV)</td>
+</tr>
+<tr>
+<td>Bellman-Ford</td>
+<td style="text-align:center">无负权环</td>
+<td style="text-align:center">有向图</td>
+<td>O(VE)</td>
+</tr>
+<tr>
+<td>利用拓扑排序</td>
+<td style="text-align:center">有向无环图<br>DAG</td>
+<td style="text-align:center">有向图</td>
+<td>O(V+E)</td>
+</tr>
+</tbody>
+</table>
+<p>所有对最短路径算法,可以回答任何一个点到其他任何点的最短路径.可以用Floyed算法实现,处理无负权环的图O(V^3)</p>
+<p>对于最长路径问题,最长路径问题不能有正权环。无权图的最长路径问题是指数级难度的。对于有权图,不能使用Dijkstra求最长路径问题,但是可以使用Bellman-Ford算法.</p>
+<h1 id="附录1-Dijkstra算法实现"><a href="#附录1-Dijkstra算法实现" class="headerlink" title="附录1-Dijkstra算法实现"></a>附录1-Dijkstra算法实现</h1><p>Dijkstra算法实现代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Vector;</div><div class="line"><span class="keyword">import</span> java.util.Stack;</div><div class="line"></div><div class="line"><span class="comment">// Dijkstra算法求最短路径</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dijkstra</span>&lt;<span class="title">Weight</span> <span class="keyword">extends</span> <span class="title">Number</span> &amp; <span class="title">Comparable</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> WeightedGraph G;      <span class="comment">// 图的引用</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> s;               <span class="comment">// 起始点</span></div><div class="line">    <span class="keyword">private</span> Number[] distTo;    <span class="comment">// distTo[i]存储从起始点s到i的最短路径长度</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span>[] marked;  <span class="comment">// 标记数组,在算法运行过程中标记节点i是否被访问</span></div><div class="line">    <span class="keyword">private</span> Edge&lt;Weight&gt;[] from; <span class="comment">// from[i]记录最短路径中,到达i节点的边是哪一条,可以用来恢复整个最短路径</span></div><div class="line"></div><div class="line">    <span class="comment">//构造函数,使用Dijkstra算法求最短路径</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Dijkstra</span><span class="params">(WeightedGraph graph, <span class="keyword">int</span> s)</span></span>&#123;</div><div class="line"></div><div class="line">        <span class="comment">//算法初始化</span></div><div class="line">        G = graph;</div><div class="line">        <span class="keyword">if</span>(s &lt; <span class="number">0</span> || s &gt; G.V())&#123;</div><div class="line">            <span class="keyword">throw</span>  <span class="keyword">new</span> IllegalArgumentException(<span class="string">"s is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.s = s;</div><div class="line">        distTo = <span class="keyword">new</span> Number[G.V()];</div><div class="line">        marked = <span class="keyword">new</span> <span class="keyword">boolean</span>[G.V()];</div><div class="line">        from = <span class="keyword">new</span> Edge[G.V()];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++) &#123;</div><div class="line">            distTo[i] = <span class="number">0.0</span>;</div><div class="line">            marked[i] = <span class="keyword">false</span>;</div><div class="line">            from[i] = <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// 使用索引堆记录当前找到的到达每个顶点的最短距离</span></div><div class="line">        IndexMinHeap&lt;Weight&gt; ipq = <span class="keyword">new</span> IndexMinHeap&lt;Weight&gt;(G.V());</div><div class="line"></div><div class="line">        <span class="comment">//对于起始点s进行初始化</span></div><div class="line">        distTo[s] = <span class="number">0.0</span>;</div><div class="line">        from[s] = <span class="keyword">new</span> Edge&lt;Weight&gt;(s, s, (Weight)(Number)<span class="number">0.0</span>);</div><div class="line">        ipq.insert(s,(Weight)distTo[s]);</div><div class="line">        marked[s] = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (!ipq.isEmpty())&#123;</div><div class="line">            <span class="keyword">int</span> v = ipq.extractMinIndex();</div><div class="line"></div><div class="line">            <span class="comment">// distTo[v]就是s到v的距离</span></div><div class="line">            marked[v] = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">            <span class="comment">// 对v的所有相邻节点进行更新,即松弛操作</span></div><div class="line">            <span class="keyword">for</span>( Object item : G.adj(v) )&#123;</div><div class="line">                Edge&lt;Weight&gt; e = (Edge&lt;Weight&gt;) item;</div><div class="line">                <span class="keyword">int</span> w = e.other(v);</div><div class="line">                <span class="comment">//如果从s点到w点的最短路径还没有找到</span></div><div class="line">                <span class="keyword">if</span>( !marked[w] )&#123;</div><div class="line">                    <span class="comment">//如果w点以前没有访问过</span></div><div class="line">                    <span class="comment">//或者访问过,但是通过当前的v点到w点距离更短,则进行更新</span></div><div class="line">                    <span class="keyword">if</span>( from[w] == <span class="keyword">null</span> || distTo[v].doubleValue() + e.wt().doubleValue() &lt; distTo[w].doubleValue() )&#123;</div><div class="line">                        <span class="comment">//长度更新为较小的值</span></div><div class="line">                        distTo[w] = distTo[v].doubleValue() + e.wt().doubleValue();</div><div class="line">                        <span class="comment">//对from进行更新</span></div><div class="line">                        from[w] = e;</div><div class="line">                        <span class="comment">//对最小索引堆进行判断</span></div><div class="line">                        <span class="keyword">if</span>( ipq.contain(w) )&#123;</div><div class="line">                            ipq.change(w,(Weight)distTo[w]);</div><div class="line">                        &#125;</div><div class="line">                        <span class="keyword">else</span>&#123;</div><div class="line">                            ipq.insert(w,(Weight)distTo[w]);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 返回从s点到w点的最短路径长度</span></div><div class="line">    <span class="function">Number <span class="title">shortestPathTo</span><span class="params">( <span class="keyword">int</span> w )</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(w &lt; <span class="number">0</span> || w &gt;= G.V() )&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"w is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!hasPathTo(w))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"these two have no path!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> distTo[w];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//判断从s点到w点是否联通</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasPathTo</span><span class="params">( <span class="keyword">int</span> w )</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(w &lt; <span class="number">0</span> || w &gt;= G.V() )&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"w is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> marked[w];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//寻找从s到w的最短路径,将整个路径经过的边存放在vec中</span></div><div class="line">    Vector&lt;Edge&lt;Weight&gt;&gt; shortestPath( <span class="keyword">int</span> w )&#123;</div><div class="line">        <span class="keyword">if</span>(w &lt; <span class="number">0</span> || w &gt;= G.V() )&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"w is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!hasPathTo(w))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"these two have no path!"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//通过from数组逆向查找到从s到w的路径,存放到栈中</span></div><div class="line">        Stack&lt;Edge&lt;Weight&gt;&gt; s = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        Edge&lt;Weight&gt; e = from[w];</div><div class="line">        <span class="keyword">while</span>( e.v() != <span class="keyword">this</span>.s )&#123;</div><div class="line">            s.push(e);</div><div class="line">            e = from[e.v()];</div><div class="line">        &#125;</div><div class="line">        s.push(e);</div><div class="line"></div><div class="line">        <span class="comment">//从栈中依次取出元素,获得顺序的从s到w的路径</span></div><div class="line">        Vector&lt;Edge&lt;Weight&gt;&gt; res = <span class="keyword">new</span> Vector&lt;&gt;();</div><div class="line">        <span class="keyword">while</span> (!s.empty())&#123;</div><div class="line">            e = s.pop();</div><div class="line">            res.add(e);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//打印出从s点到w点的路径</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showPath</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(w &lt; <span class="number">0</span> || w &gt;= G.V() )&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"w is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!hasPathTo(w))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"these two have no path!"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Vector&lt;Edge&lt;Weight&gt;&gt; path = shortestPath(w);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; path.size(); i ++)&#123;</div><div class="line">            System.out.print(path.elementAt(i).v() + <span class="string">"-&gt;"</span>);</div><div class="line">            <span class="keyword">if</span>( i == path.size() - <span class="number">1</span>)</div><div class="line">                System.out.println(path.elementAt(i).w());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试用的图文件<code>testG1.txt</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">5 8</div><div class="line">0 1 5</div><div class="line">0 2 2</div><div class="line">0 3 6</div><div class="line">1 4 1</div><div class="line">2 1 1</div><div class="line">2 4 5</div><div class="line">2 3 3</div><div class="line">3 4 2</div></pre></td></tr></table></figure></p>
+<p>Main函数中测试:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 测试Dijkstra最短路径算法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        String filename = <span class="string">"testG1.txt"</span>;</div><div class="line">        <span class="keyword">int</span> V = <span class="number">5</span>;</div><div class="line"></div><div class="line">        SparseWeightedGraph&lt;Integer&gt; g = <span class="keyword">new</span> SparseWeightedGraph&lt;Integer&gt;(V, <span class="keyword">true</span>);</div><div class="line">        <span class="comment">// Dijkstra最短路径算法同样适用于有向图</span></div><div class="line">        <span class="comment">//SparseGraph&lt;int&gt; g = SparseGraph&lt;int&gt;(V, false);</span></div><div class="line">        ReadWeightedGraph readGraph = <span class="keyword">new</span> ReadWeightedGraph(g, filename);</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"Test Dijkstra:\n"</span>);</div><div class="line">        Dijkstra&lt;Integer&gt; dij = <span class="keyword">new</span> Dijkstra&lt;Integer&gt;(g,<span class="number">0</span>);</div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; V ; i ++ )&#123;</div><div class="line">            <span class="keyword">if</span>(dij.hasPathTo(i)) &#123;</div><div class="line">                System.out.println(<span class="string">"Shortest Path to "</span> + i + <span class="string">" : "</span> + dij.shortestPathTo(i));</div><div class="line">                dij.showPath(i);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                System.out.println(<span class="string">"No Path to "</span> + i );</div><div class="line"></div><div class="line">            System.out.println(<span class="string">"----------"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>测试结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Test Dijkstra:</div><div class="line"></div><div class="line">Shortest Path to 1 : 3.0</div><div class="line">0-&gt;2-&gt;1</div><div class="line">----------</div><div class="line">Shortest Path to 2 : 2.0</div><div class="line">0-&gt;2</div><div class="line">----------</div><div class="line">Shortest Path to 3 : 5.0</div><div class="line">0-&gt;2-&gt;3</div><div class="line">----------</div><div class="line">Shortest Path to 4 : 4.0</div><div class="line">0-&gt;2-&gt;1-&gt;4</div><div class="line">----------</div></pre></td></tr></table></figure></p>
+<h1 id="附录2-Bellman-Ford-代码实现"><a href="#附录2-Bellman-Ford-代码实现" class="headerlink" title="附录2-Bellman-Ford 代码实现"></a>附录2-Bellman-Ford 代码实现</h1><p><code>BellmanFord.java</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Vector;</div><div class="line"><span class="keyword">import</span> java.util.Stack;</div><div class="line"></div><div class="line"><span class="comment">// 使用BellmanFord算法求最短路径</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BellmanFord</span>&lt;<span class="title">Weight</span> <span class="keyword">extends</span> <span class="title">Number</span> &amp; <span class="title">Comparable</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> WeightedGraph G;    <span class="comment">//图的引用</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> s;             <span class="comment">//设置起始点</span></div><div class="line">    <span class="keyword">private</span> Number[] distTo;   <span class="comment">//distT[i]存放从起始点s到i的最短路径长度</span></div><div class="line">    Edge&lt;Weight&gt;[] from;        <span class="comment">//from[i]记录最短路径中,到达i点的边是哪一条</span></div><div class="line">                                 <span class="comment">//可以用来回复整个最短路径</span></div><div class="line">    <span class="keyword">boolean</span> hasNegativeCycle;  <span class="comment">//标记图中是否有负权环</span></div><div class="line"></div><div class="line">    <span class="comment">//构造函数,使用BellanFord算法求最短路径</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BellmanFord</span><span class="params">(WeightedGraph graph, <span class="keyword">int</span> s)</span></span>&#123;</div><div class="line">        G = graph;</div><div class="line">        <span class="keyword">this</span>.s = s;</div><div class="line">        distTo = <span class="keyword">new</span> Number[G.V()];</div><div class="line">        from = <span class="keyword">new</span> Edge[G.V()];</div><div class="line">        <span class="comment">//初始化所有的节点s都不可达,由from数组来表示</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)&#123;</div><div class="line">            from[i] = <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//设置distTo[s]=0 ,并且让from[s]不为NULL,表示初始s节点可达且距离为0</span></div><div class="line">        distTo[s] = <span class="number">0.0</span>;</div><div class="line">        from[s] = <span class="keyword">new</span> Edge&lt;Weight&gt;(s,s,(Weight)(Number)<span class="number">0.0</span>);</div><div class="line"></div><div class="line">        <span class="comment">//Bellman-Ford过程</span></div><div class="line">        <span class="comment">//进行V-1次循环,每一次循环求出从起点到其余所有点,最多使用pass步可以到达的最短距离</span></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">int</span> pass = <span class="number">1</span> ; pass &lt; G.V() ; pass ++)&#123;</div><div class="line"></div><div class="line">            <span class="comment">//每次循环中对所有的边进行一遍松弛操作</span></div><div class="line">            <span class="comment">//遍历所有边的方式是先遍历所有的顶点,然后遍历和所有顶点相邻的所有边</span></div><div class="line">            <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)&#123;</div><div class="line">                <span class="comment">//使用临边迭代器遍历和所有顶点相邻的所有边</span></div><div class="line">                <span class="keyword">for</span>( Object item : G.adj(i) )&#123;</div><div class="line">                    Edge&lt;Weight&gt; e = (Edge&lt;Weight&gt;) item;</div><div class="line">                    <span class="comment">//对于每一个边首先判断e.v()可达</span></div><div class="line">                    <span class="comment">//之后看如果e.w()以前没有到达过,显然可以更新distTo[e.w()]</span></div><div class="line">                    <span class="comment">//或者e.w()以前虽然到达过,但是通过这个e可以获得一个更短的距离,即可以进行一次松弛操作,也可以更新distTo[e.w()]</span></div><div class="line">                    <span class="keyword">if</span>(from[e.v()] != <span class="keyword">null</span> &amp;&amp; (from[e.w()] == <span class="keyword">null</span> || distTo[e.v()].doubleValue() + e.wt().doubleValue() &lt; distTo[e.w()].doubleValue()) )&#123;</div><div class="line">                        distTo[e.w()] = distTo[e.v()].doubleValue() + e.wt().doubleValue();</div><div class="line">                        from[e.w()] = e;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            hasNegativeCycle = detectNegativeCycle();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//判断图中是否有负权环</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">detectNegativeCycle</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; G.V() ; i ++)&#123;</div><div class="line">            <span class="keyword">for</span>(Object item : G.adj(i) )&#123;</div><div class="line">                Edge&lt;Weight&gt; e = (Edge&lt;Weight&gt;)item;</div><div class="line">                <span class="keyword">if</span>( from[e.v()] != <span class="keyword">null</span> &amp;&amp; distTo[e.v()].doubleValue() + e.wt().doubleValue() &lt; distTo[e.w()].doubleValue())</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回图中是否有负权环</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">negativeCycle</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> hasNegativeCycle;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//返回从s点到w点的最短路径长度</span></div><div class="line">    <span class="function">Number <span class="title">shortestPathTo</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(w &lt; <span class="number">0</span> || w &gt;= G.V())&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"w is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (hasNegativeCycle)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"this Graph hasNegativeCycle!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!hasPathTo(w))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(s + <span class="string">"to "</span>+ w +<span class="string">"doesn't have path!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> distTo[w];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//判断s点到w点是否联通</span></div><div class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasPathTo</span><span class="params">(<span class="keyword">int</span> w)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(w &lt; <span class="number">0</span> || w &gt;= G.V())&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"w is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> from[w] != <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//寻找s点到w点的最短路径,将整个路径经过的边存放在vec中</span></div><div class="line">    Vector&lt;Edge&lt;Weight&gt;&gt; shortestPath(<span class="keyword">int</span> w)&#123;</div><div class="line">        <span class="keyword">if</span>(w &lt; <span class="number">0</span> || w &gt;= G.V())&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"w is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (hasNegativeCycle)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"this Graph hasNegativeCycle!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!hasPathTo(w))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(s + <span class="string">"to "</span>+ w +<span class="string">"doesn't have path!"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//通过from数组逆向查找到从s到w的路径,存放到栈中</span></div><div class="line">        Stack&lt;Edge&lt;Weight&gt;&gt; s = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        Edge&lt;Weight&gt; e = from[w];</div><div class="line">        <span class="keyword">while</span> (e.v() != <span class="keyword">this</span>.s)&#123;</div><div class="line">            s.push(e);</div><div class="line">            e = from[e.v()];</div><div class="line">        &#125;</div><div class="line">        s.push(e);</div><div class="line"></div><div class="line">        <span class="comment">//从栈中依次取出元素,获得顺序的从s到w的路径</span></div><div class="line">        Vector&lt;Edge&lt;Weight&gt;&gt; res = <span class="keyword">new</span> Vector&lt;&gt;();</div><div class="line">        <span class="keyword">while</span> (!s.empty())&#123;</div><div class="line">            e = s.pop();</div><div class="line">            res.add(e);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//打印出从s点到w点的路径</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showPath</span><span class="params">(<span class="keyword">int</span> w)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(w &lt; <span class="number">0</span> || w &gt;= G.V())&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"w is out of bounds!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (hasNegativeCycle)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"this Graph hasNegativeCycle!"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!hasPathTo(w))&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(s + <span class="string">"to "</span>+ w +<span class="string">"doesn't have path!"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Vector&lt;Edge&lt;Weight&gt;&gt; res = shortestPath(w);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; res.size() ; i ++)&#123;</div><div class="line">            System.out.print(res.elementAt(i).v() + <span class="string">" -&gt; "</span>);</div><div class="line">            <span class="keyword">if</span>( i == res.size() - <span class="number">1</span> )&#123;</div><div class="line">                System.out.println(res.elementAt(i).w());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><code>testG2.txt</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">5 8</div><div class="line">0 1 5</div><div class="line">0 2 2</div><div class="line">0 3 6</div><div class="line">1 2 -4</div><div class="line">1 4 2</div><div class="line">2 4 5</div><div class="line">2 3 3</div><div class="line">4 3 -3</div></pre></td></tr></table></figure>
+<p><code>testG_negative_circle.txt</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">5 9</div><div class="line">0 1 5</div><div class="line">0 2 2</div><div class="line">0 3 6</div><div class="line">1 2 -4</div><div class="line">2 1 1</div><div class="line">1 4 2</div><div class="line">2 4 5</div><div class="line">2 3 3</div><div class="line">4 3 -3</div></pre></td></tr></table></figure>
+<p>Main测试函数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">// 测试我们的Bellman-Ford最短路径算法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"></div><div class="line">        String filename = <span class="string">"testG2.txt"</span>;</div><div class="line"><span class="comment">//        String filename = "testG_negative_circle.txt";</span></div><div class="line">        <span class="keyword">int</span> V = <span class="number">5</span>;</div><div class="line"></div><div class="line">        SparseWeightedGraph&lt;Integer&gt; g = <span class="keyword">new</span> SparseWeightedGraph&lt;Integer&gt;(V, <span class="keyword">true</span>);</div><div class="line">        ReadWeightedGraph readGraph = <span class="keyword">new</span> ReadWeightedGraph(g, filename);</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"Test Bellman-Ford:\n"</span>);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> s = <span class="number">0</span>;</div><div class="line">        BellmanFord&lt;Integer&gt; bellmanFord = <span class="keyword">new</span> BellmanFord&lt;Integer&gt;(g, s);</div><div class="line">        <span class="keyword">if</span>( bellmanFord.negativeCycle() )</div><div class="line">            System.out.println(<span class="string">"The graph contain negative cycle!"</span>);</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; V ; i ++ )&#123;</div><div class="line">                <span class="keyword">if</span>(i == s)</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line"></div><div class="line">                <span class="keyword">if</span>(bellmanFord.hasPathTo(i)) &#123;</div><div class="line">                    System.out.println(<span class="string">"Shortest Path to "</span> + i + <span class="string">" : "</span> + bellmanFord.shortestPathTo(i));</div><div class="line">                    bellmanFord.showPath(i);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    System.out.println(<span class="string">"No Path to "</span> + i );</div><div class="line"></div><div class="line">            System.out.println(<span class="string">"----------"</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对没有负权环图的测试结果<code>testG2.txt</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Test Bellman-Ford:</div><div class="line"></div><div class="line">Shortest Path to 1 : 5.0</div><div class="line">0 -&gt; 1</div><div class="line">----------</div><div class="line">Shortest Path to 2 : 1.0</div><div class="line">0 -&gt; 1 -&gt; 2</div><div class="line">----------</div><div class="line">Shortest Path to 3 : 3.0</div><div class="line">0 -&gt; 1 -&gt; 2 -&gt; 4 -&gt; 3</div><div class="line">----------</div><div class="line">Shortest Path to 4 : 6.0</div><div class="line">0 -&gt; 1 -&gt; 2 -&gt; 4</div><div class="line">----------</div></pre></td></tr></table></figure></p>
+<p>对有负权环图<code>testG_negative_circle.txt</code>的测试结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Test Bellman-Ford:</div><div class="line"></div><div class="line">The graph contain negative cycle!</div></pre></td></tr></table></figure></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/04/07/堆和堆排序/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/05/06/浅谈TCP协议/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz",
+            appKey: "FpJsLvikc9nea305u094EDFf",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+  
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
