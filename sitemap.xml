@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://homxu.com/search/index.html</loc>
+    
+    <lastmod>2021-02-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homxu.com/about/index.html</loc>
+    
+    <lastmod>2021-02-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homxu.com/link/index.html</loc>
+    
+    <lastmod>2021-02-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homxu.com/tag/index.html</loc>
+    
+    <lastmod>2021-02-23</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homxu.com/category/index.html</loc>
+    
+    <lastmod>2021-02-23</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://homxu.com/2021/01/15/webpack5%E7%89%88%E6%9C%AC%EF%BC%8C%E4%BD%BF%E7%94%A8webpack-dev-server%E6%8A%A5%E9%94%99/</loc>
     
     <lastmod>2021-02-04</lastmod>
@@ -131,13 +166,6 @@
     <loc>http://homxu.com/2019/06/11/%E4%B9%90%E8%A7%82%E9%94%81%E4%B8%8E%E6%82%B2%E8%A7%82%E9%94%81/</loc>
     
     <lastmod>2019-06-11</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homxu.com/about/index.html</loc>
-    
-    <lastmod>2019-06-09</lastmod>
     
   </url>
   
@@ -515,6 +543,13 @@
 
   
   <url>
+    <loc>http://homxu.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2021-02-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://homxu.com/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
@@ -530,13 +565,6 @@
   
   <url>
     <loc>http://homxu.com/tags/HDFS/</loc>
-    <lastmod>2021-02-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://homxu.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -585,13 +613,6 @@
   </url>
   
   <url>
-    <loc>http://homxu.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2021-02-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://homxu.com/tags/%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
@@ -599,7 +620,21 @@
   </url>
   
   <url>
+    <loc>http://homxu.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2021-02-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://homxu.com/tags/JavaWeb/</loc>
+    <lastmod>2021-02-23</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://homxu.com/tags/%E5%B9%B6%E5%8F%91/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -620,7 +655,7 @@
   </url>
   
   <url>
-    <loc>http://homxu.com/tags/%E5%B9%B6%E5%8F%91/</loc>
+    <loc>http://homxu.com/tags/webpack/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -634,7 +669,7 @@
   </url>
   
   <url>
-    <loc>http://homxu.com/tags/webpack/</loc>
+    <loc>http://homxu.com/tags/%E5%9B%BE/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -642,13 +677,6 @@
   
   <url>
     <loc>http://homxu.com/tags/java%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2021-02-23</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://homxu.com/tags/%E5%9B%BE/</loc>
     <lastmod>2021-02-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
