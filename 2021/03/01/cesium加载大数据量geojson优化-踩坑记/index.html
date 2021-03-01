@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>cesium加载大数据量geojson优化&amp;踩坑记 | Homxu</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="cesium,gis," />
+  
+
+  <meta name="description" content="背景在做一个新的Cesium项目时，要在Cesium中添加多个矢量图层（包括点、面），并要对矢量数据进行编辑（包括属性编辑和图形编辑）。点图层数据数据量较小，而其中一个面数据较大，大概有15000个feature，在正式上线时，面数据大概有测试数据的3-4倍，因此要找到一个高效率加载大量矢量数据的方案。 将feature加载形式从entity改为primitiveprimitive简介primit">
+<meta name="keywords" content="cesium,gis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cesium加载大数据量geojson优化&amp;踩坑记">
+<meta property="og:url" content="http://homxu.com/2021/03/01/cesium加载大数据量geojson优化-踩坑记/index.html">
+<meta property="og:site_name" content="Homxu">
+<meta property="og:description" content="背景在做一个新的Cesium项目时，要在Cesium中添加多个矢量图层（包括点、面），并要对矢量数据进行编辑（包括属性编辑和图形编辑）。点图层数据数据量较小，而其中一个面数据较大，大概有15000个feature，在正式上线时，面数据大概有测试数据的3-4倍，因此要找到一个高效率加载大量矢量数据的方案。 将feature加载形式从entity改为primitiveprimitive简介primit">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2021-03-01T12:35:18.662Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cesium加载大数据量geojson优化&amp;踩坑记">
+<meta name="twitter:description" content="背景在做一个新的Cesium项目时，要在Cesium中添加多个矢量图层（包括点、面），并要对矢量数据进行编辑（包括属性编辑和图形编辑）。点图层数据数据量较小，而其中一个面数据较大，大概有15000个feature，在正式上线时，面数据大概有测试数据的3-4倍，因此要找到一个高效率加载大量矢量数据的方案。 将feature加载形式从entity改为primitiveprimitive简介primit">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?65b28a9c8db126aaee36b688371996c8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">Posts List</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将feature加载形式从entity改为primitive"><span class="toc-text">将feature加载形式从entity改为primitive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#primitive简介"><span class="toc-text">primitive简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在的问题"><span class="toc-text">存在的问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务"><span class="toc-text">将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将图层使用GeoServer发布为WMTS服务"><span class="toc-text">将图层使用GeoServer发布为WMTS服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#在GeoServer对数据进行切片"><span class="toc-text">在GeoServer对数据进行切片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用mvt矢量切片"><span class="toc-text">使用mvt矢量切片</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#切片制作与发布"><span class="toc-text">切片制作与发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加载和显示切片"><span class="toc-text">加载和显示切片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-cesium加载大数据量geojson优化-踩坑记" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">cesium加载大数据量geojson优化&amp;踩坑记</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2021.03.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Homxu</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在做一个新的Cesium项目时，要在Cesium中添加多个矢量图层（包括点、面），并要对矢量数据进行编辑（包括属性编辑和图形编辑）。点图层数据数据量较小，而其中一个面数据较大，大概有15000个feature，在正式上线时，面数据大概有测试数据的3-4倍，因此要找到一个高效率加载大量矢量数据的方案。</p>
+<h1 id="将feature加载形式从entity改为primitive"><a href="#将feature加载形式从entity改为primitive" class="headerlink" title="将feature加载形式从entity改为primitive"></a>将feature加载形式从entity改为primitive</h1><h2 id="primitive简介"><a href="#primitive简介" class="headerlink" title="primitive简介"></a>primitive简介</h2><p>primitive更接近cesium渲染引擎的底层。</p>
+<blockquote>
+<p>使用Geometry和Appearance 具有以下优势：<br>（1）性能：绘制大量Primitive时，可以将其合并为单个Geometry以减轻CPU负担、更好的使用GPU。合并Primitive由web worker线程执行，UI保持响应性<br>（2）灵活性：Geometry与Appearance解耦，两者可以分别进行修改<br>（3）低级别访问：易于编写GLSL顶点、片段着色器、使用自定义的渲染状态</p>
+<p>同时，具有以下劣势：<br>（1）需要编写更多地代码<br>（2）需要对图形编程有更多的理解，特别是OpenGL的知识</p>
+</blockquote>
+<p>下面代码是entity与primitive方式对比：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//entity方式</span></div><div class="line">viewer.entities.add(&#123;</div><div class="line">    rectangle: &#123;</div><div class="line">        coordinates: Cesium.Rectangle.fromDegrees(<span class="number">110.20</span>, <span class="number">34.55</span>, <span class="number">111.20</span>, <span class="number">35.55</span>),</div><div class="line">        material: <span class="keyword">new</span> Cesium.StripeMaterialProperty(&#123;</div><div class="line">            evenColor: Cesium.Color.WHITE,</div><div class="line">            oddColor: Cesium.Color.BLUE,</div><div class="line">            repeat:<span class="number">5</span></div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//primitive方式</span></div><div class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> Cesium.GeometryInstance(&#123;</div><div class="line">    geometry: <span class="keyword">new</span> Cesium.RectangleGeometry(&#123;</div><div class="line">        rectangle: Cesium.Rectangle.fromDegrees(<span class="number">105.20</span>, <span class="number">30.55</span>, <span class="number">106.20</span>, <span class="number">31.55</span>),</div><div class="line">        vertexFormat:Cesium.EllipsoidSurfaceAppearance.VERTEXT_FORMAT</div><div class="line">    &#125;)</div><div class="line">&#125;);</div><div class="line">viewer.scene.primitives.add(<span class="keyword">new</span> Cesium.Primitive(&#123;</div><div class="line">    geometryInstances: instance,</div><div class="line">    appearance: <span class="keyword">new</span> Cesium.EllipsoidSurfaceAppearance(&#123;</div><div class="line">        material:Cesium.Material.fromType(<span class="string">'Stripe'</span>)</div><div class="line">    &#125;)</div><div class="line">&#125;));</div></pre></td></tr></table></figure></p>
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>改用primitive渲染feature后，仍然在数据加载阶段会有卡顿，因此猜测显示和加载feature事件过长的瓶颈不在于渲染方式上，而在于异步从服务器获取json数据方面。<br>因此考虑将数据切片，然后加载切片WMTS服务，缩短每次HTTP请求时的数据量，进而加快请求速度。</p>
+<h1 id="将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务"><a href="#将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务" class="headerlink" title="将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务"></a>将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务</h1><p>该方式虽然将shp数据入库，但是通过GeoServer发布，数据依然在加载阶段有卡顿。因为数据虽然入库，但是在请求数据时，并没有对数据进行筛选，而仍请求全部的数据，这与直接加载json文本文件没什么区别。</p>
+<h1 id="将图层使用GeoServer发布为WMTS服务"><a href="#将图层使用GeoServer发布为WMTS服务" class="headerlink" title="将图层使用GeoServer发布为WMTS服务"></a>将图层使用GeoServer发布为WMTS服务</h1><p>经过上述尝试，发现必须对数据进行分片加载，减小加载数据时的压力，切片是一个很好的方式。</p>
+<h2 id="在GeoServer对数据进行切片"><a href="#在GeoServer对数据进行切片" class="headerlink" title="在GeoServer对数据进行切片"></a>在GeoServer对数据进行切片</h2><p>使用GeoServer+Vector-tile-plugin插件生成WMTS切片。Cesium调用WMTS服务时，数据以分片方式加载，加载速度很快。<br>但该方式也有缺点：</p>
+<ol>
+<li>发布的数据风格统一，且需要在发布前定义好；</li>
+<li>数据为图片形式，无法在z轴方向拉伸；</li>
+</ol>
+<h1 id="使用mvt矢量切片"><a href="#使用mvt矢量切片" class="headerlink" title="使用mvt矢量切片"></a>使用mvt矢量切片</h1><h2 id="切片制作与发布"><a href="#切片制作与发布" class="headerlink" title="切片制作与发布"></a>切片制作与发布</h2><p>首先使用idesktop对数据源进行矢量切片（如果需要制作专题图，建议先在idesktop中制作好，然后对该数据进行切片）<br>在单任务生成底图瓦片界面中，勾选所需切片的比例尺级别，输出设置中，存储类型选原始。其他保持不变。</p>
+<p><strong>注意</strong><br>在idesktop制作mvt切片时，浏览工作空间时，注意要将工作区的<em>整幅地图</em>放在工作窗口内，否则在切片后数据会存在不能显示和浏览的问题。（这是超图需要改进的一个地方，而且这个问题官方也没提醒需要注意，只能踩坑才能发现）</p>
+<p>使用iserver发布制作好的矢量切片，步骤：</p>
+<ol>
+<li>在iserver中选择发布服务，在弹出对话框数据中选择<code>UGCV5(MVT)切片</code></li>
+<li>选择瓦片配置文件。选择制作好的矢量切片文件夹，找到后缀为<code>.sci</code>的配置文件并选择。</li>
+<li>选择发布的服务类型。选择<code>REST-矢量瓦片服务</code>。点击下一步，并点击完成。</li>
+</ol>
+<p>服务发布后，可以在iserver中浏览数据。</p>
+<h2 id="加载和显示切片"><a href="#加载和显示切片" class="headerlink" title="加载和显示切片"></a>加载和显示切片</h2><p>在SuperMap的WebGL应用中，调用和添加切片数据：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">scene.addVectorTilesMap(&#123;  <span class="comment">//scene是Cesium.viewer.scene</span></div><div class="line">    url: url, <span class="comment">//服务地址</span></div><div class="line">    canvasWidth: <span class="number">512</span>,</div><div class="line">    name: <span class="string">'testMVT'</span>,</div><div class="line">    viewer: viewer <span class="comment">//Cesium.viewer</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
+<li><a href="https://www.jianshu.com/p/5a74c607a591" target="_blank" rel="external">https://www.jianshu.com/p/5a74c607a591</a></li>
+<li><a href="http://support.supermap.com.cn:8090/webgl/web/apis/3dwebgl.html" target="_blank" rel="external">http://support.supermap.com.cn:8090/webgl/web/apis/3dwebgl.html</a></li>
+<li>官方加载MVT的示例 <a href="http://support.supermap.com.cn:8090/webgl/examples/webgl/editor.html#MVT" target="_blank" rel="external">http://support.supermap.com.cn:8090/webgl/examples/webgl/editor.html#MVT</a></li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2021/02/04/react-transition-group结合多个styled-components组件动画不生效的问题/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">Close</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js"></script>
+    <div id="comment" class="vcomment" ></div>
+    <script>
+        var notify = 'false' == true ? true : false;
+        var verify = 'false' == true ? true : false;
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+            return GUEST_INFO.indexOf(item) > -1
+        });
+        guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+        window.valine = new Valine({
+            el: '.vcomment',
+            notify: notify,
+            verify: verify,
+            appId: "iFklDyH6wGe8Do5e9binSdWh-gzGzoHsz",
+            appKey: "FpJsLvikc9nea305u094EDFf",
+            avatar:'mm',
+            placeholder: "Just go go",
+            guest_info:guest_info,
+            pageSize:'10'
+        });
+    </script>
+  
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
