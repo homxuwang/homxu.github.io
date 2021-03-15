@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Homxu">
 <meta property="og:description" content="背景在做一个新的Cesium项目时，要在Cesium中添加多个矢量图层（包括点、面），并要对矢量数据进行编辑（包括属性编辑和图形编辑）。点图层数据数据量较小，而其中一个面数据较大，大概有15000个feature，在正式上线时，面数据大概有测试数据的3-4倍，因此要找到一个高效率加载大量矢量数据的方案。 将feature加载形式从entity改为primitiveprimitive简介primit">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-03-01T12:35:18.662Z">
+<meta property="og:updated_time" content="2021-03-15T14:24:35.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cesium加载大数据量geojson优化&amp;踩坑记">
 <meta name="twitter:description" content="背景在做一个新的Cesium项目时，要在Cesium中添加多个矢量图层（包括点、面），并要对矢量数据进行编辑（包括属性编辑和图形编辑）。点图层数据数据量较小，而其中一个面数据较大，大概有15000个feature，在正式上线时，面数据大概有测试数据的3-4倍，因此要找到一个高效率加载大量矢量数据的方案。 将feature加载形式从entity改为primitiveprimitive简介primit">
@@ -171,8 +171,8 @@
 
 
   <div id="toc" class="toc-article">
-    <strong class="toc-title">Posts List</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将feature加载形式从entity改为primitive"><span class="toc-text">将feature加载形式从entity改为primitive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#primitive简介"><span class="toc-text">primitive简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在的问题"><span class="toc-text">存在的问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务"><span class="toc-text">将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将图层使用GeoServer发布为WMTS服务"><span class="toc-text">将图层使用GeoServer发布为WMTS服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#在GeoServer对数据进行切片"><span class="toc-text">在GeoServer对数据进行切片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用mvt矢量切片"><span class="toc-text">使用mvt矢量切片</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#切片制作与发布"><span class="toc-text">切片制作与发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加载和显示切片"><span class="toc-text">加载和显示切片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将feature加载形式从entity改为primitive"><span class="toc-text">将feature加载形式从entity改为primitive</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#primitive简介"><span class="toc-text">primitive简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存在的问题"><span class="toc-text">存在的问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务"><span class="toc-text">将shp数据存入PostgreSQL，通过GeoServer发布为WFS服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将图层使用GeoServer发布为WMTS服务"><span class="toc-text">将图层使用GeoServer发布为WMTS服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#在GeoServer对数据进行切片"><span class="toc-text">在GeoServer对数据进行切片</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用mvt矢量切片"><span class="toc-text">使用mvt矢量切片</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#切片制作与发布"><span class="toc-text">切片制作与发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加载和显示切片"><span class="toc-text">加载和显示切片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#缺点及改进方案"><span class="toc-text">缺点及改进方案</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
   </div>
 
 
@@ -238,6 +238,13 @@
 </ol>
 <p>服务发布后，可以在iserver中浏览数据。</p>
 <h2 id="加载和显示切片"><a href="#加载和显示切片" class="headerlink" title="加载和显示切片"></a>加载和显示切片</h2><p>在SuperMap的WebGL应用中，调用和添加切片数据：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">scene.addVectorTilesMap(&#123;  <span class="comment">//scene是Cesium.viewer.scene</span></div><div class="line">    url: url, <span class="comment">//服务地址</span></div><div class="line">    canvasWidth: <span class="number">512</span>,</div><div class="line">    name: <span class="string">'testMVT'</span>,</div><div class="line">    viewer: viewer <span class="comment">//Cesium.viewer</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="缺点及改进方案"><a href="#缺点及改进方案" class="headerlink" title="缺点及改进方案"></a>缺点及改进方案</h2><p>– 2021.3.8更新 –</p>
+<p>矢量切片有两个很明显的缺点：</p>
+<ol>
+<li>不能以entity或primitive形式加载feature，因此不能对每个要素进行单独的渲染，只能以2d形式平铺在平面。</li>
+<li>虽然能够读取属性信息，但是无法对属性信息进行修改。</li>
+</ol>
+<p>针对第一种缺点的解决方案，可以在idesktop中先将要素进行拉伸，渲染，然后发布为<code>.s3m</code>的切片；针对第二个问题的解决方案，我采用的方法是，单独写一个后台服务，用来修改和读取要素的属性信息，即在数据库中针对要素的属性单独挂接一张表，读取和修改时通过后台服务进行操作。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ol>
 <li><a href="https://www.jianshu.com/p/5a74c607a591" target="_blank" rel="external">https://www.jianshu.com/p/5a74c607a591</a></li>
 <li><a href="http://support.supermap.com.cn:8090/webgl/web/apis/3dwebgl.html" target="_blank" rel="external">http://support.supermap.com.cn:8090/webgl/web/apis/3dwebgl.html</a></li>
@@ -279,7 +286,7 @@
   <span id="cover" class="cover hide"></span>
   <div id="modal-dialog" class="modal-dialog hide-dialog">
     <div class="modal-header">
-      <span id="close" class="btn-close">Close</span>
+      <span id="close" class="btn-close">关闭</span>
     </div>
     <hr>
     <div class="modal-body">
