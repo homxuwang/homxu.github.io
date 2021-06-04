@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://homxu.com/2021/06/04/%E4%BD%BF%E7%94%A8SpringBoot-Gson-%E6%97%A0%E6%B3%95%E8%A7%A3%E6%9E%90JsonObject%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</loc>
+    <lastmod>2021-06-04T13:32:55.512Z</lastmod>
+    <data>
+        <display>
+        <title>使用SpringBoot + Gson 无法解析JsonObject的问题及解决方法</title>
+        <pubTime>2021-06-04T13:32:29.000Z</pubTime>
+        
+        <tag>SpringBoot</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://homxu.com/2021/03/19/%E4%BD%BF%E7%94%A8GeoServer-API-%E6%89%B9%E9%87%8F%E5%8F%91%E5%B8%83%E5%9C%B0%E5%9B%BE%E6%9C%8D%E5%8A%A1/</loc>
     <lastmod>2021-03-19T12:25:45.689Z</lastmod>
     <data>
@@ -329,9 +346,9 @@
         <title>Spring学习笔记-二</title>
         <pubTime>2018-11-10T01:13:56.000Z</pubTime>
         
-        <tag>Spring</tag>
-         
         <tag>学习笔记</tag>
+         
+        <tag>Spring</tag>
          
         <tag>JavaWeb</tag>
          
@@ -367,9 +384,9 @@
         <title>Spring学习笔记-一</title>
         <pubTime>2018-11-09T07:04:24.000Z</pubTime>
         
-        <tag>Spring</tag>
-         
         <tag>学习笔记</tag>
+         
+        <tag>Spring</tag>
          
         <tag>JavaWeb</tag>
          
@@ -407,9 +424,9 @@
         <title>windows下开启和使用mysql的binlog</title>
         <pubTime>2019-05-09T08:14:44.000Z</pubTime>
         
-        <tag>数据库</tag>
-         
         <tag>系统开发记录</tag>
+         
+        <tag>数据库</tag>
          
          
            
@@ -727,9 +744,9 @@
         <title>整合Struts2+Spring+Hibernate</title>
         <pubTime>2018-11-16T01:13:41.000Z</pubTime>
         
-        <tag>Spring</tag>
-         
         <tag>学习笔记</tag>
+         
+        <tag>Spring</tag>
          
         <tag>SSH</tag>
          
@@ -816,9 +833,9 @@
         <title>Spring学习笔记-三</title>
         <pubTime>2018-11-13T07:24:11.000Z</pubTime>
         
-        <tag>Spring</tag>
-         
         <tag>学习笔记</tag>
+         
+        <tag>Spring</tag>
          
          
            
