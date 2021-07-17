@@ -46,6 +46,19 @@
   
 
   
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-141265597-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
 
   
   <script type="text/javascript">
@@ -249,7 +262,7 @@
 <li><p>使用Redirect from ‘react-router-dom’ ，来实现页面跳转</p>
 </li>
 <li><p>使用react-loadable导出异步组件，做component的异步加载。默认情况下，所有的组件都打包到一个bundle.js文件中，一次加载所有组件，如果组件数量过多，效率会很慢。<br>使用：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> Loadable <span class="keyword">from</span> <span class="string">'react-loadable'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> LoadableComponent = Loadable(&#123;</div><div class="line">  loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./'</span>), <span class="comment">//代表当前目录下的index.js</span></div><div class="line">  loading()&#123;</div><div class="line">      <span class="keyword">return</span> &lt;div&gt;正在加载&lt;/div&gt;</div><div class="line">  &#125; <span class="comment">//在加载时，默认显示的内容</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; &lt;LoadableComponent/&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> Loadable <span class="keyword">from</span> <span class="string">'react-loadable'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> LoadableComponent = Loadable(&#123;</div><div class="line">  loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./'</span>), <span class="comment">//代表当前目录下的index.js</span></div><div class="line">  loading()&#123;</div><div class="line">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>正在加载<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line">  &#125; <span class="comment">//在加载时，默认显示的内容</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; <span class="xml"><span class="tag">&lt;<span class="name">LoadableComponent</span>/&gt;</span></span></div></pre></td></tr></table></figure>
 </li>
 </ol>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// App.js</span></div><div class="line"><span class="keyword">import</span> Detail <span class="keyword">from</span> <span class="string">'./pages/detail/loadable.js'</span></div><div class="line"> ...</div><div class="line"> </div><div class="line"> <span class="comment">// detail/index.js</span></div><div class="line"> <span class="keyword">import</span> &#123; withRouter &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span></div><div class="line"> ...</div><div class="line"> <span class="keyword">export</span> <span class="keyword">default</span> connect(mapStateToProps,mapStateToDispatch)(withRouter(Detail))</div></pre></td></tr></table></figure>
